@@ -58,6 +58,8 @@ kramdown:
 # 评论系统
 # Disqus（https://disqus.com/）
 disqus_username: x5brain
+disqus: true
+disqus_shortname: youllbe.cn
 
 # Gitalk
 gitalk:
