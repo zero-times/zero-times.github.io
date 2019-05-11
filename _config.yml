@@ -1,10 +1,10 @@
 # Site settings
 title: Hoa Blog
-SEOTitle: iOS | Apple | Xcode | 个人博客 | Hoa Blog
+SEOTitle: iOS | Hoa | apple | 苹果 | 开发 | 安卓 | 单片机 | Blog
 header-img: img/post-bg-desk.jpg
-email: x5brain@gmail.com
+email: zero-times@gmail.com
 description: "Every failure is leading towards success."
-keyword: "Hoa, Hoa Blog, iOS, Apple, iPhone"
+keyword: "Hoa, Hoa Blog, 柏荧的博客, zero-times, 邱柏荧, iOS, Apple, iPhone"
 url: "http://zero-times.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/zero-times/zero-times.github.io.git" # you code repository
@@ -12,18 +12,18 @@ github_repo: "https://github.com/zero-times/zero-times.github.io.git" # you code
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Goals determine what you going to be!"
-sidebar-avatar: /img/about-BY-gentle.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/about-Hoa-gentle.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
 # SNS settings
 RSS: false
-# weibo_username:     qiubaiying
-# zhihu_username:     qiubaiying
+# weibo_username:     zero-times
+zhihu_username:     zero-times
 github_username:    zero-times
-# facebook_username:  baiying.qiu.7
-# jianshu_username:   e71990ada2fd
-#twitter_username:   qiubaiying
+facebook_username:  baiying.qiu.7
+jianshu_username:   e71990ada2fd
+#twitter_username:   zero-times
 
 
 
@@ -57,6 +57,7 @@ kramdown:
 
 # 评论系统
 # Disqus（https://disqus.com/）
+# disqus_username: zero-times
 
 # Gitalk
 gitalk:
@@ -73,11 +74,11 @@ gitalk:
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: 671c5ec4aa0f47b4a8ee4a7dc9eefdef
+ba_track_id: b50bf2b12b5338a1845e33832976fd68
 
 # Google Analytics
-# ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-# ga_domain: youllbe.cn               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
+ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
+ga_domain: youllbe.cn               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
 
@@ -101,7 +102,7 @@ friends: [
         title: "WY",
         href: "http://zhengwuyang.com"
     },{
-        title: "简书·BY",
+        title: "简书·Hoa",
         href: "http://www.jianshu.com/u/e71990ada2fd"
     },{
         title: "Apple",
