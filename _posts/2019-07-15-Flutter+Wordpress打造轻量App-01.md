@@ -7,9 +7,8 @@ author:     Hoa
 header-img: img/post-bg-ios9-web.jpg
 catalog: true
 tags:
-    - Flutter
-    - 三端
-    - Android
+    - flutter
+    - android
     - iOS
 ---
 # 准备
