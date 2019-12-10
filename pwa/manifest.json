@@ -1,7 +1,7 @@
 {
-  "name": "Hux Blog",
-  "short_name": "Hux Blog",
-  "description": "About an engineer & designer who loves web.",
+  "name": "Hoa Blog",
+  "short_name": "Hoa Blog",
+  "description": "Code is the tool to achieve your dreams.",
   "icons": [{
     "src": "icons/128.png",
     "sizes": "128x128",
