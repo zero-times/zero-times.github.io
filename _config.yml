@@ -1,10 +1,10 @@
 # Site settings
 title: You'll Be
-SEOTitle: iOS | Hoa | apple | 苹果 | 开发 | 安卓 | 单片机 | Blog
+SEOTitle: iOS | Flutter | android | 小程序
 header-img: img/post-bg-desk.jpg
-email: zero-times@gmail.com
+email: x5brain@gmail.com
 description: "Every failure is leading towards success."
-keyword: "Hoa, Hoa Blog,zero-times, iOS, Apple, iPhone"
+keyword: "Hoa, iOS, Flutter, android, 小程序"
 url: "http://zero-times.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/zero-times/zero-times.github.io.git" # you code repository
@@ -102,13 +102,7 @@ friends: [
         title: "爱玩",
         href: "https://aiwanwang.cn"
     },{
-        title: "简书·Hoa",
-        href: "http://www.jianshu.com/u/e71990ada2fd"
-    },{
-        title: "Apple",
-        href: "https://apple.com"
-    },{
-        title: "Apple Developer",
-        href: "https://developer.apple.com/"
+        title: "运微",
+        href: "https://wetool.aiwanwang.cn"
     }
 ]
