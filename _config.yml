@@ -1,46 +1,44 @@
 # Site settings
-title: You'll Be
-SEOTitle: iOS | Flutter | android | 小程序
-header-img: img/post-bg-desk.jpg
+title: Hoa Blog
+SEOTitle: Hoa博客 | iOS | Flutter | android | 小程序
+header-img: img/home-bg.jpg
 email: x5brain@gmail.com
-description: "Every failure is leading towards success."
+description: "与你一起发现更大的世界。"
 keyword: "Hoa, iOS, Flutter, android, 小程序"
-url: "http://zero-times.github.io"          # your host, for absolute URL
-baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/zero-times/zero-times.github.io.git" # you code repository
+url: "https://youllbe.cn"              # your host, for absolute URL
+baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
-# Sidebar settings
-sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Goals determine what you going to be!"
-sidebar-avatar: /img/avatar-by.jpeg     # use absolute URL, seeing it's used in both `/` and `/about/`
-
-
+# Publish posts or collection documents with a future date.
+future: true
 
 # SNS settings
 RSS: false
-# weibo_username:     zero-times
+#weibo_username:     huxpro
 zhihu_username:     zero-times
 github_username:    zero-times
-#facebook_username:  baiying.qiu.7
-#jianshu_username:   e71990ada2fd
-#twitter_username:   zero-times
-
+#twitter_username:   huxpro
+#facebook_username:  huxpro
+#linkedin_username:  firstname-lastname-idxxxx
 
 
 
 # Build settings
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
+highlighter: rouge
 permalink: pretty
 paginate: 10
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
+# If you have timezone issue (e.g. #68) in China, uncomment to use this:
+#timezone: CN  
 
 
 
 # Gems
 # from PR#40, to support local preview for Jekyll 3.0
-gems: [jekyll-paginate]
-
+# make sure you have this gem installed
+# `$ gem install jekyll-paginate`
+plugins: [jekyll-paginate]
 
 
 
@@ -49,44 +47,53 @@ gems: [jekyll-paginate]
 # although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
 # document: http://jekyllrb.com/docs/configuration/#kramdown
 markdown: kramdown
-highlighter: rouge
 kramdown:
   input: GFM                            # use Github Flavored Markdown !important
+  syntax_highlighter_opts:
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
 
 
 
-# 评论系统
-# Disqus（https://disqus.com/）
-# disqus_username: zero-times
+# Disqus settings
+disqus_username: hux
 
-# Gitalk
-gitalk:
-  enable: true    #是否开启Gitalk评论
-  clientID: 735943afc0b63062e306                            #生成的clientID
-  clientSecret: 0176b3fd9760cd170c7bd4517cc24b5ea64cfeff    #生成的clientSecret
-  repo: zero-times.github.io    #仓库名称
-  owner: zero-times    #github用户名
-  admin: zero-times
-  distractionFreeMode: true #是否启用类似FB的阴影遮罩
+# Netease settings
+netease_comment: false
 
 
-# 统计
 
 # Analytics settings
-# Baidu Analytics
-ba_track_id: b50bf2b12b5338a1845e33832976fd68
+# Baidu Analytics 
+# ba_track_id: [your track id]
+gitalk:
+    enable: true    #是否开启Gitalk评论
+    clientID: 735943afc0b63062e306                            #生成的clientID
+    clientSecret: 0176b3fd9760cd170c7bd4517cc24b5ea64cfeff    #生成的clientSecret
+    repo: zero-times.github.io    #仓库名称
+    owner: zero-times    #github用户名
+    admin: zero-times
+    distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 # Google Analytics
-ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-ga_domain: youllbe.cn               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
+ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
+ga_domain: huangxuan.me
 
 
+
+# Sidebar settings
+sidebar: true                           # whether or not using Sidebar.
+sidebar-about-description: "For the next quantum leap<br>离开世界之前，一切都是过程"
+sidebar-avatar: /img/avatar-hux-ny.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
 # Featured Tags
-featured-tags: true                     # 是否使用首页标签
-featured-condition-size: 1              # 相同标签数量大于这个数，才会出现在首页
+featured-tags: true                     # whether or not using Feature-Tags
+featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
 
 
 
@@ -96,13 +103,18 @@ service-worker: true
 
 
 
+# MathJax rendering for layout:page (e.g. post preview)
+page-mathjax: false
+
+
+
 # Friends
 friends: [
-    {
-        title: "爱玩",
-        href: "https://aiwanwang.cn"
-    },{
-        title: "运微",
-        href: "https://wetool.aiwanwang.cn"
-    }
+   {
+       title: "爱玩",
+       href: "https://aiwanwang.cn"
+   },{
+       title: "运微",
+       href: "https://wetool.aiwanwang.cn"
+   }
 ]
