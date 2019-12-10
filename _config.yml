@@ -45,7 +45,10 @@ plugins:
 - jemoji
 feed:
   categories:
-  - release
+  - wechat
+  - iOS
+  - android
+  - Flutter
 sass:
   style: compressed
 strict_front_matter: true
