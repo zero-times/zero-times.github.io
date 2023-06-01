@@ -1,15 +1,9 @@
 ---
 layout:     post
-title:      Flutter+Wordpress打靠双平台App01
-subtitle:   Flutter跨平台+wordpress reset api
-date:       2019-07-15
+title:      Flutter+Wordpress打造双平台App01
 author:     Hoa
-header-img: img/post-bg-ios9-web.jpg
-catalog: true
-tags:
-    - flutter
-    - android
-    - iOS
+image: assets/images/3.jpg
+categories: [ Flutter, Android, iOS ]
 ---
 # 准备
 - 域名+云服务器（个人推荐直接购买备案的二手域名，或者在阿里云等服务商申请，用服务商带的备案系统申请备案，周期一个月不等，阿里云需要云服务器+域名一起备案）
