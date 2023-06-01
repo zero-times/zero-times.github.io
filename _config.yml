@@ -1,7 +1,7 @@
 title: "Affiliates"
 email: x5brain@gmail.com
 timezone: UTC
-baseurl: "/affiliates-jekyll-theme"
+baseurl: "/zero-times.github.io"
 permalink: "/:title/"
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/favicon.ico'
