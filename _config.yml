@@ -1,4 +1,4 @@
-title: "Affiliates"
+title: "Hoa"
 email: x5brain@gmail.com
 timezone: UTC
 baseurl: ""
@@ -7,7 +7,7 @@ logo: 'assets/images/logo.png'
 favicon: 'assets/images/favicon.ico'
 author: Hoa
 paginate: 30
-disqus: 'demowebsite'
+disqus: 'Hoas Blog'
 locale: en_us
 lang: en_us
 feed_items: 10
@@ -29,23 +29,23 @@ authors:
     display_name: Hoa
     avatar: 'assets/images/sal.png'
     email: x5brain@gmail.com
-    web: https://www.wowthemes.net/category/jekyll-themes/
-    twitter: https://twitter.com/wowthemesnet
-    description: "Author of Affiliates, a template available for WordPress, HTML, Ghost and Jekyll. You are currently previewing Jekyll template demo."
-  john:
-    name: John
-    display_name: John
-    avatar: 'assets/images/john.png'
-    email: wowthemesnet@gmail.com
-    web: https://www.wowthemes.net/category/jekyll-themes/
-    twitter: https://twitter.com/wowthemesnet
-    description: "This is the author box. Write a short description of the author here. You are currently previewing Affiliates theme demo, a Jekyll template compatible with Github pages."
+    web: https://youllbe.cn
+    # twitter: https://twitter.com/wowthemesnet
+    # description: "Author of Affiliates, a template available for WordPress, HTML, Ghost and Jekyll. You are currently previewing Jekyll template demo."
+  #john:
+    # name: John
+    # display_name: John
+    # avatar: 'assets/images/john.png'
+    # email: wowthemesnet@gmail.com
+    # web: https://www.wowthemes.net/category/jekyll-themes/
+    # twitter: https://twitter.com/wowthemesnet
+    # description: "This is the author box. Write a short description of the author here. You are currently previewing Affiliates theme demo, a Jekyll template compatible with Github pages."
 
 # Social
-social:
-  instagram: https://www.instagram.com/bootstrapstarter/
-  facebook: https://www.facebook.com/bootstrapstartercom-346329609045284
-  twitter: https://twitter.com/bstartercom
+# social:
+  # instagram: https://www.instagram.com/bootstrapstarter/
+  # facebook: https://www.facebook.com/bootstrapstartercom-346329609045284
+  # twitter: https://twitter.com/bstartercom
 
 # Plugins
 plugins: 
