@@ -7,7 +7,7 @@ logo: 'assets/images/logo.png'
 favicon: 'assets/images/favicon.ico'
 author: Hoa
 paginate: 30
-disqus: 'Hoas Blog'
+disqus: 'youllbe-cn'
 locale: en_us
 lang: en_us
 feed_items: 10
