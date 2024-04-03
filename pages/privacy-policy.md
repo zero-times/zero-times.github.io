@@ -5,6 +5,11 @@ permalink: /privacy-policy/
 comments: false
 ---
 
+### AU
+Your personal data will be processed and information from your device (cookies, unique identifiers, and other device data) may be stored by, accessed by and shared with 0 TCF vendor(s), or used specifically by this site or app.
+
+Some vendors may process your personal data on the basis of legitimate interest, which you can object to by managing your options below. Look for a link at the bottom of this page or in our privacy policy where you can withdraw consent.
+
 ### Information that is gathered from visitors
 In common with other websites, log files are stored on the web server saving details such as the visitor's IP address, browser type, referring page and time of visit.
 
