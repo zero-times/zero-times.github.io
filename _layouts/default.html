@@ -13,20 +13,22 @@
 
 <!-- custom CSS - Remove this if you don't use it or choose to customize the stylesheet with sass-->
 <link href="{{ site.baseurl }}/assets/css/custom.css" rel="stylesheet">
-<!-- custom CSS end-->
+    <!-- custom CSS end-->
     
-{% if jekyll.environment == "production" %}       
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{site.ganalytics}}"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '{{site.ganalytics}}');
-</script>
-{% endif %}
-   
-</head>   
+    {% if jekyll.environment == "production" %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{site.ganalytics}}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{site.ganalytics}}');
+    </script>
+    {% endif %}
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5928117043364923"
+         crossorigin="anonymous"></script>
+</head>
     
 {% capture layout %}{% if page.layout %}layout-{{ page.layout }}{% endif %}{% endcapture %}
 <body class="{{ layout }}">
