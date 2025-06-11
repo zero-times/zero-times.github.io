@@ -1,13 +1,13 @@
 # Top Menu
 topmenu:
 
-- title: Home
+- title: 主页
   url: ""
 
-- title: About
+- title: 关于
   url: "about/"
 
-- title: Contact
+- title: 联系
   url: "contact/"
 
 #- title: Get this theme
@@ -18,13 +18,13 @@ topmenu:
 # Footer Menu
 footermenu:
 
-- title: Home
+- title: 主页
   url: ""
 
-- title: Privacy Policy
+- title: 隐私协议
   url: "privacy-policy/"
 
-- title: Contact
+- title: 联系
   url: "contact/"
 
 #- title: Download
