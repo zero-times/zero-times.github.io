@@ -101,6 +101,7 @@ body {
   background: radial-gradient(circle at top right, rgba(41, 151, 255, 0.55), rgba(5, 11, 24, 0.98) 55%);
   border-radius: 40px;
   padding: 60px;
+  margin-top: 50px;
   color: #f5f5f7;
   border: none;
   box-shadow: 0 35px 90px rgba(3, 7, 18, 0.65);
@@ -838,7 +839,7 @@ body {
   }
 
   .navigation-wrap + main.container {
-    margin-top: 110px;
+    margin-top: 80px;
   }
 
   .share-background {
