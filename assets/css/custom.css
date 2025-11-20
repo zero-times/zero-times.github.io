@@ -185,6 +185,69 @@ html {
   color: var(--apple-space);
 }
 
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project-thumb {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(13, 17, 23, 0.08);
+  background: #f4f5f8;
+}
+
+.project-thumb img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.project-meta h3 {
+  margin-bottom: 8px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.project-tags span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(10, 132, 255, 0.1);
+  color: var(--apple-space);
+}
+
+.project-summary {
+  color: #4b4c52;
+  margin-bottom: 0;
+}
+
+.project-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-link {
+  font-weight: 600;
+  color: var(--apple-ink);
+  text-decoration: none;
+}
+
+.project-link:hover {
+  color: var(--apple-space);
+  text-decoration: none;
+}
+
 .profile-card,
 .stack-card,
 .case-card {
@@ -262,5 +325,15 @@ html {
 
   .hero-status-panel {
     margin-top: 24px;
+  }
+
+  .project-thumb img {
+    height: 140px;
+  }
+
+  .project-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 }

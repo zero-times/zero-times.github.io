@@ -4,6 +4,11 @@ layout: default
 background: '/img/bg-index.jpg'
 ---
 
+{% assign project_posts = site.posts | where_exp: "item", "item.site and item.site != ''" %}
+{% assign blog_posts = site.posts | where_exp: "item", "item.site == nil or item.site == ''" %}
+{% assign blog_featured = blog_posts | where: "featured", true %}
+{% assign regular_blog_posts = blog_posts | where_exp: "item", "item.featured != true" %}
+
 <!-- Home Intro
 ================================================== -->
 {% if page.url == "/" %} 
@@ -114,47 +119,48 @@ background: '/img/bg-index.jpg'
 
 <section id="cases" class="profile-section mb-5">
   <div class="section-heading text-center">
-    <span class="eyebrow">🛠️ 实战解决方案</span>
-    <h2 class="font-weight-bold">技术落地案例节选</h2>
+    <span class="eyebrow">🛠️ 实战项目</span>
+    <h2 class="font-weight-bold">上线中的跨平台产品与工具</h2>
+    <p class="text-muted">所有带有 <code>site</code> 配置的文章会在此展示，直达项目体验链接。</p>
   </div>
+  {% if project_posts.size > 0 %}
   <div class="row">
-    <div class="col-md-6 mb-4">
-      <div class="case-card h-100">
-        <small class="text-uppercase text-muted">Flutter 应用鸿蒙生态迁移</small>
-        <h3>多端统一 · 地图与支付一致体验</h3>
-        <p>主导基于 OpenHarmony Flutter SDK 的适配，封装地图与支付能力，完成鸿蒙系统首发。</p>
-        <ul class="case-list">
-          <li><strong>挑战：</strong> iOS/Android 的既有业务须在鸿蒙侧无缝承接。</li>
-          <li><strong>行动：</strong> 设计多端抽象层 + Platform Channel 通信，调用 HMS Core 能力。</li>
-          <li><strong>成果：</strong> 实现“一套代码，三端部署”，沉淀跨端迁移方法论。</li>
-        </ul>
-      </div>
+    {% for project in project_posts %}
+    {% assign summary = project.excerpt | strip_html | strip_newlines | truncate: 110 %}
+    {% if summary == '' %}
+      {% assign summary = project.title %}
+    {% endif %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <article class="case-card project-card h-100">
+        {% if project.image %}
+        <div class="project-thumb">
+          <img src="{{ site.baseurl }}/{{ project.image }}" alt="{{ project.title }}">
+        </div>
+        {% endif %}
+        <div class="project-meta">
+          <div class="project-title-wrap">
+            <h3>{{ project.title }}</h3>
+            {% if project.categories %}
+            <div class="project-tags">
+              {% for category in project.categories %}
+              <span>{{ category }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <p class="project-summary">{{ summary }}</p>
+        </div>
+        <div class="project-actions">
+          <a class="btn btn-apple-primary btn-sm px-4" href="{{ project.site | strip }}" target="_blank" rel="noopener">访问项目</a>
+          <a class="project-link" href="{{ project.url | relative_url }}">了解更多</a>
+        </div>
+      </article>
     </div>
-    <div class="col-md-6 mb-4">
-      <div class="case-card h-100">
-        <small class="text-uppercase text-muted">高性能文件传输</small>
-        <h3>NAS 上传稳定性提升 300%</h3>
-        <p>构建基于 Isolate 的异步上传引擎，解决大文件上传卡顿、易失败的问题。</p>
-        <ul class="case-list">
-          <li><strong>挑战：</strong> 大文件传输占用主线程导致界面卡顿，失败率居高不下。</li>
-          <li><strong>行动：</strong> 设计切片与断点续传策略，配套自定义文件选择器与播放器。</li>
-          <li><strong>成果：</strong> 后台稳定上传 + 前台丝滑交互，形成可复用技术资产。</li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-6 mb-4">
-      <div class="case-card h-100">
-        <small class="text-uppercase text-muted">核心技术 SDK 化</small>
-        <h3>为荣耀交付轻量直播 SDK</h3>
-        <p>独立完成选型、架构与关键实现，把复杂直播业务萃取为可快速集成的 SDK。</p>
-        <ul class="case-list">
-          <li><strong>挑战：</strong> 多端直播能力需以低功耗、高稳定的 SDK 形态交付合作方。</li>
-          <li><strong>行动：</strong> 重构接口、加强容错、优化功耗并完成多端适配。</li>
-          <li><strong>成果：</strong> 通过严格测试并量产上线，实现技术能力产品化输出。</li>
-        </ul>
-      </div>
-    </div>
+    {% endfor %}
   </div>
+  {% else %}
+  <p class="text-center text-muted mb-0">当前没有配置项目链接的文章。</p>
+  {% endif %}
 </section>
 
 {% endif %}
@@ -165,37 +171,33 @@ background: '/img/bg-index.jpg'
     <h2 class="font-weight-bold">记录 HarmonyOS 适配、跨平台架构与产品复盘</h2>
     <p class="text-muted">关注 Flutter · 原生多端融合、性能攻坚与工程化思考。</p>
   </div>
-  {% assign featured_posts = site.posts | where: "featured", true %}
-  {% if featured_posts.size > 0 %}
+  {% if blog_featured.size > 0 %}
   <div class="row featured-row">
-    {% for post in featured_posts %}
+    {% for post in blog_featured %}
     <div class="col-md-4 mb-5">
       {% include postbox.html %}
     </div>
     {% endfor %}
   </div>
   {% endif %}
+  {% if regular_blog_posts.size > 0 %}
   <div class="row">
     <div class="col-sm-8">
       <div class="row">
-        {% for post in paginator.posts %}
-        {% unless post.featured == true %}
+        {% for post in regular_blog_posts %}
         <div class="col-md-6 mb-5">
           {% include postbox.html %}
         </div>
-        {% endunless %}
         {% endfor %}
-      </div>
-      <div class="bottompagination">
-        <span class="navigation" role="navigation">
-            {% include pagination.html %}
-        </span>
       </div>
     </div>
     <div class="col-sm-4">
       {% include sidebar.html %}
     </div>
   </div>
+  {% else %}
+  <p class="text-center text-muted">还没有博客文章，敬请期待。</p>
+  {% endif %}
 </section>
 
 {% if page.url == "/" %}
