@@ -79,6 +79,35 @@ body {
     color: rgba(245, 245, 247, 0.75);
   }
 
+  .blog-card {
+    background: rgba(5, 8, 20, 0.65);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+  }
+
+  .store-card,
+  .share-card__column,
+  .share-card__contact,
+  .share-card__stores .store-card {
+    background: rgba(6, 9, 20, 0.9);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #f5f5f7;
+  }
+
+  .store-link {
+    color: var(--apple-space);
+  }
+
+  .project-thumb {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .project-tags span {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--apple-space);
+  }
+
   .project-link {
     color: rgba(245, 245, 247, 0.85);
   }
