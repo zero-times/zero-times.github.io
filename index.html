@@ -12,18 +12,21 @@ background: '/img/bg-index.jpg'
     <div class="col-lg-7">
       <span class="eyebrow text-uppercase">移动端架构与跨平台解决方案专家</span>
       <h1 class="display-4 font-weight-bold mb-3">王雄皓 (Hoa)</h1>
-      <p class="lead hero-description">
-        9 年移动端研发与架构实战经验，专注 Flutter 与原生技术的融合交付。
-        我将模糊需求转化为可落地的跨平台方案，护航从零到一的产品交付。
-      </p>
-      <ul class="hero-highlights list-unstyled mb-4">
-        <li><strong>9 年</strong> 企业级移动端架构经验，拥有 iOS/Android/HarmonyOS 全栈背景。</li>
-        <li><strong>HarmonyOS NEXT</strong> 早期适配者，熟悉 Flutter on HarmonyOS 的通信层与生态差异。</li>
-        <li><strong>从零到一</strong> 构建 NAS 上传系统、核心直播 SDK、广告与支付等全链路能力。</li>
-      </ul>
-      <div class="hero-cta">
-        <a href="#cases" class="btn btn-apple-primary btn-lg px-4 mr-3">查看案例</a>
-        <a href="{{site.baseurl}}/contact" class="btn btn-outline-light btn-lg px-4">与我合作</a>
+      <div class="hero-copy-panel">
+        <p class="lead hero-description">
+          9 年移动端研发与架构实战经验，专注 Flutter 与原生技术的融合交付。
+          我将模糊需求转化为可落地的跨平台方案，护航从零到一的产品交付。
+        </p>
+        <ul class="hero-highlights list-unstyled mb-4">
+          <li><strong>9 年</strong> 企业级移动端架构经验，拥有 iOS/Android/HarmonyOS 全栈背景。</li>
+          <li><strong>HarmonyOS NEXT</strong> 早期适配者，熟悉 Flutter on HarmonyOS 的通信层与生态差异。</li>
+          <li><strong>从零到一</strong> 构建 NAS 上传系统、核心直播 SDK、广告与支付等全链路能力。</li>
+        </ul>
+        <div class="hero-cta">
+          <a href="#cases" class="btn btn-apple-primary btn-lg px-4 mr-3 mb-3 mb-lg-0">查看案例</a>
+          <a href="#blog" class="btn btn-outline-light btn-lg px-4 mr-3 mb-3 mb-lg-0">阅读博客</a>
+          <a href="{{site.baseurl}}/contact" class="hero-link">与我合作</a>
+        </div>
       </div>
     </div>
     <div class="col-lg-5">
@@ -154,6 +157,48 @@ background: '/img/bg-index.jpg'
   </div>
 </section>
 
+{% endif %}
+
+<section id="blog" class="blog-section mb-5">
+  <div class="section-heading text-center mb-5">
+    <span class="eyebrow">✍️ 博客与洞察</span>
+    <h2 class="font-weight-bold">记录 HarmonyOS 适配、跨平台架构与产品复盘</h2>
+    <p class="text-muted">关注 Flutter · 原生多端融合、性能攻坚与工程化思考。</p>
+  </div>
+  {% assign featured_posts = site.posts | where: "featured", true %}
+  {% if featured_posts.size > 0 %}
+  <div class="row featured-row">
+    {% for post in featured_posts %}
+    <div class="col-md-4 mb-5">
+      {% include postbox.html %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="row">
+        {% for post in paginator.posts %}
+        {% unless post.featured == true %}
+        <div class="col-md-6 mb-5">
+          {% include postbox.html %}
+        </div>
+        {% endunless %}
+        {% endfor %}
+      </div>
+      <div class="bottompagination">
+        <span class="navigation" role="navigation">
+            {% include pagination.html %}
+        </span>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      {% include sidebar.html %}
+    </div>
+  </div>
+</section>
+
+{% if page.url == "/" %}
 <section class="profile-section contact-cta text-center mb-5">
   <span class="eyebrow">📞 欢迎交流</span>
   <h2 class="font-weight-bold mb-3">无论是项目合作、技术咨询，还是新想法的碰撞，我都乐于参与</h2>
@@ -162,41 +207,3 @@ background: '/img/bg-index.jpg'
   <p class="small text-muted mb-0">或直接邮件至 <a href="mailto:{{site.email}}">{{site.email}}</a></p>
 </section>
 {% endif %}
-
-<!-- Featured
-================================================== -->
-<section class="row">
-  {% for post in site.posts %}
-      {% if post.featured == true %}
-          <div class="col-md-4 mb-5">
-          {% include postbox.html %}
-          </div>
-      {% endif %}
-  {% endfor %}
-  </div>
-</section>
-
-<!-- Posts List with Sidebar (except featured)
-================================================== -->
-<section class="row">
-  <div class="col-sm-8">
-    <div class="row">
-      {% for post in paginator.posts %}
-      {% unless post.featured == true %}
-      <div class="col-md-6 mb-5">
-        {% include postbox.html %}
-      </div>
-      {% endunless %}
-      {% endfor %}
-    </div>
-    <!-- Pagination -->
-    <div class="bottompagination">
-      <span class="navigation" role="navigation">
-          {% include pagination.html %}
-      </span>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    {% include sidebar.html %}
-  </div>
-</section>
