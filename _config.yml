@@ -22,6 +22,11 @@ sass:
   style: :compressed
 ganalytics: UA-214748269-1
 
+collections:
+  blogs:
+    output: true
+    permalink: /blog/:title/
+
 # Authors
 authors:
   Hoa:

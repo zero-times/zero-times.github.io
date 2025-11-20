@@ -4,8 +4,8 @@ layout: default
 background: '/img/bg-index.jpg'
 ---
 
-{% assign project_posts = site.posts | where_exp: "item", "item.site and item.site != ''" %}
-{% assign blog_posts = site.posts | where_exp: "item", "item.site == nil or item.site == ''" %}
+{% assign project_posts = site.posts | sort: "date" | reverse %}
+{% assign blog_posts = site.blogs | sort: "date" | reverse %}
 {% assign blog_featured = blog_posts | where: "featured", true %}
 {% assign regular_blog_posts = blog_posts | where_exp: "item", "item.featured != true" %}
 
@@ -151,7 +151,11 @@ background: '/img/bg-index.jpg'
           <p class="project-summary">{{ summary }}</p>
         </div>
         <div class="project-actions">
+          {% if project.site %}
           <a class="btn btn-apple-primary btn-sm px-4" href="{{ project.site | strip }}" target="_blank" rel="noopener">访问项目</a>
+          {% else %}
+          <a class="btn btn-apple-primary btn-sm px-4" href="{{ project.url | relative_url }}">查看案例</a>
+          {% endif %}
           <a class="project-link" href="{{ project.url | relative_url }}">了解更多</a>
         </div>
       </article>
