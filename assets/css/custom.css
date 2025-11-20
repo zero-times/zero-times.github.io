@@ -60,6 +60,15 @@ body {
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
   }
 
+  .profile-section .text-muted,
+  .profile-section p {
+    color: rgba(245, 245, 247, 0.8) !important;
+  }
+
+  .store-section {
+    background: linear-gradient(180deg, rgba(2, 5, 16, 0.96), rgba(4, 9, 20, 0.98));
+  }
+
   .blog-section {
     border: 1px solid rgba(255, 255, 255, 0.12);
   }
