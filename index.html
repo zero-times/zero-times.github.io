@@ -7,18 +7,160 @@ background: '/img/bg-index.jpg'
 <!-- Home Intro
 ================================================== -->
 {% if page.url == "/" %} 
-<div class="rounded mb-5 hero">
-  <div class="row align-items-center justify-content-between">
-    <div class="col-md-6">
-      <h1 class="font-weight-bold mb-4 serif-font">有想法就去做，记录开发日常。</h1>
-      <p class="lead mb-4">分享成长点滴</p>
-      <a href="{{site.baseurl}}/about" class="btn btn-dark text-white px-5 btn-lg">关于我</a>
+<section class="hero-tech mb-5">
+  <div class="row align-items-center g-5">
+    <div class="col-lg-7">
+      <span class="eyebrow text-uppercase">移动端架构与跨平台解决方案专家</span>
+      <h1 class="display-4 font-weight-bold mb-3">王雄皓 (Hoa)</h1>
+      <p class="lead hero-description">
+        9 年移动端研发与架构实战经验，专注 Flutter 与原生技术的融合交付。
+        我将模糊需求转化为可落地的跨平台方案，护航从零到一的产品交付。
+      </p>
+      <ul class="hero-highlights list-unstyled mb-4">
+        <li><strong>9 年</strong> 企业级移动端架构经验，拥有 iOS/Android/HarmonyOS 全栈背景。</li>
+        <li><strong>HarmonyOS NEXT</strong> 早期适配者，熟悉 Flutter on HarmonyOS 的通信层与生态差异。</li>
+        <li><strong>从零到一</strong> 构建 NAS 上传系统、核心直播 SDK、广告与支付等全链路能力。</li>
+      </ul>
+      <div class="hero-cta">
+        <a href="#cases" class="btn btn-apple-primary btn-lg px-4 mr-3">查看案例</a>
+        <a href="{{site.baseurl}}/contact" class="btn btn-outline-light btn-lg px-4">与我合作</a>
+      </div>
     </div>
-    <div class="col-md-6 text-right pl-0 pl-lg-4">
-      <img class="intro" height="500" src="{{site.baseurl}}/assets/images/intro.svg">      
+    <div class="col-lg-5">
+      <div class="hero-status-panel">
+        <div class="status-item">
+          <p class="status-label">HarmonyOS 融合实践</p>
+          <p class="status-value">一套代码 · 三端同构</p>
+          <p class="status-copy">基于 OpenHarmony Flutter SDK，设计多端抽象层封装地图、支付与 HMS Core 能力。</p>
+        </div>
+        <div class="status-item">
+          <p class="status-label">性能突破</p>
+          <p class="status-value">文件上传稳定性 +300%</p>
+          <p class="status-copy">以 Isolate 为核心的异步任务架构，解决 NAS 大文件传输卡顿与失败率。</p>
+        </div>
+        <div class="status-item">
+          <p class="status-label">交付效率</p>
+          <p class="status-value">直播 SDK 成功产品化</p>
+          <p class="status-copy">为荣耀独立输出轻量高性能 SDK，完成从选型到适配的全链路交付。</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<section id="value" class="profile-section mb-5">
+  <div class="section-heading text-center">
+    <span class="eyebrow">🚀 价值主张</span>
+    <h2 class="font-weight-bold">一个面向未来的跨平台技术伙伴</h2>
+    <p class="text-muted">我关注技术趋势，也能把每一个目标转成可验证、可交付的解决方案。</p>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="profile-card h-100">
+        <h3>全链路托底</h3>
+        <p>定义目标、方案与交付路径，把复杂需求拆解为可执行的里程碑，确保你只需关注业务价值。</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="profile-card h-100">
+        <h3>技术趋势先行</h3>
+        <p>长期跟进 HarmonyOS NEXT、Lanai 等新平台，帮助团队建立跨端统一能力并抢占入口。</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="profile-card h-100">
+        <h3>深度经验壁垒</h3>
+        <p>服务过智能硬件、金融、政务、医疗等行业，沉淀了架构思维与避坑经验，减少试错成本。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="expertise" class="profile-section mb-5">
+  <div class="section-heading text-center">
+    <span class="eyebrow">💡 核心专长</span>
+    <h2 class="font-weight-bold">跨平台架构 · 下一代系统 · 性能攻坚 · 从零到一</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="stack-card h-100">
+        <h3>全平台架构设计</h3>
+        <p>精通 Flutter/Dart，熟练驾驭 iOS、Android 与 HarmonyOS 的混合开发模型，搭建统一能力接口。</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="stack-card h-100">
+        <h3>HarmonyOS 落地</h3>
+        <p>拥有 Flutter on HarmonyOS 的适配与上架经验，理解三端差异与 HMS Core 接入路径。</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="stack-card h-100">
+        <h3>性能瓶颈攻关</h3>
+        <p>对大文件传输、UI 流畅、包体积、网络容灾等领域具备成熟方法论与工程实践。</p>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="stack-card h-100">
+        <h3>产品化交付</h3>
+        <p>多次主导 SDK、支付、广告、数据平台的从零到一落地，确保方案可持续演进。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cases" class="profile-section mb-5">
+  <div class="section-heading text-center">
+    <span class="eyebrow">🛠️ 实战解决方案</span>
+    <h2 class="font-weight-bold">技术落地案例节选</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="case-card h-100">
+        <small class="text-uppercase text-muted">Flutter 应用鸿蒙生态迁移</small>
+        <h3>多端统一 · 地图与支付一致体验</h3>
+        <p>主导基于 OpenHarmony Flutter SDK 的适配，封装地图与支付能力，完成鸿蒙系统首发。</p>
+        <ul class="case-list">
+          <li><strong>挑战：</strong> iOS/Android 的既有业务须在鸿蒙侧无缝承接。</li>
+          <li><strong>行动：</strong> 设计多端抽象层 + Platform Channel 通信，调用 HMS Core 能力。</li>
+          <li><strong>成果：</strong> 实现“一套代码，三端部署”，沉淀跨端迁移方法论。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="case-card h-100">
+        <small class="text-uppercase text-muted">高性能文件传输</small>
+        <h3>NAS 上传稳定性提升 300%</h3>
+        <p>构建基于 Isolate 的异步上传引擎，解决大文件上传卡顿、易失败的问题。</p>
+        <ul class="case-list">
+          <li><strong>挑战：</strong> 大文件传输占用主线程导致界面卡顿，失败率居高不下。</li>
+          <li><strong>行动：</strong> 设计切片与断点续传策略，配套自定义文件选择器与播放器。</li>
+          <li><strong>成果：</strong> 后台稳定上传 + 前台丝滑交互，形成可复用技术资产。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="case-card h-100">
+        <small class="text-uppercase text-muted">核心技术 SDK 化</small>
+        <h3>为荣耀交付轻量直播 SDK</h3>
+        <p>独立完成选型、架构与关键实现，把复杂直播业务萃取为可快速集成的 SDK。</p>
+        <ul class="case-list">
+          <li><strong>挑战：</strong> 多端直播能力需以低功耗、高稳定的 SDK 形态交付合作方。</li>
+          <li><strong>行动：</strong> 重构接口、加强容错、优化功耗并完成多端适配。</li>
+          <li><strong>成果：</strong> 通过严格测试并量产上线，实现技术能力产品化输出。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="profile-section contact-cta text-center mb-5">
+  <span class="eyebrow">📞 欢迎交流</span>
+  <h2 class="font-weight-bold mb-3">无论是项目合作、技术咨询，还是新想法的碰撞，我都乐于参与</h2>
+  <p class="text-muted mb-4">告诉我你的目标，我将为你构思、实现并交付跨平台的最佳路径。</p>
+  <a class="btn btn-apple-primary btn-lg px-5 mb-2" href="{{site.baseurl}}/contact">联系我</a>
+  <p class="small text-muted mb-0">或直接邮件至 <a href="mailto:{{site.email}}">{{site.email}}</a></p>
+</section>
 {% endif %}
 
 <!-- Featured
