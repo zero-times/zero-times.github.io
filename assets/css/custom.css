@@ -34,10 +34,6 @@ html {
   overflow: hidden;
 }
 
-.navigation-wrap + main.container {
-  margin-top: 100px;
-}
-
 .hero-copy-panel {
   background: rgba(3, 7, 18, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -771,7 +767,7 @@ html {
   .navigation-wrap + main.container {
     margin-top: 70px;
   }
-
+  
   .share-background {
     padding: 30px 12px;
   }
