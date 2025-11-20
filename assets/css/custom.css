@@ -43,6 +43,68 @@ html {
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
 }
 
+.brand-glyph {
+  width: 56px;
+  height: 56px;
+  border-radius: 20px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a84ff 0%, #00c3ff 45%, #7ee8fa 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 25px rgba(10, 132, 255, 0.35), inset 0 0 20px rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+.brand-glyph::before,
+.brand-glyph::after {
+  content: "";
+  position: absolute;
+  border-radius: 14px;
+}
+
+.brand-glyph::before {
+  width: 14px;
+  height: 60%;
+  background: rgba(255, 255, 255, 0.9);
+  left: 24%;
+  top: 20%;
+  box-shadow: 18px 0 0 rgba(255, 255, 255, 0.35);
+}
+
+.brand-glyph::after {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  right: 8%;
+  top: 15%;
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.brand-glyph--xl {
+  width: 180px;
+  height: 180px;
+  border-radius: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+.brand-glyph--xl::before {
+  width: 28px;
+  left: 26%;
+  box-shadow: 48px 0 0 rgba(255, 255, 255, 0.35);
+}
+
+.brand-glyph--xl::after {
+  border-width: 4px;
+}
+
+.brand-title {
+  letter-spacing: 0.08em;
+  font-size: 1.1rem;
+}
+
 .hero-tech .display-4 {
   font-size: clamp(2.4rem, 4vw, 3.2rem);
 }
@@ -426,12 +488,10 @@ html {
   height: 180px;
 }
 
-.share-card__avatar img {
+.share-card__avatar .brand-glyph {
   width: 100%;
   height: 100%;
-  border-radius: 32px;
-  object-fit: cover;
-  position: relative;
+  border-radius: 40px;
   z-index: 1;
 }
 
@@ -441,6 +501,7 @@ html {
   border-radius: 32px;
   background: radial-gradient(circle, rgba(10, 132, 255, 0.7), rgba(10, 132, 255, 0));
   filter: blur(12px);
+  z-index: 0;
 }
 
 .share-card__stats {
