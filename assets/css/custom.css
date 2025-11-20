@@ -24,6 +24,79 @@ html {
   --apple-border: rgba(255, 255, 255, 0.15);
 }
 
+body {
+  background: #ffffff;
+  color: #1b1b1f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --apple-night: #01040d;
+    --apple-space: #4fc0ff;
+    --apple-space-soft: #7fd4ff;
+    --apple-ink: #f5f7ff;
+    --apple-smoke: #b8c1d9;
+    --apple-card: rgba(255, 255, 255, 0.12);
+    --apple-border: rgba(255, 255, 255, 0.25);
+  }
+
+  body {
+    background: #03050e;
+    color: #f5f5f7;
+  }
+
+  .hero-tech {
+    background: radial-gradient(circle at top right, rgba(80, 173, 255, 0.55), rgba(0, 3, 12, 0.98) 55%);
+  }
+
+  .hero-copy-panel {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .profile-section {
+    background: linear-gradient(180deg, rgba(13, 17, 28, 0.95), rgba(4, 6, 18, 0.97));
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+  }
+
+  .blog-section {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .profile-card,
+  .stack-card,
+  .case-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f5f5f7;
+  }
+
+  .project-summary,
+  .profile-card p,
+  .stack-card p,
+  .case-card p {
+    color: rgba(245, 245, 247, 0.75);
+  }
+
+  .project-link {
+    color: rgba(245, 245, 247, 0.85);
+  }
+
+  .contact-cta {
+    background: linear-gradient(120deg, #01030b, #040820);
+  }
+
+  .navigation-wrap {
+    background: rgba(5, 9, 20, 0.85);
+    backdrop-filter: blur(16px);
+  }
+
+  .brand-title {
+    color: #f5f5f7;
+  }
+}
+
 .hero-tech {
   background: radial-gradient(circle at top right, rgba(41, 151, 255, 0.55), rgba(5, 11, 24, 0.98) 55%);
   border-radius: 40px;
