@@ -5,38 +5,36 @@ permalink: /privacy-policy/
 comments: false
 ---
 
-### AU
-Your personal data will be processed and information from your device (cookies, unique identifiers, and other device data) may be stored by, accessed by and shared with 0 TCF vendor(s), or used specifically by this site or app.
+### 引言
+我们重视您的隐私与数据安全，对所有访问者使用的数据收集、处理与分享进行透明说明。本文档适用于您在浏览本站、留言或与我们互动的全部场景。
 
-Some vendors may process your personal data on the basis of legitimate interest, which you can object to by managing your options below. Look for a link at the bottom of this page or in our privacy policy where you can withdraw consent.
+### 信息的收集
+- **日志信息**：服务器会记录 IP、浏览器类型、引用页面、访问时间等基础信息，用于安全审计与性能统计。
+- **Cookies 与本地存储**：用来记住您在本站的偏好设置（如语言、主题、登录状态），也可能被第三方统计或广告脚本用于衡量访问效果。
+- **注册/订阅信息**：当您提交邮箱、昵称等资料时，我们会将其安全存储，仅用于向您发送必要通知。
 
-### Information that is gathered from visitors
-In common with other websites, log files are stored on the web server saving details such as the visitor's IP address, browser type, referring page and time of visit.
+### 使用目的
+- 优化站点体验：根据访问数据改善页面加载、内容展示与交互流程。
+- 通知服务更新：在获得许可的情况下，通过电子邮件发送产品更新、活动或内容推荐。
+- 安全与合规：通过日志与设备信息识别异常行为，保护站点与用户安全。
 
-Cookies may be used to remember visitor preferences when interacting with the website.
+### 数据共享
+我们不会主动出售、出租或交换您的个人信息。仅在以下情况发生共享：
+1. **法律要求**：应监管机构、法院或执法机关的合法请求。
+2. **服务支持**：与受信任的第三方（如托管、分析或广告服务商）协作，这些服务商仅可按合同目的处理信息。
 
-Where registration is required, the visitor's email and a username will be stored on the server.
+### Cookies 管理
+您可以在浏览器中禁用或删除 Cookies，但可能会影响站点的某些功能。主流浏览器都提供清除缓存或设置隐私偏好的选项。
 
-### How the Information is used
-The information is used to enhance the vistor's experience when using the website to display personalised content and possibly advertising.
+### 第三方服务
+本站可能接入 Google Analytics、Google Ads 或其他统计/广告合作方，它们会基于 Cookie 和浏览历史为您提供更相关的内容。您可通过访问相关服务的隐私政策来了解并管理个性化设置。
 
-E-mail addresses will not be sold, rented or leased to 3rd parties.
+### 您的权利
+- 查阅、更新或删除您提供的个人信息；
+- 随时撤回邮件订阅或其他营销授权；
+- 对基于合法利益的数据处理提出异议，我们将尽快回应并给出解决方案。
 
-E-mail may be sent to inform you of news of our services or offers by us or our affiliates.
+如需行使上述权利，请通过页面底部的联系方式或邮件（{{ site.email }}）与我们联系。
 
-### Visitor Options
-If you have subscribed to one of our services, you may unsubscribe by following the instructions which are included in e-mail that you receive.
-
-You may be able to block cookies via your browser settings but this may prevent you from access to certain features of the website.
-
-### Cookies
-Cookies are small digital signature files that are stored by your web browser that allow your preferences to be recorded when visiting the website. Also they may be used to track your return visits to the website.
-
-3rd party advertising companies may also use cookies for tracking purposes.
-
-### Google Ads
-Google, as a third party vendor, uses cookies to serve ads.
-
-Google's use of the DART cookie enables it to serve ads to visitors based on their visit to sites they visit on the Internet.
-
-Website visitors may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy.
+### 更新
+本隐私政策可能因业务调整或法律法规变化而更新。新版条款发布后立即生效，我们会在页面顶部标明更新时间，建议您定期查阅。
