@@ -1,32 +1,57 @@
 <!-- begin post -->
 {% assign author = site.authors[post.author] %}
-<div class="card">
+<div class="card blog-card">
+    {% capture post_href %}
     {% if post.site %}
-    <a href="{{ post.site }}">
-        {% if post.image %} <img class="rounded mb-4" src="{{ site.baseurl }}/{{ post.image }}" alt="{{ post.title }}"> {% endif %}
-    </a>
+        {{ post.site }}
     {% else %}
-    <a href="{{ post.url | absolute_url }}">
-        {% if post.image %} <img class="rounded mb-4" src="{{ site.baseurl }}/{{ post.image }}" alt="{{ post.title }}"> {% endif %}
-    </a>
+        {{ post.url | relative_url }}
     {% endif %}
-    <div class="card-block">
-        
-        {% if post.site %}
-        <h2 class="card-title h4 serif-font"><a href="{{ post.site }}">{{ post.title }}</a></h2>
+    {% endcapture %}
+
+    <a class="blog-card-thumb" href="{{ post_href | strip }}">
+        {% if post.image %}
+        <img src="{{ site.baseurl }}/{{ post.image }}" alt="{{ post.title }}">
         {% else %}
-        <h2 class="card-title h4 serif-font"><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></h2>
+        <div class="blog-card-thumb__placeholder">
+            <span>{{ post.title | slice: 0, 1 }}</span>
+        </div>
         {% endif %}
-        
-        <p class="card-text text-muted">{{ post.excerpt | strip_html | truncatewords:15 }}</p>
-        <div class="metafooter">
-            <div class="wrapfooter small d-flex align-items-center">
-                <span class="author-meta">
-                    By  <span class="post-name"> {% if post.author %}{{ author.display_name }}{% else %}{{ site.author }}{% endif %}, </span>
-                    on <span class="post-date">{{ post.date | date_to_string }}</span>
-                </span>
-                <div class="clearfix"></div>
+        <span class="blog-card-badge">Blog</span>
+    </a>
+
+    <div class="card-block">
+        <div class="blog-card-meta">
+            {% if post.categories %}
+            <div class="blog-card-tags">
+                {% for category in post.categories %}
+                <span>{{ category }}</span>
+                {% endfor %}
             </div>
+            {% endif %}
+            <span class="blog-card-date">{{ post.date | date: "%Y.%m.%d" }}</span>
+        </div>
+
+        <h3 class="card-title h4 serif-font">
+            <a href="{{ post_href | strip }}">{{ post.title }}</a>
+        </h3>
+
+        <p class="card-text text-muted">{{ post.excerpt | strip_html | truncatewords: 22 }}</p>
+        
+        <div class="blog-card-footer">
+            <span class="author-meta">
+                {% if post.author and author %}
+                {{ author.display_name }}
+                {% else %}
+                {{ site.author }}
+                {% endif %}
+            </span>
+            <span class="blog-card-read">
+                阅读全文
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                </svg>
+            </span>
         </div>
     </div>
 </div>
