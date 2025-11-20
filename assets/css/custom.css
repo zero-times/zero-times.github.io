@@ -25,12 +25,12 @@ html {
 }
 
 .hero-tech {
-  background: radial-gradient(circle at top right, rgba(41, 151, 255, 0.4), rgba(5, 11, 24, 0.95) 55%);
+  background: radial-gradient(circle at top right, rgba(41, 151, 255, 0.55), rgba(5, 11, 24, 0.98) 55%);
   border-radius: 40px;
   padding: 60px;
   color: #f5f5f7;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 35px 80px rgba(3, 7, 18, 0.55);
+  border: none;
+  box-shadow: 0 35px 90px rgba(3, 7, 18, 0.65);
   overflow: hidden;
 }
 
@@ -46,14 +46,14 @@ html {
 .brand-glyph {
   width: 56px;
   height: 56px;
-  border-radius: 20px;
+  border-radius: 18px;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0a84ff 0%, #00c3ff 45%, #7ee8fa 100%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 12px 25px rgba(10, 132, 255, 0.35), inset 0 0 20px rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at 25% 25%, rgba(93, 247, 255, 0.8), rgba(22, 52, 106, 0.95) 65%);
+  border: none;
+  box-shadow: 0 18px 35px rgba(3, 10, 24, 0.55), inset 0 0 25px rgba(255, 255, 255, 0.25);
   overflow: hidden;
 }
 
@@ -65,39 +65,38 @@ html {
 }
 
 .brand-glyph::before {
-  width: 14px;
-  height: 60%;
-  background: rgba(255, 255, 255, 0.9);
-  left: 24%;
-  top: 20%;
-  box-shadow: 18px 0 0 rgba(255, 255, 255, 0.35);
+  width: 12px;
+  height: 58%;
+  background: rgba(255, 255, 255, 0.7);
+  left: 26%;
+  top: 22%;
+  box-shadow: 16px 0 0 rgba(255, 255, 255, 0.25);
 }
 
 .brand-glyph::after {
-  width: 70%;
-  height: 70%;
+  width: 68%;
+  height: 68%;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.45);
-  right: 8%;
-  top: 15%;
-  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  right: 10%;
+  top: 16%;
+  box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.15);
 }
 
 .brand-glyph--xl {
   width: 180px;
   height: 180px;
-  border-radius: 50px;
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 48px;
 }
 
 .brand-glyph--xl::before {
-  width: 28px;
-  left: 26%;
-  box-shadow: 48px 0 0 rgba(255, 255, 255, 0.35);
+  width: 26px;
+  left: 27%;
+  box-shadow: 46px 0 0 rgba(255, 255, 255, 0.25);
 }
 
 .brand-glyph--xl::after {
-  border-width: 4px;
+  border-width: 3px;
 }
 
 .brand-title {
