@@ -7,6 +7,13 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (max-width: 575.98px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
 :root {
   --apple-night: #050b18;
   --apple-space: #0a84ff;
@@ -478,7 +485,7 @@ html {
   .hero-tech,
   .profile-section,
   .blog-section {
-    padding: 40px 24px;
+    padding: 32px 18px;
   }
 
   .hero-cta {
