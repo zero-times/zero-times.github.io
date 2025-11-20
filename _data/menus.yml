@@ -10,6 +10,9 @@ topmenu:
 - title: 联系
   url: "contact/"
 
+- title: 分享
+  url: "share/"
+
 #- title: Get this theme
 #  url: https://bootstrapstarter.com/template-affiliates-bootstrap-jekyll/
 #  class: "ml-2 btn btn-dark text-white px-3"
