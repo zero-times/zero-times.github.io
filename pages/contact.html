@@ -5,16 +5,66 @@ permalink: "/contact/"
 comments: false
 ---
 
-<form action="https://formspree.io/xvoewlbz" method="POST">
-<p class="mb-4">Thank you for your interest in getting in touch with us. Please send your message here. We will reply as soon as possible!</p>
-<div class="form-group row">
-<div class="col-md-6">
-<input class="form-control" type="text" name="name" placeholder="Name*" required>
-</div>
-<div class="col-md-6">
-<input class="form-control" type="email" name="email" placeholder="E-mail Address*" required>
-</div>
-</div>
-<textarea rows="8" class="form-control mb-3" name="message" placeholder="Message*" required></textarea>    
-<input class="btn btn-dark" type="submit" value="Send">
-</form>
+<section class="contact-wrapper contact-hero mb-5">
+  <div class="contact-hero__badge">保持高效对话</div>
+  <h1>和我聊聊你的产品、架构或跨平台挑战</h1>
+  <p class="lead">无论你需要咨询 HarmonyOS / Flutter 技术路线，还是希望我协助从零搭建移动端能力，都欢迎直接联系。给我一个目标，我会写下清晰的技术路径与行动计划。</p>
+  <div class="contact-chips">
+    <div class="contact-chip">
+      <span class="contact-chip__label">邮箱</span>
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </div>
+    <div class="contact-chip">
+      <span class="contact-chip__label">WeChat</span>
+      <span class="contact-chip__value">hoaever</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact-wrapper contact-methods mb-5">
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="contact-card h-100">
+        <h3>项目合作</h3>
+        <p>希望我加入到你的关键项目中？描述业务目标与时间节点，我们可以快速对齐架构设计、技术选型与交付节奏。</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="contact-card h-100">
+        <h3>技术咨询</h3>
+        <p>针对 HarmonyOS/Flutter 融合、性能优化、SDK 产品化等话题，我可提供诊断、方案评估或顾问服务。</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="contact-card h-100">
+        <h3>内容合作</h3>
+        <p>欢迎媒体采访、活动分享或社区合作。希望借此让更多人了解跨平台领域的真实经验与方法论。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-wrapper contact-form mb-5">
+  <h2>写信给我</h2>
+  <p class="text-muted">也可以直接通过下面的表单说明你的需求、时间安排或任何想讨论的议题。收到后我会在 48 小时内回复。</p>
+  <form class="contact-form__box" action="https://formspree.io/xvoewlbz" method="POST">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <input class="form-control" type="text" name="name" placeholder="称呼*" required>
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" type="email" name="email" placeholder="邮箱*" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-6">
+        <input class="form-control" type="text" name="company" placeholder="公司 / 团队 (可选)">
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" type="text" name="topic" placeholder="项目或主题 (可选)">
+      </div>
+    </div>
+    <textarea rows="8" class="form-control mb-3" name="message" placeholder="请描述你的目标、背景或期待的帮助*" required></textarea>    
+    <input class="btn btn-apple-primary btn-lg px-5" type="submit" value="发送信息">
+  </form>
+</section>
