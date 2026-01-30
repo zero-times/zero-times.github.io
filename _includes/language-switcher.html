@@ -1,51 +1,8 @@
 <!-- Language Switch Component -->
 <div id="language-switcher" class="language-switcher">
-  <select onchange="changeLanguage(this.value)">
+  <select id="language-switcher-select" class="language-selector">
     <option value="pt-br" {{ page.lang == 'pt-br' or page.lang == nil ? 'selected' : '' }}>🇧🇷 Português</option>
     <option value="en" {{ page.lang == 'en' ? 'selected' : '' }}>🇺🇸 English</option>
     <option value="zh" {{ page.lang == 'zh' ? 'selected' : '' }}>🇨🇳 中文</option>
   </select>
 </div>
-
-<script>
-  // Função para mudar o idioma
-  function changeLanguage(lang) {
-    // Armazenar o idioma selecionado no localStorage
-    localStorage.setItem('preferred-language', lang);
-    
-    // Recarregar a página para aplicar as alterações
-    location.reload();
-  }
-  
-  // Função para obter o idioma preferido
-  function getPreferredLanguage() {
-    // Verificar se há um idioma armazenado
-    const storedLang = localStorage.getItem('preferred-language');
-    if (storedLang) {
-      return storedLang;
-    }
-    
-    // Caso contrário, verificar o idioma do navegador
-    const browserLang = navigator.language || navigator.userLanguage;
-    if (browserLang.startsWith('pt')) {
-      return 'pt-br';
-    } else if (browserLang.startsWith('en')) {
-      return 'en';
-    } else if (browserLang.startsWith('zh')) {
-      return 'zh';
-    }
-    
-    // Padrão para português
-    return 'pt-br';
-  }
-  
-  // Aplicar o idioma preferido quando a página carregar
-  document.addEventListener('DOMContentLoaded', function() {
-    const preferredLang = getPreferredLanguage();
-    // Atualizar o seletor de idioma
-    const selector = document.querySelector('#language-switcher select');
-    if (selector) {
-      selector.value = preferredLang;
-    }
-  });
-</script>

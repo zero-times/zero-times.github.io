@@ -63,6 +63,16 @@ Custom CSS for zero-times.github.io
 
 /* Locale-aware typography and palette tuning */
 :root {
+  --apple-night: #050b18;
+  --apple-space: #0a84ff;
+  --apple-space-soft: #2997ff;
+  --apple-ink: #1d1d1f;
+  --apple-smoke: #86868b;
+  --apple-card: rgba(255, 255, 255, 0.08);
+  --apple-border: rgba(255, 255, 255, 0.15);
+  --apple-success: #34c759;
+  --apple-warning: #ff9500;
+  --apple-error: #ff3b30;
   --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
   --font-heading: "PT Sans", "Helvetica Neue", Arial, sans-serif;
   --font-serif: "PT Serif", Georgia, "Times New Roman", serif;

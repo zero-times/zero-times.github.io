@@ -1,50 +1,56 @@
----
 # Multi-language configuration for zero-times.github.io
 # Default language is Portuguese (Brazil) to serve Brazilian users
 
 # Navigation menu translations
-menus:
-  topmenu:
-    - title:
-        pt-br: "Projetos"
-        en: "Projects"
-        zh: "项目"
-      url: "#projects"
-      class: "js-scroll-trigger"
-    - title:
-        pt-br: "Blog"
-        en: "Blog"
-        zh: "博客"
-      url: "#blog"
-      class: "js-scroll-trigger"
-    - title:
-        pt-br: "Sobre"
-        en: "About"
-        zh: "关于"
-      url: "/about"
-    - title:
-        pt-br: "Contato"
-        en: "Contact"
-        zh: "联系"
-      url: "/contact"
-  footermenu:
-    - title:
-        pt-br: "Início"
-        en: "Home"
-        zh: "首页"
-      url: "/"
-    - title:
-        pt-br: "Sobre"
-        en: "About"
-        zh: "关于"
-      url: "/about"
-    - title:
-        pt-br: "Contato"
-        en: "Contact"
-        zh: "联系"
-      url: "/contact"
-    - title:
-        pt-br: "Política de Privacidade"
-        en: "Privacy Policy"
-        zh: "隐私政策"
-      url: "/privacy-policy"
+topmenu:
+  - title:
+      pt-br: "Projetos"
+      en: "Projects"
+      zh: "项目"
+    url: "#projects"
+    class: "js-scroll-trigger"
+  - title:
+      pt-br: "Blog"
+      en: "Blog"
+      zh: "博客"
+    url: "#blog"
+    class: "js-scroll-trigger"
+  - title:
+      pt-br: "Sobre"
+      en: "About"
+      zh: "关于"
+    url: "/about"
+  - title:
+      pt-br: "Contato"
+      en: "Contact"
+      zh: "联系"
+    url: "/contact"
+    
+footermenu:
+  - title:
+      pt-br: "Início"
+      en: "Home"
+      zh: "首页"
+    url: "/"
+  - title:
+      pt-br: "Sobre"
+      en: "About"
+      zh: "关于"
+    url: "/about"
+  - title:
+      pt-br: "Contato"
+      en: "Contact"
+      zh: "联系"
+    url: "/contact"
+  - title:
+      pt-br: "Política de Privacidade"
+      en: "Privacy Policy"
+      zh: "隐私政策"
+    url: "/privacy-policy"
+    
+# Additional site content translations
+site_content:
+  copyright:
+    pt-br: "Copyright © {{site.title}}. Todos os direitos reservados."
+    en: "Copyright © {{site.title}}. All rights reserved."
+    zh: "Copyright © {{site.title}}. 保留所有权利。"

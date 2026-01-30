@@ -46,4 +46,11 @@ $(document).ready(function() {
   if (typeof changeLanguage !== 'function') {
     $.getScript('/assets/js/i18n.js');
   }
+  
+  // Initialize language selection after DOM is ready
+  setTimeout(function() {
+    if (typeof setHtmlLanguage === 'function') {
+      setHtmlLanguage();
+    }
+  }, 100);
 });

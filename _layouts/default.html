@@ -1,16 +1,40 @@
-{% assign page_lang = page.lang | default: site.lang | default: 'en' %}
+{% assign page_lang = page.lang | default: site.default_lang | default: 'pt-br' %}
 {% assign page_lang = page_lang | replace: '_', '-' | downcase %}
 {% assign page_dir = page.dir | default: site.dir | default: 'ltr' | downcase %}
+
+{% comment %} Normalize language codes for HTML attributes {% endcomment %}
+{% case page_lang %}
+  {% when 'pt-br', 'pt' %}
+    {% assign html_lang = 'pt-BR' %}
+    {% assign normalized_lang = 'pt-br' %}
+  {% when 'en', 'en-US', 'en-us' %}
+    {% assign html_lang = 'en-US' %}
+    {% assign normalized_lang = 'en' %}
+  {% when 'zh', 'zh-CN', 'zh-cn' %}
+    {% assign html_lang = 'zh-CN' %}
+    {% assign normalized_lang = 'zh' %}
+  {% else %}
+    {% assign html_lang = 'pt-BR' %}
+    {% assign normalized_lang = 'pt-br' %}
+{% endcase %}
+
 <!DOCTYPE html>
-<html lang="{{ page_lang }}" dir="{{ page_dir }}">
+<html lang="{{ html_lang }}" dir="{{ page_dir }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="language" content="{{ normalized_lang }}">
 <link rel="icon" href="{{ site.baseurl }}/{{site.favicon}}">
 
 <title>{{ page.title }} | {{site.title}}</title>
 
 {% seo %}
+
+<!-- Alternate language links for SEO -->
+<link rel="alternate" hreflang="pt-br" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+<link rel="alternate" hreflang="en" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+<link rel="alternate" hreflang="zh" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
 
 <link href="{{ site.baseurl }}/assets/css/theme.css" rel="stylesheet">
 
@@ -35,6 +59,9 @@
         crossorigin="anonymous"></script>
     
     <script async src="https://fundingchoicesmessages.google.com/i/pub-5928117043364923?ers=1" nonce="fybtBD2OPKaSs7jaeErqyQ"></script><script nonce="fybtBD2OPKaSs7jaeErqyQ">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
+    
+    <!-- Multi-language support script -->
+    <script src="{{ site.baseurl }}/assets/js/i18n.js"></script>
     
 </head>
     
@@ -85,9 +112,11 @@
           
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto font-weight-bold d-flex align-items-center">
+              {% assign current_lang = page.lang | default: site.default_lang | default: 'pt-br' %}
               {% for item in site.data.menus.topmenu %}
               <li class="nav-item">
-                <a class="nav-link px-3 {% if item.class %}{{item.class}}{% endif %}" href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{item.title}}">{{item.title}}</a>
+                {% assign title = item.title[current_lang] | default: item.title.pt-br | default: item.title.en | default: item.title.zh | default: 'Untitled' %}
+                <a class="nav-link px-3 {% if item.class %}{{item.class}}{% endif %}" href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{ title }}">{{ title }}</a>
               </li>
               {% endfor %}
               <li class="nav-item">
@@ -121,14 +150,17 @@
   <!-- CREDITS END -->
 
   <ul class="p-0 mb-1 small">
+    {% assign current_lang = page.lang | default: site.default_lang | default: 'pt-br' %}
     {% for item in site.data.menus.footermenu %}
     <li>
-      <a href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{item.title}}">{{item.title}}</a>
+      {% assign title = item.title[current_lang] | default: item.title.pt-br | default: item.title.en | default: item.title.zh | default: 'Untitled' %}
+      <a href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{ title }}">{{ title }}</a>
     </li>
     {% endfor %}
     </ul>
     <div class="copyright small">
-       Copyright © {{site.title}}. All rights reserved.
+       {% assign current_lang = page.lang | default: site.default_lang | default: 'pt-br' %}
+       {{ site.data.menus.site_content.copyright[current_lang] | default: site.data.menus.site_content.copyright.pt-br | default: "Copyright © {{site.title}}. All rights reserved." }}
     </div>
 </footer>
 
