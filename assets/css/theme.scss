@@ -796,11 +796,11 @@ span.navigation:before {
 .language-switcher {
   margin-left: 1rem;
   padding-left: 1rem;
-  border-left: 1px solid #dee2e6;
+  border-left: 2px solid $green; /* Brazilian theme color */
 
   select {
     background-color: transparent;
-    border: 1px solid #ced4da;
+    border: 1px solid $green; /* Brazilian theme color */
     border-radius: 4px;
     padding: 0.375rem 0.75rem;
     font-size: 0.875rem;
@@ -809,7 +809,7 @@ span.navigation:before {
     background-clip: padding-box;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2308a057' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     background-size: 16px 12px;
@@ -817,8 +817,8 @@ span.navigation:before {
 
     &:focus {
       outline: 0;
-      border-color: #80bdff;
-      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      border-color: $blue;
+      box-shadow: 0 0 0 0.2rem rgba($blue, 0.25);
     }
   }
 }
@@ -847,5 +847,196 @@ span.navigation:before {
       width: 100%;
       border-top: 1px solid #e9ecef;
     }
+  }
+}
+
+// Brazilian-focused style enhancements
+// Optimized for Portuguese language, Brazilian color preferences, and common device sizes
+
+// Brazilian-themed color palette
+$brazil-yellow: #FDDA24;  // Yellow from Brazilian flag
+$brazil-green: #009C3B;   // Green from Brazilian flag
+$brazil-blue: #002776;    // Blue from Brazilian flag
+$brazil-accent: #FF6B00;  // Orange accent representing vibrancy
+
+// Enhanced body styling for Portuguese text
+body {
+  font-family: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px; // Slightly larger for better Portuguese readability
+  line-height: 1.7; // Optimal for Portuguese text flow
+  color: #333;
+  overflow-x: hidden;
+  padding-top: 116px;
+  
+  // Improve text rendering for Portuguese diacritics
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Enhanced navigation for Brazilian user habits
+.navigation-wrap {
+  background: #fff;
+  backdrop-filter: blur(10px);
+  
+  // Brazilian-friendly color scheme
+  .navbar-brand {
+    color: $brazil-green;
+    font-weight: bold;
+  }
+  
+  .nav-link {
+    color: #333;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: $brazil-accent;
+    }
+  }
+}
+
+// Hero section with Brazilian cultural considerations
+.hero-minimal {
+  background: linear-gradient(135deg, $brazil-green 0%, $brazil-yellow 100%);
+  padding: 4rem 0;
+  text-align: center;
+  
+  h1 {
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  }
+  
+  .lead {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.25rem;
+  }
+  
+  .btn-apple-primary {
+    background-color: $brazil-blue;
+    border-color: $brazil-blue;
+    
+    &:hover {
+      background-color: darken($brazil-blue, 10%);
+      border-color: darken($brazil-blue, 10%);
+    }
+  }
+}
+
+// Content sections optimized for Brazilian reading patterns
+.main-content {
+  padding: 2rem 0;
+  
+  h2, h3, h4 {
+    color: $brazil-green;
+    font-weight: 600;
+  }
+  
+  p {
+    font-size: 1.05rem; // Slightly larger for comfort
+    line-height: 1.8;   // Optimized for Portuguese text
+  }
+}
+
+// Footer with Brazilian-friendly design
+.footer {
+  background-color: $brazil-green;
+  color: white;
+  padding: 2rem 0;
+  
+  a {
+    color: rgba(255,255,255,0.8);
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: #fff;
+    }
+  }
+  
+  .copyright {
+    color: rgba(255,255,255,0.7);
+  }
+}
+
+// Mobile optimizations for Brazilian device usage
+$brazil-mobile: 360px;
+$brazil-tablet: 768px;
+$brazil-desktop: 1024px;
+
+@media (max-width: $brazil-mobile) {
+  body {
+    padding-top: 80px; // Smaller header on mobile
+    font-size: 16px;   // Adjusted for smaller screens
+  }
+  
+  .hero-minimal {
+    padding: 2rem 1rem;
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    .lead {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .language-switcher select {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+// Tablet optimizations
+@media (min-width: $brazil-tablet) and (max-width: $brazil-desktop - 1) {
+  .container {
+    max-width: 90%;
+  }
+  
+  .hero-minimal {
+    padding: 3rem 0;
+  }
+}
+
+// Accessibility enhancements for Brazilian users
+:focus {
+  outline: 2px solid $brazil-accent;
+  outline-offset: 2px;
+}
+
+// Reduce motion support (important for accessibility)
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Enhanced button styles with Brazilian color scheme
+.btn-brazil {
+  background-color: $brazil-green;
+  border-color: $brazil-green;
+  color: white;
+  
+  &:hover {
+    background-color: darken($brazil-green, 10%);
+    border-color: darken($brazil-green, 10%);
+    color: white;
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($brazil-green, 0.5);
+  }
+}
+
+// Card styling optimized for Brazilian aesthetics
+.card-brazil {
+  border: 1px solid rgba($brazil-green, 0.2);
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba($brazil-green, 0.15);
   }
 }

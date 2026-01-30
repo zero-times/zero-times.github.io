@@ -60,3 +60,345 @@ Custom CSS for zero-times.github.io
     border-top: 1px solid #e9ecef;
   }
 }
+
+/* Locale-aware typography and palette tuning */
+:root {
+  --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "PT Serif", Georgia, "Times New Roman", serif;
+  --font-body-pt: "Alegreya Sans", "PT Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-heading-pt: "Alegreya", "PT Serif", Georgia, "Times New Roman", serif;
+  --font-mono: "SFMono-Regular", "Menlo", "Consolas", "Liberation Mono", monospace;
+  --br-green: #009b3a;
+  --br-green-soft: #20b461;
+  --br-yellow: #ffdf00;
+  --br-yellow-soft: #ffe45c;
+  --br-blue: #002776;
+  --br-blue-soft: #1b4aa6;
+}
+
+body {
+  font-family: var(--font-body);
+  font-kerning: normal;
+  font-feature-settings: "kern", "liga", "clig";
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.navbar-brand,
+.section-heading h2 {
+  font-family: var(--font-heading);
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+}
+
+/* Portuguese typography */
+html:lang(pt) body,
+.locale-pt body,
+.locale-pt-br body {
+  font-family: var(--font-body-pt);
+  line-height: 1.7;
+}
+
+html:lang(pt) h1,
+html:lang(pt) h2,
+html:lang(pt) h3,
+html:lang(pt) h4,
+html:lang(pt) h5,
+html:lang(pt) h6,
+.locale-pt h1,
+.locale-pt h2,
+.locale-pt h3,
+.locale-pt h4,
+.locale-pt h5,
+.locale-pt h6,
+.locale-pt-br h1,
+.locale-pt-br h2,
+.locale-pt-br h3,
+.locale-pt-br h4,
+.locale-pt-br h5,
+.locale-pt-br h6 {
+  font-family: var(--font-heading-pt);
+}
+
+html:lang(pt) .display-4,
+html:lang(pt) h1,
+html:lang(pt) h2,
+.locale-pt .display-4,
+.locale-pt h1,
+.locale-pt h2,
+.locale-pt-br .display-4,
+.locale-pt-br h1,
+.locale-pt-br h2 {
+  text-wrap: balance;
+}
+
+html:lang(pt) p,
+html:lang(pt) li,
+html:lang(pt) .lead,
+html:lang(pt) .hero-description,
+html:lang(pt) .project-summary,
+html:lang(pt) .article-post,
+html:lang(pt) .section-heading p,
+html:lang(pt) .profile-card p,
+html:lang(pt) .stack-card p,
+html:lang(pt) .case-card p,
+.locale-pt p,
+.locale-pt li,
+.locale-pt .lead,
+.locale-pt .hero-description,
+.locale-pt .project-summary,
+.locale-pt .article-post,
+.locale-pt .section-heading p,
+.locale-pt .profile-card p,
+.locale-pt .stack-card p,
+.locale-pt .case-card p,
+.locale-pt-br p,
+.locale-pt-br li,
+.locale-pt-br .lead,
+.locale-pt-br .hero-description,
+.locale-pt-br .project-summary,
+.locale-pt-br .article-post,
+.locale-pt-br .section-heading p,
+.locale-pt-br .profile-card p,
+.locale-pt-br .stack-card p,
+.locale-pt-br .case-card p {
+  hyphens: auto;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  text-wrap: pretty;
+}
+
+html:lang(pt) .eyebrow,
+html:lang(pt) .section-heading .eyebrow,
+html:lang(pt) .status-label,
+html:lang(pt) .store-label,
+html:lang(pt) .share-card__badge,
+html:lang(pt) .blog-card-badge,
+html:lang(pt) .contact-hero__badge,
+html:lang(pt) .case-card small,
+html:lang(pt) .share-card__label,
+.locale-pt .eyebrow,
+.locale-pt .section-heading .eyebrow,
+.locale-pt .status-label,
+.locale-pt .store-label,
+.locale-pt .share-card__badge,
+.locale-pt .blog-card-badge,
+.locale-pt .contact-hero__badge,
+.locale-pt .case-card small,
+.locale-pt .share-card__label,
+.locale-pt-br .eyebrow,
+.locale-pt-br .section-heading .eyebrow,
+.locale-pt-br .status-label,
+.locale-pt-br .store-label,
+.locale-pt-br .share-card__badge,
+.locale-pt-br .blog-card-badge,
+.locale-pt-br .contact-hero__badge,
+.locale-pt-br .case-card small,
+.locale-pt-br .share-card__label {
+  letter-spacing: 0.12em;
+}
+
+/* Brazilian Portuguese palette accents */
+html:lang(pt-br),
+.locale-pt-br {
+  --apple-space: var(--br-green);
+  --apple-space-soft: var(--br-green-soft);
+  --apple-success: var(--br-green);
+  --apple-warning: var(--br-yellow);
+}
+
+html:lang(pt-br) .hero-minimal,
+.locale-pt-br .hero-minimal {
+  background: linear-gradient(135deg, rgba(255, 223, 0, 0.2), #ffffff 45%, rgba(0, 155, 58, 0.18));
+  border-color: rgba(0, 155, 58, 0.12);
+  box-shadow: 0 35px 70px rgba(0, 39, 118, 0.12);
+}
+
+html:lang(pt-br) .hero-minimal::before,
+.locale-pt-br .hero-minimal::before {
+  background: radial-gradient(circle, rgba(0, 155, 58, 0.3), rgba(0, 155, 58, 0));
+}
+
+html:lang(pt-br) .hero-tech,
+.locale-pt-br .hero-tech {
+  background: radial-gradient(circle at top right, rgba(0, 155, 58, 0.5), rgba(0, 39, 118, 0.95) 58%);
+}
+
+html:lang(pt-br) .btn-apple-primary,
+.locale-pt-br .btn-apple-primary {
+  box-shadow: 0 15px 35px rgba(0, 155, 58, 0.45);
+}
+
+html:lang(pt-br) .btn-apple-primary:hover,
+html:lang(pt-br) .btn-apple-primary:focus,
+.locale-pt-br .btn-apple-primary:hover,
+.locale-pt-br .btn-apple-primary:focus {
+  box-shadow: 0 20px 45px rgba(0, 155, 58, 0.6);
+}
+
+html:lang(pt-br) .blog-card-badge,
+.locale-pt-br .blog-card-badge {
+  background: rgba(0, 155, 58, 0.9);
+}
+
+html:lang(pt-br) .bottompagination span.navigation a,
+.locale-pt-br .bottompagination span.navigation a {
+  background: var(--br-yellow);
+  color: #1b1b1f;
+}
+
+html:lang(pt-br) .bottompagination span.navigation a:hover,
+.locale-pt-br .bottompagination span.navigation a:hover {
+  background: #f4cf00;
+}
+
+/* RTL reading improvements */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] body {
+  text-align: right;
+}
+
+[dir="rtl"] .navbar-nav {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .brand-glyph {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+[dir="rtl"] .social-icon {
+  margin-left: 0;
+  margin-right: 15px;
+}
+
+[dir="rtl"] .item-card .categories {
+  left: auto;
+  right: 30px;
+}
+
+[dir="rtl"] .section-title h2:before {
+  left: auto;
+  right: 15px;
+}
+
+[dir="rtl"] .section-title span {
+  padding: 0 0 0 15px;
+}
+
+[dir="rtl"] blockquote {
+  border-left: 0;
+  border-right: 4px solid #222;
+  padding-left: 0;
+  padding-right: 20px;
+  margin-left: 0;
+  margin-right: 30px;
+}
+
+[dir="rtl"] .hero-highlights li::before {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[dir="rtl"] .blog-card-badge {
+  left: auto;
+  right: 16px;
+}
+
+[dir="rtl"] .store-link {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .hero-actions,
+[dir="rtl"] .hero-cta,
+[dir="rtl"] .blog-card-meta,
+[dir="rtl"] .project-actions,
+[dir="rtl"] .store-card {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .article-post ul,
+[dir="rtl"] .article-post ol {
+  padding-left: 0;
+  padding-right: 1.2rem;
+}
+
+/* Brazil device size tuning */
+@media (max-width: 420px) {
+  body {
+    font-size: 16px;
+  }
+
+  .hero-minimal,
+  .hero-tech,
+  .projects-section,
+  .profile-section,
+  .blog-section,
+  .contact-wrapper,
+  .share-card {
+    padding: 28px 16px;
+    border-radius: 28px;
+  }
+
+  .hero-minimal .display-4,
+  .hero-tech .display-4 {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
+  .section-heading h2 {
+    font-size: clamp(1.5rem, 5.5vw, 2rem);
+  }
+
+  .hero-actions .btn,
+  .hero-cta .btn {
+    padding: 12px 24px;
+  }
+
+  .project-thumb img {
+    height: 150px;
+  }
+
+  .blog-card-thumb img,
+  .blog-card-thumb__placeholder {
+    height: 170px;
+  }
+
+  .store-card {
+    padding: 22px;
+  }
+
+  .contact-chips {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-minimal,
+  .hero-tech,
+  .projects-section,
+  .profile-section,
+  .blog-section {
+    padding: 24px 14px;
+    border-radius: 24px;
+  }
+
+  .hero-minimal .display-4,
+  .hero-tech .display-4 {
+    font-size: clamp(1.85rem, 7.5vw, 2.4rem);
+  }
+
+  .share-card__avatar {
+    width: 150px;
+    height: 150px;
+  }
+}
