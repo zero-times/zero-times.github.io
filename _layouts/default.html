@@ -1,5 +1,8 @@
+{% assign page_lang = page.lang | default: site.lang | default: 'en' %}
+{% assign page_lang = page_lang | replace: '_', '-' | downcase %}
+{% assign page_dir = page.dir | default: site.dir | default: 'ltr' | downcase %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ page_lang }}" dir="{{ page_dir }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,7 +39,7 @@
 </head>
     
 {% capture layout %}{% if page.layout %}layout-{{ page.layout }}{% endif %}{% endcapture %}
-<body class="{{ layout }}">
+<body class="{{ layout }} locale-{{ page_lang }} dir-{{ page_dir }}">
 
     
 <!-- Menu Navigation
@@ -87,6 +90,9 @@
                 <a class="nav-link px-3 {% if item.class %}{{item.class}}{% endif %}" href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{item.title}}">{{item.title}}</a>
               </li>
               {% endfor %}
+              <li class="nav-item">
+                {% include language-switcher.html %}
+              </li>
             </ul>
           </div>
 

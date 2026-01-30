@@ -1,10 +1,4 @@
-/*
-Custom CSS for zero-times.github.io
-*/
-
-/* Add your custom styles here */
-
-/* Multi-language switcher styles */
+/* 多语言切换组件样式 */
 .language-switcher {
   margin-left: 1rem;
   padding-left: 1rem;
@@ -35,7 +29,7 @@ Custom CSS for zero-times.github.io
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-/* In navbar styles */
+/* 在导航栏中的样式 */
 .navbar .language-switcher {
   display: flex;
   align-items: center;
@@ -45,7 +39,7 @@ Custom CSS for zero-times.github.io
   height: calc(1.5em + 0.75rem + 2px);
 }
 
-/* Mobile adaptation */
+/* 移动端适配 */
 @media (max-width: 991.98px) {
   .language-switcher {
     margin-left: 0;

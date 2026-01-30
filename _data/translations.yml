@@ -1,0 +1,96 @@
+# 多语言翻译配置
+# 用于 zero-times.github.io 博客的多语言支持
+# 默认语言：pt-br (葡萄牙语)
+
+translations:
+  # 首页 Hero 部分
+  hero:
+    title:
+      pt-br: "Wang Xionghao (Hoa)"
+      en: "Wang Xionghao (Hoa)"
+      zh: "王雄皓 (Hoa)"
+    subtitle:
+      pt-br: "9 anos de experiência em arquitetura móvel · Especialista em soluções multiplataforma com Flutter · Adaptador early adopter do HarmonyOS NEXT"
+      en: "9 years mobile architecture experience · Specialist in cross-platform solutions with Flutter · Early adapter of HarmonyOS NEXT"
+      zh: "9 年移动端架构经验 · 专注 Flutter 与跨平台解决方案 · HarmonyOS NEXT 早期适配者"
+    cta_projects:
+      pt-br: "Ver Projetos"
+      en: "View Projects"
+      zh: "查看项目"
+    cta_blog:
+      pt-br: "Ler Blog"
+      en: "Read Blog"
+      zh: "阅读博客"
+    cta_about:
+      pt-br: "Sobre Mim"
+      en: "About Me"
+      zh: "关于我"
+
+  # 关于页面
+  about:
+    title:
+      pt-br: "Sobre Mim"
+      en: "About Me"
+      zh: "关于我"
+    hero_subtitle:
+      pt-br: "Especialista em arquitetura móvel e soluções multiplataforma"
+      en: "Mobile Architecture and Cross-Platform Solutions Expert"
+      zh: "移动端架构与跨平台解决方案专家"
+    description:
+      pt-br: "9 anos de experiência prática em desenvolvimento e arquitetura móvel, especializado em entrega combinada de Flutter e tecnologia nativa. Transformo requisitos vagos em soluções multiplataforma viáveis e protejo entregas de produtos do zero ao um."
+      en: "9 years of hands-on mobile development and architecture experience, specializing in combined Flutter and native technology delivery. I transform vague requirements into viable cross-platform solutions and safeguard zero-to-one product deliveries."
+      zh: "9 年移动端研发与架构实战经验，专注 Flutter 与原生技术的融合交付。我将模糊需求转化为可落地的跨平台方案，护航从零到一的产品交付。"
+    expertise_title:
+      pt-br: "Valor Proposto"
+      en: "Value Proposition"
+      zh: "价值主张"
+    expertise_desc:
+      pt-br: "Sou um parceiro técnico multiplataforma voltado para o futuro. Observo tendências tecnológicas e também converto cada objetivo em soluções verificáveis e entregáveis."
+      en: "I'm a future-oriented cross-platform technology partner. I pay attention to technology trends and can also turn every goal into verifiable and deliverable solutions."
+      zh: "一个面向未来的跨平台技术伙伴。我关注技术趋势，也能把每一个目标转成可验证、可交付的解决方案。"
+    core_expertise:
+      pt-br: "Especialidade Principal"
+      en: "Core Expertise"
+      zh: "核心专长"
+
+  # 联系页面
+  contact:
+    title:
+      pt-br: "Contato"
+      en: "Contact"
+      zh: "联系"
+    hero_title:
+      pt-br: "Fale comigo sobre seu produto, arquitetura ou desafios multiplataforma"
+      en: "Talk to me about your product, architecture, or cross-platform challenges"
+      zh: "和我聊聊你的产品、架构或跨平台挑战"
+    hero_subtitle:
+      pt-br: "Se você precisa de consultoria sobre rotas técnicas HarmonyOS/Flutter ou espera que eu ajude a construir capacidades móveis do zero, sinta-se à vontade para entrar em contato diretamente. Dê-me um objetivo e eu escreverei um caminho técnico claro e plano de ação."
+      en: "Whether you need consulting on HarmonyOS/Flutter technical routes or expect me to help build mobile capabilities from scratch, feel free to contact me directly. Give me a goal and I will write a clear technical path and action plan."
+      zh: "无论你需要咨询 HarmonyOS/Flutter 技术路线，还是希望我协助从零搭建移动端能力，都欢迎直接联系。给我一个目标，我会写下清晰的技术路径与行动计划。"
+    contact_cta:
+      pt-br: "Escreva-me"
+      en: "Write to me"
+      zh: "写信给我"
+
+  # 通用词汇
+  common:
+    projects:
+      pt-br: "Projetos"
+      en: "Projects"
+      zh: "项目"
+    blog:
+      pt-br: "Blog"
+      en: "Blog"
+      zh: "博客"
+    about:
+      pt-br: "Sobre"
+      en: "About"
+      zh: "关于"
+    contact:
+      pt-br: "Contato"
+      en: "Contact"
+      zh: "联系"
+    language_switch:
+      pt-br: "Português"
+      en: "English"
+      zh: "中文"

@@ -39,3 +39,11 @@
 $(document.links).filter(function() {
 return this.hostname != window.location.hostname;
 }).attr('target', '_blank');
+
+// Load the i18n functionality after the page loads
+$(document).ready(function() {
+  // Dynamically load the i18n script if it's not already loaded
+  if (typeof changeLanguage !== 'function') {
+    $.getScript('/assets/js/i18n.js');
+  }
+});

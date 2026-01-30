@@ -8,8 +8,10 @@ favicon: 'assets/images/favicon.ico'
 author: Hoa
 paginate: 30
 disqus: 'youllbe-cn'
-locale: en_us
-lang: en_us
+locale: pt_br
+lang: pt_br
+default_lang: pt-br
+languages: ["pt-br", "en", "zh"]
 feed_items: 10
 feed_update_period: daily
 feed_update_frequency: 1

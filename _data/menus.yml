@@ -1,32 +1,50 @@
-# Top Menu
-topmenu:
+---
+# Multi-language configuration for zero-times.github.io
+# Default language is Portuguese (Brazil) to serve Brazilian users
 
-- title: 主页
-  url: ""
-
-- title: 联系
-  url: "contact/"
-
-- title: 分享
-  url: "share/"
-
-#- title: Get this theme
-#  url: https://bootstrapstarter.com/template-affiliates-bootstrap-jekyll/
-#  class: "ml-2 btn btn-dark text-white px-3"
-#  external: true
-
-# Footer Menu
-footermenu:
-
-- title: 主页
-  url: ""
-
-- title: 隐私协议
-  url: "privacy-policy/"
-
-- title: 联系
-  url: "contact/"
-
-#- title: Download
-#  url: https://bootstrapstarter.com/template-affiliates-bootstrap-jekyll/
-#  external: true
+# Navigation menu translations
+menus:
+  topmenu:
+    - title:
+        pt-br: "Projetos"
+        en: "Projects"
+        zh: "项目"
+      url: "#projects"
+      class: "js-scroll-trigger"
+    - title:
+        pt-br: "Blog"
+        en: "Blog"
+        zh: "博客"
+      url: "#blog"
+      class: "js-scroll-trigger"
+    - title:
+        pt-br: "Sobre"
+        en: "About"
+        zh: "关于"
+      url: "/about"
+    - title:
+        pt-br: "Contato"
+        en: "Contact"
+        zh: "联系"
+      url: "/contact"
+  footermenu:
+    - title:
+        pt-br: "Início"
+        en: "Home"
+        zh: "首页"
+      url: "/"
+    - title:
+        pt-br: "Sobre"
+        en: "About"
+        zh: "关于"
+      url: "/about"
+    - title:
+        pt-br: "Contato"
+        en: "Contact"
+        zh: "联系"
+      url: "/contact"
+    - title:
+        pt-br: "Política de Privacidade"
+        en: "Privacy Policy"
+        zh: "隐私政策"
+      url: "/privacy-policy"
