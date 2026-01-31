@@ -11,9 +11,23 @@
 {% seo %}
 <link href="{{ site.baseurl }}/assets/css/theme.css" rel="stylesheet">
 <link href="{{ site.baseurl }}/assets/css/custom.css" rel="stylesheet">
+<script>
+  window.I18N_DATA = {
+    translations: {{ site.data.translations | jsonify }},
+    menus: {{ site.data.menus | jsonify }},
+    defaultLang: {{ site.default_lang | default: 'pt-br' | jsonify }},
+    supportedLangs: {{ site.languages | jsonify }},
+    siteTitle: {{ site.title | jsonify }},
+    siteEmail: {{ site.email | jsonify }}
+  };
+</script>
+<script src="{{ site.baseurl }}/assets/js/i18n.js"></script>
 </head>
 <body class="share-page locale-{{ page_lang }} dir-{{ page_dir }}">
   <div class="share-background">
+    <div class="share-language-switcher">
+      {% include language-switcher.html %}
+    </div>
     <main class="share-wrapper">
       {{ content }}
     </main>

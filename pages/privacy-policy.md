@@ -1,40 +1,53 @@
 ---
 layout: page
-title: Privacy Policy
+title: Política de Privacidade
 permalink: /privacy-policy/
 comments: false
 ---
 
-### 引言
-我们重视您的隐私与数据安全，对所有访问者使用的数据收集、处理与分享进行透明说明。本文档适用于您在浏览本站、留言或与我们互动的全部场景。
+<section class="privacy-policy">
+  <h3 data-i18n="privacy.intro_title">{% t privacy.intro_title %}</h3>
+  <p data-i18n="privacy.intro_body">{% t privacy.intro_body %}</p>
 
-### 信息的收集
-- **日志信息**：服务器会记录 IP、浏览器类型、引用页面、访问时间等基础信息，用于安全审计与性能统计。
-- **Cookies 与本地存储**：用来记住您在本站的偏好设置（如语言、主题、登录状态），也可能被第三方统计或广告脚本用于衡量访问效果。
-- **注册/订阅信息**：当您提交邮箱、昵称等资料时，我们会将其安全存储，仅用于向您发送必要通知。
+  <h3 data-i18n="privacy.collection_title">{% t privacy.collection_title %}</h3>
+  <ul>
+    <li data-i18n="privacy.collection_item_logs">{% t privacy.collection_item_logs %}</li>
+    <li data-i18n="privacy.collection_item_cookies">{% t privacy.collection_item_cookies %}</li>
+    <li data-i18n="privacy.collection_item_registration">{% t privacy.collection_item_registration %}</li>
+  </ul>
 
-### 使用目的
-- 优化站点体验：根据访问数据改善页面加载、内容展示与交互流程。
-- 通知服务更新：在获得许可的情况下，通过电子邮件发送产品更新、活动或内容推荐。
-- 安全与合规：通过日志与设备信息识别异常行为，保护站点与用户安全。
+  <h3 data-i18n="privacy.usage_title">{% t privacy.usage_title %}</h3>
+  <ul>
+    <li data-i18n="privacy.usage_item_experience">{% t privacy.usage_item_experience %}</li>
+    <li data-i18n="privacy.usage_item_updates">{% t privacy.usage_item_updates %}</li>
+    <li data-i18n="privacy.usage_item_security">{% t privacy.usage_item_security %}</li>
+  </ul>
 
-### 数据共享
-我们不会主动出售、出租或交换您的个人信息。仅在以下情况发生共享：
-1. **法律要求**：应监管机构、法院或执法机关的合法请求。
-2. **服务支持**：与受信任的第三方（如托管、分析或广告服务商）协作，这些服务商仅可按合同目的处理信息。
+  <h3 data-i18n="privacy.sharing_title">{% t privacy.sharing_title %}</h3>
+  <p data-i18n="privacy.sharing_body">{% t privacy.sharing_body %}</p>
+  <ol>
+    <li data-i18n="privacy.sharing_item_legal">{% t privacy.sharing_item_legal %}</li>
+    <li data-i18n="privacy.sharing_item_support">{% t privacy.sharing_item_support %}</li>
+  </ol>
 
-### Cookies 管理
-您可以在浏览器中禁用或删除 Cookies，但可能会影响站点的某些功能。主流浏览器都提供清除缓存或设置隐私偏好的选项。
+  <h3 data-i18n="privacy.cookies_title">{% t privacy.cookies_title %}</h3>
+  <p data-i18n="privacy.cookies_body">{% t privacy.cookies_body %}</p>
 
-### 第三方服务
-本站可能接入 Google Analytics、Google Ads 或其他统计/广告合作方，它们会基于 Cookie 和浏览历史为您提供更相关的内容。您可通过访问相关服务的隐私政策来了解并管理个性化设置。
+  <h3 data-i18n="privacy.third_party_title">{% t privacy.third_party_title %}</h3>
+  <p data-i18n="privacy.third_party_body">{% t privacy.third_party_body %}</p>
 
-### 您的权利
-- 查阅、更新或删除您提供的个人信息；
-- 随时撤回邮件订阅或其他营销授权；
-- 对基于合法利益的数据处理提出异议，我们将尽快回应并给出解决方案。
+  <h3 data-i18n="privacy.rights_title">{% t privacy.rights_title %}</h3>
+  <ul>
+    <li data-i18n="privacy.rights_item_access">{% t privacy.rights_item_access %}</li>
+    <li data-i18n="privacy.rights_item_optout">{% t privacy.rights_item_optout %}</li>
+    <li data-i18n="privacy.rights_item_objection">{% t privacy.rights_item_objection %}</li>
+  </ul>
+  <p>
+    <span data-i18n="privacy.rights_contact_prefix">{% t privacy.rights_contact_prefix %}</span>
+    <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+    <span data-i18n="privacy.rights_contact_suffix">{% t privacy.rights_contact_suffix %}</span>
+  </p>
 
-如需行使上述权利，请通过页面底部的联系方式或邮件（{{ site.email }}）与我们联系。
-
-### 更新
-本隐私政策可能因业务调整或法律法规变化而更新。新版条款发布后立即生效，我们会在页面顶部标明更新时间，建议您定期查阅。
+  <h3 data-i18n="privacy.updates_title">{% t privacy.updates_title %}</h3>
+  <p data-i18n="privacy.updates_body">{% t privacy.updates_body %}</p>
+</section>

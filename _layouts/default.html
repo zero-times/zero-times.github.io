@@ -43,6 +43,17 @@
 <!-- responsive enhancements CSS -->
 <link href="{{ site.baseurl }}/assets/css/responsive-enhancements.css" rel="stylesheet">
     <!-- custom CSS end-->
+
+    <script>
+      window.I18N_DATA = {
+        translations: {{ site.data.translations | jsonify }},
+        menus: {{ site.data.menus | jsonify }},
+        defaultLang: {{ site.default_lang | default: 'pt-br' | jsonify }},
+        supportedLangs: {{ site.languages | jsonify }},
+        siteTitle: {{ site.title | jsonify }},
+        siteEmail: {{ site.email | jsonify }}
+      };
+    </script>
     
     {% if jekyll.environment == "production" %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -112,11 +123,11 @@
           
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto font-weight-bold d-flex align-items-center">
-              {% assign current_lang = page.lang | default: site.default_lang | default: 'pt-br' %}
+              {% assign default_lang = site.default_lang | default: 'pt-br' %}
               {% for item in site.data.menus.topmenu %}
               <li class="nav-item">
-                {% assign title = item.title[current_lang] | default: item.title.pt-br | default: item.title.en | default: item.title.zh | default: 'Untitled' %}
-                <a class="nav-link px-3 {% if item.class %}{{item.class}}{% endif %}" href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{ title }}">{{ title }}</a>
+                {% assign title = item.title[default_lang] | default: item.title.pt-br | default: item.title.en | default: item.title.zh | default: 'Untitled' %}
+                <a class="nav-link px-3 {% if item.class %}{{item.class}}{% endif %}" href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{ title }}" data-i18n="menus.topmenu.{{ forloop.index0 }}.title">{{ title }}</a>
               </li>
               {% endfor %}
               <li class="nav-item">
@@ -150,17 +161,19 @@
   <!-- CREDITS END -->
 
   <ul class="p-0 mb-1 small">
-    {% assign current_lang = page.lang | default: site.default_lang | default: 'pt-br' %}
+    {% assign default_lang = site.default_lang | default: 'pt-br' %}
     {% for item in site.data.menus.footermenu %}
     <li>
-      {% assign title = item.title[current_lang] | default: item.title.pt-br | default: item.title.en | default: item.title.zh | default: 'Untitled' %}
-      <a href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{ title }}">{{ title }}</a>
+      {% assign title = item.title[default_lang] | default: item.title.pt-br | default: item.title.en | default: item.title.zh | default: 'Untitled' %}
+      <a href="{% unless item.external %}{{site.baseurl}}/{% endunless %}{{item.url}}" alt="{{ title }}" data-i18n="menus.footermenu.{{ forloop.index0 }}.title">{{ title }}</a>
     </li>
     {% endfor %}
     </ul>
     <div class="copyright small">
-       {% assign current_lang = page.lang | default: site.default_lang | default: 'pt-br' %}
-       {{ site.data.menus.site_content.copyright[current_lang] | default: site.data.menus.site_content.copyright.pt-br | default: "Copyright © {{site.title}}. All rights reserved." }}
+       {% assign default_lang = site.default_lang | default: 'pt-br' %}
+       <span data-i18n="menus.site_content.copyright">
+         {{ site.data.menus.site_content.copyright[default_lang] | default: site.data.menus.site_content.copyright.pt-br | default: "Copyright © {{site.title}}. All rights reserved." | replace: "{{site.title}}", site.title }}
+       </span>
     </div>
 </footer>
 

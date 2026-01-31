@@ -9,39 +9,39 @@ permalink: /about/
 <section class="hero-tech mb-5">
   <div class="row align-items-center g-5">
     <div class="col-lg-7">
-      <span class="eyebrow text-uppercase">{{ site.data.translations.about.hero_subtitle.pt-br }}</span>
+      <span class="eyebrow text-uppercase" data-i18n="about.hero_subtitle">{% t about.hero_subtitle %}</span>
       <h1 class="display-4 font-weight-bold mb-3">Wang Xionghao (Hoa)</h1>
       <div class="hero-copy-panel">
-        <p class="lead hero-description">
-          {{ site.data.translations.about.description.pt-br }}
+        <p class="lead hero-description" data-i18n="about.description">
+          {% t about.description %}
         </p>
         <ul class="hero-highlights list-unstyled mb-4">
-          <li><strong>9 anos</strong> Experiência em arquitetura móvel corporativa, com fundo completo em iOS/Android/HarmonyOS.</li>
-          <li><strong>HarmonyOS NEXT</strong> Adaptador early adopter, familiarizado com a camada de comunicação e diferenças ecológicas do Flutter on HarmonyOS.</li>
-          <li><strong>Do zero ao um</strong> Construção de sistemas de upload NAS, SDK de transmissão principal, habilidades de pagamento e publicidade, capacidade de cadeia completa.</li>
+          <li data-i18n-html="about.highlights.item1">{% t about.highlights.item1 %}</li>
+          <li data-i18n-html="about.highlights.item2">{% t about.highlights.item2 %}</li>
+          <li data-i18n-html="about.highlights.item3">{% t about.highlights.item3 %}</li>
         </ul>
         <div class="hero-cta">
-          <a href="#expertise" class="btn btn-apple-primary btn-lg px-4 mr-3 mb-3 mb-lg-0">Entender especialidade</a>
-          <a href="{{site.baseurl}}/contact" class="hero-link">Colaborar comigo</a>
+          <a href="#expertise" class="btn btn-apple-primary btn-lg px-4 mr-3 mb-3 mb-lg-0" data-i18n="about.cta_primary">{% t about.cta_primary %}</a>
+          <a href="{{site.baseurl}}/contact" class="hero-link" data-i18n="about.cta_secondary">{% t about.cta_secondary %}</a>
         </div>
       </div>
     </div>
     <div class="col-lg-5">
       <div class="hero-status-panel">
         <div class="status-item">
-          <p class="status-label">Prática de integração HarmonyOS</p>
-          <p class="status-value">Um código base · Três estruturas homogêneas</p>
-          <p class="status-copy">Baseado no SDK Flutter OpenHarmony, projetar camada de abstração multi-plataforma para encapsular recursos de mapas, pagamentos e HMS Core.</p>
+          <p class="status-label" data-i18n="about.status.item1.label">{% t about.status.item1.label %}</p>
+          <p class="status-value" data-i18n="about.status.item1.value">{% t about.status.item1.value %}</p>
+          <p class="status-copy" data-i18n="about.status.item1.description">{% t about.status.item1.description %}</p>
         </div>
         <div class="status-item">
-          <p class="status-label">Avanço de desempenho</p>
-          <p class="status-value">Estabilidade de upload de arquivos +300%</p>
-          <p class="status-copy">Arquitetura de tarefas assíncronas centrada no Isolate, resolvendo travamentos e taxas de falha na transmissão de grandes arquivos NAS.</p>
+          <p class="status-label" data-i18n="about.status.item2.label">{% t about.status.item2.label %}</p>
+          <p class="status-value" data-i18n="about.status.item2.value">{% t about.status.item2.value %}</p>
+          <p class="status-copy" data-i18n="about.status.item2.description">{% t about.status.item2.description %}</p>
         </div>
         <div class="status-item">
-          <p class="status-label">Eficiência de entrega</p>
-          <p class="status-value">SDK de transmissão bem-sucedido em forma de produto</p>
-          <p class="status-copy">Para Honor, entregar independentemente SDK leve e de alto desempenho, completando a cadeia de entrega desde a seleção até a adaptação.</p>
+          <p class="status-label" data-i18n="about.status.item3.label">{% t about.status.item3.label %}</p>
+          <p class="status-value" data-i18n="about.status.item3.value">{% t about.status.item3.value %}</p>
+          <p class="status-copy" data-i18n="about.status.item3.description">{% t about.status.item3.description %}</p>
         </div>
       </div>
     </div>
@@ -52,27 +52,27 @@ permalink: /about/
 ================================================== -->
 <section id="value" class="profile-section mb-5">
   <div class="section-heading text-center">
-    <span class="eyebrow">价值主张</span>
-    <h2 class="font-weight-bold">一个面向未来的跨平台技术伙伴</h2>
-    <p class="text-muted">我关注技术趋势，也能把每一个目标转成可验证、可交付的解决方案。</p>
+    <span class="eyebrow" data-i18n="about.value.eyebrow">{% t about.value.eyebrow %}</span>
+    <h2 class="font-weight-bold" data-i18n="about.value.title">{% t about.value.title %}</h2>
+    <p class="text-muted" data-i18n="about.value.description">{% t about.value.description %}</p>
   </div>
   <div class="row">
     <div class="col-md-4 mb-4">
       <div class="profile-card h-100">
-        <h3>全链路托底</h3>
-        <p>定义目标、方案与交付路径，把复杂需求拆解为可执行的里程碑，确保你只需关注业务价值。</p>
+        <h3 data-i18n="about.value.cards.item1.title">{% t about.value.cards.item1.title %}</h3>
+        <p data-i18n="about.value.cards.item1.description">{% t about.value.cards.item1.description %}</p>
       </div>
     </div>
     <div class="col-md-4 mb-4">
       <div class="profile-card h-100">
-        <h3>技术趋势先行</h3>
-        <p>长期跟进 HarmonyOS NEXT、Lanai 等新平台，帮助团队建立跨端统一能力并抢占入口。</p>
+        <h3 data-i18n="about.value.cards.item2.title">{% t about.value.cards.item2.title %}</h3>
+        <p data-i18n="about.value.cards.item2.description">{% t about.value.cards.item2.description %}</p>
       </div>
     </div>
     <div class="col-md-4 mb-4">
       <div class="profile-card h-100">
-        <h3>深度经验壁垒</h3>
-        <p>服务过智能硬件、金融、政务、医疗等行业，沉淀了架构思维与避坑经验，减少试错成本。</p>
+        <h3 data-i18n="about.value.cards.item3.title">{% t about.value.cards.item3.title %}</h3>
+        <p data-i18n="about.value.cards.item3.description">{% t about.value.cards.item3.description %}</p>
       </div>
     </div>
   </div>
@@ -82,32 +82,32 @@ permalink: /about/
 ================================================== -->
 <section id="expertise" class="profile-section mb-5">
   <div class="section-heading text-center">
-    <span class="eyebrow">核心专长</span>
-    <h2 class="font-weight-bold">跨平台架构 · 下一代系统 · 性能攻坚 · 从零到一</h2>
+    <span class="eyebrow" data-i18n="about.expertise.eyebrow">{% t about.expertise.eyebrow %}</span>
+    <h2 class="font-weight-bold" data-i18n="about.expertise.title">{% t about.expertise.title %}</h2>
   </div>
   <div class="row">
     <div class="col-md-6 col-lg-3 mb-4">
       <div class="stack-card h-100">
-        <h3>全平台架构设计</h3>
-        <p>精通 Flutter/Dart，熟练驾驭 iOS、Android 与 HarmonyOS 的混合开发模型，搭建统一能力接口。</p>
+        <h3 data-i18n="about.expertise.cards.item1.title">{% t about.expertise.cards.item1.title %}</h3>
+        <p data-i18n="about.expertise.cards.item1.description">{% t about.expertise.cards.item1.description %}</p>
       </div>
     </div>
     <div class="col-md-6 col-lg-3 mb-4">
       <div class="stack-card h-100">
-        <h3>HarmonyOS 落地</h3>
-        <p>拥有 Flutter on HarmonyOS 的适配与上架经验，理解三端差异与 HMS Core 接入路径。</p>
+        <h3 data-i18n="about.expertise.cards.item2.title">{% t about.expertise.cards.item2.title %}</h3>
+        <p data-i18n="about.expertise.cards.item2.description">{% t about.expertise.cards.item2.description %}</p>
       </div>
     </div>
     <div class="col-md-6 col-lg-3 mb-4">
       <div class="stack-card h-100">
-        <h3>性能瓶颈攻关</h3>
-        <p>对大文件传输、UI 流畅、包体积、网络容灾等领域具备成熟方法论与工程实践。</p>
+        <h3 data-i18n="about.expertise.cards.item3.title">{% t about.expertise.cards.item3.title %}</h3>
+        <p data-i18n="about.expertise.cards.item3.description">{% t about.expertise.cards.item3.description %}</p>
       </div>
     </div>
     <div class="col-md-6 col-lg-3 mb-4">
       <div class="stack-card h-100">
-        <h3>产品化交付</h3>
-        <p>多次主导 SDK、支付、广告、数据平台的从零到一落地，确保方案可持续演进。</p>
+        <h3 data-i18n="about.expertise.cards.item4.title">{% t about.expertise.cards.item4.title %}</h3>
+        <p data-i18n="about.expertise.cards.item4.description">{% t about.expertise.cards.item4.description %}</p>
       </div>
     </div>
   </div>
@@ -117,9 +117,9 @@ permalink: /about/
 ================================================== -->
 <section id="store" class="profile-section store-section mb-5">
   <div class="section-heading text-center">
-    <span class="eyebrow">我的商店</span>
-    <h2 class="font-weight-bold">在多个应用商店体验我的作品</h2>
-    <p class="text-muted">实时维护 Google Play、App Store 上线的应用，随时欢迎试用与反馈。</p>
+    <span class="eyebrow" data-i18n="about.store.eyebrow">{% t about.store.eyebrow %}</span>
+    <h2 class="font-weight-bold" data-i18n="about.store.title">{% t about.store.title %}</h2>
+    <p class="text-muted" data-i18n="about.store.description">{% t about.store.description %}</p>
   </div>
   <div class="row store-row">
     <div class="col-md-6 mb-4">
@@ -132,11 +132,11 @@ permalink: /about/
           </svg>
         </div>
         <div class="store-info">
-          <p class="store-label">Google Play</p>
-          <h3>Google Play 开发者主页</h3>
-          <p class="text-muted">探索 Flutter、HarmonyOS 适配的多端产品，及时更新版本。</p>
+          <p class="store-label" data-i18n="about.store.play_label">{% t about.store.play_label %}</p>
+          <h3 data-i18n="about.store.play_title">{% t about.store.play_title %}</h3>
+          <p class="text-muted" data-i18n="about.store.play_desc">{% t about.store.play_desc %}</p>
         </div>
-        <span class="store-link">访问主页</span>
+        <span class="store-link" data-i18n="about.store.play_link">{% t about.store.play_link %}</span>
       </a>
     </div>
     <div class="col-md-6 mb-4">
@@ -147,11 +147,11 @@ permalink: /about/
           </svg>
         </div>
         <div class="store-info">
-          <p class="store-label">App Store</p>
-          <h3>苹果商店开发者主页</h3>
-          <p class="text-muted">查看 SwiftUI、原生能力打造的 iOS 应用并获取最新版本。</p>
+          <p class="store-label" data-i18n="about.store.apple_label">{% t about.store.apple_label %}</p>
+          <h3 data-i18n="about.store.apple_title">{% t about.store.apple_title %}</h3>
+          <p class="text-muted" data-i18n="about.store.apple_desc">{% t about.store.apple_desc %}</p>
         </div>
-        <span class="store-link">前往查看</span>
+        <span class="store-link" data-i18n="about.store.apple_link">{% t about.store.apple_link %}</span>
       </a>
     </div>
   </div>
@@ -160,9 +160,9 @@ permalink: /about/
 <!-- Contact CTA
 ================================================== -->
 <section class="profile-section contact-cta text-center mb-5">
-  <span class="eyebrow">欢迎交流</span>
-  <h2 class="font-weight-bold mb-3">无论是项目合作、技术咨询，还是新想法的碰撞，我都乐于参与</h2>
-  <p class="text-muted mb-4">告诉我你的目标，我将为你构思、实现并交付跨平台的最佳路径。</p>
-  <a class="btn btn-apple-primary btn-lg px-5 mb-2" href="{{site.baseurl}}/contact">联系我</a>
-  <p class="small text-muted mb-0">或直接邮件至 <a href="mailto:{{site.email}}">{{site.email}}</a></p>
+  <span class="eyebrow" data-i18n="about.contact_cta.eyebrow">{% t about.contact_cta.eyebrow %}</span>
+  <h2 class="font-weight-bold mb-3" data-i18n="about.contact_cta.title">{% t about.contact_cta.title %}</h2>
+  <p class="text-muted mb-4" data-i18n="about.contact_cta.description">{% t about.contact_cta.description %}</p>
+  <a class="btn btn-apple-primary btn-lg px-5 mb-2" href="{{site.baseurl}}/contact" data-i18n="about.contact_cta.button">{% t about.contact_cta.button %}</a>
+  <p class="small text-muted mb-0"><span data-i18n="about.contact_cta.email_prefix">{% t about.contact_cta.email_prefix %}</span><a href="mailto:{{site.email}}">{{site.email}}</a></p>
 </section>

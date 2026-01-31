@@ -27,6 +27,7 @@ Custom CSS for zero-times.github.io
   background-position: right 0.75rem center;
   background-size: 16px 12px;
   padding-right: 2rem;
+  min-width: 140px;
 }
 
 .language-switcher select:focus {
@@ -45,6 +46,55 @@ Custom CSS for zero-times.github.io
   height: calc(1.5em + 0.75rem + 2px);
 }
 
+/* Share page language switcher */
+.share-background {
+  position: relative;
+}
+
+.share-language-switcher {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 10;
+}
+
+.share-language-switcher .language-switcher {
+  margin-left: 0;
+  padding-left: 0;
+  border-left: none;
+}
+
+.share-language-switcher .language-switcher select {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Buttons and CTA layout for long translations */
+.hero-actions,
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.hero-minimal .hero-actions {
+  justify-content: center;
+}
+
+/* Improve long heading wrapping */
+.hero-minimal .display-4,
+.hero-tech .display-4,
+.section-heading h2,
+.contact-hero h1 {
+  overflow-wrap: anywhere;
+}
+
+.contact-chips {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /* Mobile adaptation */
 @media (max-width: 991.98px) {
   .language-switcher {
@@ -58,6 +108,17 @@ Custom CSS for zero-times.github.io
     padding: 0.5rem 1rem;
     width: 100%;
     border-top: 1px solid #e9ecef;
+  }
+
+  .language-switcher select {
+    width: 100%;
+  }
+
+  .share-language-switcher {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
   }
 }
 
@@ -211,6 +272,11 @@ html:lang(pt) .share-card__label,
 .locale-pt-br .case-card small,
 .locale-pt-br .share-card__label {
   letter-spacing: 0.12em;
+}
+
+.locale-pt-br .language-switcher select {
+  border-color: var(--br-green);
+  color: var(--br-blue);
 }
 
 /* Brazilian Portuguese palette accents */

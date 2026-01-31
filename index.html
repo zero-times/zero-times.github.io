@@ -1,5 +1,5 @@
 ---
-title: Home
+title: Início
 layout: default
 background: '/img/bg-index.jpg'
 ---
@@ -15,14 +15,14 @@ background: '/img/bg-index.jpg'
 <section class="hero-minimal mb-5">
   <div class="row align-items-center">
     <div class="col-lg-8 mx-auto text-center">
-      <h1 class="display-4 font-weight-bold mb-3">{{ site.data.translations.hero.title.pt-br }}</h1>
-      <p class="lead text-muted mb-4">
-        {{ site.data.translations.hero.subtitle.pt-br }}
+      <h1 class="display-4 font-weight-bold mb-3" data-i18n="hero.title">{% t hero.title %}</h1>
+      <p class="lead text-muted mb-4" data-i18n="hero.subtitle">
+        {% t hero.subtitle %}
       </p>
       <div class="hero-actions">
-        <a href="#projects" class="btn btn-brazil btn-lg px-4 mr-3 mb-3">{{ site.data.translations.hero.cta_projects.pt-br }}</a>
-        <a href="#blog" class="btn btn-outline-secondary btn-lg px-4 mr-3 mb-3">{{ site.data.translations.hero.cta_blog.pt-br }}</a>
-        <a href="{{site.baseurl}}/about" class="btn btn-outline-secondary btn-lg px-4 mb-3">{{ site.data.translations.hero.cta_about.pt-br }}</a>
+        <a href="#projects" class="btn btn-brazil btn-lg px-4 mr-3 mb-3" data-i18n="hero.cta_projects">{% t hero.cta_projects %}</a>
+        <a href="#blog" class="btn btn-outline-secondary btn-lg px-4 mr-3 mb-3" data-i18n="hero.cta_blog">{% t hero.cta_blog %}</a>
+        <a href="{{site.baseurl}}/about" class="btn btn-outline-secondary btn-lg px-4 mb-3" data-i18n="hero.cta_about">{% t hero.cta_about %}</a>
       </div>
     </div>
   </div>
@@ -33,9 +33,9 @@ background: '/img/bg-index.jpg'
 ================================================== -->
 <section id="projects" class="projects-section mb-5">
   <div class="section-heading text-center mb-4">
-    <span class="eyebrow">实战项目</span>
-    <h2 class="font-weight-bold">上线中的跨平台产品与工具</h2>
-    <p class="text-muted">所有带有项目链接的作品会在此展示</p>
+    <span class="eyebrow" data-i18n="home.projects.eyebrow">{% t home.projects.eyebrow %}</span>
+    <h2 class="font-weight-bold" data-i18n="home.projects.title">{% t home.projects.title %}</h2>
+    <p class="text-muted" data-i18n="home.projects.description">{% t home.projects.description %}</p>
   </div>
   {% if project_posts.size > 0 %}
   <div class="row">
@@ -66,18 +66,18 @@ background: '/img/bg-index.jpg'
         </div>
         <div class="project-actions">
           {% if project.site %}
-          <a class="btn btn-apple-primary btn-sm px-4" href="{{ project.site | strip }}" target="_blank" rel="noopener">访问项目</a>
+          <a class="btn btn-apple-primary btn-sm px-4" href="{{ project.site | strip }}" target="_blank" rel="noopener" data-i18n="home.projects.visit_project">{% t home.projects.visit_project %}</a>
           {% else %}
-          <a class="btn btn-apple-primary btn-sm px-4" href="{{ project.url | relative_url }}">查看详情</a>
+          <a class="btn btn-apple-primary btn-sm px-4" href="{{ project.url | relative_url }}" data-i18n="home.projects.view_details">{% t home.projects.view_details %}</a>
           {% endif %}
-          <a class="project-link" href="{{ project.url | relative_url }}">了解更多</a>
+          <a class="project-link" href="{{ project.url | relative_url }}" data-i18n="home.projects.learn_more">{% t home.projects.learn_more %}</a>
         </div>
       </article>
     </div>
     {% endfor %}
   </div>
   {% else %}
-  <p class="text-center text-muted mb-0">当前没有配置项目。</p>
+  <p class="text-center text-muted mb-0" data-i18n="home.projects.empty">{% t home.projects.empty %}</p>
   {% endif %}
 </section>
 
@@ -85,9 +85,9 @@ background: '/img/bg-index.jpg'
 ================================================== -->
 <section id="blog" class="blog-section mb-5">
   <div class="section-heading text-center mb-4">
-    <span class="eyebrow">博客与洞察</span>
-    <h2 class="font-weight-bold">HarmonyOS 适配 · 跨平台架构 · 产品复盘</h2>
-    <p class="text-muted">记录技术实践与工程化思考</p>
+    <span class="eyebrow" data-i18n="home.blog.eyebrow">{% t home.blog.eyebrow %}</span>
+    <h2 class="font-weight-bold" data-i18n="home.blog.title">{% t home.blog.title %}</h2>
+    <p class="text-muted" data-i18n="home.blog.description">{% t home.blog.description %}</p>
   </div>
   {% if blog_featured.size > 0 %}
   <div class="row featured-row mb-5">
@@ -114,7 +114,7 @@ background: '/img/bg-index.jpg'
     </div>
   </div>
   {% else %}
-  <p class="text-center text-muted">还没有博客文章，敬请期待。</p>
+  <p class="text-center text-muted" data-i18n="home.blog.empty">{% t home.blog.empty %}</p>
   {% endif %}
 </section>
 
@@ -123,9 +123,9 @@ background: '/img/bg-index.jpg'
 {% if page.url == "/" %}
 <section id="store" class="profile-section store-section mb-5">
   <div class="section-heading text-center">
-    <span class="eyebrow">我的商店</span>
-    <h2 class="font-weight-bold">在应用商店体验更多作品</h2>
-    <p class="text-muted">Google Play 与 App Store 上线应用</p>
+    <span class="eyebrow" data-i18n="home.store.eyebrow">{% t home.store.eyebrow %}</span>
+    <h2 class="font-weight-bold" data-i18n="home.store.title">{% t home.store.title %}</h2>
+    <p class="text-muted" data-i18n="home.store.description">{% t home.store.description %}</p>
   </div>
   <div class="row store-row">
     <div class="col-md-6 mb-4">
@@ -138,11 +138,11 @@ background: '/img/bg-index.jpg'
           </svg>
         </div>
         <div class="store-info">
-          <p class="store-label">Google Play</p>
-          <h3>Google Play 开发者主页</h3>
-          <p class="text-muted">探索 Flutter、HarmonyOS 适配的多端产品</p>
+          <p class="store-label" data-i18n="home.store.play_label">{% t home.store.play_label %}</p>
+          <h3 data-i18n="home.store.play_title">{% t home.store.play_title %}</h3>
+          <p class="text-muted" data-i18n="home.store.play_desc">{% t home.store.play_desc %}</p>
         </div>
-        <span class="store-link">访问主页</span>
+        <span class="store-link" data-i18n="home.store.play_link">{% t home.store.play_link %}</span>
       </a>
     </div>
     <div class="col-md-6 mb-4">
@@ -153,11 +153,11 @@ background: '/img/bg-index.jpg'
           </svg>
         </div>
         <div class="store-info">
-          <p class="store-label">App Store</p>
-          <h3>苹果商店开发者主页</h3>
-          <p class="text-muted">查看 SwiftUI 打造的 iOS 应用</p>
+          <p class="store-label" data-i18n="home.store.apple_label">{% t home.store.apple_label %}</p>
+          <h3 data-i18n="home.store.apple_title">{% t home.store.apple_title %}</h3>
+          <p class="text-muted" data-i18n="home.store.apple_desc">{% t home.store.apple_desc %}</p>
         </div>
-        <span class="store-link">前往查看</span>
+        <span class="store-link" data-i18n="home.store.apple_link">{% t home.store.apple_link %}</span>
       </a>
     </div>
   </div>
@@ -166,10 +166,10 @@ background: '/img/bg-index.jpg'
 <!-- Contact CTA
 ================================================== -->
 <section class="profile-section contact-cta text-center mb-5">
-  <span class="eyebrow">欢迎交流</span>
-  <h2 class="font-weight-bold mb-3">项目合作 · 技术咨询 · 产品共创</h2>
-  <p class="text-muted mb-4">告诉我你的目标，一起构思并交付跨平台的最佳方案</p>
-  <a class="btn btn-apple-primary btn-lg px-5 mb-2" href="{{site.baseurl}}/contact">联系我</a>
-  <p class="small text-muted mb-0">或直接邮件至 <a href="mailto:{{site.email}}">{{site.email}}</a></p>
+  <span class="eyebrow" data-i18n="home.contact_cta.eyebrow">{% t home.contact_cta.eyebrow %}</span>
+  <h2 class="font-weight-bold mb-3" data-i18n="home.contact_cta.title">{% t home.contact_cta.title %}</h2>
+  <p class="text-muted mb-4" data-i18n="home.contact_cta.description">{% t home.contact_cta.description %}</p>
+  <a class="btn btn-apple-primary btn-lg px-5 mb-2" href="{{site.baseurl}}/contact" data-i18n="home.contact_cta.button">{% t home.contact_cta.button %}</a>
+  <p class="small text-muted mb-0"><span data-i18n="home.contact_cta.email_prefix">{% t home.contact_cta.email_prefix %}</span><a href="mailto:{{site.email}}">{{site.email}}</a></p>
 </section>
 {% endif %}

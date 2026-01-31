@@ -17,7 +17,7 @@
             <span>{{ post.title | slice: 0, 1 }}</span>
         </div>
         {% endif %}
-        <span class="blog-card-badge">Blog</span>
+        <span class="blog-card-badge" data-i18n="common.blog_badge">{% t common.blog_badge %}</span>
     </a>
 
     <div class="card-block">
@@ -47,7 +47,7 @@
                 {% endif %}
             </span>
             <span class="blog-card-read">
-                阅读全文
+                <span data-i18n="common.read_more">{% t common.read_more %}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
                 </svg>

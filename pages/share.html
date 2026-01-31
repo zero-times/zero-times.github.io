@@ -1,14 +1,14 @@
 ---
 layout: share
-title: 分享
+title: Compartilhar
 permalink: /share/
 ---
 
 <section class="share-card">
   <header class="share-card__header">
-    <div class="share-card__badge">移动端架构 & 跨平台</div>
-    <h1>王雄皓 (Hoa)</h1>
-    <p class="share-card__tagline">移动端架构与跨平台解决方案专家 · HarmonyOS 早期实践者</p>
+    <div class="share-card__badge" data-i18n="share.badge">{% t share.badge %}</div>
+    <h1>Wang Xionghao (Hoa)</h1>
+    <p class="share-card__tagline" data-i18n="share.tagline">{% t share.tagline %}</p>
   </header>
 
   <div class="share-card__hero">
@@ -18,51 +18,51 @@ permalink: /share/
     </div>
     <ul class="share-card__stats">
       <li>
-        <strong>9 年</strong>
-        <span>全平台架构经验</span>
+        <strong data-i18n="share.stats.item1.value">{% t share.stats.item1.value %}</strong>
+        <span data-i18n="share.stats.item1.label">{% t share.stats.item1.label %}</span>
       </li>
       <li>
-        <strong>HarmonyOS</strong>
-        <span>Flutter on NEXT 适配</span>
+        <strong data-i18n="share.stats.item2.value">{% t share.stats.item2.value %}</strong>
+        <span data-i18n="share.stats.item2.label">{% t share.stats.item2.label %}</span>
       </li>
       <li>
-        <strong>300%</strong>
-        <span>性能提升案例</span>
+        <strong data-i18n="share.stats.item3.value">{% t share.stats.item3.value %}</strong>
+        <span data-i18n="share.stats.item3.label">{% t share.stats.item3.label %}</span>
       </li>
     </ul>
   </div>
 
   <div class="share-card__content">
     <div class="share-card__column">
-      <h2>我能帮助你</h2>
+      <h2 data-i18n="share.help_title">{% t share.help_title %}</h2>
       <ul>
-        <li>为 iOS / Android / HarmonyOS 统一架构、通信层与多端 DevOps。</li>
-        <li>把 NAS 上传、直播 SDK、支付广告等复杂模块产品化输出。</li>
-        <li>洞察鸿蒙生态与下一代系统，构建面向未来的跨端体验。</li>
+        <li data-i18n="share.help_items.item1">{% t share.help_items.item1 %}</li>
+        <li data-i18n="share.help_items.item2">{% t share.help_items.item2 %}</li>
+        <li data-i18n="share.help_items.item3">{% t share.help_items.item3 %}</li>
       </ul>
     </div>
     <div class="share-card__column">
-      <h2>代表成果</h2>
+      <h2 data-i18n="share.achievements_title">{% t share.achievements_title %}</h2>
       <ul>
-        <li>主导 Flutter 项目迁移至 HarmonyOS NEXT，实现三端统一能力。</li>
-        <li>设计基于 Isolate 的大文件传输引擎，稳定性提升 300%。</li>
-        <li>为荣耀交付轻量直播 SDK，完成从选型到多端适配。</li>
+        <li data-i18n="share.achievements_items.item1">{% t share.achievements_items.item1 %}</li>
+        <li data-i18n="share.achievements_items.item2">{% t share.achievements_items.item2 %}</li>
+        <li data-i18n="share.achievements_items.item3">{% t share.achievements_items.item3 %}</li>
       </ul>
     </div>
   </div>
 
   <div class="share-card__contact">
     <div>
-      <p class="share-card__label">网站</p>
+      <p class="share-card__label" data-i18n="share.contact.website">{% t share.contact.website %}</p>
       <a href="https://youllbe.cn" target="_blank" rel="noopener">https://youllbe.cn</a>
     </div>
     <div>
-      <p class="share-card__label">邮箱</p>
+      <p class="share-card__label" data-i18n="share.contact.email">{% t share.contact.email %}</p>
       <a href="mailto:{{ site.email }}">{{ site.email }}</a>
     </div>
     <div>
-      <p class="share-card__label">社交</p>
-      <span>wechat: hoaever</span>
+      <p class="share-card__label" data-i18n="share.contact.social">{% t share.contact.social %}</p>
+      <span data-i18n="share.contact.wechat_handle">{% t share.contact.wechat_handle %}</span>
     </div>
   </div>
 
@@ -76,11 +76,11 @@ permalink: /share/
         </svg>
       </div>
       <div class="store-info">
-        <p class="store-label">Google Play</p>
-        <h3>Google Play 开发者主页</h3>
-        <p class="text-muted">获取 Flutter 适配 Android 应用。</p>
+        <p class="store-label" data-i18n="share.store.play_label">{% t share.store.play_label %}</p>
+        <h3 data-i18n="share.store.play_title">{% t share.store.play_title %}</h3>
+        <p class="text-muted" data-i18n="share.store.play_desc">{% t share.store.play_desc %}</p>
       </div>
-      <span class="store-link">访问</span>
+      <span class="store-link" data-i18n="share.store.play_link">{% t share.store.play_link %}</span>
     </a>
     <a class="store-card" href="https://apps.apple.com/cn/developer/%E9%9B%84%E7%9A%93-%E7%8E%8B/id1445704309" target="_blank" rel="noopener">
       <div class="store-icon store-icon--apple">
@@ -89,16 +89,16 @@ permalink: /share/
         </svg>
       </div>
       <div class="store-info">
-        <p class="store-label">App Store</p>
-        <h3>苹果商店开发者主页</h3>
-        <p class="text-muted">查看 Flutter/SwiftUI/Swift/Objective-C打造的 iOS 产品。</p>
+        <p class="store-label" data-i18n="share.store.apple_label">{% t share.store.apple_label %}</p>
+        <h3 data-i18n="share.store.apple_title">{% t share.store.apple_title %}</h3>
+        <p class="text-muted" data-i18n="share.store.apple_desc">{% t share.store.apple_desc %}</p>
       </div>
-      <span class="store-link">进入</span>
+      <span class="store-link" data-i18n="share.store.apple_link">{% t share.store.apple_link %}</span>
     </a>
   </div>
 
   <footer class="share-card__footer">
-    <p>与我合作，定义你的下一代多端体验。</p>
-    <span>扫描或截图此页，即是我的名片</span>
+    <p data-i18n="share.footer.title">{% t share.footer.title %}</p>
+    <span data-i18n="share.footer.subtitle">{% t share.footer.subtitle %}</span>
   </footer>
 </section>

@@ -1,106 +1,246 @@
-// 多语言内容切换功能
-// 用于 zero-times.github.io 博客的国际化支持
+// Multi-language content switching
+// For zero-times.github.io internationalization support
 
-// 从URL参数、本地存储或浏览器语言获取首选语言
-function getPreferredLanguage() {
-  // 检查URL参数
-  const urlParams = new URLSearchParams(window.location.search);
-  const langFromUrl = urlParams.get('lang');
-  if (langFromUrl) {
-    return normalizeLanguageCode(langFromUrl);
+(function () {
+  const DATA = window.I18N_DATA || {};
+  const DEFAULT_LANG = normalizeLanguageCode(DATA.defaultLang || 'pt-br');
+  const SUPPORTED_LANGS = (DATA.supportedLangs || ['pt-br', 'en', 'zh'])
+    .map((lang) => normalizeLanguageCode(lang))
+    .filter((lang, index, arr) => arr.indexOf(lang) === index);
+  const SITE_TITLE = DATA.siteTitle || '';
+  const SITE_EMAIL = DATA.siteEmail || '';
+
+  function normalizeLanguageCode(lang) {
+    if (!lang) return 'pt-br';
+    const normalized = String(lang).trim().toLowerCase().replace('_', '-');
+
+    if (normalized.startsWith('pt')) return 'pt-br';
+    if (normalized.startsWith('en')) return 'en';
+    if (normalized.startsWith('zh') || normalized.startsWith('cn')) return 'zh';
+
+    return normalized;
   }
-  
-  // 检查本地存储
-  const storedLang = localStorage.getItem('preferred-language');
-  if (storedLang) {
-    return normalizeLanguageCode(storedLang);
+
+  function ensureSupported(lang) {
+    const normalized = normalizeLanguageCode(lang);
+    if (SUPPORTED_LANGS.includes(normalized)) {
+      return normalized;
+    }
+    return DEFAULT_LANG;
   }
-  
-  // 检测浏览器语言
-  const browserLang = navigator.language || navigator.userLanguage;
-  return normalizeLanguageCode(browserLang);
-}
 
-// 规范化语言代码
-function normalizeLanguageCode(lang) {
-  if (!lang) return 'pt-br';
-  
-  const normalized = lang.toLowerCase();
-  
-  if (normalized.startsWith('pt') || normalized.includes('br')) {
-    return 'pt-br';
-  } else if (normalized.startsWith('en')) {
-    return 'en';
-  } else if (normalized.startsWith('zh') || normalized.startsWith('cn')) {
-    return 'zh';
+  function isRtlLanguage(lang) {
+    return ['ar', 'he', 'fa', 'ur'].some((prefix) => lang.startsWith(prefix));
   }
-  
-  // 默认返回葡萄牙语（面向巴西用户）
-  return 'pt-br';
-}
 
-// 设置HTML的lang属性
-function setHtmlLanguage() {
-  const currentLang = getPreferredLanguage();
-  document.documentElement.lang = currentLang.replace('-', '_');
-  
-  // 更新语言选择器
-  const langSelector = document.getElementById('language-switcher-select');
-  if (langSelector) {
-    langSelector.value = currentLang;
+  function getPreferredLanguage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const langFromUrl = urlParams.get('lang');
+    if (langFromUrl) {
+      return ensureSupported(langFromUrl);
+    }
+
+    const storedLang = localStorage.getItem('preferred-language');
+    if (storedLang) {
+      return ensureSupported(storedLang);
+    }
+
+    const browserLang = navigator.language || navigator.userLanguage;
+    return ensureSupported(browserLang || DEFAULT_LANG);
   }
-  
-  // 应用语言特定的样式
-  applyLanguageSpecificStyles(currentLang);
-}
 
-// 应用语言特定的样式
-function applyLanguageSpecificStyles(lang) {
-  // 移除之前可能添加的语言类
-  document.body.classList.remove('lang-pt-br', 'lang-en', 'lang-zh');
-  
-  // 添加当前语言类
-  document.body.classList.add(`lang-${lang.replace('-', '_')}`);
-  
-  // 特定于中文的样式调整
-  if (lang === 'zh') {
-    // 中文排版优化
-    document.body.style.fontFeatureSettings = '"liga", "clig", "calt", "hanj"';
-  } else {
-    document.body.style.fontFeatureSettings = 'normal';
+  function updateUrlLanguage(lang) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', lang);
+    window.history.replaceState({}, '', url.toString());
   }
-}
 
-// 切换语言
-function changeLanguage(lang) {
-  // 规范化语言代码
-  const normalizedLang = normalizeLanguageCode(lang);
-  
-  // 存储用户选择
-  localStorage.setItem('preferred-language', normalizedLang);
-  
-  // 重新加载页面以应用新的语言设置
-  location.search = `lang=${normalizedLang}`;
-}
+  function resolvePath(root, path) {
+    if (!root || !path) return undefined;
+    const parts = path.split('.');
+    let value = root;
 
-// 等待DOM加载完成后设置语言
-document.addEventListener('DOMContentLoaded', function() {
-  setHtmlLanguage();
-  
-  // 监听语言切换器的变化
-  const langSelector = document.getElementById('language-switcher-select');
-  if (langSelector) {
-    langSelector.addEventListener('change', function() {
-      changeLanguage(this.value);
+    for (const part of parts) {
+      if (Array.isArray(value)) {
+        const index = Number(part);
+        value = Number.isInteger(index) ? value[index] : undefined;
+      } else if (value && typeof value === 'object') {
+        value = value[part];
+      } else {
+        value = undefined;
+      }
+
+      if (value === undefined || value === null) break;
+    }
+
+    return value;
+  }
+
+  function interpolate(value) {
+    if (typeof value !== 'string') return value;
+    return value
+      .replace(/\{\{\s*site\.title\s*\}\}/g, SITE_TITLE)
+      .replace(/\{\{\s*site\.email\s*\}\}/g, SITE_EMAIL)
+      .replace(/\{\{\s*title\s*\}\}/g, SITE_TITLE)
+      .replace(/\{\{\s*email\s*\}\}/g, SITE_EMAIL);
+  }
+
+  function getTranslation(key, lang) {
+    const root = { ...(DATA.translations || {}) };
+    if (DATA.menus) {
+      root.menus = DATA.menus;
+    }
+
+    let value = resolvePath(root, key);
+
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      value =
+        value[lang] ||
+        value[DEFAULT_LANG] ||
+        value.en ||
+        value['pt-br'] ||
+        value.zh ||
+        Object.values(value)[0];
+    }
+
+    if (typeof value === 'string') {
+      return interpolate(value);
+    }
+
+    return value;
+  }
+
+  function updateBodyClasses(lang, dir) {
+    if (!document.body) return;
+    const classes = document.body.className
+      .split(' ')
+      .filter((cls) =>
+        cls &&
+        !cls.startsWith('locale-') &&
+        !cls.startsWith('lang-') &&
+        !cls.startsWith('dir-')
+      );
+
+    classes.push(`locale-${lang}`);
+    classes.push(`dir-${dir}`);
+    document.body.className = classes.join(' ');
+  }
+
+  function applyTranslations(lang) {
+    const normalizedLang = ensureSupported(lang);
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      const value = getTranslation(key, normalizedLang);
+      if (typeof value === 'string') {
+        el.textContent = value;
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-html');
+      const value = getTranslation(key, normalizedLang);
+      if (typeof value === 'string') {
+        el.innerHTML = value;
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      const value = getTranslation(key, normalizedLang);
+      if (typeof value === 'string') {
+        el.setAttribute('placeholder', value);
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-value]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-value');
+      const value = getTranslation(key, normalizedLang);
+      if (typeof value === 'string') {
+        el.setAttribute('value', value);
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-title]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-title');
+      const value = getTranslation(key, normalizedLang);
+      if (typeof value === 'string') {
+        el.setAttribute('title', value);
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-aria]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-aria');
+      const value = getTranslation(key, normalizedLang);
+      if (typeof value === 'string') {
+        el.setAttribute('aria-label', value);
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-alt]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-alt');
+      const value = getTranslation(key, normalizedLang);
+      if (typeof value === 'string') {
+        el.setAttribute('alt', value);
+      }
     });
   }
-});
 
-// 导出函数以便在其他地方使用
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    getPreferredLanguage,
-    normalizeLanguageCode,
-    changeLanguage
-  };
-}
+  function updateLanguage(lang) {
+    const normalizedLang = ensureSupported(lang);
+    const dir = isRtlLanguage(normalizedLang) ? 'rtl' : 'ltr';
+
+    document.documentElement.lang = normalizedLang;
+    document.documentElement.dir = dir;
+
+    const metaLang = document.querySelector('meta[name="language"]');
+    if (metaLang) {
+      metaLang.setAttribute('content', normalizedLang);
+    }
+
+    updateBodyClasses(normalizedLang, dir);
+
+    if (document.body) {
+      if (normalizedLang === 'zh') {
+        document.body.style.fontFeatureSettings = '"liga", "clig", "calt", "hanj"';
+      } else {
+        document.body.style.fontFeatureSettings = 'normal';
+      }
+    }
+
+    const langSelector = document.getElementById('language-switcher-select');
+    if (langSelector) {
+      langSelector.value = normalizedLang;
+    }
+
+    applyTranslations(normalizedLang);
+  }
+
+  function changeLanguage(lang) {
+    const normalizedLang = ensureSupported(lang);
+    localStorage.setItem('preferred-language', normalizedLang);
+    updateUrlLanguage(normalizedLang);
+    updateLanguage(normalizedLang);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const initialLang = getPreferredLanguage();
+    updateLanguage(initialLang);
+
+    const langSelector = document.getElementById('language-switcher-select');
+    if (langSelector) {
+      langSelector.addEventListener('change', function () {
+        changeLanguage(this.value);
+      });
+    }
+  });
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+      getPreferredLanguage,
+      normalizeLanguageCode,
+      changeLanguage,
+      applyTranslations,
+    };
+  }
+})();
