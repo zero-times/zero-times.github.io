@@ -1,15 +1,15 @@
 
-Por favor, analise este relatório de auditoria de website e proponha melhorias:
+请分析以下网站审计报告，并提出具体的改进建议和代码修复：
 
-Relatório de Auditoria do Website
+网站审计报告
 ===============================
-Data: 2026-01-31T11:15:35.032105
-URL do Website: https://zero-times.github.io
-Pontuação Geral: 7.1/10.0
+时间: 2026-01-31T16:34:53.463830
+网站 URL: https://zero-times.github.io
+总体评分: 7.1/10.0
 
-Avaliação de Layout:
-- Pontuação: 7.5/10.0
-- Resultados: [
+布局评估:
+- 评分: 7.5/10.0
+- 结果: [
   {
     "aspect": "Page Structure",
     "result": "Good",
@@ -32,10 +32,10 @@ Avaliação de Layout:
   }
 ]
 
-Verificação de Links Quebrados:
-- Pontuação: 4.5/10.0
-- Links quebrados encontrados: 5
-- Detalhes: [
+链接有效性检查:
+- 评分: 4.5/10.0
+- 发现的断链数量: 5
+- 详情: [
   {
     "aspect": "Internal Links",
     "result": "Good",
@@ -48,9 +48,9 @@ Verificação de Links Quebrados:
   }
 ]
 
-Avaliação de SEO:
-- Pontuação: 8.0/10.0
-- Resultados: [
+SEO 评估:
+- 评分: 8.0/10.0
+- 结果: [
   {
     "aspect": "Title Tags",
     "result": "Good",
@@ -83,9 +83,9 @@ Avaliação de SEO:
   }
 ]
 
-Avaliação de Qualidade de Conteúdo:
-- Pontuação: 8.5/10.0
-- Resultados: [
+内容质量评估:
+- 评分: 8.5/10.0
+- 结果: [
   {
     "aspect": "Content Freshness",
     "result": "Good",
@@ -108,18 +108,22 @@ Avaliação de Qualidade de Conteúdo:
   }
 ]
 
-Recomendações:
+建议:
 [
   "Consider improving site layout and responsiveness",
   "Review and fix broken external links in news posts",
   "Fix 5 broken links identified in content"
 ]
 
-Por favor, forneça sugestões específicas para:
-1. Corrigir os links quebrados identificados
-2. Melhorar o layout e responsividade
-3. Otimizar elementos de SEO
-4. Melhorar a qualidade geral do conteúdo
-5. Implementar quaisquer outras melhorias sugeridas
+请提供具体的改进建议并实施代码修复：
 
-As alterações devem ser feitas nos arquivos apropriados do website.
+1. 修复识别出的断链（更新链接或删除无效链接）
+2. 改进布局和响应式设计
+3. 优化 SEO 元素（标题、描述、关键词、sitemap 等）
+4. 提升整体内容质量
+5. 实施其他建议的改进
+
+请直接在相应的文件中实施这些改进。
+完成后，请提交所有更改到 git。
+
+重要：使用中文进行所有改进说明和代码注释。
