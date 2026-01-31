@@ -4,101 +4,92 @@ title: Compartilhar
 permalink: /share/
 ---
 
-<section class="share-card">
-  <header class="share-card__header">
-    <div class="share-card__badge" data-i18n="share.badge">{% t share.badge %}</div>
-    <h1>Wang Xionghao (Hoa)</h1>
-    <p class="share-card__tagline" data-i18n="share.tagline">{% t share.tagline %}</p>
-  </header>
-
-  <div class="share-card__hero">
-    <div class="share-card__avatar">
-      <div class="share-card__avatar-glow"></div>
-      <span class="brand-glyph brand-glyph--xl" aria-hidden="true"></span>
-    </div>
-    <ul class="share-card__stats">
-      <li>
-        <strong data-i18n="share.stats.item1.value">{% t share.stats.item1.value %}</strong>
-        <span data-i18n="share.stats.item1.label">{% t share.stats.item1.label %}</span>
-      </li>
-      <li>
-        <strong data-i18n="share.stats.item2.value">{% t share.stats.item2.value %}</strong>
-        <span data-i18n="share.stats.item2.label">{% t share.stats.item2.label %}</span>
-      </li>
-      <li>
-        <strong data-i18n="share.stats.item3.value">{% t share.stats.item3.value %}</strong>
-        <span data-i18n="share.stats.item3.label">{% t share.stats.item3.label %}</span>
-      </li>
-    </ul>
-  </div>
-
-  <div class="share-card__content">
-    <div class="share-card__column">
-      <h2 data-i18n="share.help_title">{% t share.help_title %}</h2>
-      <ul>
-        <li data-i18n="share.help_items.item1">{% t share.help_items.item1 %}</li>
-        <li data-i18n="share.help_items.item2">{% t share.help_items.item2 %}</li>
-        <li data-i18n="share.help_items.item3">{% t share.help_items.item3 %}</li>
-      </ul>
-    </div>
-    <div class="share-card__column">
-      <h2 data-i18n="share.achievements_title">{% t share.achievements_title %}</h2>
-      <ul>
-        <li data-i18n="share.achievements_items.item1">{% t share.achievements_items.item1 %}</li>
-        <li data-i18n="share.achievements_items.item2">{% t share.achievements_items.item2 %}</li>
-        <li data-i18n="share.achievements_items.item3">{% t share.achievements_items.item3 %}</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="share-card__contact">
-    <div>
-      <p class="share-card__label" data-i18n="share.contact.website">{% t share.contact.website %}</p>
-      <a href="https://youllbe.cn" target="_blank" rel="noopener">https://youllbe.cn</a>
-    </div>
-    <div>
-      <p class="share-card__label" data-i18n="share.contact.email">{% t share.contact.email %}</p>
-      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
-    </div>
-    <div>
-      <p class="share-card__label" data-i18n="share.contact.social">{% t share.contact.social %}</p>
-      <span data-i18n="share.contact.wechat_handle">{% t share.contact.wechat_handle %}</span>
-    </div>
-  </div>
-
-  <div class="share-card__stores">
-    <a class="store-card" href="https://play.google.com/store/apps/dev?id=4642950853103060547" target="_blank" rel="noopener">
-      <div class="store-icon store-icon--play">
-        <svg viewBox="0 0 512 512" aria-hidden="true" focusable="false">
-          <path d="M96 60l236 196-236 196V60z" fill="#0a84ff"/>
-          <path d="M96 60l140 116-56 60-84-176z" fill="#74b5ff"/>
-          <path d="M96 452l140-116-56-60-84 176z" fill="#0050c8"/>
-        </svg>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="share-card text-center">
+        <div class="share-card__badge">Compartilhe</div>
+        <h1 class="display-4">Espalhe a Palavra</h1>
+        <p class="share-card__tagline">Ajude-nos a crescer compartilhando com amigos e colegas</p>
+        
+        <div class="stats-card row text-center mt-5">
+          <div class="col-md-4 mb-4 mb-md-0">
+            <strong class="d-block">1000+</strong>
+            <span>Usuários</span>
+          </div>
+          <div class="col-md-4 mb-4 mb-md-0">
+            <strong class="d-block">50+</strong>
+            <span>Downloads</span>
+          </div>
+          <div class="col-md-4 mb-4 mb-md-0">
+            <strong class="d-block">4.8</strong>
+            <span>Avaliação</span>
+          </div>
+        </div>
+        
+        <h2 class="mt-5">Como você pode nos ajudar</h2>
+        <ul class="help-list text-start mt-4">
+          <li>Compartilhe nosso conteúdo nas redes sociais</li>
+          <li>Indique-nos para amigos e colegas</li>
+          <li>Deixe uma avaliação positiva em lojas de aplicativos</li>
+        </ul>
+        
+        <h2 class="mt-5">Nossas Conquistas</h2>
+        <ul class="achievements-list text-start mt-4">
+          <li>Lançamento bem-sucedido de múltiplas aplicações</li>
+          <li>Feedback positivo da comunidade de usuários</li>
+          <li>Parcerias com empresas de renome</li>
+        </ul>
+        
+        <div class="contact-section mt-5">
+          <h3>Entre em Contato</h3>
+          <p class="share-card__label">Website: <a href="{{site.url}}">{{site.url}}</a></p>
+          <p class="share-card__label">Email: <a href="mailto:{{site.email}}">{{site.email}}</a></p>
+          <p class="share-card__label">Redes Sociais: Siga-nos nas redes sociais</p>
+        </div>
+        
+        <div class="store-section mt-5">
+          <div class="row store-row">
+            <div class="col-md-6 mb-4">
+              <a class="store-card" href="https://play.google.com/store/apps/dev?id=4642950853103060547" target="_blank" rel="noopener">
+                <div class="store-icon store-icon--play">
+                  <svg viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+                    <path d="M96 60l236 196-236 196V60z" fill="#0a84ff"/>
+                    <path d="M96 60l140 116-56 60-84-176z" fill="#74b5ff"/>
+                    <path d="M96 452l140-116-56-60-84 176z" fill="#0050c8"/>
+                  </svg>
+                </div>
+                <div class="store-info">
+                  <p class="store-label">Google Play</p>
+                  <h3>Disponível na Play Store</h3>
+                  <p class="text-muted">Baixe nossos aplicativos</p>
+                </div>
+                <span class="store-link">Ver apps</span>
+              </a>
+            </div>
+            <div class="col-md-6 mb-4">
+              <a class="store-card" href="https://apps.apple.com/cn/developer/%E9%9B%84%E7%9A%93-%E7%8E%8B/id1445704309" target="_blank" rel="noopener">
+                <div class="store-icon store-icon--apple">
+                  <svg viewBox="0 0 384 512" aria-hidden="true" focusable="false">
+                    <path fill="#f5f5f7" d="M318.7 268.7c-.3-62.6 51.4-92.8 53.8-94.3-29.3-42.8-74.8-48.6-90.7-49.3-38.6-3.9-75.3 22.7-94.9 22.7-19.6 0-49.8-22.1-81.9-21.5-42.1.6-80.9 24.4-102.6 61.6-43.7 75.8-11.2 188 31.3 249.5 20.7 30 45.4 63.7 78.1 62.4 31.4-1.3 43.3-20.2 81.3-20.2 38 0 48.6 20.2 81.9 19.6 33.9-.6 55.3-30.6 76-60.9 23.9-34.9 33.8-68.7 34.4-70.4-.7-.3-65.9-25.3-66.3-100.2zM259.5 82.5c17.3-20.9 29.1-50 26-79.1-25.2 1-55.6 16.8-73.6 37.7-16.2 18.5-30.3 48.2-26.6 76.5 28.1 2.2 56.9-14.2 74.2-35.1z"/>
+                  </svg>
+                </div>
+                <div class="store-info">
+                  <p class="store-label">Apple Store</p>
+                  <h3>Disponível na App Store</h3>
+                  <p class="text-muted">Baixe nossos aplicativos</p>
+                </div>
+                <span class="store-link">Ver apps</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-section mt-5 pt-4 border-top">
+          <p>© {{ site.time | date: '%Y' }} {{ site.title }}. Todos os direitos reservados.</p>
+          <p class="mb-0">Apoiamos a comunidade e incentivamos o compartilhamento</p>
+        </div>
       </div>
-      <div class="store-info">
-        <p class="store-label" data-i18n="share.store.play_label">{% t share.store.play_label %}</p>
-        <h3 data-i18n="share.store.play_title">{% t share.store.play_title %}</h3>
-        <p class="text-muted" data-i18n="share.store.play_desc">{% t share.store.play_desc %}</p>
-      </div>
-      <span class="store-link" data-i18n="share.store.play_link">{% t share.store.play_link %}</span>
-    </a>
-    <a class="store-card" href="https://apps.apple.com/cn/developer/%E9%9B%84%E7%9A%93-%E7%8E%8B/id1445704309" target="_blank" rel="noopener">
-      <div class="store-icon store-icon--apple">
-        <svg viewBox="0 0 384 512" aria-hidden="true" focusable="false">
-          <path fill="#f5f5f7" d="M318.7 268.7c-.3-62.6 51.4-92.8 53.8-94.3-29.3-42.8-74.8-48.6-90.7-49.3-38.6-3.9-75.3 22.7-94.9 22.7-19.6 0-49.8-22.1-81.9-21.5-42.1.6-80.9 24.4-102.6 61.6-43.7 75.8-11.2 188 31.3 249.5 20.7 30 45.4 63.7 78.1 62.4 31.4-1.3 43.3-20.2 81.3-20.2 38 0 48.6 20.2 81.9 19.6 33.9-.6 55.3-30.6 76-60.9 23.9-34.9 33.8-68.7 34.4-70.4-.7-.3-65.9-25.3-66.3-100.2zM259.5 82.5c17.3-20.9 29.1-50 26-79.1-25.2 1-55.6 16.8-73.6 37.7-16.2 18.5-30.3 48.2-26.6 76.5 28.1 2.2 56.9-14.2 74.2-35.1z"/>
-        </svg>
-      </div>
-      <div class="store-info">
-        <p class="store-label" data-i18n="share.store.apple_label">{% t share.store.apple_label %}</p>
-        <h3 data-i18n="share.store.apple_title">{% t share.store.apple_title %}</h3>
-        <p class="text-muted" data-i18n="share.store.apple_desc">{% t share.store.apple_desc %}</p>
-      </div>
-      <span class="store-link" data-i18n="share.store.apple_link">{% t share.store.apple_link %}</span>
-    </a>
+    </div>
   </div>
-
-  <footer class="share-card__footer">
-    <p data-i18n="share.footer.title">{% t share.footer.title %}</p>
-    <span data-i18n="share.footer.subtitle">{% t share.footer.subtitle %}</span>
-  </footer>
-</section>
+</div>

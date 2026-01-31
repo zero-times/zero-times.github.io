@@ -1,70 +1,110 @@
 ---
-layout: page
 title: Contato
-permalink: "/contact/"
-comments: false
+layout: page
+permalink: /contact/
 ---
 
-<section class="contact-wrapper contact-hero mb-5">
-  <div class="contact-hero__badge" data-i18n="contact_page.hero_badge">{% t contact_page.hero_badge %}</div>
-  <h1 data-i18n="contact_page.hero_title">{% t contact_page.hero_title %}</h1>
-  <p class="lead" data-i18n="contact_page.hero_subtitle">{% t contact_page.hero_subtitle %}</p>
-  <div class="contact-chips">
-    <div class="contact-chip">
-      <span class="contact-chip__label" data-i18n="contact_page.chip_email">{% t contact_page.chip_email %}</span>
-      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+<!-- Contact Hero
+================================================== -->
+<section class="contact-hero text-center mb-5 py-5">
+  <div class="container">
+    <div class="contact-hero__badge">Entre em Contato</div>
+    <h1>Como Posso Ajudar?</h1>
+    <p class="lead">Estou disponível para projetos freelance, consultorias ou oportunidades de trabalho</p>
+  </div>
+</section>
+
+<!-- Contact Methods
+================================================== -->
+<section class="contact-methods mb-5">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="contact-chip d-inline-block px-4 py-3 rounded">
+          <span class="contact-chip__label">Email</span>
+          <h3 class="h6 mb-0"><a href="mailto:{{site.email}}">{{site.email}}</a></h3>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="contact-chip d-inline-block px-4 py-3 rounded">
+          <span class="contact-chip__label">Localização</span>
+          <h3 class="h6 mb-0">Brasil</h3>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="contact-chip d-inline-block px-4 py-3 rounded">
+          <span class="contact-chip__label">Idiomas</span>
+          <h3 class="h6 mb-0">Pt, En, Zh</h3>
+        </div>
+      </div>
     </div>
-    <div class="contact-chip">
-      <span class="contact-chip__label" data-i18n="contact_page.chip_wechat">{% t contact_page.chip_wechat %}</span>
-      <span class="contact-chip__value">hoaever</span>
+    
+    <div class="row mt-5">
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+          <div class="card-body">
+            <h3 class="h5">Projetos Freelance</h3>
+            <p class="text-muted">Desenvolvimento de aplicações web e mobile sob demanda</p>
+            <a href="#" class="btn btn-outline-primary">Solicitar orçamento</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+          <div class="card-body">
+            <h3 class="h5">Consultoria</h3>
+            <p class="text-muted">Assessoria técnica e arquitetura de soluções</p>
+            <a href="#" class="btn btn-outline-primary">Agendar consulta</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+          <div class="card-body">
+            <h3 class="h5">Oportunidades</h3>
+            <p class="text-muted">Colaboração em projetos interessantes</p>
+            <a href="#" class="btn btn-outline-primary">Enviar proposta</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="contact-wrapper contact-methods mb-5">
-  <div class="row">
-    <div class="col-md-4 mb-4">
-      <div class="contact-card h-100">
-        <h3 data-i18n="contact_page.methods.project_title">{% t contact_page.methods.project_title %}</h3>
-        <p data-i18n="contact_page.methods.project_desc">{% t contact_page.methods.project_desc %}</p>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="contact-card h-100">
-        <h3 data-i18n="contact_page.methods.consult_title">{% t contact_page.methods.consult_title %}</h3>
-        <p data-i18n="contact_page.methods.consult_desc">{% t contact_page.methods.consult_desc %}</p>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="contact-card h-100">
-        <h3 data-i18n="contact_page.methods.content_title">{% t contact_page.methods.content_title %}</h3>
-        <p data-i18n="contact_page.methods.content_desc">{% t contact_page.methods.content_desc %}</p>
+<!-- Contact Form
+================================================== -->
+<section class="contact-form mb-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="text-center mb-4">Envie uma Mensagem</h2>
+        <p class="text-center text-muted mb-5">Preencha o formulário abaixo e entrarei em contato o mais breve possível</p>
+        
+        <form>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <input class="form-control" type="text" name="name" placeholder="Seu nome" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <input class="form-control" type="email" name="email" placeholder="Seu email" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <input class="form-control" type="text" name="company" placeholder="Sua empresa (opcional)">
+            </div>
+            <div class="col-md-6 mb-3">
+              <input class="form-control" type="text" name="topic" placeholder="Assunto">
+            </div>
+          </div>
+          <div class="mb-3">
+            <textarea rows="8" class="form-control mb-3" name="message" placeholder="Sua mensagem" required></textarea>
+          </div>
+          <div class="text-center">
+            <input class="btn btn-primary btn-lg px-5" type="submit" value="Enviar Mensagem">
+          </div>
+        </form>
       </div>
     </div>
   </div>
-</section>
-
-<section class="contact-wrapper contact-form mb-5">
-  <h2 data-i18n="contact_page.form.title">{% t contact_page.form.title %}</h2>
-  <p class="text-muted" data-i18n="contact_page.form.description">{% t contact_page.form.description %}</p>
-  <form class="contact-form__box" action="https://formspree.io/xvoewlbz" method="POST">
-    <div class="form-group row">
-      <div class="col-md-6">
-        <input class="form-control" type="text" name="name" placeholder="{% t contact_page.form.name_placeholder %}" data-i18n-placeholder="contact_page.form.name_placeholder" required>
-      </div>
-      <div class="col-md-6">
-        <input class="form-control" type="email" name="email" placeholder="{% t contact_page.form.email_placeholder %}" data-i18n-placeholder="contact_page.form.email_placeholder" required>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-md-6">
-        <input class="form-control" type="text" name="company" placeholder="{% t contact_page.form.company_placeholder %}" data-i18n-placeholder="contact_page.form.company_placeholder">
-      </div>
-      <div class="col-md-6">
-        <input class="form-control" type="text" name="topic" placeholder="{% t contact_page.form.topic_placeholder %}" data-i18n-placeholder="contact_page.form.topic_placeholder">
-      </div>
-    </div>
-    <textarea rows="8" class="form-control mb-3" name="message" placeholder="{% t contact_page.form.message_placeholder %}" data-i18n-placeholder="contact_page.form.message_placeholder" required></textarea>
-    <input class="btn btn-apple-primary btn-lg px-5" type="submit" value="{% t contact_page.form.submit %}" data-i18n-value="contact_page.form.submit">
-  </form>
 </section>

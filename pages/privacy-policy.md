@@ -6,48 +6,44 @@ comments: false
 ---
 
 <section class="privacy-policy">
-  <h3 data-i18n="privacy.intro_title">{% t privacy.intro_title %}</h3>
-  <p data-i18n="privacy.intro_body">{% t privacy.intro_body %}</p>
+  <h3>Introdução</h3>
+  <p>Valorizamos sua privacidade e segurança de dados. Este documento explica, de forma transparente, como coletamos, processamos e compartilhamos informações ao acessar o site, deixar mensagens ou interagir conosco.</p>
 
-  <h3 data-i18n="privacy.collection_title">{% t privacy.collection_title %}</h3>
+  <h3>Coleta de informações</h3>
   <ul>
-    <li data-i18n="privacy.collection_item_logs">{% t privacy.collection_item_logs %}</li>
-    <li data-i18n="privacy.collection_item_cookies">{% t privacy.collection_item_cookies %}</li>
-    <li data-i18n="privacy.collection_item_registration">{% t privacy.collection_item_registration %}</li>
+    <li>Informações de log: registramos IP, tipo de navegador, página de referência, horário de acesso e outros dados básicos para segurança e análise de desempenho.</li>
+    <li>Cookies e armazenamento local: usados para lembrar preferências (como idioma e tema) e podem ser utilizados por scripts de analytics ou anúncios.</li>
+    <li>Informações de cadastro/assinatura: quando você envia e-mail ou apelido, armazenamos com segurança e usamos apenas para notificações necessárias.</li>
   </ul>
 
-  <h3 data-i18n="privacy.usage_title">{% t privacy.usage_title %}</h3>
+  <h3>Finalidades de uso</h3>
   <ul>
-    <li data-i18n="privacy.usage_item_experience">{% t privacy.usage_item_experience %}</li>
-    <li data-i18n="privacy.usage_item_updates">{% t privacy.usage_item_updates %}</li>
-    <li data-i18n="privacy.usage_item_security">{% t privacy.usage_item_security %}</li>
+    <li>Otimizar a experiência do site: aprimoramos desempenho, conteúdo e fluxos de interação com base em dados de acesso.</li>
+    <li>Enviar atualizações: com sua permissão, enviamos por e-mail novidades, eventos ou recomendações.</li>
+    <li>Segurança e conformidade: usamos logs e dados de dispositivo para identificar comportamentos anormais.</li>
   </ul>
 
-  <h3 data-i18n="privacy.sharing_title">{% t privacy.sharing_title %}</h3>
-  <p data-i18n="privacy.sharing_body">{% t privacy.sharing_body %}</p>
+  <h3>Compartilhamento de dados</h3>
+  <p>Não vendemos, alugamos ou trocamos suas informações pessoais. Compartilhamos apenas quando necessário:</p>
   <ol>
-    <li data-i18n="privacy.sharing_item_legal">{% t privacy.sharing_item_legal %}</li>
-    <li data-i18n="privacy.sharing_item_support">{% t privacy.sharing_item_support %}</li>
+    <li>Exigência legal: solicitações legítimas de autoridades regulatórias, tribunais ou órgãos de aplicação da lei.</li>
+    <li>Suporte de serviços: colaboração com terceiros confiáveis (hospedagem, analytics, anúncios) sob contrato.</li>
   </ol>
 
-  <h3 data-i18n="privacy.cookies_title">{% t privacy.cookies_title %}</h3>
-  <p data-i18n="privacy.cookies_body">{% t privacy.cookies_body %}</p>
+  <h3>Gerenciamento de cookies</h3>
+  <p>Você pode desativar ou excluir cookies no navegador, mas isso pode afetar algumas funções do site.</p>
 
-  <h3 data-i18n="privacy.third_party_title">{% t privacy.third_party_title %}</h3>
-  <p data-i18n="privacy.third_party_body">{% t privacy.third_party_body %}</p>
+  <h3>Serviços de terceiros</h3>
+  <p>Podemos integrar Google Analytics, Google Ads ou outros parceiros. Eles podem usar cookies e histórico de navegação para personalizar conteúdo.</p>
 
-  <h3 data-i18n="privacy.rights_title">{% t privacy.rights_title %}</h3>
+  <h3>Seus direitos</h3>
   <ul>
-    <li data-i18n="privacy.rights_item_access">{% t privacy.rights_item_access %}</li>
-    <li data-i18n="privacy.rights_item_optout">{% t privacy.rights_item_optout %}</li>
-    <li data-i18n="privacy.rights_item_objection">{% t privacy.rights_item_objection %}</li>
+    <li>Acessar, atualizar ou excluir suas informações pessoais.</li>
+    <li>Cancelar assinatura de e-mails ou outras autorizações de marketing a qualquer momento.</li>
+    <li>Opor-se ao processamento com base em interesse legítimo; responderemos prontamente.</li>
   </ul>
-  <p>
-    <span data-i18n="privacy.rights_contact_prefix">{% t privacy.rights_contact_prefix %}</span>
-    <a href="mailto:{{ site.email }}">{{ site.email }}</a>
-    <span data-i18n="privacy.rights_contact_suffix">{% t privacy.rights_contact_suffix %}</span>
-  </p>
+  <p>Para exercer esses direitos, entre em contato pela página ou pelo e-mail <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
 
-  <h3 data-i18n="privacy.updates_title">{% t privacy.updates_title %}</h3>
-  <p data-i18n="privacy.updates_body">{% t privacy.updates_body %}</p>
+  <h3>Atualizações</h3>
+  <p>Esta política pode ser atualizada conforme mudanças legais ou de negócio. As novas versões entram em vigor imediatamente após publicação.</p>
 </section>

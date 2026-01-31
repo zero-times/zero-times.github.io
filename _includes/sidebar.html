@@ -1,17 +1,25 @@
-<div class="sidebar sticky-top">        
-    <div class="sidebar-section">
-        <h5><span data-i18n="newsletter.title">{% t newsletter.title %}</span></h5>
-        {% include newsletter.html %}
+<div class="col-md-4">
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h5>Newsletter</h5>
     </div>
-    <div class="sidebar-section">
-<!--        <h5><span>Your Ad Here</span></h5>-->
-<!--        <img src="{{site.baseurl}}/assets/images/ad.jpg">-->
-<!-- Sim -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5928117043364923"
-     data-ad-slot="9923857440"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+    <div class="card-body">
+      {% include newsletter.html %}
     </div>
+  </div>
+  
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h5>Arquivos</h5>
+    </div>
+    <div class="card-body">
+      {% for post in site.posts limit: 5 %}
+      <div class="mb-2">
+        <a href="{{ post.url }}" class="text-decoration-none">{{ post.title }}</a>
+        <small class="text-muted d-block">{{ post.date | date: "%d/%m/%Y" }}</small>
+      </div>
+      {% endfor %}
+      <a href="/blog/archive/" class="btn btn-sm btn-outline-secondary mt-2">Ver todos</a>
+    </div>
+  </div>
 </div>

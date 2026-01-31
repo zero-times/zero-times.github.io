@@ -1,58 +1,7 @@
-<!-- begin post -->
-{% assign author = site.authors[post.author] %}
-<div class="card blog-card">
-    {% capture post_href %}
-    {% if post.site %}
-        {{ post.site }}
-    {% else %}
-        {{ post.url | relative_url }}
-    {% endif %}
-    {% endcapture %}
-
-    <a class="blog-card-thumb" href="{{ post_href | strip }}">
-        {% if post.image %}
-        <img src="{{ site.baseurl }}/{{ post.image }}" alt="{{ post.title }}">
-        {% else %}
-        <div class="blog-card-thumb__placeholder">
-            <span>{{ post.title | slice: 0, 1 }}</span>
-        </div>
-        {% endif %}
-        <span class="blog-card-badge" data-i18n="common.blog_badge">{% t common.blog_badge %}</span>
-    </a>
-
-    <div class="card-block">
-        <div class="blog-card-meta">
-            {% if post.categories %}
-            <div class="blog-card-tags">
-                {% for category in post.categories %}
-                <span>{{ category }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-            <span class="blog-card-date">{{ post.date | date: "%Y.%m.%d" }}</span>
-        </div>
-
-        <h3 class="card-title h4 serif-font">
-            <a href="{{ post_href | strip }}">{{ post.title }}</a>
-        </h3>
-
-        <p class="card-text text-muted">{{ post.excerpt | strip_html | truncatewords: 22 }}</p>
-        
-        <div class="blog-card-footer">
-            <span class="author-meta">
-                {% if post.author and author %}
-                {{ author.display_name }}
-                {% else %}
-                {{ site.author }}
-                {% endif %}
-            </span>
-            <span class="blog-card-read">
-                <span data-i18n="common.read_more">{% t common.read_more %}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
-                </svg>
-            </span>
-        </div>
-    </div>
+<div class="card mb-4">
+  <div class="card-body">
+    <h3 class="card-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+    <p class="card-text">{{ post.excerpt | strip_html | truncate: 100 }}</p>
+    <a href="{{ post.url }}" class="btn btn-outline-primary">Leia mais</a>
+  </div>
 </div>
-<!-- end post -->

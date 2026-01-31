@@ -1,8 +1,7 @@
-{% assign page_lang = page.lang | default: site.lang | default: 'en' %}
-{% assign page_lang = page_lang | replace: '_', '-' | downcase %}
-{% assign page_dir = page.dir | default: site.dir | default: 'ltr' | downcase %}
+---
+---
 <!DOCTYPE html>
-<html lang="{{ page_lang }}" dir="{{ page_dir }}">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,26 +10,10 @@
 {% seo %}
 <link href="{{ site.baseurl }}/assets/css/theme.css" rel="stylesheet">
 <link href="{{ site.baseurl }}/assets/css/custom.css" rel="stylesheet">
-<script>
-  window.I18N_DATA = {
-    translations: {{ site.data.translations | jsonify }},
-    menus: {{ site.data.menus | jsonify }},
-    defaultLang: {{ site.default_lang | default: 'pt-br' | jsonify }},
-    supportedLangs: {{ site.languages | jsonify }},
-    siteTitle: {{ site.title | jsonify }},
-    siteEmail: {{ site.email | jsonify }}
-  };
-</script>
-<script src="{{ site.baseurl }}/assets/js/i18n.js"></script>
 </head>
-<body class="share-page locale-{{ page_lang }} dir-{{ page_dir }}">
-  <div class="share-background">
-    <div class="share-language-switcher">
-      {% include language-switcher.html %}
-    </div>
-    <main class="share-wrapper">
-      {{ content }}
-    </main>
-  </div>
+<body class="share-page">
+  <main>
+    {{ content }}
+  </main>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <!-- Language Switch Component -->
 <div id="language-switcher" class="language-switcher">
-  <select id="language-switcher-select" class="language-selector" data-i18n-aria="common.language_switch">
+  <select id="language-switcher-select" class="language-selector" aria-label="Selecionar idioma">
     <option value="pt-br" {{ page.lang == 'pt-br' or page.lang == nil ? 'selected' : '' }}>🇧🇷 Português (Brasil)</option>
     <option value="en" {{ page.lang == 'en' ? 'selected' : '' }}>🇺🇸 English</option>
     <option value="zh" {{ page.lang == 'zh' ? 'selected' : '' }}>🇨🇳 中文</option>

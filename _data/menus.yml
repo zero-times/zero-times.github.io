@@ -1,56 +1,29 @@
-# Multi-language configuration for zero-times.github.io
-# Default language is Portuguese (Brazil) to serve Brazilian users
+# Menu configuration for zero-times.github.io
+# Simplified menu structure without internationalization
 
-# Navigation menu translations
+# Navigation menu
 topmenu:
-  - title:
-      pt-br: "Projetos"
-      en: "Projects"
-      zh: "项目"
+  - title: "Projetos"
     url: "#projects"
     class: "js-scroll-trigger"
-  - title:
-      pt-br: "Blog"
-      en: "Blog"
-      zh: "博客"
+  - title: "Blog"
     url: "#blog"
     class: "js-scroll-trigger"
-  - title:
-      pt-br: "Sobre"
-      en: "About"
-      zh: "关于"
+  - title: "Sobre"
     url: "/about"
-  - title:
-      pt-br: "Contato"
-      en: "Contact"
-      zh: "联系"
+  - title: "Contato"
     url: "/contact"
     
 footermenu:
-  - title:
-      pt-br: "Início"
-      en: "Home"
-      zh: "首页"
+  - title: "Início"
     url: "/"
-  - title:
-      pt-br: "Sobre"
-      en: "About"
-      zh: "关于"
+  - title: "Sobre"
     url: "/about"
-  - title:
-      pt-br: "Contato"
-      en: "Contact"
-      zh: "联系"
+  - title: "Contato"
     url: "/contact"
-  - title:
-      pt-br: "Política de Privacidade"
-      en: "Privacy Policy"
-      zh: "隐私政策"
+  - title: "Política de Privacidade"
     url: "/privacy-policy"
     
-# Additional site content translations
+# Additional site content
 site_content:
-  copyright:
-    pt-br: "Copyright © {{site.title}}. Todos os direitos reservados."
-    en: "Copyright © {{site.title}}. All rights reserved."
-    zh: "Copyright © {{site.title}}. 保留所有权利。"
+  copyright: "Copyright © {{site.title}}. Todos os direitos reservados."

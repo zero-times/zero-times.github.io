@@ -1,125 +1,91 @@
 ---
 layout: default
-disqus: false
-archive: false
-post_class: post-template
 ---
 
-<!-- Begin Article
-================================================== -->
-
-	<div class="row">
-		
-
-		<!-- Post -->        
-        {% assign author = site.authors[page.author] %}
-        
-		<div class="col-sm-8">
-            <!-- Post Featured Image -->
-			{% if page.image %}<img class="featured-image img-fluid rounded" src="{{ site.baseurl }}/{{ page.image }}" alt="{{ page.title }}">{% endif %}
-			<!-- End Featured Image -->
-			<div class="mainheading">             
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            {% if page.image %}<img class="featured-image img-fluid rounded" src="{{ site.baseurl }}/{{ page.image }}" alt="{{ page.title }}">{% endif %}
+            
+            <div class="post-header">
+                <h1 class="posttitle" itemprop="name headline">{{ page.title }}</h1>
                 
-                <!-- Post Categories -->
-                <div class="after-post-tags">
-                    <ul class="tags">
-                        {% assign sortedCategories = page.categories | sort %}
-                        {% for category in sortedCategories %}
-                        <li>
-                         <a href="{{ site.baseurl }}/categories#{{ category | slugify }}">{{ category }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                <div class="post-meta">
+                    <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}">{{ page.date | date_to_string }}</time></span>           
+                    
+                    {% if page.last_modified_at %}
+                    <span class="post-updated">(<time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">Atualizado em {{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)</span>
+                    {% endif %}
+                    
+                    {% if page.author %}
+                        {% assign author = site.authors[page.author] %}
+                    {% else %}
+                        {% assign author = site.author %}
+                    {% endif %}
+                    
+                    {% if author %}
+                        <span class="post-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                            <span itemprop="name">{{ author.display_name }}</span>
+                        </span>
+                    {% endif %}
+                    
+                    {% if page.categories %}
+                        <div class="post-categories">
+                            {% for category in page.categories %}
+                            <a href="{{site.baseurl}}/categories#{{ category | slugify }}">{{ category }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-                <!-- End Categories -->
-                
-                <!-- Post Title -->
-				<h1 class="posttitle">{{ page.title }}</h1> 
-                
-			</div>
-
-			
-
-			<!-- Post Content -->
-			<div class="article-post serif-font">
-				{{content}}
-                <div class="clearfix"></div>
-			</div>
-
-            <!-- Post Date -->
-            <p>
-            <small>
-                <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}">{{ page.date | date_to_string }}</time></span>           
-                {% if page.last_modified_at %}
-                (<span data-i18n="post.updated_label">{% t post.updated_label %}</span> <time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)
-                {% endif %}
-                </small>
-            </p>
+            </div>
             
-			
+            <div class="post-content" itemprop="articleBody">
+                {{content}}
+            </div>
             
-            <!-- Prev/Next -->
-            <div class="row PageNavigation mt-4 prevnextlinks d-flex justify-content-between">
-              {% if page.previous.url %}
-                <div class="col-md-6 rightborder pl-0">
-                    <a class="thepostlink" href="{{page.previous.url | absolute_url}}">&laquo; {{page.previous.title}}</a>
+            {% if page.tags %}
+            <div class="post-tags">
+                {% for tag in page.tags %}
+                <a class="badge badge-light" href="{{site.baseurl}}/tags#{{ tag | slugify }}">{{ tag }}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <hr />
+            <nav class="previous-next-post" aria-label="Navegação de postagens">
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if page.previous.url %}
+                        <a class="btn btn-outline-primary" href="{{page.previous.url | absolute_url}}" title="Previous Post">&laquo; {{page.previous.title}}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 text-right">
+                        {% if page.next.url %}
+                        <a class="btn btn-outline-primary" href="{{page.next.url | absolute_url}}" title="Next Post">{{page.next.title}} &raquo;</a>
+                        {% endif %}
+                    </div>
                 </div>
-              {% endif %}
-              {% if page.next.url %}
-                <div class="col-md-6 text-right pr-0">
-                    <a class="thepostlink" href="{{page.next.url | absolute_url}}">{{page.next.title}} &raquo;</a>
+            </nav>
+            
+            {% if author %}
+            <div class="author-box mt-5">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center">
+                        {% if author.avatar %}
+                        <img class="author-thumb rounded-circle" src="{{site.baseurl}}/{{author.avatar}}" alt="{{ author.display_name }}">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-10">
+                        <h4>{{ author.display_name }}</h4>
+                        <p class="author-description">{{ author.description }}</p>
+                        {% if author.web %}
+                        <a target="_blank" class="btn btn-sm btn-outline-primary" href="{{ author.web }}">Visitar site</a>
+                        {% endif %}
+                    </div>
                 </div>
-              {% endif %}
             </div>
-            <!-- End Prev/Next -->
-            
-            
-             <!-- Author Box -->
-                {% if page.author %}				
-				<div class="row post-top-meta">
-					<div class="col-md-2">
-						<img class="author-thumb" src="{{site.baseurl}}/{{author.avatar}}" alt="{{ author.display_name }}">
-					</div>
-					<div class="col-md-10">
-						<a target="_blank" class="link-dark" href="{{ author.web }}">{{ author.display_name }}</a><a target="_blank" href="{{ author.twitter }}" class="btn follow" data-i18n="post.follow_label">{% t post.follow_label %}</a>
-						<span class="author-description">{{ author.description }}</span>						
-					</div>
-				</div>				
-                {% endif %}
-            
-            
-            <!-- Begin Comments
-            ================================================== -->
-            <section>
-            <div id="comments">                          
-                {% include disqus.html %} 
-            </div>
-            </section>
-            <!--End Comments
-            ================================================== -->
-            
-            
-
-		</div>
-		<!-- End Post -->
-
-
-        
-
-		<!-- Sidebar -->
-        
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5928117043364923"
-             crossorigin="anonymous"></script>
-        <div class="col-sm-4">
-            {% include sidebar.html %}
-            </div>
-        
-   <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-   </script>
-        
-
-	</div>
-
-<!-- End Article
-================================================== -->
+            {% endif %}
+        </div>
+    </div>
+</article>

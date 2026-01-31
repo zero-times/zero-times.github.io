@@ -1,13 +1,42 @@
-<nav class="pagination" role="pagination">
+<!-- Pagination -->
+{% if paginator.total_pages > 1 %}
+<nav aria-label="Navegação de página">
+  <ul class="pagination justify-content-center">
     {% if paginator.previous_page %}
-        {% if paginator.previous_page == 1 %}
-            <a class="newer-posts" href="{{site.baseurl}}/" title="{% t pagination.previous_title %}" data-i18n-title="pagination.previous_title"><span aria-hidden="true">&laquo;</span> <span data-i18n="pagination.newer">{% t pagination.newer %}</span></a>
-        {% else %}
-            <a class="newer-posts" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" title="{% t pagination.previous_title %}" data-i18n-title="pagination.previous_title"><span aria-hidden="true">&laquo;</span> <span data-i18n="pagination.newer">{% t pagination.newer %}</span></a>
-      {% endif %}
+    <li class="page-item">
+      <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">Anterior</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">Anterior</span>
+    </li>
     {% endif %}
-    <span class="page-number d-none"> &nbsp; &nbsp; <span data-i18n="pagination.page_label">{% t pagination.page_label %}</span> {{paginator.page}} <span data-i18n="pagination.of_label">{% t pagination.of_label %}</span> {{paginator.total_pages}} &nbsp; &nbsp; </span>
-    {% if paginator.next_page %} 
-        <a class="older-posts" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" title="{% t pagination.next_title %}" data-i18n-title="pagination.next_title"><span data-i18n="pagination.older">{% t pagination.older %}</span> <span aria-hidden="true">&raquo;</span></a>
-    {% endif %} 
+
+    {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+    <li class="page-item active">
+      <span class="page-link">{{ page }}</span>
+    </li>
+    {% elsif page == 1 %}
+    <li class="page-item">
+      <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+
+    {% if paginator.next_page %}
+    <li class="page-item">
+      <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Próxima</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">Próxima</span>
+    </li>
+    {% endif %}
+  </ul>
 </nav>
+{% endif %}

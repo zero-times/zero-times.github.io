@@ -17,10 +17,8 @@ plugins:
   - jekyll-sitemap
   - jekyll-paginate
 
-# Multilanguage settings
-languages: ["pt", "en", "zh"]
-default_lang: "pt"
-exclude_from_localization: ["assets", "css", "js", "images", "favicon.ico"]
+# Language settings
+lang: "pt-BR"
 
 # Pagination
 paginate: 5
