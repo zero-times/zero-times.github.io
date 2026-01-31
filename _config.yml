@@ -1,13 +1,13 @@
 # Site settings
-title: Meu Blog Pessoal
-email: seu-email@exemplo.com
+title: "Hoa"
+email: x5brain@gmail.com
 description: Bem-vindo ao meu blog pessoal em português!
 baseurl: ""
-url: "https://seu-nome.github.io"
+url: "https://zero-times.github.io"
 author:
-  name: Seu Nome
-  bio: Desenvolvedor apaixonado por tecnologia e design
-  avatar: /images/avatar.jpg
+  name: "Hoa"
+  bio: "Especialista em arquitetura móvel e soluções multiplataforma"
+  avatar: /assets/images/avatar.jpg
 
 # Build settings
 markdown: kramdown
@@ -25,20 +25,19 @@ paginate: 5
 paginate_path: "/blog/page:num/"
 
 # SEO
-twitter_username: seu_twitter
-github_username: seu_github
+twitter_username: hoabie
+github_username: zero-times
 social:
-  name: Seu Nome
+  name: Hoa
   links:
-    - https://twitter.com/seu_twitter
-    - https://github.com/seu_github
-    - https://linkedin.com/in/seu_perfil
+    - https://github.com/zero-times
+    - https://linkedin.com/in/hoa-wang
 
 # Bootstrap version
 bootstrap_version: 5
 
 # Analytics (optional)
-google_analytics: 'UA-XXXXXXXXX-X'
+google_analytics: 'UA-214748269-1'
 
 # Defaults
 defaults:

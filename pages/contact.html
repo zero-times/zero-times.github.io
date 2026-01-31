@@ -1,110 +1,70 @@
 ---
-title: Contato
 layout: page
-permalink: /contact/
+title: Contato
+permalink: "/contact/"
+comments: false
 ---
 
-<!-- Contact Hero
-================================================== -->
-<section class="contact-hero text-center mb-5 py-5">
-  <div class="container">
-    <div class="contact-hero__badge">Entre em Contato</div>
-    <h1>Como Posso Ajudar?</h1>
-    <p class="lead">Estou disponível para projetos freelance, consultorias ou oportunidades de trabalho</p>
+<section class="contact-wrapper contact-hero mb-5">
+  <div class="contact-hero__badge">Conversa direta</div>
+  <h1>Vamos falar sobre seu produto, arquitetura ou desafios multiplataforma</h1>
+  <p class="lead">Se você precisa de consultoria sobre rotas técnicas HarmonyOS/Flutter ou quer construir capacidade móvel do zero, sinta-se à vontade para falar comigo. Dê-me um objetivo e eu preparo um caminho técnico claro e um plano de ação.</p>
+  <div class="contact-chips">
+    <div class="contact-chip">
+      <span class="contact-chip__label">Email</span>
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </div>
+    <div class="contact-chip">
+      <span class="contact-chip__label">WeChat</span>
+      <span class="contact-chip__value">hoaever</span>
+    </div>
   </div>
 </section>
 
-<!-- Contact Methods
-================================================== -->
-<section class="contact-methods mb-5">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-4 mb-4">
-        <div class="contact-chip d-inline-block px-4 py-3 rounded">
-          <span class="contact-chip__label">Email</span>
-          <h3 class="h6 mb-0"><a href="mailto:{{site.email}}">{{site.email}}</a></h3>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="contact-chip d-inline-block px-4 py-3 rounded">
-          <span class="contact-chip__label">Localização</span>
-          <h3 class="h6 mb-0">Brasil</h3>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="contact-chip d-inline-block px-4 py-3 rounded">
-          <span class="contact-chip__label">Idiomas</span>
-          <h3 class="h6 mb-0">Pt, En, Zh</h3>
-        </div>
+<section class="contact-wrapper contact-methods mb-5">
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="contact-card h-100">
+        <h3>Parcerias de projeto</h3>
+        <p>Quer que eu participe do seu projeto crítico? Descreva metas e prazos e alinhamos arquitetura, tecnologia e ritmo de entrega.</p>
       </div>
     </div>
-    
-    <div class="row mt-5">
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <h3 class="h5">Projetos Freelance</h3>
-            <p class="text-muted">Desenvolvimento de aplicações web e mobile sob demanda</p>
-            <a href="#" class="btn btn-outline-primary">Solicitar orçamento</a>
-          </div>
-        </div>
+    <div class="col-md-4 mb-4">
+      <div class="contact-card h-100">
+        <h3>Consultoria técnica</h3>
+        <p>Para HarmonyOS/Flutter, performance, SDKs e produto, posso oferecer diagnóstico, avaliação de soluções ou consultoria.</p>
       </div>
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <h3 class="h5">Consultoria</h3>
-            <p class="text-muted">Assessoria técnica e arquitetura de soluções</p>
-            <a href="#" class="btn btn-outline-primary">Agendar consulta</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <h3 class="h5">Oportunidades</h3>
-            <p class="text-muted">Colaboração em projetos interessantes</p>
-            <a href="#" class="btn btn-outline-primary">Enviar proposta</a>
-          </div>
-        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="contact-card h-100">
+        <h3>Colaboração de conteúdo</h3>
+        <p>Aberto a entrevistas, palestras e comunidades para compartilhar experiências reais de multiplataforma.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Contact Form
-================================================== -->
-<section class="contact-form mb-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <h2 class="text-center mb-4">Envie uma Mensagem</h2>
-        <p class="text-center text-muted mb-5">Preencha o formulário abaixo e entrarei em contato o mais breve possível</p>
-        
-        <form>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <input class="form-control" type="text" name="name" placeholder="Seu nome" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <input class="form-control" type="email" name="email" placeholder="Seu email" required>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <input class="form-control" type="text" name="company" placeholder="Sua empresa (opcional)">
-            </div>
-            <div class="col-md-6 mb-3">
-              <input class="form-control" type="text" name="topic" placeholder="Assunto">
-            </div>
-          </div>
-          <div class="mb-3">
-            <textarea rows="8" class="form-control mb-3" name="message" placeholder="Sua mensagem" required></textarea>
-          </div>
-          <div class="text-center">
-            <input class="btn btn-primary btn-lg px-5" type="submit" value="Enviar Mensagem">
-          </div>
-        </form>
+<section class="contact-wrapper contact-form mb-5">
+  <h2>Escreva para mim</h2>
+  <p class="text-muted">Use o formulário para descrever suas necessidades, prazos ou qualquer tema. Responderei em até 48 horas.</p>
+  <form class="contact-form__box" action="https://formspree.io/xvoewlbz" method="POST">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <input class="form-control" type="text" name="name" placeholder="Nome*" required>
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" type="email" name="email" placeholder="Email*" required>
       </div>
     </div>
-  </div>
+    <div class="form-group row">
+      <div class="col-md-6">
+        <input class="form-control" type="text" name="company" placeholder="Empresa / equipe (opcional)">
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" type="text" name="topic" placeholder="Projeto ou tema (opcional)">
+      </div>
+    </div>
+    <textarea rows="8" class="form-control mb-3" name="message" placeholder="Descreva seu objetivo, contexto ou o apoio esperado*" required></textarea>    
+    <input class="btn btn-apple-primary btn-lg px-5" type="submit" value="Enviar mensagem">
+  </form>
 </section>
