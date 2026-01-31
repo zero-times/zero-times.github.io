@@ -25,13 +25,14 @@ paginate: 5
 paginate_path: "/blog/page:num/"
 
 # SEO
-twitter_username: hoabie
 github_username: zero-times
+whatsapp: "+8619152250086"
 social:
   name: Hoa
   links:
     - https://github.com/zero-times
     - https://linkedin.com/in/hoa-wang
+    - https://wa.me/8619152250086
 
 # Bootstrap version
 bootstrap_version: 5

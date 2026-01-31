@@ -48,16 +48,16 @@ description: Entre em contato comigo
                 </li>
               </ul>
               
-              <h5 class="mt-4">Redes Sociais</h5>
+              <h5 class="mt-4">Contato</h5>
               <div class="social-links">
-                {% if site.twitter_username %}
-                <a href="https://twitter.com/{{ site.twitter_username }}" class="d-block mb-2" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-twitter"></i> Twitter
-                </a>
-                {% endif %}
                 {% if site.github_username %}
                 <a href="https://github.com/{{ site.github_username }}" class="d-block mb-2" target="_blank" rel="noopener noreferrer">
                   <i class="fab fa-github"></i> GitHub
+                </a>
+                {% endif %}
+                {% if site.whatsapp %}
+                <a href="https://wa.me/{{ site.whatsapp | replace: '+', '' }}" class="d-block mb-2" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-whatsapp"></i> WhatsApp: {{ site.whatsapp }}
                 </a>
                 {% endif %}
               </div>
