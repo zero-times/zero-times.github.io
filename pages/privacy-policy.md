@@ -3,6 +3,7 @@ layout: page
 title: Política de Privacidade
 permalink: /privacy-policy/
 comments: false
+description: Política de privacidade e tratamento de dados do site
 ---
 
 <section class="privacy-policy">

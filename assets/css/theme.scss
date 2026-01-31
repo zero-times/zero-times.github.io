@@ -1,3 +1,5 @@
+---
+---
 /* Custom styles for the Portuguese Personal Blog */
 :root {
   --primary-color: #2c3e50;
@@ -21,6 +23,34 @@ body {
   word-wrap: break-word;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  padding: 1.5rem 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #ffffff;
+  color: var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transform: translateY(-200%);
+  transition: transform 0.2s ease-in-out;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Improve focus indicators for keyboard navigation */
@@ -169,6 +199,61 @@ article h2 a:hover {
   color: var(--secondary-color);
 }
 
+.post-header {
+  margin-bottom: 1.5rem;
+}
+
+.posttitle {
+  margin-bottom: 0.75rem;
+  word-break: break-word;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.post-categories a {
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.post-content {
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.post-content p {
+  margin-bottom: 1.25rem;
+}
+
+.post-content ul,
+.post-content ol {
+  padding-left: 1.5rem;
+}
+
+.post-content blockquote {
+  border-left: 4px solid var(--secondary-color);
+  padding-left: 1rem;
+  color: var(--text-light);
+  margin: 1.5rem 0;
+}
+
+.author-box {
+  background: var(--light-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+.author-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+}
+
 /* Pagination */
 .pagination {
   margin-top: 2rem;
@@ -196,6 +281,16 @@ footer {
 
 footer a {
   color: var(--text-light);
+}
+
+@media (max-width: 576px) {
+  main {
+    padding: 1rem 0;
+  }
+
+  .post-content {
+    font-size: 1rem;
+  }
 }
 
 footer a:hover {

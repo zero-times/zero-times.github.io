@@ -3,38 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="theme-color" content="#2c3e50">
+  {% if page.keywords %}
+    <meta name="keywords" content="{{ page.keywords }}">
+  {% elsif site.keywords %}
+    <meta name="keywords" content="{{ site.keywords }}">
+  {% endif %}
+  {% seo %}
   
-  <!-- Bootstrap 5 CSS -->
+  <!-- Bootstrap 5 样式 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="/assets/css/theme.scss">
+  <!-- 站点样式 -->
+  <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/responsive-enhancements.css' | relative_url }}">
   
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+  <!-- 网站图标 -->
+  <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
   
-  <!-- SEO Meta Tags -->
-  {% if page.description %}
-    <meta name="description" content="{{ page.description }}">
-  {% else %}
-    <meta name="description" content="{{ site.description }}">
-  {% endif %}
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ page.url | absolute_url }}">
-  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="og:description" content="{{ page.description | default: site.description }}">
-  
-  <!-- RSS Feed -->
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="/feed.xml">
+  <!-- RSS 订阅 -->
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 </head>
 <body class="d-flex flex-column min-vh-100">
-  <!-- Header -->
+  <!-- 页头 -->
   <header class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
     <div class="container">
-      <a class="navbar-brand" href="/">{{ site.title }}</a>
+      <a class="navbar-brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,27 +39,27 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link {% if page.url == '/' %}active{% endif %}" href="/">Início</a>
+            <a class="nav-link {% if page.url == '/' %}active{% endif %}" href="{{ '/' | relative_url }}">Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/blog/' %}active{% endif %}" href="/blog/">Blog</a>
+            <a class="nav-link {% if page.url contains '/blog/' %}active{% endif %}" href="{{ '/blog/' | relative_url }}">Blog</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/about/' %}active{% endif %}" href="/about/">Sobre</a>
+            <a class="nav-link {% if page.url contains '/about/' %}active{% endif %}" href="{{ '/about/' | relative_url }}">Sobre</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/contact/' %}active{% endif %}" href="/contact/">Contato</a>
+            <a class="nav-link {% if page.url contains '/contact/' %}active{% endif %}" href="{{ '/contact/' | relative_url }}">Contato</a>
           </li>
           
-          <!-- Language selector -->
+          <!-- 语言选择 -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               🌐 {{ page.lang | upcase }}
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/pt/">Português</a></li>
-              <li><a class="dropdown-item" href="/en/">English</a></li>
-              <li><a class="dropdown-item" href="/zh/">中文</a></li>
+              <li><a class="dropdown-item" href="{{ '/pt/' | relative_url }}">Português</a></li>
+              <li><a class="dropdown-item" href="{{ '/en/' | relative_url }}">English</a></li>
+              <li><a class="dropdown-item" href="{{ '/zh/' | relative_url }}">中文</a></li>
             </ul>
           </li>
         </ul>
@@ -72,12 +67,12 @@
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-grow-1" id="main-content">
+  <!-- 主内容 -->
+  <main class="flex-grow-1" id="main-content" role="main">
     {{ content }}
   </main>
 
-  <!-- Footer -->
+  <!-- 页脚 -->
   <footer class="bg-light py-4 mt-5">
     <div class="container">
       <div class="row">
@@ -85,17 +80,17 @@
           <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}. Todos os direitos reservados.</p>
         </div>
         <div class="col-md-6 text-md-end">
-          <a href="/privacy/" class="me-3">Política de Privacidade</a>
-          <a href="/terms/">Termos de Uso</a>
+          <a href="{{ '/privacy-policy/' | relative_url }}" class="me-3">Política de Privacidade</a>
+          <a href="{{ '/terms/' | relative_url }}">Termos de Uso</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- Bootstrap JS Bundle with Popper -->
+  <!-- Bootstrap 脚本 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
-  <!-- Custom JavaScript -->
-  <script src="/assets/js/theme.js"></script>
+  <!-- 站点脚本 -->
+  <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
 </body>
 </html>

@@ -2,20 +2,28 @@
 title: "Hoa"
 email: x5brain@gmail.com
 description: Bem-vindo ao meu blog pessoal em português!
+keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, Brasil"
 baseurl: ""
-url: "https://zero-times.github.io"
+url: "https://youllbe.cn"
+default_lang: "pt-BR"
+locale: "pt_BR"
 author:
   name: "Hoa"
   bio: "Especialista em arquitetura móvel e soluções multiplataforma"
-  avatar: /assets/images/avatar.jpg
+  avatar: /assets/images/sal.png
+  url: "https://youllbe.cn"
+logo: /assets/images/logo.png
 
 # Build settings
 markdown: kramdown
 theme: minima
+timezone: UTC
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-archives
 
 # Language settings
 lang: "pt-BR"

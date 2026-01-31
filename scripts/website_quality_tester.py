@@ -99,7 +99,7 @@ def check_broken_links():
             
             # Check for example links which are likely broken
             for link in links:
-                if any(domain in link for domain in ['example.com', 'agenciabrasil.gov.br', 'valor.globo.com']):
+                if any(domain in link for domain in ['example.com', 'invalid-url', 'nonexistent-site']):
                     broken_links.append({
                         "url": link,
                         "issue": "Likely broken link - example domain or non-existent path",

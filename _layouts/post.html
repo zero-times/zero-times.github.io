@@ -2,90 +2,93 @@
 layout: default
 ---
 
+{% assign author_data = site.authors[page.author] | default: site.author %}
+{% assign author_name = author_data.display_name | default: author_data.name %}
+{% assign author_bio = author_data.description | default: author_data.bio %}
+{% assign author_avatar = author_data.avatar | default: site.author.avatar %}
+{% assign author_web = author_data.web | default: author_data.url %}
+
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-	
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            {% if page.image %}<img class="featured-image img-fluid rounded" src="{{ site.baseurl }}/{{ page.image }}" alt="{{ page.title }}">{% endif %}
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                {% if page.image %}<img class="featured-image img-fluid rounded" src="{{ site.baseurl }}/{{ page.image }}" alt="{{ page.title }}" itemprop="image" loading="lazy" decoding="async">{% endif %}
             
-            <div class="post-header">
-                <h1 class="posttitle" itemprop="name headline">{{ page.title }}</h1>
+                <div class="post-header">
+                    <h1 class="posttitle" itemprop="name headline">{{ page.title }}</h1>
                 
-                <div class="post-meta">
-                    <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}">{{ page.date | date_to_string }}</time></span>           
+                    <div class="post-meta">
+                        <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}" itemprop="datePublished">{{ page.date | date_to_string }}</time></span>           
                     
-                    {% if page.last_modified_at %}
-                    <span class="post-updated">(<time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">Atualizado em {{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)</span>
-                    {% endif %}
+                        {% if page.last_modified_at %}
+                        <span class="post-updated">(<time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">Atualizado em {{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)</span>
+                        {% endif %}
                     
-                    {% if page.author %}
-                        {% assign author = site.authors[page.author] %}
-                    {% else %}
-                        {% assign author = site.author %}
-                    {% endif %}
+                        {% if author_name %}
+                            <span class="post-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                <span itemprop="name">{{ author_name }}</span>
+                            </span>
+                        {% endif %}
                     
-                    {% if author %}
-                        <span class="post-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-                            <span itemprop="name">{{ author.display_name }}</span>
-                        </span>
-                    {% endif %}
-                    
-                    {% if page.categories %}
-                        <div class="post-categories">
-                            {% for category in page.categories %}
-                            <a href="{{site.baseurl}}/categories#{{ category | slugify }}">{{ category }}</a>
-                            {% endfor %}
+                        {% if page.categories %}
+                            <div class="post-categories">
+                                {% for category in page.categories %}
+                                <a href="{{site.baseurl}}/categories#{{ category | slugify }}">{{ category }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                <div class="post-content" itemprop="articleBody">
+                    {{content}}
+                </div>
+            
+                {% if page.tags %}
+                <div class="post-tags">
+                    {% for tag in page.tags %}
+                    <a class="badge rounded-pill bg-light text-dark" href="{{site.baseurl}}/tags#{{ tag | slugify }}">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            
+                <hr />
+                <nav class="previous-next-post" aria-label="Navegação de postagens">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {% if page.previous.url %}
+                            <a class="btn btn-outline-primary" href="{{page.previous.url | absolute_url}}" rel="prev" title="Post anterior">&laquo; {{page.previous.title}}</a>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                </div>
-            </div>
-            
-            <div class="post-content" itemprop="articleBody">
-                {{content}}
-            </div>
-            
-            {% if page.tags %}
-            <div class="post-tags">
-                {% for tag in page.tags %}
-                <a class="badge badge-light" href="{{site.baseurl}}/tags#{{ tag | slugify }}">{{ tag }}</a>
-                {% endfor %}
-            </div>
-            {% endif %}
-            
-            <hr />
-            <nav class="previous-next-post" aria-label="Navegação de postagens">
-                <div class="row">
-                    <div class="col-md-6">
-                        {% if page.previous.url %}
-                        <a class="btn btn-outline-primary" href="{{page.previous.url | absolute_url}}" title="Previous Post">&laquo; {{page.previous.title}}</a>
-                        {% endif %}
+                        <div class="col-md-6 text-end">
+                            {% if page.next.url %}
+                            <a class="btn btn-outline-primary" href="{{page.next.url | absolute_url}}" rel="next" title="Próximo post">{{page.next.title}} &raquo;</a>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="col-md-6 text-right">
-                        {% if page.next.url %}
-                        <a class="btn btn-outline-primary" href="{{page.next.url | absolute_url}}" title="Next Post">{{page.next.title}} &raquo;</a>
-                        {% endif %}
+                </nav>
+            
+                {% if author_name %}
+                <div class="author-box mt-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 text-center">
+                            {% if author_avatar %}
+                            <img class="author-thumb rounded-circle" src="{{site.baseurl}}/{{author_avatar}}" alt="{{ author_name }}" loading="lazy" decoding="async">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                            <h4>{{ author_name }}</h4>
+                            {% if author_bio %}
+                            <p class="author-description">{{ author_bio }}</p>
+                            {% endif %}
+                            {% if author_web %}
+                            <a target="_blank" class="btn btn-sm btn-outline-primary" href="{{ author_web }}" rel="noopener noreferrer">Visitar site</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-            </nav>
-            
-            {% if author %}
-            <div class="author-box mt-5">
-                <div class="row align-items-center">
-                    <div class="col-md-2 text-center">
-                        {% if author.avatar %}
-                        <img class="author-thumb rounded-circle" src="{{site.baseurl}}/{{author.avatar}}" alt="{{ author.display_name }}">
-                        {% endif %}
-                    </div>
-                    <div class="col-md-10">
-                        <h4>{{ author.display_name }}</h4>
-                        <p class="author-description">{{ author.description }}</p>
-                        {% if author.web %}
-                        <a target="_blank" class="btn btn-sm btn-outline-primary" href="{{ author.web }}">Visitar site</a>
-                        {% endif %}
-                    </div>
-                </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
 </article>
