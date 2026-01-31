@@ -1,0 +1,70 @@
+---
+layout: default
+lang: pt
+title: Contato
+description: Entre em contato comigo
+---
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <h1 class="display-5 fw-bold mb-4">Entre em Contato</h1>
+      
+      <div class="row">
+        <div class="col-md-8">
+          <form>
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="nome" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="assunto" class="form-label">Assunto</label>
+              <input type="text" class="form-control" id="assunto" required>
+            </div>
+            <div class="mb-3">
+              <label for="mensagem" class="form-label">Mensagem</label>
+              <textarea class="form-control" id="mensagem" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+          </form>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5>Informações de Contato</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2">
+                  <strong>Email:</strong><br>
+                  <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+                </li>
+                <li class="mb-2">
+                  <strong>Localização:</strong><br>
+                  Brasil
+                </li>
+              </ul>
+              
+              <h5 class="mt-4">Redes Sociais</h5>
+              <div class="social-links">
+                {% if site.twitter_username %}
+                <a href="https://twitter.com/{{ site.twitter_username }}" class="d-block mb-2" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-twitter"></i> Twitter
+                </a>
+                {% endif %}
+                {% if site.github_username %}
+                <a href="https://github.com/{{ site.github_username }}" class="d-block mb-2" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-github"></i> GitHub
+                </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

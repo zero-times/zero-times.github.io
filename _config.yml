@@ -1,63 +1,58 @@
-title: "Hoa"
-email: x5brain@gmail.com
-timezone: UTC
+# Site settings
+title: Meu Blog Pessoal
+email: seu-email@exemplo.com
+description: Bem-vindo ao meu blog pessoal em português!
 baseurl: ""
-permalink: "/:title/"
-logo: 'assets/images/logo.png'
-favicon: 'assets/images/favicon.ico'
-author: Hoa
-paginate: 30
-disqus: 'youllbe-cn'
-locale: pt-br
-lang: pt-br
-default_lang: pt-br
-languages: ["pt-br", "en", "zh"]
-feed_items: 10
-feed_update_period: daily
-feed_update_frequency: 1
+url: "https://seu-nome.github.io"
+author:
+  name: Seu Nome
+  bio: Desenvolvedor apaixonado por tecnologia e design
+  avatar: /images/avatar.jpg
+
+# Build settings
 markdown: kramdown
-kramdown:
-  syntax_highlighter_opts:
-    disable: true
-sass:
-  sass_dir: _sass
-  style: :compressed
-ganalytics: UA-214748269-1
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-paginate
 
-collections:
-  blogs:
-    output: true
-    permalink: /blog/:title/
+# Multilanguage settings
+languages: ["pt", "en", "zh"]
+default_lang: "pt"
+exclude_from_localization: ["assets", "css", "js", "images", "favicon.ico"]
 
-# Authors
-authors:
-  Hoa:
-    name: Hoa
-    display_name: Hoa
-    avatar: 'assets/images/sal.png'
-    email: x5brain@gmail.com
-    web: https://youllbe.cn
-    # twitter: https://twitter.com/wowthemesnet
-    # description: "Author of Affiliates, a template available for WordPress, HTML, Ghost and Jekyll. You are currently previewing Jekyll template demo."
-  #john:
-    # name: John
-    # display_name: John
-    # avatar: 'assets/images/john.png'
-    # email: wowthemesnet@gmail.com
-    # web: https://www.wowthemes.net/category/jekyll-themes/
-    # twitter: https://twitter.com/wowthemesnet
-    # description: "This is the author box. Write a short description of the author here. You are currently previewing Affiliates theme demo, a Jekyll template compatible with Github pages."
+# Pagination
+paginate: 5
+paginate_path: "/blog/page:num/"
 
-# Social
-# social:
-  # instagram: https://www.instagram.com/bootstrapstarter/
-  # facebook: https://www.facebook.com/bootstrapstartercom-346329609045284
-  # twitter: https://twitter.com/bstartercom
+# SEO
+twitter_username: seu_twitter
+github_username: seu_github
+social:
+  name: Seu Nome
+  links:
+    - https://twitter.com/seu_twitter
+    - https://github.com/seu_github
+    - https://linkedin.com/in/seu_perfil
 
-# Plugins
-plugins: 
-- jekyll-paginate
-- jekyll-sitemap
-- jekyll-feed
-- jekyll-seo-tag
-- jekyll-archives
+# Bootstrap version
+bootstrap_version: 5
+
+# Analytics (optional)
+google_analytics: 'UA-XXXXXXXXX-X'
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      lang: "pt"
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "post"
+      lang: "pt"
