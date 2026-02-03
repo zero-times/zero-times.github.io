@@ -1,0 +1,80 @@
+{
+  "audit_timestamp": "2026-02-03T00:00:00-05:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Navigation",
+          "result": "Improved",
+          "details": "Removed language dropdown links that pointed to non-existent sections; replaced with static locale indicator."
+        },
+        {
+          "aspect": "Media",
+          "result": "Improved",
+          "details": "Normalized featured image paths via relative_url for post/page templates."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Links",
+          "result": "Issues Found (1)",
+          "details": "Language dropdown pointed to /pt/, /en/, /zh/ which are absent."
+        }
+      ],
+      "broken_links": [
+        {
+          "url": "/pt/",
+          "text": "Português",
+          "location": "_layouts/default.html",
+          "issue": "Missing localized section"
+        }
+      ]
+    },
+    "seo_evaluation": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Keywords",
+          "result": "Good",
+          "details": "Site and page-level keywords present."
+        },
+        {
+          "aspect": "URL Consistency",
+          "result": "Improved",
+          "details": "Normalized internal links to use relative_url for baseurl safety."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Clarity",
+          "result": "Good",
+          "details": "Homepage messaging and author bio are concise and clear."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 7.5/10",
+    "seo": "SEO: 8.0/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Keep internal links using relative_url across templates",
+    "Consider adding localized sections before re-enabling language menu"
+  ]
+}

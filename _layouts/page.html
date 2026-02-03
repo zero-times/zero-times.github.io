@@ -5,7 +5,7 @@ layout: default
   <!-- 页面特色图 -->
   {% if page.image %}
   <div class="text-center mx-auto mb-5">
-    <img class="featured-image text-center mx-auto rounded" src="{{ site.baseurl }}/{{ page.image }}" alt="{{ page.title }}" loading="lazy" decoding="async">
+    <img class="featured-image text-center mx-auto rounded" src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy" decoding="async">
   </div>
   {% endif %}
 

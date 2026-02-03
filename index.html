@@ -17,7 +17,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         {% for post in site.posts limit: 3 %}
         <div class="card mb-4 shadow-sm">
           <div class="card-body">
-            <h3 class="card-title"><a href="{{ post.url }}" class="text-decoration-none">{{ post.title }}</a></h3>
+            <h3 class="card-title"><a href="{{ post.url | relative_url }}" class="text-decoration-none">{{ post.title }}</a></h3>
             <p class="card-text">{{ post.excerpt | strip_html | truncate: 150 }}</p>
             <small class="text-muted">{{ post.date | date: "%d/%m/%Y" }}</small>
           </div>
@@ -25,7 +25,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         {% endfor %}
         
         <div class="text-center mt-4">
-          <a href="/blog/" class="btn btn-primary">Ver todos os artigos</a>
+          <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary">Ver todos os artigos</a>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         <div class="card-body">
           <img src="{{ site.author.avatar }}" alt="{{ site.author.name }}" class="img-fluid rounded-circle mb-3" style="max-width: 150px;" loading="lazy" decoding="async">
           <p>{{ site.author.bio }}</p>
-          <a href="/about/" class="btn btn-outline-primary">Saiba mais</a>
+          <a href="{{ '/about/' | relative_url }}" class="btn btn-outline-primary">Saiba mais</a>
         </div>
       </div>
       
@@ -57,7 +57,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
       </div>
       
       <div class="text-center">
-        <a href="/contact/" class="btn btn-success">Entre em contato</a>
+        <a href="{{ '/contact/' | relative_url }}" class="btn btn-success">Entre em contato</a>
       </div>
     </div>
   </div>
