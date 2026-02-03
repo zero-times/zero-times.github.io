@@ -135,10 +135,11 @@ def create_news_post(news_items):
         f"Resumo automático das principais notícias do Brasil em {datetime.now().strftime('%d/%m/%Y')}."
     )
     keywords = "Brasil, notícias, atualidades, economia, sociedade, tecnologia"
+    post_date = datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %z')
     post_content = f"""---
 layout: post
 title: "Notícias Diárias do Brasil - {datetime.now().strftime('%d/%m/%Y')}"
-date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+date: {post_date}
 categories: news
 lang: pt-br
 description: "{description}"
