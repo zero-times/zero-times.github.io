@@ -131,12 +131,18 @@ def create_news_post(news_items):
         news_content += "\n"
     
     # 生成文章内容
+    description = (
+        f"Resumo automático das principais notícias do Brasil em {datetime.now().strftime('%d/%m/%Y')}."
+    )
+    keywords = "Brasil, notícias, atualidades, economia, sociedade, tecnologia"
     post_content = f"""---
 layout: post
 title: "Notícias Diárias do Brasil - {datetime.now().strftime('%d/%m/%Y')}"
 date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 categories: news
 lang: pt-br
+description: "{description}"
+keywords: "{keywords}"
 ---
 
 # Notícias em Destaque no Brasil - {datetime.now().strftime('%d/%m/%Y')}

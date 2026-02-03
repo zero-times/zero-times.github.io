@@ -1,0 +1,50 @@
+{
+  "audit_timestamp": "2026-02-03T14:22:22+0800",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {"aspect": "Page Structure", "result": "Good", "details": "Layouts use semantic structure and clear containers."},
+        {"aspect": "Mobile Responsiveness", "result": "Good", "details": "Bootstrap grid and responsive utilities applied."}
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {"aspect": "External Links", "result": "No Issues", "details": "No example.com or placeholder links detected in recent posts."}
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {"aspect": "Meta Descriptions", "result": "Good", "details": "Key pages and daily news posts include descriptions."},
+        {"aspect": "Keywords", "result": "Good", "details": "Keywords added for daily news posts and site config."}
+      ]
+    },
+    "content_quality": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {"aspect": "Freshness", "result": "Good", "details": "Daily news updated on schedule."},
+        {"aspect": "Clarity", "result": "Needs Improvement", "details": "RSS summaries include inline HTML and images; consider cleanup."}
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.0/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 7.5/10"
+  },
+  "recommendations": [
+    "Normalize RSS summaries to remove inline HTML images for readability",
+    "Keep adding descriptions/keywords to auto-generated posts"
+  ]
+}
