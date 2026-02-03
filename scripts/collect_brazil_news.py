@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
 """
-Brazil News Collector
-Collects trending news from Brazil and creates a daily news post for Jekyll blog
+巴西新闻采集脚本（唯一保留脚本）
+从公开 RSS/网页抓取新闻并生成 Jekyll 日报，自动提交到 git。
 """
 
 import os
-import sys
-import requests
-from datetime import datetime
-from bs4 import BeautifulSoup
-import json
+import subprocess
 import urllib.parse
+from datetime import datetime
+from pathlib import Path
+
+import requests
+from bs4 import BeautifulSoup
 
 def get_brazilian_news():
-    """Collect news from major Brazilian sources"""
+    """从主流巴西新闻源收集新闻"""
     news_sources = [
         {
             'name': 'G1',
@@ -41,7 +42,7 @@ def get_brazilian_news():
     
     for source in news_sources:
         try:
-            # Try RSS feed first
+            # 优先尝试 RSS
             if 'api' in source:
                 response = requests.get(source['api'], timeout=10)
                 if response.status_code == 200:
@@ -74,7 +75,7 @@ def get_brazilian_news():
                         if len(all_news) >= 15:  # Limit total news items
                             break
             else:
-                # Fallback to web scraping
+                # RSS 不可用时的降级抓取
                 headers = {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
                 }
@@ -101,23 +102,24 @@ def get_brazilian_news():
                                 'pubdate': datetime.now().strftime('%a, %d %b %Y %H:%M:%S %z')
                             })
             
-            if len(all_news) >= 15:  # Limit total news items
+            if len(all_news) >= 15:  # 限制总条数
                 break
                 
         except Exception as e:
             print(f"Error collecting news from {source['name']}: {str(e)}")
             continue
     
-    # Sort by most recent and return top 10
+    # 返回前 10 条
     return all_news[:10]
 
 def create_news_post(news_items):
-    """Create a Jekyll post with the collected news"""
+    """生成 Jekyll 日报文章"""
     date_str = datetime.now().strftime('%Y-%m-%d')
-    post_filename = f"/Users/mac/Documents/GitHub/zero-times.github.io/_posts/{date_str}-daily-news-{datetime.now().strftime('%Y%m%d')}.md"
+    project_root = Path(__file__).resolve().parents[1]
+    post_filename = project_root / "_posts" / f"{date_str}-daily-news-{datetime.now().strftime('%Y%m%d')}.md"
     
-    # Create posts directory if it doesn't exist
-    os.makedirs(os.path.dirname(post_filename), exist_ok=True)
+    # 创建目录
+    post_filename.parent.mkdir(parents=True, exist_ok=True)
     
     # Format the news items
     news_content = ""
@@ -128,13 +130,13 @@ def create_news_post(news_items):
             news_content += f"   - Resumo: {item['description']}\n"
         news_content += "\n"
     
-    # Create the post content
+    # 生成文章内容
     post_content = f"""---
 layout: post
 title: "Notícias Diárias do Brasil - {datetime.now().strftime('%d/%m/%Y')}"
 date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 categories: noticias
-lang: pt
+lang: pt-br
 ---
 
 # Notícias em Destaque no Brasil - {datetime.now().strftime('%d/%m/%Y')}
@@ -147,7 +149,7 @@ Segue um resumo das principais notícias coletadas automaticamente dos principai
 *Postagem automática gerada em {datetime.now().strftime('%d/%m/%Y às %H:%M')}*
 """
     
-    # Write the post
+    # 写入文件
     with open(post_filename, 'w', encoding='utf-8') as f:
         f.write(post_content)
     
@@ -164,6 +166,16 @@ def main():
         print(f"News post created successfully: {post_file}")
     else:
         print("No news items collected")
+
+    # 自动提交到 git（仅提交新增文章）
+    try:
+        project_root = Path(__file__).resolve().parents[1]
+        subprocess.run(["git", "-C", str(project_root), "add", str(post_file)], check=True)
+        commit_msg = f"Auto: Add daily Brazil news for {datetime.now().strftime('%Y-%m-%d')}"
+        subprocess.run(["git", "-C", str(project_root), "commit", "-m", commit_msg], check=True)
+        print(f"Changes committed: {commit_msg}")
+    except subprocess.CalledProcessError as e:
+        print(f"Could not commit changes: {e}")
 
 if __name__ == "__main__":
     main()
