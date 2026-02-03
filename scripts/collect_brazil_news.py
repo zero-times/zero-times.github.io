@@ -135,7 +135,7 @@ def create_news_post(news_items):
 layout: post
 title: "Notícias Diárias do Brasil - {datetime.now().strftime('%d/%m/%Y')}"
 date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-categories: noticias
+categories: news
 lang: pt-br
 ---
 
