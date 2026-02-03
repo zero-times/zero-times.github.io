@@ -174,6 +174,9 @@ def main():
         commit_msg = f"Auto: Add daily Brazil news for {datetime.now().strftime('%Y-%m-%d')}"
         subprocess.run(["git", "-C", str(project_root), "commit", "-m", commit_msg], check=True)
         print(f"Changes committed: {commit_msg}")
+        # 自动推送到远端，触发 GitHub Pages 部署
+        subprocess.run(["git", "-C", str(project_root), "push", "origin", "master"], check=True)
+        print("Changes pushed to origin/master")
     except subprocess.CalledProcessError as e:
         print(f"Could not commit changes: {e}")
 
