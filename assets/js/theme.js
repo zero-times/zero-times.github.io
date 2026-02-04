@@ -1,6 +1,8 @@
 // Main JavaScript file for the Portuguese Personal Blog
 
 document.addEventListener('DOMContentLoaded', function() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // Add skip link for accessibility
   const skipLink = document.createElement('a');
   skipLink.href = '#main-content';
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {
         target.scrollIntoView({
-          behavior: 'smooth',
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
           block: 'start'
         });
       }

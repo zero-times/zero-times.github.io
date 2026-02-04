@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-04T12:02:59+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Skip link visibility",
+          "result": "Issue Found",
+          "details": "Skip link is injected but lacks visible focus styles, making keyboard navigation harder."
+        },
+        {
+          "aspect": "Image responsiveness",
+          "result": "Good",
+          "details": "Main images are responsive with max-width: 100% and height auto."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No obvious placeholders",
+          "details": "No example.com or placeholder links found in content scan."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta keywords & seo tag",
+          "result": "Good",
+          "details": "Site and page keywords are provided; seo tag is enabled."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 7.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Motion accessibility",
+          "result": "Issue Found",
+          "details": "Smooth-scrolling behavior does not respect prefers-reduced-motion."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.8/10",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 7.8/10"
+  },
+  "recommendations": [
+    "Add visible focus styles for the skip link",
+    "Respect prefers-reduced-motion for smooth scrolling"
+  ]
+}

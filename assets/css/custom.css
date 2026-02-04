@@ -156,6 +156,25 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Accessible skip link (injected via theme.js) */
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: -999px;
+  z-index: 1000;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--br-blue);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0.75rem;
+}
+
 /* Responsive media defaults */
 main img {
   max-width: 100%;
