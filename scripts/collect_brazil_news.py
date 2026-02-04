@@ -5,6 +5,7 @@
 """
 
 import os
+import re
 import subprocess
 import urllib.parse
 from datetime import datetime
@@ -123,11 +124,24 @@ def create_news_post(news_items):
     
     # Format the news items
     news_content = ""
+    def normalize_description(text):
+        if not text:
+            return text
+        def add_attrs(match):
+            tag = match.group(0)
+            if "loading=" in tag:
+                return tag
+            insert = 'loading="lazy" decoding="async" alt="Imagem relacionada à notícia" '
+            return tag.replace("<img ", f"<img {insert}", 1)
+        text = re.sub(r"<img\\s+", add_attrs, text)
+        return text
+
     for i, item in enumerate(news_items, 1):
         news_content += f"\n{i}. **[{item['title']}]({item['link']})**\n"
         news_content += f"   - Fonte: {item['source']}\n"
         if item['description']:
-            news_content += f"   - Resumo: {item['description']}\n"
+            summary = normalize_description(item['description'])
+            news_content += f"   - Resumo: {summary}\n"
         news_content += "\n"
     
     # 生成文章内容
@@ -141,7 +155,7 @@ layout: post
 title: "Notícias Diárias do Brasil - {datetime.now().strftime('%d/%m/%Y')}"
 date: {post_date}
 categories: news
-lang: pt-br
+lang: pt-BR
 description: "{description}"
 keywords: "{keywords}"
 ---
