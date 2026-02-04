@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-04T15:04:21+0800",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Inline Media Layout",
+          "result": "Minor Issues",
+          "details": "Daily news posts still use deprecated align attributes for inline thumbnails, which can cause inconsistent wrapping on mobile."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No Broken Links Detected (manual scan)",
+          "details": "External store links point to official app stores and appear valid."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Outbound Link Hygiene",
+          "result": "Minor Issues",
+          "details": "Some outbound links with target=_blank were missing noreferrer and descriptive aria labels."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent daily posts updated through 2026-02-04."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Replace deprecated align attributes with CSS classes for inline thumbnails",
+    "Add rel=\"noreferrer\" and aria labels for external store links that open in new tabs"
+  ]
+}
