@@ -1,0 +1,81 @@
+{
+  "audit_timestamp": "2026-02-04T11:02:34+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Page Structure",
+          "result": "Good",
+          "details": "Layouts already use responsive containers and semantic sections; post layout includes structured data for BlogPosting."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Unchecked",
+          "details": "Network-restricted environment; external links were not validated in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta & Social",
+          "result": "Good",
+          "details": "Site-level description/keywords/logo and page-level metadata are present; SEO tag is enabled in default layout."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent daily news posts present; portfolio and contact content is current."
+        }
+      ]
+    },
+    "performance": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Critical Resource Hints",
+          "result": "Needs Improvement",
+          "details": "CDN/analytics preconnect and dns-prefetch hints were missing."
+        },
+        {
+          "aspect": "Image Loading",
+          "result": "Needs Improvement",
+          "details": "Inline content images do not consistently include loading/decoding/alt attributes."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.0/10",
+    "content": "Content: 8.5/10",
+    "performance": "Performance: 8.0/10"
+  },
+  "recommendations": [
+    "Add preconnect/dns-prefetch hints for CDN and analytics domains",
+    "Ensure all content images receive lazy loading/async decoding and safe alt defaults",
+    "Re-run external link checks when network access is available"
+  ]
+}

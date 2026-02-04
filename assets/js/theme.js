@@ -82,7 +82,20 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Add image lazy loading for performance
-  const images = document.querySelectorAll('img[data-src]');
+  const images = document.querySelectorAll('img');
+  images.forEach(img => {
+    if (!img.hasAttribute('loading')) {
+      img.setAttribute('loading', 'lazy');
+    }
+    if (!img.hasAttribute('decoding')) {
+      img.setAttribute('decoding', 'async');
+    }
+    if (!img.hasAttribute('alt')) {
+      img.setAttribute('alt', '');
+    }
+  });
+
+  const lazyImages = document.querySelectorAll('img[data-src]');
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -95,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    images.forEach(img => imageObserver.observe(img));
+    lazyImages.forEach(img => imageObserver.observe(img));
   }
 
   // Add focus management for dropdowns
