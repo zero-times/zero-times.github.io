@@ -38,6 +38,17 @@ layout: default
                             </div>
                         {% endif %}
                     </div>
+
+                    {% if page.site %}
+                        {% if page.site contains '://' %}
+                            {% assign post_site_link = page.site %}
+                        {% else %}
+                            {% assign post_site_link = page.site | relative_url %}
+                        {% endif %}
+                        <div class="post-site mt-3">
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ post_site_link }}" target="_blank" rel="noopener noreferrer">访问站点</a>
+                        </div>
+                    {% endif %}
                 </div>
             
                 <div class="post-content" itemprop="articleBody">

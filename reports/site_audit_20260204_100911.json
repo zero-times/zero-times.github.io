@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-04T10:09:11-08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.5,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post CTA",
+          "result": "Improved",
+          "details": "Added post-level site button when front matter includes site URL."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Fully Verified",
+          "details": "External links exist in posts; no automated link checker script available in repo."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Consistency",
+          "result": "Good",
+          "details": "Post metadata remains intact after CTA addition."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.9,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Product References",
+          "result": "Improved",
+          "details": "Posts with site URLs now expose direct navigation for readers."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 7.8/10",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 8.9/10"
+  },
+  "recommendations": [
+    "Add an automated external link checker to validate daily-news sources.",
+    "Consider adding a small icon to the post site CTA for faster scanning."
+  ]
+}
