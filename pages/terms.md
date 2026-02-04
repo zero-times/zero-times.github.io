@@ -3,6 +3,7 @@ layout: page
 title: Termos de Uso
 permalink: /terms/
 description: Termos de uso do site e diretrizes de conteúdo
+keywords: "termos de uso, regras, conteúdo, responsabilidade, propriedade intelectual"
 ---
 
 <section class="terms-of-use">

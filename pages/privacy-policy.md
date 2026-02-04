@@ -4,6 +4,7 @@ title: Política de Privacidade
 permalink: /privacy-policy/
 comments: false
 description: Política de privacidade e tratamento de dados do site
+keywords: "privacidade, dados pessoais, cookies, analytics, conformidade"
 ---
 
 <section class="privacy-policy">
