@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-04T16:03:29+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Duplicate route pages",
+          "result": "Needs Fix",
+          "details": "Found duplicated /about/ and /contact/ pages in about/index.html and contact/index.html alongside pages/about.html and pages/contact.html. This can cause conflicting output and SEO duplication."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Network checks are disabled in this run. External links were reviewed for structure only."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta tags",
+          "result": "Good",
+          "details": "Global SEO tags and page-level description/keywords are present."
+        },
+        {
+          "aspect": "Duplicate content",
+          "result": "Needs Fix",
+          "details": "Duplicate About/Contact pages can dilute canonical indexing."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.1,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content freshness",
+          "result": "Good",
+          "details": "Latest posts are present with recent dates."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 7.8/10",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 8.1/10"
+  },
+  "recommendations": [
+    "Remove duplicate /about/ and /contact/ pages to prevent routing conflicts",
+    "Re-run link validation when network checks are available"
+  ]
+}
