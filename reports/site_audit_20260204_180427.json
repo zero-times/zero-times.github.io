@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-04T18:04:27+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post Layout",
+          "result": "Good",
+          "details": "Post e páginas mantêm layout consistente e responsivo com Bootstrap."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No obvious placeholders",
+          "details": "Não foram encontrados links de exemplo ou domínios inválidos nos arquivos principais."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post Front Matter",
+          "result": "Improved",
+          "details": "Padronizados description/keywords e lang para posts antigos e notícias diárias."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Metadata",
+          "result": "Improved",
+          "details": "Posts de apps em chinês agora possuem descrição e palavras-chave para melhor contexto."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.2/10",
+    "content": "Content: 8.6/10"
+  },
+  "recommendations": [
+    "Continuar adicionando description/keywords em novos posts.",
+    "Manter lang consistente (pt-BR/zh-CN) para SEO e acessibilidade."
+  ]
+}

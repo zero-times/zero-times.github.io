@@ -6,6 +6,7 @@ categories: exemplo
 tags: [português, blog, exemplo]
 lang: pt
 description: "Este é um exemplo de postagem de blog em português"
+keywords: "blog, português, Jekyll, Bootstrap, design responsivo"
 ---
 
 # Exemplo de Post em Português
