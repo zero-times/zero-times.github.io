@@ -1,7 +1,7 @@
 <div class="card mb-4">
   <div class="card-body">
-    <h3 class="card-title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+    <h3 class="card-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
     <p class="card-text">{{ post.excerpt | strip_html | truncate: 100 }}</p>
-    <a href="{{ post.url }}" class="btn btn-outline-primary">Leia mais</a>
+    <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary">Leia mais</a>
   </div>
 </div>

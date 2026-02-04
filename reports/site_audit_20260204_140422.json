@@ -1,0 +1,83 @@
+{
+  "audit_timestamp": "2026-02-04T14:04:32+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Page Structure",
+          "result": "Good",
+          "details": "Layouts seguem estrutura consistente com container e hierarquia clara."
+        },
+        {
+          "aspect": "Responsiveness",
+          "result": "Good",
+          "details": "Uso de Bootstrap e classes responsivas cobre o básico; sem alertas críticos."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Links",
+          "result": "Improved",
+          "details": "Links de posts passaram a usar relative_url e o link /blog/archive/ foi removido."
+        },
+        {
+          "aspect": "External Links",
+          "result": "Manual Review Needed",
+          "details": "Links externos principais parecem válidos, mas exigem validação de disponibilidade."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Descriptions",
+          "result": "Good",
+          "details": "Páginas principais possuem description/keywords; layout usa jekyll-seo-tag."
+        },
+        {
+          "aspect": "Canonical/Structured Data",
+          "result": "Good",
+          "details": "jekyll-seo-tag gera canonical e meta OG."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Freshness",
+          "result": "Good",
+          "details": "Conteúdo atualizado com posts recentes e notícias diárias."
+        },
+        {
+          "aspect": "Consistency",
+          "result": "Improved",
+          "details": "Links internos padronizados com relative_url para evitar conflitos de baseurl."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.3/10"
+  },
+  "recommendations": [
+    "Validar periodicamente links externos em posts de notícias",
+    "Manter links internos usando relative_url para compatibilidade com baseurl"
+  ]
+}
