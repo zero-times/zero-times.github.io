@@ -8,7 +8,7 @@ layout: default
 {% assign author_avatar = author_data.avatar | default: site.author.avatar %}
 {% assign author_web = author_data.web | default: author_data.url %}
 
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<article class="post" itemscope itemtype="https://schema.org/BlogPosting">
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -25,7 +25,7 @@ layout: default
                         {% endif %}
                     
                         {% if author_name %}
-                            <span class="post-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                            <span class="post-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
                                 <span itemprop="name">{{ author_name }}</span>
                             </span>
                         {% endif %}
