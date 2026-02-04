@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-04T17:03:00+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "A11y navigation",
+          "result": "Needs improvement",
+          "details": "Skip link styles exist but no skip link in default layout."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal links",
+          "result": "No issues found",
+          "details": "Primary navigation and footer links resolve to existing pages."
+        },
+        {
+          "aspect": "External links",
+          "result": "Not validated",
+          "details": "Network checks skipped in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta keywords/description",
+          "result": "Good",
+          "details": "Site-level keywords and descriptions present; seo tag enabled."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Repository hygiene",
+          "result": "Needs improvement",
+          "details": "Tracked .DS_Store files and duplicated .gitignore entries detected."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 8.2/10"
+  },
+  "recommendations": [
+    "Add a skip link to the default layout to match existing styles.",
+    "Remove tracked .DS_Store files and normalize .gitignore entries."
+  ]
+}
