@@ -55,10 +55,10 @@ defaults:
       type: "pages"
     values:
       layout: "default"
-      lang: "pt"
+      lang: "pt-BR"
   - scope:
       path: "_posts"
       type: "posts"
     values:
       layout: "post"
-      lang: "pt"
+      lang: "pt-BR"

@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Página não encontrada
-lang: pt
+lang: pt-BR
+description: Página 404 do site com acesso rápido ao conteúdo principal.
+keywords: "404, página não encontrada, erro, Hoa"
 ---
 
 <div class="container my-5">
@@ -10,7 +12,7 @@ lang: pt
       <h1 class="display-1 fw-bold">404</h1>
       <h2>Página não encontrada</h2>
       <p class="lead">Desculpe, mas a página que você está procurando não existe.</p>
-      <a href="/" class="btn btn-primary">Voltar para a página inicial</a>
+      <a href="{{ '/' | relative_url }}" class="btn btn-primary">Voltar para a página inicial</a>
     </div>
   </div>
 </div>

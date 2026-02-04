@@ -1,0 +1,73 @@
+{
+  "audit_timestamp": "2026-02-04T21:04:20+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Navigation Links",
+          "result": "Improved",
+          "details": "Post navigation updated to use baseurl-safe relative links."
+        },
+        {
+          "aspect": "404 Experience",
+          "result": "Improved",
+          "details": "Base URL-safe return link added for consistent routing."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not audited (manual run)",
+          "details": "No automated checker available in repo; manual scan only."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Language Metadata",
+          "result": "Improved",
+          "details": "Default language aligned to pt-BR for pages and posts."
+        },
+        {
+          "aspect": "404 Metadata",
+          "result": "Improved",
+          "details": "Description/keywords added to reduce thin metadata."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent news posts include summaries and images with lazy loading."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Add automated link checker script if recurring audits are desired",
+    "Continue aligning page language and metadata for older posts"
+  ]
+}
