@@ -156,7 +156,7 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Accessible skip link (injected via theme.js) */
+/* Accessible skip link (rendered in layout) */
 .skip-link {
   position: absolute;
   top: 0.75rem;

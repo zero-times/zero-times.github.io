@@ -3,13 +3,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Add skip link for accessibility
-  const skipLink = document.createElement('a');
-  skipLink.href = '#main-content';
-  skipLink.textContent = 'Pular para o conteúdo principal';
-  skipLink.className = 'skip-link';
-  document.body.insertBefore(skipLink, document.body.firstChild);
-
   // Add smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
