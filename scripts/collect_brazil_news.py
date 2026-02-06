@@ -124,23 +124,24 @@ def create_news_post(news_items):
     
     # Format the news items
     news_content = ""
+    # 清理摘要中的 HTML/图片，避免正文出现大段内联内容
     def normalize_description(text):
         if not text:
-            return text
-        def add_attrs(match):
-            tag = match.group(0)
-            if "loading=" in tag:
-                return tag
-            insert = 'loading="lazy" decoding="async" alt="Imagem relacionada à notícia" '
-            return tag.replace("<img ", f"<img {insert}", 1)
-        text = re.sub(r"<img\\s+", add_attrs, text)
-        return text
+            return ""
+        cleaned = re.sub(r"<img[^>]*>", "", text)
+        cleaned = re.sub(r"<br\\s*/?>", " ", cleaned)
+        cleaned = re.sub(r"<[^>]+>", " ", cleaned)
+        cleaned = unescape(cleaned)
+        cleaned = re.sub(r"\\s+", " ", cleaned).strip()
+        if len(cleaned) > 240:
+            cleaned = cleaned[:237].rstrip() + "..."
+        return cleaned
 
     for i, item in enumerate(news_items, 1):
         news_content += f"\n{i}. **[{item['title']}]({item['link']})**\n"
         news_content += f"   - Fonte: {item['source']}\n"
-        if item['description']:
-            summary = normalize_description(item['description'])
+        summary = normalize_description(item.get('description', ''))
+        if summary:
             news_content += f"   - Resumo: {summary}\n"
         news_content += "\n"
     
@@ -155,7 +156,7 @@ layout: post
 title: "Notícias Diárias do Brasil - {datetime.now().strftime('%d/%m/%Y')}"
 date: {post_date}
 categories: news
-lang: pt-BR
+lang: pt-br
 description: "{description}"
 keywords: "{keywords}"
 ---
