@@ -57,16 +57,16 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link {% if page.url == '/' %}active{% endif %}" href="{{ '/' | relative_url }}">Início</a>
+            <a class="nav-link {% if page.url == '/' %}active{% endif %}" href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/blog/' %}active{% endif %}" href="{{ '/blog/' | relative_url }}">Blog</a>
+            <a class="nav-link {% if page.url contains '/blog/' %}active{% endif %}" href="{{ '/blog/' | relative_url }}"{% if page.url contains '/blog/' %} aria-current="page"{% endif %}>Blog</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/about/' %}active{% endif %}" href="{{ '/about/' | relative_url }}">Sobre</a>
+            <a class="nav-link {% if page.url contains '/about/' %}active{% endif %}" href="{{ '/about/' | relative_url }}"{% if page.url contains '/about/' %} aria-current="page"{% endif %}>Sobre</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/contact/' %}active{% endif %}" href="{{ '/contact/' | relative_url }}">Contato</a>
+            <a class="nav-link {% if page.url contains '/contact/' %}active{% endif %}" href="{{ '/contact/' | relative_url }}"{% if page.url contains '/contact/' %} aria-current="page"{% endif %}>Contato</a>
           </li>
           
           <li class="nav-item">
