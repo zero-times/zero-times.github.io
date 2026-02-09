@@ -1,15 +1,16 @@
 ---
 ---
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ page.lang | default: site.default_lang }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="icon" href="{{ site.baseurl }}/{{site.favicon}}">
-<title>{{ page.title }} | {{site.title}}</title>
+<meta name="theme-color" content="#2c3e50">
+<link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
+<title>{{ page.title }} | {{ site.title }}</title>
 {% seo %}
-<link href="{{ site.baseurl }}/assets/css/theme.css" rel="stylesheet">
-<link href="{{ site.baseurl }}/assets/css/custom.css" rel="stylesheet">
+<link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet">
+<link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet">
 </head>
 <body class="share-page">
   <main>
