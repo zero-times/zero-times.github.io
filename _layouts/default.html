@@ -105,5 +105,15 @@
   
   <!-- 站点脚本 -->
   <script src="{{ '/assets/js/theme.js' | relative_url }}" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('img:not([loading])').forEach(function (img) {
+        img.loading = 'lazy';
+        if (!img.decoding) {
+          img.decoding = 'async';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
