@@ -50,12 +50,13 @@ keywords: "contato, consultoria Flutter, HarmonyOS, arquitetura móvel, multipla
   <h2>Escreva para mim</h2>
   <p class="text-muted">Use o formulário para descrever suas necessidades, prazos ou qualquer tema. Responderei em até 48 horas.</p>
   <form class="contact-form__box" action="https://formspree.io/xvoewlbz" method="POST">
+    <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="form-group row">
       <div class="col-md-6">
         <input class="form-control" type="text" name="name" placeholder="Nome*" aria-label="Nome" autocomplete="name" required>
       </div>
       <div class="col-md-6">
-        <input class="form-control" type="email" name="email" placeholder="Email*" aria-label="Email" autocomplete="email" required>
+        <input class="form-control" type="email" name="email" placeholder="Email*" aria-label="Email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
       </div>
     </div>
     <div class="form-group row">

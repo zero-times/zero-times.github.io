@@ -7,12 +7,12 @@ layout: default
             <h1>Categorias</h1>
             
             {% for category in site.categories %}
-            <h4 class="mt-5 mb-4 pb-2 border-bottom" id="{{ category[0] | replace: " ","-" }}"><span class="text-capitalize small font-weight-bold">Categoria: "{{ category[0] }}"</span></h4>
+            <h4 class="mt-5 mb-4 pb-2 border-bottom" id="{{ category[0] | slugify }}"><span class="text-capitalize small font-weight-bold">Categoria: "{{ category[0] }}"</span></h4>
             
             {% for post in category[1] %}
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h5>
+                    <h5 class="card-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h5>
                     <p class="card-text">{{ post.excerpt | strip_html | truncate: 120 }}</p>
                     <small class="text-muted">{{ post.date | date: "%B %d, %Y" }}</small>
                 </div>
@@ -29,7 +29,7 @@ layout: default
                 <div class="card-body">
                     <ul class="list-unstyled">
                         {% for category in site.categories %}
-                        <li><a href="#{{ category[0] | replace: " ","-" }}">{{ category[0] | capitalize }}</a> ({{ category[1].size }})</li>
+                        <li><a href="#{{ category[0] | slugify }}">{{ category[0] | capitalize }}</a> ({{ category[1].size }})</li>
                         {% endfor %}
                     </ul>
                 </div>

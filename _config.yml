@@ -17,7 +17,7 @@ logo: /assets/images/logo.png
 # Build settings
 markdown: kramdown
 theme: minima
-timezone: UTC
+timezone: Asia/Shanghai
 plugins:
   - jekyll-feed
   - jekyll-sitemap
