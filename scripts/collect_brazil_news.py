@@ -9,6 +9,7 @@ import re
 import subprocess
 import urllib.parse
 from datetime import datetime
+from html import unescape
 from pathlib import Path
 
 import requests
@@ -197,8 +198,8 @@ def main():
         subprocess.run(["git", "-C", str(project_root), "commit", "-m", commit_msg], check=True)
         print(f"Changes committed: {commit_msg}")
         # 自动推送到远端，触发 GitHub Pages 部署
-        subprocess.run(["git", "-C", str(project_root), "push", "origin", "master"], check=True)
-        print("Changes pushed to origin/master")
+        subprocess.run(["git", "-C", str(project_root), "push", "origin", "main"], check=True)
+        print("Changes pushed to origin/main")
     except subprocess.CalledProcessError as e:
         print(f"Could not commit changes: {e}")
 
