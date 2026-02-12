@@ -6,6 +6,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="theme-color" content="#2c3e50">
+<meta name="color-scheme" content="light">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="author" content="{{ site.author.name }}">
+{% if page.keywords %}
+<meta name="keywords" content="{{ page.keywords }}">
+{% elsif site.keywords %}
+<meta name="keywords" content="{{ site.keywords }}">
+{% endif %}
 <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
 <title>{{ page.title }} | {{ site.title }}</title>
 {% seo %}
