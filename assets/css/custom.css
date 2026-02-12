@@ -230,6 +230,23 @@ main img {
   box-shadow: 0 12px 28px rgba(0, 39, 118, 0.18);
 }
 
+.btn:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.page-link:focus-visible,
+.form-control:focus-visible {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(0, 39, 118, 0.15);
+}
+
+.form-control:focus {
+  border-color: rgba(0, 39, 118, 0.35);
+  box-shadow: 0 0 0 0.2rem rgba(0, 39, 118, 0.12);
+}
+
 .navbar-brand:focus-visible,
 .navbar .nav-link:focus-visible {
   outline: 3px solid var(--br-yellow);

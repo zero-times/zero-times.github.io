@@ -18,6 +18,14 @@
     <meta name="keywords" content="{{ site.keywords }}">
   {% endif %}
   {% seo %}
+  {% if paginator %}
+    {% if paginator.previous_page %}
+      <link rel="prev" href="{{ paginator.previous_page_path | relative_url }}">
+    {% endif %}
+    {% if paginator.next_page %}
+      <link rel="next" href="{{ paginator.next_page_path | relative_url }}">
+    {% endif %}
+  {% endif %}
   
   <!-- Bootstrap 5 样式 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
