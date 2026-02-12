@@ -224,14 +224,6 @@ main img {
   border-radius: 0.35rem;
 }
 
-@media (max-width: 576px) {
-  .news-inline-thumb {
-    float: none;
-    display: block;
-    margin: 0.5rem auto 0.75rem;
-  }
-}
-
 .store-card:focus-visible {
   outline: 3px solid var(--br-yellow);
   outline-offset: 4px;
@@ -278,7 +270,7 @@ main img {
   .news-inline-thumb {
     float: none;
     display: block;
-    margin: 0 0 0.75rem 0;
+    margin: 0.5rem auto 0.75rem;
   }
 
   .post-content table {
