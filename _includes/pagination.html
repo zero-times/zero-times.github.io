@@ -4,7 +4,7 @@
   <ul class="pagination justify-content-center">
     {% if paginator.previous_page %}
     <li class="page-item">
-      <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">Anterior</a>
+      <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="prev" aria-label="Página anterior">Anterior</a>
     </li>
     {% else %}
     <li class="page-item disabled">
@@ -15,22 +15,22 @@
     {% for page in (1..paginator.total_pages) %}
     {% if page == paginator.page %}
     <li class="page-item active">
-      <span class="page-link">{{ page }}</span>
+      <span class="page-link" aria-current="page">{{ page }}</span>
     </li>
     {% elsif page == 1 %}
     <li class="page-item">
-      <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+      <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Página {{ page }}">{{ page }}</a>
     </li>
     {% else %}
     <li class="page-item">
-      <a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+      <a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}" aria-label="Página {{ page }}">{{ page }}</a>
     </li>
     {% endif %}
     {% endfor %}
 
     {% if paginator.next_page %}
     <li class="page-item">
-      <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Próxima</a>
+      <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="next" aria-label="Próxima página">Próxima</a>
     </li>
     {% else %}
     <li class="page-item disabled">
