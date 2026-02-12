@@ -7,6 +7,9 @@
   <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="author" content="{{ site.author.name }}">
+  {% if page.url == '/' %}
+  <link rel="preload" as="image" href="{{ site.author.avatar | relative_url }}">
+  {% endif %}
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   {% if page.keywords %}
