@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#2c3e50">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320">
   <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="author" content="{{ site.author.name }}">
@@ -103,7 +104,7 @@
           <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}. Todos os direitos reservados.</p>
         </div>
         <div class="col-md-6 text-md-end">
-          <a href="{{ '/privacy-policy/' | relative_url }}" class="me-3">Política de Privacidade</a>
+          <a href="{{ '/privacy-policy/' | relative_url }}" class="me-3"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>Política de Privacidade</a>
           <a href="{{ '/terms/' | relative_url }}"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos de Uso</a>
         </div>
       </div>
