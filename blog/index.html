@@ -22,11 +22,11 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
       
       <!-- Pagination -->
       {% if paginator.total_pages > 1 %}
-      <nav aria-label="Navegação de página">
+      <nav aria-label="Navegação de paginação">
         <ul class="pagination justify-content-center">
           {% if paginator.previous_page %}
           <li class="page-item">
-            <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">Anterior</a>
+            <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="prev">Anterior</a>
           </li>
           {% else %}
           <li class="page-item disabled">
@@ -37,7 +37,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
           {% for page in (1..paginator.total_pages) %}
           {% if page == paginator.page %}
           <li class="page-item active">
-            <span class="page-link">{{ page }}</span>
+            <span class="page-link" aria-current="page">{{ page }}</span>
           </li>
           {% elsif page == 1 %}
           <li class="page-item">
@@ -52,7 +52,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
 
           {% if paginator.next_page %}
           <li class="page-item">
-            <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Próxima</a>
+            <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="next">Próxima</a>
           </li>
           {% else %}
           <li class="page-item disabled">
