@@ -258,6 +258,22 @@ select:focus-visible,
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.blog-entry {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(0, 39, 118, 0.1);
+}
+
+.blog-entry:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .blog-entry {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+  }
+}
+
 .card:focus-within {
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
