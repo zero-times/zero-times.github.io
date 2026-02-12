@@ -11,9 +11,12 @@ import urllib.parse
 from datetime import datetime
 from html import unescape
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 from bs4 import BeautifulSoup
+
+SITE_TZ = ZoneInfo("Asia/Shanghai")
 
 def get_brazilian_news():
     """从主流巴西新闻源收集新闻"""
@@ -101,7 +104,7 @@ def get_brazilian_news():
                                 'description': 'Notícia coletada do portal ' + source['name'],
                                 'link': link,
                                 'source': source['name'],
-                                'pubdate': datetime.now().strftime('%a, %d %b %Y %H:%M:%S %z')
+                                'pubdate': datetime.now(SITE_TZ).strftime('%a, %d %b %Y %H:%M:%S %z')
                             })
             
             if len(all_news) >= 15:  # 限制总条数
@@ -116,9 +119,11 @@ def get_brazilian_news():
 
 def create_news_post(news_items):
     """生成 Jekyll 日报文章"""
-    date_str = datetime.now().strftime('%Y-%m-%d')
+    # 固定使用站点时区，避免文件名日期与 front matter 日期跨天不一致
+    now = datetime.now(SITE_TZ)
+    date_str = now.strftime('%Y-%m-%d')
     project_root = Path(__file__).resolve().parents[1]
-    post_filename = project_root / "_posts" / f"{date_str}-daily-news-{datetime.now().strftime('%Y%m%d')}.md"
+    post_filename = project_root / "_posts" / f"{date_str}-daily-news-{now.strftime('%Y%m%d')}.md"
     
     # 创建目录
     post_filename.parent.mkdir(parents=True, exist_ok=True)
@@ -148,13 +153,13 @@ def create_news_post(news_items):
     
     # 生成文章内容
     description = (
-        f"Resumo automático das principais notícias do Brasil em {datetime.now().strftime('%d/%m/%Y')}."
+        f"Resumo automático das principais notícias do Brasil em {now.strftime('%d/%m/%Y')}."
     )
     keywords = "Brasil, notícias, atualidades, economia, sociedade, tecnologia"
-    post_date = datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %z')
+    post_date = now.strftime('%Y-%m-%d %H:%M:%S %z')
     post_content = f"""---
 layout: post
-title: "Notícias Diárias do Brasil - {datetime.now().strftime('%d/%m/%Y')}"
+title: "Notícias Diárias do Brasil - {now.strftime('%d/%m/%Y')}"
 date: {post_date}
 categories: news
 lang: pt-br
@@ -162,14 +167,14 @@ description: "{description}"
 keywords: "{keywords}"
 ---
 
-# Notícias em Destaque no Brasil - {datetime.now().strftime('%d/%m/%Y')}
+# Notícias em Destaque no Brasil - {now.strftime('%d/%m/%Y')}
 
 Segue um resumo das principais notícias coletadas automaticamente dos principais portais brasileiros hoje:
 
 {news_content}
 
 ---
-*Postagem automática gerada em {datetime.now().strftime('%d/%m/%Y às %H:%M')}*
+*Postagem automática gerada em {now.strftime('%d/%m/%Y às %H:%M')}*
 """
     
     # 写入文件
@@ -194,7 +199,7 @@ def main():
     try:
         project_root = Path(__file__).resolve().parents[1]
         subprocess.run(["git", "-C", str(project_root), "add", str(post_file)], check=True)
-        commit_msg = f"Auto: Add daily Brazil news for {datetime.now().strftime('%Y-%m-%d')}"
+        commit_msg = f"Auto: Add daily Brazil news for {datetime.now(SITE_TZ).strftime('%Y-%m-%d')}"
         subprocess.run(["git", "-C", str(project_root), "commit", "-m", commit_msg], check=True)
         print(f"Changes committed: {commit_msg}")
         # 自动推送到远端，触发 GitHub Pages 部署
