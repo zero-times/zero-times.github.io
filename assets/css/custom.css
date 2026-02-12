@@ -284,6 +284,12 @@ html:lang(pt) .case-card p,
   text-wrap: pretty;
 }
 
+.article-post img,
+.post-content img {
+  max-width: 100%;
+  height: auto;
+}
+
 html:lang(pt) .eyebrow,
 html:lang(pt) .section-heading .eyebrow,
 html:lang(pt) .status-label,
