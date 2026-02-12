@@ -156,6 +156,38 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Homepage hero styling */
+.home-hero {
+  position: relative;
+  padding: 3rem 2.5rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 155, 58, 0.08), rgba(0, 39, 118, 0.08));
+  border: 1px solid rgba(0, 39, 118, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+}
+
+.home-hero__title {
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.home-hero__lead {
+  color: rgba(29, 29, 31, 0.78);
+  max-width: 40rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .home-hero {
+    background: linear-gradient(135deg, rgba(0, 39, 118, 0.35), rgba(0, 155, 58, 0.2));
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .home-hero__lead {
+    color: rgba(243, 244, 246, 0.78);
+  }
+}
+
 /* Accessible skip link (rendered in layout) */
 .skip-link {
   position: absolute;
@@ -222,6 +254,15 @@ main img {
 }
 
 @media (max-width: 575.98px) {
+  .home-hero {
+    padding: 2rem 1.25rem;
+    border-radius: 1.1rem;
+  }
+
+  .home-hero__title {
+    font-size: 2.15rem;
+  }
+
   main [id] {
     scroll-margin-top: 72px;
   }
