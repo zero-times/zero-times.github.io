@@ -208,6 +208,12 @@ main img {
     display: block;
     margin: 0 0 0.75rem 0;
   }
+
+  .post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -302,6 +308,26 @@ html:lang(pt) .case-card p,
 .post-content img {
   max-width: 100%;
   height: auto;
+}
+
+/* Post content readability + mobile table handling */
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.post-content th,
+.post-content td {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  vertical-align: top;
+}
+
+.post-content pre {
+  overflow-x: auto;
+  padding: 1rem 1.2rem;
+  border-radius: 0.85rem;
+  background: rgba(2, 8, 23, 0.04);
 }
 
 html:lang(pt) .eyebrow,
