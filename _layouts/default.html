@@ -94,7 +94,7 @@
         </div>
         <div class="col-md-6 text-md-end">
           <a href="{{ '/privacy-policy/' | relative_url }}" class="me-3">Política de Privacidade</a>
-          <a href="{{ '/terms/' | relative_url }}">Termos de Uso</a>
+          <a href="{{ '/terms/' | relative_url }}"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos de Uso</a>
         </div>
       </div>
     </div>
