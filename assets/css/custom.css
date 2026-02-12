@@ -411,6 +411,20 @@ html:lang(pt) .case-card p,
   background: rgba(2, 8, 23, 0.04);
 }
 
+.post-content a {
+  color: inherit;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgba(0, 39, 118, 0.45);
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.post-content a:hover,
+.post-content a:focus-visible {
+  color: #002776;
+  text-decoration-color: rgba(0, 39, 118, 0.75);
+}
+
 html:lang(pt) .eyebrow,
 html:lang(pt) .section-heading .eyebrow,
 html:lang(pt) .status-label,
@@ -517,6 +531,13 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 [dir="rtl"] .brand-glyph {
   margin-right: 0;
   margin-left: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .post-content a {
+    transition: none;
+  }
 }
 
 [dir="rtl"] .social-icon {
