@@ -246,6 +246,7 @@ body {
 .home-hero__title {
   line-height: 1.08;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .home-hero__lead {

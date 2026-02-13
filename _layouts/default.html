@@ -139,17 +139,5 @@
   
   <!-- 站点脚本 -->
   <script src="{{ '/assets/js/theme.js' | relative_url }}" defer></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('img').forEach(function (img) {
-        if (!img.loading) {
-          img.loading = 'lazy';
-        }
-        if (!img.decoding) {
-          img.decoding = 'async';
-        }
-      });
-    });
-  </script>
 </body>
 </html>
