@@ -21,7 +21,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
           <span class="blog-entry__badge">{{ words | divided_by: 180 | at_least: 1 }} min de leitura</span>
         </p>
         <p>{{ post.excerpt | strip_html | truncate: 200 }}</p>
-        <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary" aria-label="Continuar lendo: {{ post.title }}">Continuar lendo</a>
+        <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary" aria-label="Continuar lendo: {{ post.title }}" rel="bookmark">Continuar lendo</a>
       </article>
       {% endfor %}
       
@@ -81,7 +81,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
             <small class="text-muted d-block">{{ post.date | date: "%d/%m/%Y" }}</small>
           </div>
           {% endfor %}
-          <a href="{{ '/blog/' | relative_url }}" class="btn btn-sm btn-outline-secondary mt-2">Ver todos</a>
+          <a href="{{ '/blog/' | relative_url }}" class="btn btn-sm btn-outline-secondary mt-2" aria-label="Ver todos os posts do blog">Ver todos</a>
         </div>
       </div>
       
