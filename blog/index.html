@@ -91,11 +91,12 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
         </div>
         <div class="card-body">
           <p>Inscreva-se para receber atualizações sobre novos artigos.</p>
-          <form action="https://formspree.io/xvoewlbz" method="POST">
+          <form class="newsletter-form" action="https://formspree.io/xvoewlbz" method="POST">
             <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="source" value="blog-sidebar">
             <div class="mb-3">
-              <input type="email" name="email" class="form-control" placeholder="Seu melhor email" aria-label="Seu melhor email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
+              <input type="email" name="email" class="form-control" placeholder="Seu melhor email" aria-label="Seu melhor email" aria-describedby="blog-newsletter-hint" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
+              <small id="blog-newsletter-hint" class="newsletter-hint">Sem spam. Cancelamento a qualquer momento.</small>
             </div>
             <button type="submit" class="btn btn-primary w-100">Inscrever-se</button>
           </form>
