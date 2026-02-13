@@ -31,7 +31,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
         <ul class="pagination justify-content-center">
           {% if paginator.previous_page %}
           <li class="page-item">
-            <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="prev">Anterior</a>
+            <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="prev" aria-label="Página anterior">Anterior</a>
           </li>
           {% else %}
           <li class="page-item disabled">
@@ -46,18 +46,18 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
           </li>
           {% elsif page == 1 %}
           <li class="page-item">
-            <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+            <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Página {{ page }}">{{ page }}</a>
           </li>
           {% else %}
           <li class="page-item">
-            <a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+            <a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}" aria-label="Página {{ page }}">{{ page }}</a>
           </li>
           {% endif %}
           {% endfor %}
 
           {% if paginator.next_page %}
           <li class="page-item">
-            <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="next">Próxima</a>
+            <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="next" aria-label="Próxima página">Próxima</a>
           </li>
           {% else %}
           <li class="page-item disabled">
@@ -77,7 +77,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
         <div class="card-body">
           {% for post in site.posts limit: 5 %}
           <div class="mb-2">
-            <a href="{{ post.url | relative_url }}" class="text-decoration-none">{{ post.title }}</a>
+            <a href="{{ post.url | relative_url }}" class="text-decoration-none blog-archive-link" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
             <small class="text-muted d-block">{{ post.date | date: "%d/%m/%Y" }}</small>
           </div>
           {% endfor %}

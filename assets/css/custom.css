@@ -282,6 +282,28 @@ select:focus-visible,
   border-radius: 0.25rem;
 }
 
+.blog-archive-link {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(120deg, rgba(0, 39, 118, 0.18), rgba(0, 155, 58, 0.2));
+  background-size: 0 0.25em;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.2s ease, color 0.2s ease;
+}
+
+.blog-archive-link:hover,
+.blog-archive-link:focus-visible {
+  color: #0f1f48;
+  background-size: 100% 0.25em;
+}
+
+.blog-archive-link:focus-visible {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 3px;
+  border-radius: 0.2rem;
+}
+
 .blog-entry {
   padding-bottom: 2rem;
   border-bottom: 1px solid rgba(0, 39, 118, 0.1);
@@ -343,6 +365,16 @@ select:focus-visible,
 
   .card-link:hover,
   .card-link:focus-visible {
+    color: #f8fafc;
+  }
+
+  .blog-archive-link {
+    color: #f8fafc;
+    background-image: linear-gradient(120deg, rgba(148, 197, 255, 0.28), rgba(72, 220, 153, 0.2));
+  }
+
+  .blog-archive-link:hover,
+  .blog-archive-link:focus-visible {
     color: #f8fafc;
   }
 
