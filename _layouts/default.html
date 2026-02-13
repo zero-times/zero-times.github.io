@@ -24,6 +24,20 @@
     <meta name="keywords" content="{{ site.keywords }}">
   {% endif %}
   {% seo %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ site.title | escape }}",
+      "url": "{{ site.url }}{{ site.baseurl }}",
+      "inLanguage": "{{ site.lang | default: site.default_lang }}",
+      "publisher": {
+        "@type": "Person",
+        "name": "{{ site.author.name | escape }}",
+        "url": "{{ site.author.url }}"
+      }
+    }
+  </script>
   {% if paginator %}
     {% if paginator.previous_page %}
       <link rel="prev" href="{{ paginator.previous_page_path | relative_url }}">
