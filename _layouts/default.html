@@ -8,6 +8,9 @@
   <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="author" content="{{ site.author.name }}">
+  {% if page.image %}
+  <link rel="preload" as="image" href="{{ page.image | relative_url }}">
+  {% endif %}
   {% if page.url == '/' %}
   <link rel="preload" as="image" href="{{ site.author.avatar | relative_url }}">
   {% endif %}
