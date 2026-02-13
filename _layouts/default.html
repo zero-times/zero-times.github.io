@@ -11,7 +11,11 @@
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% if page.image %}
-  <link rel="preload" as="image" href="{{ page.image | relative_url }}">
+    {% if page.image contains '://' %}
+      <link rel="preload" as="image" href="{{ page.image }}">
+    {% else %}
+      <link rel="preload" as="image" href="{{ page.image | relative_url }}">
+    {% endif %}
   {% endif %}
   {% if page.url == '/' %}
   <link rel="preload" as="image" href="{{ site.author.avatar | relative_url }}">
@@ -137,8 +141,10 @@
   <script src="{{ '/assets/js/theme.js' | relative_url }}" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('img:not([loading])').forEach(function (img) {
-        img.loading = 'lazy';
+      document.querySelectorAll('img').forEach(function (img) {
+        if (!img.loading) {
+          img.loading = 'lazy';
+        }
         if (!img.decoding) {
           img.decoding = 'async';
         }

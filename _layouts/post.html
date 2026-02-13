@@ -16,7 +16,14 @@ layout: default
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                {% if page.image %}<img class="featured-image img-fluid rounded" src="{{ page.image | relative_url }}" alt="{{ page.title }}" itemprop="image" loading="eager" decoding="async" fetchpriority="high"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>{% endif %}
+                {% if page.image %}
+                {% if page.image contains '://' %}
+                {% assign post_image_src = page.image %}
+                {% else %}
+                {% assign post_image_src = page.image | relative_url %}
+                {% endif %}
+                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ page.title }}" itemprop="image" loading="eager" decoding="async" fetchpriority="high"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
+                {% endif %}
             
                 <div class="post-header">
                     <h1 class="posttitle" itemprop="name headline">{{ page.title }}</h1>
