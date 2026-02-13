@@ -15,11 +15,11 @@
     <div class="card-body">
       {% for post in site.posts limit: 5 %}
       <div class="mb-2">
-        <a href="{{ post.url | relative_url }}" class="text-decoration-none">{{ post.title }}</a>
+        <a href="{{ post.url | relative_url }}" class="blog-archive-link" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
         <small class="text-muted d-block">{{ post.date | date: "%d/%m/%Y" }}</small>
       </div>
       {% endfor %}
-      <a href="{{ '/blog/' | relative_url }}" class="btn btn-sm btn-outline-secondary mt-2">Ver todos</a>
+      <a href="{{ '/blog/' | relative_url }}" class="btn btn-sm btn-outline-secondary mt-2" aria-label="Ver todos os posts do blog">Ver todos</a>
     </div>
   </div>
 </div>
