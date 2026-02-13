@@ -17,7 +17,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         {% for post in site.posts limit: 3 %}
         <div class="card mb-4 shadow-sm">
           <div class="card-body">
-            <h3 class="card-title"><a href="{{ post.url | relative_url }}" class="text-decoration-none">{{ post.title }}</a></h3>
+            <h3 class="card-title"><a href="{{ post.url | relative_url }}" class="card-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h3>
             <p class="card-text">{{ post.excerpt | strip_html | truncate: 150 }}</p>
             <small class="text-muted">{{ post.date | date: "%d/%m/%Y" }}</small>
           </div>
