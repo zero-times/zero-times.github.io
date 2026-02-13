@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const isCurrent = href === currentPage || isBlogSection;
 
     if (isCurrent) {
-      link.setAttribute('aria-current', 'true');
+      link.setAttribute('aria-current', 'page');
       link.classList.add('active');
     } else {
       link.removeAttribute('aria-current');

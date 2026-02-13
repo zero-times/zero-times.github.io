@@ -18,7 +18,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
           <time class="blog-entry__date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
           <span aria-hidden="true">•</span>
           {% assign words = post.content | number_of_words %}
-          <span class="blog-entry__badge">{{ words | divided_by: 180 | at_least: 1 }} min de leitura</span>
+          <span class="blog-entry__badge">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
         </p>
         <p>{{ post.excerpt | strip_html | truncate: 200 }}</p>
         <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary" aria-label="Continuar lendo: {{ post.title }}" rel="bookmark">Continuar lendo</a>
