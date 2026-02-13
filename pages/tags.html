@@ -13,7 +13,7 @@ keywords: "tags, índice, blog, Flutter, arquitetura móvel"
       <p class="text-muted mb-2">Navegue por tema:</p>
       <div class="d-flex flex-wrap gap-2">
         {% for tag in sorted_tags %}
-          <a class="badge rounded-pill bg-light text-dark" href="#{{ tag[0] | slugify }}">{{ tag[0] }} ({{ tag[1].size }})</a>
+          <a class="badge rounded-pill bg-light text-dark" href="#{{ tag[0] | slugify }}" rel="tag" aria-label="Ver tag {{ tag[0] }}">{{ tag[0] }} ({{ tag[1].size }})</a>
         {% endfor %}
       </div>
     </div>
@@ -24,7 +24,7 @@ keywords: "tags, índice, blog, Flutter, arquitetura móvel"
         <ul class="list-unstyled">
           {% for post in tag[1] %}
             <li class="mb-3 pb-3 border-bottom">
-              <a class="fw-semibold text-decoration-none" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+              <a class="fw-semibold text-decoration-none" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
               <div class="small text-muted">{{ post.date | date: "%d/%m/%Y" }}</div>
             </li>
           {% endfor %}
