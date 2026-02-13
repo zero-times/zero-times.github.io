@@ -10,11 +10,11 @@ layout: default
             <h4 class="mt-5 mb-4 pb-2 border-bottom" id="{{ category[0] | slugify }}"><span class="text-capitalize small font-weight-bold">Categoria: "{{ category[0] }}"</span></h4>
             
             {% for post in category[1] %}
-            <div class="card mb-3">
+            <div class="card mb-3 category-post-card">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h5>
+                    <h5 class="card-title"><a class="category-post-link" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h5>
                     <p class="card-text">{{ post.excerpt | strip_html | truncate: 120 }}</p>
-                    <small class="text-muted">{{ post.date | date: "%B %d, %Y" }}</small>
+                    <small class="text-muted"><time class="category-post-date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%B %d, %Y" }}</time></small>
                 </div>
             </div>
             {% endfor %}
@@ -27,9 +27,9 @@ layout: default
                     <h5>Todas as Categorias</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled category-list">
                         {% for category in site.categories %}
-                        <li><a href="#{{ category[0] | slugify }}">{{ category[0] | capitalize }}</a> ({{ category[1].size }})</li>
+                        <li><a class="category-link" href="#{{ category[0] | slugify }}" rel="tag" aria-label="Ir para categoria: {{ category[0] }}">{{ category[0] | capitalize }}</a> <span class="category-count">({{ category[1].size }})</span></li>
                         {% endfor %}
                     </ul>
                 </div>

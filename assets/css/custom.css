@@ -232,6 +232,115 @@ main img {
   box-shadow: 0 12px 28px rgba(0, 39, 118, 0.18);
 }
 
+.category-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.category-link {
+  font-weight: 600;
+  color: var(--br-blue);
+  text-decoration: none;
+  position: relative;
+}
+
+.category-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.15rem;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 39, 118, 0.65), rgba(0, 155, 58, 0.65));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.category-link:hover::after,
+.category-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.category-link:focus-visible {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+.category-count {
+  color: rgba(29, 29, 31, 0.6);
+  font-weight: 500;
+}
+
+.category-post-card {
+  border: 1px solid rgba(0, 39, 118, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.category-post-card:hover,
+.category-post-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(0, 39, 118, 0.22);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.12);
+}
+
+.category-post-link {
+  color: var(--br-blue);
+  text-decoration: none;
+  background-image: linear-gradient(120deg, rgba(0, 155, 58, 0.2), rgba(0, 39, 118, 0.2));
+  background-repeat: no-repeat;
+  background-size: 0% 0.2em;
+  background-position: 0 100%;
+  transition: background-size 0.2s ease, color 0.2s ease;
+}
+
+.category-post-link:hover,
+.category-post-link:focus-visible {
+  color: var(--br-blue-soft);
+  background-size: 100% 0.2em;
+}
+
+.category-post-link:focus-visible {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 4px;
+  border-radius: 0.4rem;
+}
+
+.category-post-date {
+  display: inline-block;
+  margin-top: 0.25rem;
+  letter-spacing: 0.01em;
+}
+
+@media (prefers-color-scheme: dark) {
+  .category-count {
+    color: rgba(243, 244, 246, 0.65);
+  }
+
+  .category-link {
+    color: #e2e8f0;
+  }
+
+  .category-post-card {
+    background: rgba(12, 18, 31, 0.75);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .category-post-card:hover,
+  .category-post-card:focus-within {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .category-post-link {
+    color: #f8fafc;
+  }
+}
+
 .btn:focus-visible,
 button:focus-visible,
 input:focus-visible,
