@@ -53,21 +53,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Add ARIA attributes for better accessibility
-  const navLinks = document.querySelectorAll('.nav-link');
-  navLinks.forEach(link => {
-    if (!link.getAttribute('aria-current')) {
-      link.setAttribute('aria-current', 'false');
-    }
-  });
-
   // Update active nav link based on current page
+  const navLinks = document.querySelectorAll('.nav-link');
   const currentPage = window.location.pathname;
   navLinks.forEach(link => {
-    if (link.getAttribute('href') === currentPage || 
-        (currentPage.includes('/blog/') && link.getAttribute('href') === '/blog/')) {
+    const href = link.getAttribute('href');
+    const isBlogSection = href === '/blog/' && currentPage.startsWith('/blog/');
+    const isCurrent = href === currentPage || isBlogSection;
+
+    if (isCurrent) {
       link.setAttribute('aria-current', 'true');
       link.classList.add('active');
+    } else {
+      link.removeAttribute('aria-current');
+      link.classList.remove('active');
     }
   });
 
