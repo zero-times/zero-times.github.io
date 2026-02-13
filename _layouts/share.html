@@ -10,6 +10,8 @@
 <meta name="color-scheme" content="light dark">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="author" content="{{ site.author.name }}">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 {% if page.keywords %}
 <meta name="keywords" content="{{ page.keywords }}">
 {% elsif site.keywords %}
@@ -22,7 +24,8 @@
 <link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet">
 </head>
 <body class="share-page">
-  <main>
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+  <main id="main-content" role="main">
     {{ content }}
   </main>
 </body>
