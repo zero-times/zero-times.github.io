@@ -12,15 +12,15 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
       <h1 class="display-5 fw-bold mb-4">Blog</h1>
       
       {% for post in paginator.posts %}
-      <article class="blog-entry mb-5">
-        <h2><a href="{{ post.url | relative_url }}" class="text-decoration-none" rel="bookmark">{{ post.title }}</a></h2>
+      <article class="blog-entry mb-5" itemscope itemtype="https://schema.org/BlogPosting">
+        <h2 class="blog-entry__title" itemprop="headline"><a href="{{ post.url | relative_url }}" class="text-decoration-none" rel="bookmark" itemprop="url">{{ post.title }}</a></h2>
         <p class="text-muted blog-entry__meta">
-          <time class="blog-entry__date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
+          <time class="blog-entry__date" datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
           <span aria-hidden="true">•</span>
           {% assign words = post.content | number_of_words %}
           <span class="blog-entry__badge">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
         </p>
-        <p>{{ post.excerpt | strip_html | truncate: 200 }}</p>
+        <p itemprop="description">{{ post.excerpt | strip_html | truncate: 200 }}</p>
         <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary" aria-label="Continuar lendo: {{ post.title }}" rel="bookmark">Continuar lendo</a>
       </article>
       {% endfor %}
