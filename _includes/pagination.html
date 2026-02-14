@@ -19,7 +19,11 @@
     </li>
     {% elsif page == 1 %}
     <li class="page-item">
-      <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Página {{ page }}">{{ page }}</a>
+      <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Página {{ page }}" rel="first">{{ page }}</a>
+    </li>
+    {% elsif page == paginator.total_pages %}
+    <li class="page-item">
+      <a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}" aria-label="Página {{ page }}" rel="last">{{ page }}</a>
     </li>
     {% else %}
     <li class="page-item">
