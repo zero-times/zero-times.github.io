@@ -39,7 +39,9 @@
         "@type": "Person",
         "name": "{{ site.author.name | escape }}",
         "url": "{{ site.author.url }}"
-      }
+      }{% if site.social and site.social.links %},
+      "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+      {% endif %}
     }
   </script>
   {% if paginator %}
@@ -87,7 +89,7 @@
       <a class="navbar-brand" href="{{ '/' | relative_url }}" rel="home" aria-label="Página inicial - {{ site.title }}">{{ site.title }}</a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
         <span class="navbar-toggler-icon"></span>
       </button>
       
