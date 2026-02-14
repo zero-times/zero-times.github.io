@@ -15,13 +15,24 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
       <div class="mt-5">
         <h2 class="mb-4">Últimas Postagens</h2>
         {% for post in site.posts limit: 3 %}
-        <div class="card mb-4 shadow-sm">
+        <article class="card mb-4 shadow-sm" itemscope itemtype="https://schema.org/BlogPosting">
+          <meta itemprop="author" content="{{ site.author.name }}">
+          <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
+          <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
+          <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
           <div class="card-body">
-            <h3 class="card-title"><a href="{{ post.url | relative_url }}" class="card-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h3>
-            <p class="card-text">{{ post.excerpt | strip_html | truncate: 150 }}</p>
-            <small class="text-muted">{{ post.date | date: "%d/%m/%Y" }}</small>
+            <h3 class="card-title" itemprop="headline">
+              <a href="{{ post.url | relative_url }}" class="card-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url">{{ post.title }}</a>
+            </h3>
+            <p class="card-text" itemprop="description">{{ post.excerpt | strip_html | truncate: 150 }}</p>
+            <p class="text-muted blog-entry__meta mb-0">
+              <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
+              <span aria-hidden="true">•</span>
+              {% assign words = post.content | number_of_words %}
+              <span class="blog-entry__badge">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
+            </p>
           </div>
-        </div>
+        </article>
         {% endfor %}
         
         <div class="text-center mt-4">
