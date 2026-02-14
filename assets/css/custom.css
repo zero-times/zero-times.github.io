@@ -487,6 +487,20 @@ select:focus-visible,
   text-underline-offset: 0.2em;
 }
 
+.posttitle,
+.blog-entry__title,
+.card-title {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.post-content,
+.article-post {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
 .postbox-card {
   border: 1px solid rgba(0, 39, 118, 0.12);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 248, 255, 0.92));
