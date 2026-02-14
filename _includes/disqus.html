@@ -1,12 +1,43 @@
-<section class="disqus">
+<section class="disqus" data-disqus-shortname="{{site.disqus}}">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-        var disqus_shortname = '{{site.disqus}}'; 
-        var disqus_developer = 0;
         (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = window.location.protocol + '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            var disqus_shortname = '{{site.disqus}}';
+            if (!disqus_shortname) {
+                return;
+            }
+
+            var target = document.querySelector('.disqus');
+            if (!target) {
+                return;
+            }
+
+            var loaded = false;
+            function loadDisqus() {
+                if (loaded) {
+                    return;
+                }
+                loaded = true;
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.head || document.body).appendChild(dsq);
+            }
+
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            observer.disconnect();
+                            loadDisqus();
+                        }
+                    });
+                }, { rootMargin: '200px 0px' });
+                observer.observe(target);
+            } else {
+                loadDisqus();
+            }
         })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
