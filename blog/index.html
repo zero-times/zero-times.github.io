@@ -17,6 +17,13 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
         <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
         <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
         <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
+        {% if post.image %}
+          {% if post.image contains '://' %}
+        <meta itemprop="image" content="{{ post.image }}">
+          {% else %}
+        <meta itemprop="image" content="{{ post.image | absolute_url }}">
+          {% endif %}
+        {% endif %}
         <h2 class="blog-entry__title" itemprop="headline"><a href="{{ post.url | relative_url }}" class="text-decoration-none" rel="bookmark" itemprop="url">{{ post.title }}</a></h2>
         <p class="text-muted blog-entry__meta">
           <time class="blog-entry__date" datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
