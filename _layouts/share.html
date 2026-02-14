@@ -17,11 +17,26 @@
 {% elsif site.keywords %}
 <meta name="keywords" content="{{ site.keywords }}">
 {% endif %}
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
 <title>{{ page.title }} | {{ site.title }}</title>
 {% seo %}
 <link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet">
 <link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet">
+{% if site.google_analytics %}
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.google-analytics.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ site.google_analytics }}');
+</script>
+{% endif %}
 </head>
 <body class="share-page">
   <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
