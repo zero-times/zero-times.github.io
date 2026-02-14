@@ -41,7 +41,13 @@ layout: default
                     
                         {% if author_name %}
                             <span class="post-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                                <span itemprop="name">{{ author_name }}</span>
+                                {% if author_web %}
+                                    <a href="{{ author_web }}" itemprop="url" rel="author noopener noreferrer" target="_blank">
+                                        <span itemprop="name">{{ author_name }}</span>
+                                    </a>
+                                {% else %}
+                                    <span itemprop="name">{{ author_name }}</span>
+                                {% endif %}
                             </span>
                         {% endif %}
                     
@@ -95,20 +101,20 @@ layout: default
                 </nav>
             
                 {% if author_name %}
-                <div class="author-box mt-5">
+                <div class="author-box mt-5" itemprop="author" itemscope itemtype="https://schema.org/Person">
                     <div class="row align-items-center">
                         <div class="col-md-2 text-center">
                             {% if author_avatar %}
-                            <img class="author-thumb rounded-circle" src="{{ author_avatar | relative_url }}" alt="{{ author_name }}" loading="lazy" decoding="async" width="72" height="72">
+                            <img class="author-thumb rounded-circle" src="{{ author_avatar | relative_url }}" alt="{{ author_name }}" itemprop="image" loading="lazy" decoding="async" width="72" height="72">
                             {% endif %}
                         </div>
                         <div class="col-md-10">
-                            <h4>{{ author_name }}</h4>
+                            <h4 itemprop="name">{{ author_name }}</h4>
                             {% if author_bio %}
-                            <p class="author-description">{{ author_bio }}</p>
+                            <p class="author-description" itemprop="description">{{ author_bio }}</p>
                             {% endif %}
                             {% if author_web %}
-                            <a target="_blank" class="btn btn-sm btn-outline-primary" href="{{ author_web }}" rel="noopener noreferrer">Visitar site</a>
+                            <a target="_blank" class="btn btn-sm btn-outline-primary" href="{{ author_web }}" itemprop="url" rel="author noopener noreferrer">Visitar site</a>
                             {% endif %}
                         </div>
                     </div>

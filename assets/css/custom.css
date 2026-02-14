@@ -1055,6 +1055,39 @@ html:lang(pt) .case-card p,
   text-decoration-color: rgba(0, 39, 118, 0.75);
 }
 
+.author-box {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: rgba(0, 39, 118, 0.05);
+  border: 1px solid rgba(0, 39, 118, 0.12);
+}
+
+.author-box .author-description {
+  color: rgba(15, 23, 42, 0.82);
+  margin-bottom: 0.85rem;
+}
+
+@media (max-width: 576px) {
+  .author-box .row {
+    text-align: center;
+  }
+
+  .author-box .btn {
+    margin-top: 0.35rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .author-box {
+    background: rgba(8, 15, 28, 0.7);
+    border-color: rgba(148, 163, 184, 0.2);
+  }
+
+  .author-box .author-description {
+    color: rgba(226, 232, 240, 0.78);
+  }
+}
+
 .store-section {
   background: linear-gradient(180deg, #fdfdff 0%, #eef2f9 100%);
 }
