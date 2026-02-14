@@ -36,7 +36,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (!isValid) {
         e.preventDefault();
-        alert('Por favor, preencha todos os campos obrigatórios.');
+        form.classList.add('was-validated');
+        const firstInvalid = form.querySelector('.is-invalid, [required]:invalid');
+        if (firstInvalid) {
+          firstInvalid.focus({ preventScroll: true });
+          firstInvalid.scrollIntoView({
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+            block: 'center'
+          });
+        }
+        announceToScreenReader('Por favor, preencha todos os campos obrigatórios.');
       }
     });
 
