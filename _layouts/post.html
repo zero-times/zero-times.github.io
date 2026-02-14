@@ -12,6 +12,8 @@ layout: default
     <meta itemprop="mainEntityOfPage" content="{{ page.url | absolute_url }}">
     {% if page.description %}
     <meta itemprop="description" content="{{ page.description }}">
+    {% elsif page.excerpt %}
+    <meta itemprop="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
     {% endif %}
     <div class="container my-5">
         <div class="row justify-content-center">

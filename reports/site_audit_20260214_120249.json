@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-14T12:02:49+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.5,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post Layout",
+          "result": "Good",
+          "details": "Estrutura consistente com container e hierarquia clara."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Links",
+          "result": "No Issues",
+          "details": "Nenhum placeholder encontrado na varredura local."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post Description",
+          "result": "Needs Improvement",
+          "details": "Posts sem description não expõem fallback de meta description no microdata."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Conteúdo recente e atualizado em posts diários."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.4/10",
+    "seo": "SEO: 8.2/10",
+    "content": "Content: 8.7/10"
+  },
+  "recommendations": [
+    "Adicionar fallback de description para posts sem description explícito."
+  ]
+}
