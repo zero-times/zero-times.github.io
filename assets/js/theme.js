@@ -6,14 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: prefersReducedMotion ? 'auto' : 'smooth',
-          block: 'start'
-        });
+      const href = this.getAttribute('href');
+      if (!href || href === '#' || this.hasAttribute('data-bs-toggle')) {
+        return;
       }
+      const target = document.querySelector(href);
+      if (!target) {
+        return;
+      }
+      e.preventDefault();
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start'
+      });
     });
   });
 
