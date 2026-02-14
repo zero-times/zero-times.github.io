@@ -1125,6 +1125,37 @@ html:lang(pt) .case-card p,
   box-shadow: 0 45px 90px rgba(2, 6, 23, 0.75);
   padding: 48px;
   color: #f5f5f7;
+  position: relative;
+  overflow: hidden;
+}
+
+.share-card::before {
+  content: "";
+  position: absolute;
+  top: -35%;
+  left: -10%;
+  right: -10%;
+  height: 55%;
+  background: radial-gradient(circle, rgba(10, 132, 255, 0.35), rgba(10, 132, 255, 0));
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.share-card::after {
+  content: "";
+  position: absolute;
+  bottom: -45%;
+  left: -15%;
+  right: -15%;
+  height: 65%;
+  background: radial-gradient(circle, rgba(0, 196, 180, 0.25), rgba(0, 196, 180, 0));
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.share-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .share-card__badge {
@@ -1159,6 +1190,8 @@ html:lang(pt) .case-card p,
 
 .stats-card strong {
   font-size: 1.8rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
 }
 
 .help-list,
