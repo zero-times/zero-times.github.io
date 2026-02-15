@@ -7,11 +7,15 @@ layout: default
 {% assign author_bio = author_data.description | default: author_data.bio %}
 {% assign author_avatar = author_data.avatar | default: site.author.avatar %}
 {% assign author_web = author_data.web | default: author_data.url %}
+{% assign word_count = content | number_of_words %}
+{% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
 
 <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
     <meta itemprop="mainEntityOfPage" content="{{ page.url | absolute_url }}">
     <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
     <meta itemprop="dateModified" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
+    <meta itemprop="wordCount" content="{{ word_count }}">
+    <meta itemprop="timeRequired" content="PT{{ reading_minutes }}M">
     {% if page.description %}
     <meta itemprop="description" content="{{ page.description }}">
     {% elsif page.excerpt %}
@@ -35,6 +39,8 @@ layout: default
                 
                     <div class="post-meta">
                         <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}" itemprop="datePublished">{{ page.date | date_to_string }}</time></span>           
+                        <span class="post-meta-sep" aria-hidden="true">•</span>
+                        <span class="post-reading-time" aria-label="Tempo de leitura estimado">{{ reading_minutes }} min de leitura</span>
                     
                         {% if page.last_modified_at %}
                         <span class="post-updated">(<time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">Atualizado em {{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)</span>
