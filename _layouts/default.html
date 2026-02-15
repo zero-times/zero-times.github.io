@@ -11,6 +11,12 @@
   <meta name="author" content="{{ site.author.name }}">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  {% assign social_image_alt = page.image_alt | default: page.title | default: site.title %}
+  {% assign social_image_src = page.image | default: site.image %}
+  {% if social_image_src %}
+    <meta property="og:image:alt" content="{{ social_image_alt | escape }}">
+    <meta name="twitter:image:alt" content="{{ social_image_alt | escape }}">
+  {% endif %}
   {% if page.image %}
     {% if page.image contains '://' %}
       <link rel="preload" as="image" href="{{ page.image }}">
