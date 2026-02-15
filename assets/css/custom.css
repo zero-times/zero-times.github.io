@@ -1182,6 +1182,18 @@ html:lang(pt) .case-card p,
   overflow: hidden;
 }
 
+.share-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, rgba(15, 118, 110, 0.15), transparent 45%),
+    radial-gradient(circle at 20% 10%, rgba(37, 99, 235, 0.18), transparent 38%),
+    #050914;
+}
+
+.share-page main {
+  padding: clamp(1.5rem, 3vw, 3rem) env(safe-area-inset-right)
+    calc(2.5rem + env(safe-area-inset-bottom)) env(safe-area-inset-left);
+}
+
 .share-card::before {
   content: "";
   position: absolute;
