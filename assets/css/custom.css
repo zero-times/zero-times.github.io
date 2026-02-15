@@ -93,6 +93,7 @@ Custom CSS for zero-times.github.io
 .contact-chips {
   display: flex;
   flex-wrap: wrap;
+  gap: 12px;
 }
 
 .contact-hero {
