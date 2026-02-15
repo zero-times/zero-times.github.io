@@ -161,6 +161,20 @@ Custom CSS for zero-times.github.io
   color: rgba(15, 23, 42, 0.6);
 }
 
+.contact-chip__value {
+  font-weight: 600;
+  color: #0f1f48;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.contact-chip__value:hover,
+.contact-chip__value:focus-visible {
+  color: var(--br-blue);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .contact-card,
 .contact-form__box {
   background: #ffffff;
@@ -202,6 +216,15 @@ Custom CSS for zero-times.github.io
 
   .contact-chip__label {
     color: rgba(226, 232, 240, 0.7);
+  }
+
+  .contact-chip__value {
+    color: rgba(226, 232, 240, 0.92);
+  }
+
+  .contact-chip__value:hover,
+  .contact-chip__value:focus-visible {
+    color: #ffffff;
   }
 
   .contact-card,
@@ -725,6 +748,11 @@ select:focus-visible,
   outline: 3px solid var(--br-yellow);
   outline-offset: 3px;
   border-radius: 0.2rem;
+}
+
+.blog-archive-date {
+  line-height: 1.35;
+  min-height: 1.35em;
 }
 
 .blog-entry {
