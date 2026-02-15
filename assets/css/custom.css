@@ -154,6 +154,7 @@ Custom CSS for zero-times.github.io
   height: auto;
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+  object-fit: cover;
 }
 
 @media (prefers-color-scheme: dark) {
