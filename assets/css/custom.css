@@ -30,6 +30,14 @@ Custom CSS for zero-times.github.io
   min-width: 140px;
 }
 
+@media (prefers-color-scheme: dark) {
+  .language-switcher select {
+    background-color: rgba(15, 23, 42, 0.85);
+    border-color: rgba(148, 197, 255, 0.35);
+    color: rgba(248, 250, 252, 0.92);
+  }
+}
+
 .language-switcher select:focus {
   outline: 0;
   border-color: #80bdff;
@@ -67,6 +75,24 @@ Custom CSS for zero-times.github.io
 .share-language-switcher .language-switcher select {
   background-color: rgba(255, 255, 255, 0.92);
   border-color: rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 575.98px) {
+  .navbar .language-switcher {
+    width: 100%;
+    margin: 0.5rem 0 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .navbar .language-switcher select {
+    width: 100%;
+  }
+
+  .share-language-switcher {
+    top: 12px;
+    right: 12px;
+  }
 }
 
 /* Buttons and CTA layout for long translations */
