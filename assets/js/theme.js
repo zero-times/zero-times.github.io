@@ -156,15 +156,9 @@ function updateLanguage(lang) {
 
 // Utility function for announcement of dynamic content changes
 function announceToScreenReader(message) {
-  let element = document.getElementById('aria-live-region');
+  const element = document.getElementById('aria-live-region');
   if (!element) {
-    element = document.createElement('div');
-    element.id = 'aria-live-region';
-    element.setAttribute('aria-live', 'polite');
-    element.setAttribute('aria-atomic', 'true');
-    element.style.position = 'absolute';
-    element.style.left = '-9999px';
-    document.body.appendChild(element);
+    return;
   }
   element.textContent = message;
 }
