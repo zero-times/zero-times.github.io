@@ -16,7 +16,12 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         <h2 class="mb-4">Últimas Postagens</h2>
         {% for post in site.posts limit: 3 %}
         <article class="card mb-4 shadow-sm" itemscope itemtype="https://schema.org/BlogPosting">
-          <meta itemprop="author" content="{{ site.author.name }}">
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <meta itemprop="name" content="{{ site.author.name }}">
+            {% if site.author.url %}
+            <meta itemprop="url" content="{{ site.author.url }}">
+            {% endif %}
+          </span>
           <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
           <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
           <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">

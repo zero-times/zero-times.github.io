@@ -13,7 +13,12 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
       
       {% for post in paginator.posts %}
       <article class="blog-entry mb-5" itemscope itemtype="https://schema.org/BlogPosting">
-        <meta itemprop="author" content="{{ site.author.name }}">
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="{{ site.author.name }}">
+          {% if site.author.url %}
+          <meta itemprop="url" content="{{ site.author.url }}">
+          {% endif %}
+        </span>
         <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
         <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
         <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
