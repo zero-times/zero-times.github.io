@@ -9,8 +9,16 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="format-detection" content="telephone=no">
   <meta name="author" content="{{ site.author.name }}">
+  {% if page.robots %}
+  <meta name="robots" content="{{ page.robots }}">
+  {% else %}
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  {% endif %}
+  {% if page.googlebot %}
+  <meta name="googlebot" content="{{ page.googlebot }}">
+  {% else %}
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  {% endif %}
   {% assign social_image_alt = page.image_alt | default: page.title | default: site.title %}
   {% assign social_image_src = page.image | default: site.image %}
   {% if social_image_src %}
