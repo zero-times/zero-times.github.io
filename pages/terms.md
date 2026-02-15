@@ -3,42 +3,30 @@ layout: page
 title: Termos de Uso
 permalink: /terms/
 comments: false
-description: Termos e condições de uso do site youllbe.cn
-keywords: "termos de uso, condições, responsabilidades, site"
+description: Termos e condições de uso do site e dos conteúdos publicados.
+keywords: "termos de uso, condições, responsabilidade, propriedade intelectual, contato"
 ---
 
-<section class="legal-page">
-  <p class="legal-lead">Ao acessar e navegar neste site, você concorda com os termos abaixo. O objetivo é oferecer transparência sobre direitos, responsabilidades e limites de uso.</p>
+<section class="terms-of-use">
+  <h3>1. Aceitação dos termos</h3>
+  <p>Ao acessar este site, você concorda com estes Termos de Uso e com a Política de Privacidade. Caso não concorde, interrompa a navegação.</p>
 
-  <div class="legal-card">
-    <h3>Uso do conteúdo</h3>
-    <ul>
-      <li>Os textos, imagens e códigos publicados são destinados a fins informativos e educacionais.</li>
-      <li>Você pode compartilhar trechos com crédito e link de origem, sem alterar o sentido original.</li>
-      <li>Não é permitido republicar conteúdos integrais para fins comerciais sem autorização.</li>
-    </ul>
-  </div>
+  <h3>2. Uso do conteúdo</h3>
+  <ul>
+    <li>Os conteúdos publicados têm caráter informativo e podem ser atualizados sem aviso prévio.</li>
+    <li>É permitida a citação com atribuição e link para a fonte original.</li>
+    <li>Não é permitido copiar, reproduzir ou redistribuir conteúdos sem autorização prévia.</li>
+  </ul>
 
-  <div class="legal-card">
-    <h3>Responsabilidades</h3>
-    <ul>
-      <li>As informações são fornecidas “como estão” e podem ser atualizadas a qualquer momento.</li>
-      <li>Não nos responsabilizamos por decisões tomadas a partir do conteúdo publicado.</li>
-      <li>Links externos são fornecidos por conveniência e podem mudar sem aviso prévio.</li>
-    </ul>
-  </div>
+  <h3>3. Responsabilidade</h3>
+  <p>Empenhamos esforços para manter informações corretas e atualizadas, mas não garantimos a ausência de erros. O uso das informações é de responsabilidade do usuário.</p>
 
-  <div class="legal-card">
-    <h3>Comentários e contato</h3>
-    <ul>
-      <li>Comentários são bem-vindos, desde que respeitosos e relevantes ao tema.</li>
-      <li>Reservamo-nos o direito de remover conteúdo abusivo, ofensivo ou spam.</li>
-      <li>Para dúvidas, escreva para <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</li>
-    </ul>
-  </div>
+  <h3>4. Links externos</h3>
+  <p>Este site pode conter links para serviços de terceiros. Não controlamos o conteúdo desses sites e não nos responsabilizamos por suas políticas.</p>
 
-  <div class="legal-card">
-    <h3>Atualizações destes termos</h3>
-    <p>Podemos revisar estes termos para refletir mudanças legais ou operacionais. Recomendamos revisitar esta página periodicamente.</p>
-  </div>
+  <h3>5. Contato</h3>
+  <p>Em caso de dúvidas, fale conosco pela página de contato ou pelo e-mail <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+
+  <h3>6. Alterações</h3>
+  <p>Estes termos podem ser revisados a qualquer momento. As mudanças entram em vigor imediatamente após a publicação.</p>
 </section>

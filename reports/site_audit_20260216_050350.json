@@ -1,0 +1,70 @@
+{
+  "audit_timestamp": "2026-02-16T05:03:50+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Page Structure",
+          "result": "Good",
+          "details": "Layouts are consistent with main content container and accessible navigation."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Links",
+          "result": "Issue Found (1)",
+          "details": "Footer links to /terms/ but no page existed in the site tree."
+        }
+      ],
+      "broken_links": [
+        {
+          "url": "/terms/",
+          "text": "Termos de Uso",
+          "location": "_layouts/default.html",
+          "issue": "Missing page"
+        }
+      ]
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Descriptions",
+          "result": "Good",
+          "details": "Pages and layouts expose description/keywords; SEO tag present."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent posts and update cadence remain active."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 9.0/10",
+    "links": "Links: 7.5/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 9.2/10"
+  },
+  "recommendations": [
+    "Add a Terms of Use page to resolve the internal footer link",
+    "Keep auditing internal navigation for new pages"
+  ]
+}
