@@ -1393,6 +1393,10 @@ html:lang(pt) .case-card p,
   z-index: 1;
 }
 
+.share-card h1 {
+  text-wrap: balance;
+}
+
 .share-card__badge {
   display: inline-block;
   padding: 6px 16px;
@@ -1407,6 +1411,8 @@ html:lang(pt) .case-card p,
 .share-card__tagline {
   font-size: 1.1rem;
   color: rgba(245, 245, 247, 0.85);
+  max-width: 32rem;
+  margin: 0.75rem auto 0;
 }
 
 .share-card__label {

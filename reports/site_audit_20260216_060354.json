@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-16T06:04:01+0800",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Share page hierarchy",
+          "result": "Opportunity",
+          "details": "Headline and supporting tagline can be balanced and constrained for better mobile readability."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Manual scan",
+          "result": "No obvious issues",
+          "details": "Reviewed templates and recent posts via grep; no placeholder or http:// links found. External link availability not verified without network checks."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta coverage",
+          "result": "Good",
+          "details": "Core meta tags and structured data present in layouts; share page uses SEO tag and sitemap/RSS links."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Homepage and share page copy is clear; minor tuning needed for headline wrapping on smaller screens."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.7/10",
+    "links": "Links: 8.4/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Balance share page headline and constrain tagline width for improved mobile scanning"
+  ]
+}
