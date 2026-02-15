@@ -1,4 +1,7 @@
+---
+layout: null
+permalink: /robots.txt
+---
 User-agent: *
-Disallow:
-
-Sitemap: https://youllbe.cn/sitemap.xml
+Allow: /
+Sitemap: {{ site.url }}/sitemap.xml
