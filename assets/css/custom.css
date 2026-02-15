@@ -730,6 +730,18 @@ select:focus-visible,
   }
 }
 
+@media (max-width: 575.98px) {
+  .pagination .page-link {
+    padding: 0.55rem 0.75rem;
+    min-width: 2.6rem;
+    text-align: center;
+  }
+
+  .pagination .page-item {
+    margin: 0 0.15rem;
+  }
+}
+
 .newsletter,
 .newsletter-form {
   display: grid;
