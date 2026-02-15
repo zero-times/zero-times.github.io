@@ -25,6 +25,13 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
           <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
           <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
           <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
+          {% if post.image %}
+            {% if post.image contains '://' %}
+          <meta itemprop="image" content="{{ post.image }}">
+            {% else %}
+          <meta itemprop="image" content="{{ post.image | absolute_url }}">
+            {% endif %}
+          {% endif %}
           <div class="card-body">
             <h3 class="card-title" itemprop="headline">
               <a href="{{ post.url | relative_url }}" class="card-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url">{{ post.title }}</a>
@@ -41,7 +48,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         {% endfor %}
         
         <div class="text-center mt-4">
-          <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary">Ver todos os artigos</a>
+          <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary" aria-label="Ver todos os artigos do blog">Ver todos os artigos</a>
         </div>
       </div>
     </div>
