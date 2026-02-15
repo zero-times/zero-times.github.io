@@ -7,10 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
-      if (!href || href === '#' || this.hasAttribute('data-bs-toggle')) {
+      if (!href || href === '#' || href === '#!' || href.startsWith('#!') || this.hasAttribute('data-bs-toggle')) {
         return;
       }
-      const target = document.querySelector(href);
+      let target = null;
+      try {
+        target = document.querySelector(href);
+      } catch (err) {
+        return;
+      }
       if (!target) {
         return;
       }
@@ -89,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.documentElement.setAttribute('lang', 'pt-BR');
   }
 
-  // Add image lazy loading for performance
+  // Add image defaults for performance (avoid overriding eager images)
   const images = document.querySelectorAll('img');
   images.forEach(img => {
     if (!img.hasAttribute('loading')) {
