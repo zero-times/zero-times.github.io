@@ -89,7 +89,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
           {% for post in site.posts limit: 5 %}
           <div class="mb-2">
             <a href="{{ post.url | relative_url }}" class="text-decoration-none blog-archive-link" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
-            <small class="text-muted d-block">{{ post.date | date: "%d/%m/%Y" }}</small>
+            <time class="text-muted d-block" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
           </div>
           {% endfor %}
           <a href="{{ '/blog/' | relative_url }}" class="btn btn-sm btn-outline-secondary mt-2" aria-label="Ver todos os posts do blog">Ver todos</a>

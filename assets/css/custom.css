@@ -697,6 +697,23 @@ select:focus-visible,
   padding-bottom: 0;
 }
 
+@media (max-width: 575.98px) {
+  .blog-entry {
+    padding-left: 0.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .blog-entry::before {
+    width: 2px;
+    top: 0.35rem;
+    bottom: 0.35rem;
+  }
+
+  .blog-entry__title {
+    font-size: clamp(1.35rem, 5.2vw, 1.65rem);
+  }
+}
+
 .newsletter,
 .newsletter-form {
   display: grid;
