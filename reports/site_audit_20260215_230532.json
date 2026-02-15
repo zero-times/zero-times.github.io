@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-15T23:05:32+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.5,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Card Density",
+          "result": "Opportunity",
+          "details": "Post cards render well but can benefit from containment to reduce layout cost on long lists."
+        },
+        {
+          "aspect": "Mobile Tap Targets",
+          "result": "Opportunity",
+          "details": "Post card CTAs can be widened on small screens for easier interaction."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No obvious placeholders",
+          "details": "Spot-checked recent posts and static pages; no placeholder domains found."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "Site-wide SEO tags present; page-level descriptions and keywords set on core pages."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Typography and link styling remain consistent across posts and listings."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.7/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Add render containment to post cards for faster list rendering",
+    "Increase mobile CTA tap targets in post cards"
+  ]
+}
