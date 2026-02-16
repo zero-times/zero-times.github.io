@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-16T12:05:30+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.5,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "404 Experience",
+          "result": "Needs Improvement",
+          "details": "404 页面缺少继续探索的清晰路径与视觉强调。"
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No obvious placeholders",
+          "details": "未发现 example.com 等占位链接。"
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Indexing Controls",
+          "result": "Good",
+          "details": "404 已设置 noindex，核心页面含完整 meta。"
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Error Recovery",
+          "result": "Needs Improvement",
+          "details": "404 页面缺少内容回流与推荐入口。"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 8.2/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.7/10"
+  },
+  "recommendations": [
+    "Upgrade 404 page to include actionable navigation and richer visual hierarchy"
+  ]
+}
