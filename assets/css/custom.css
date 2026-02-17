@@ -1531,6 +1531,20 @@ html:lang(pt) .case-card p,
   letter-spacing: 0.01em;
 }
 
+@media (max-width: 575.98px) {
+  .stats-card {
+    padding: 16px;
+  }
+
+  .stats-card strong {
+    font-size: 1.5rem;
+  }
+
+  .stats-card span {
+    font-size: 0.95rem;
+  }
+}
+
 .help-list,
 .achievements-list {
   display: grid;
