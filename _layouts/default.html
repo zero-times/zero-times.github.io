@@ -103,7 +103,7 @@
 <body class="d-flex flex-column min-vh-100">
   <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
   <!-- 页头 -->
-  <header class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <header class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top" role="navigation" aria-label="Navegação principal">
     <div class="container">
       <a class="navbar-brand" href="{{ '/' | relative_url }}" rel="home" aria-label="Página inicial - {{ site.title }}">{{ site.title }}</a>
       
@@ -136,7 +136,7 @@
   </header>
 
   <!-- 主内容 -->
-  <main class="flex-grow-1" id="main-content" role="main">
+  <main class="flex-grow-1" id="main-content" role="main" tabindex="-1">
     {{ content }}
   </main>
 
