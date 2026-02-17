@@ -62,13 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Real-time validation feedback
     const inputs = form.querySelectorAll('input[required], textarea[required]');
     inputs.forEach(input => {
-      input.addEventListener('blur', function() {
+      const updateValidity = function() {
         if (!this.value.trim()) {
           this.classList.add('is-invalid');
         } else {
           this.classList.remove('is-invalid');
         }
-      });
+      };
+      input.addEventListener('blur', updateValidity);
+      input.addEventListener('input', updateValidity);
     });
   });
 
@@ -165,5 +167,10 @@ function announceToScreenReader(message) {
   if (!element) {
     return;
   }
-  element.textContent = message;
+  element.textContent = '';
+  window.requestAnimationFrame(() => {
+    window.setTimeout(() => {
+      element.textContent = message;
+    }, 50);
+  });
 }
