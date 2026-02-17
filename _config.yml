@@ -36,6 +36,7 @@ paginate_path: "/blog/page:num/"
 # SEO
 github_username: zero-times
 whatsapp: "+8619152250086"
+disqus: "youllbe-cn"
 social:
   name: Hoa
   links:
