@@ -50,6 +50,11 @@ bootstrap_version: 5
 # Analytics (optional)
 google_analytics: 'G-D37T5M8PL8'
 
+# Build exclusions
+exclude:
+  - reports
+  - test-responsive.html
+
 # Defaults
 defaults:
   - scope:
