@@ -61,7 +61,7 @@ layout: default
                         {% if page.categories %}
                             <div class="post-categories">
                                 {% for category in page.categories %}
-                                <a href="{{ '/categories#' | append: category | slugify | relative_url }}" rel="tag">{{ category }}</a>
+                                <a href="{{ '/categories#' | append: category | slugify | relative_url }}" rel="tag" aria-label="Categoria: {{ category }}">{{ category }}</a>
                                 {% endfor %}
                             </div>
                         {% endif %}
@@ -86,7 +86,7 @@ layout: default
                 {% if page.tags %}
                 <div class="post-tags">
                     {% for tag in page.tags %}
-                    <a class="badge rounded-pill bg-light text-dark" href="{{ '/tags#' | append: tag | slugify | relative_url }}" rel="tag">{{ tag }}</a>
+                    <a class="badge rounded-pill bg-light text-dark" href="{{ '/tags#' | append: tag | slugify | relative_url }}" rel="tag" aria-label="Tag: {{ tag }}">{{ tag }}</a>
                     {% endfor %}
                 </div>
                 {% endif %}
