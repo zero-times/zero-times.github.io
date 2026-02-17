@@ -85,7 +85,7 @@ layout: default
                             {% assign post_site_link = page.site | relative_url %}
                         {% endif %}
                         <div class="post-site mt-3">
-                            <a class="btn btn-sm btn-outline-secondary" href="{{ post_site_link }}" target="_blank" rel="noopener noreferrer">访问站点</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ post_site_link }}" target="_blank" rel="noopener noreferrer" aria-label="Visitar site relacionado: {{ page.title }}">访问站点</a>
                         </div>
                     {% endif %}
                 </div>
@@ -132,7 +132,7 @@ layout: default
                             <p class="author-description" itemprop="description">{{ author_bio }}</p>
                             {% endif %}
                             {% if author_web %}
-                            <a target="_blank" class="btn btn-sm btn-outline-primary" href="{{ author_web }}" itemprop="url" rel="author noopener noreferrer">Visitar site</a>
+                            <a target="_blank" class="btn btn-sm btn-outline-primary" href="{{ author_web }}" itemprop="url" rel="author noopener noreferrer" aria-label="Visitar site do autor {{ author_name }}">Visitar site</a>
                             {% endif %}
                         </div>
                     </div>
