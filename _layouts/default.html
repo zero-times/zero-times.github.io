@@ -39,6 +39,12 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://formspree.io" crossorigin>
   <link rel="dns-prefetch" href="https://formspree.io">
+  {% if site.disqus and page.layout == 'post' %}
+  <link rel="preconnect" href="https://{{ site.disqus }}.disqus.com" crossorigin>
+  <link rel="dns-prefetch" href="https://{{ site.disqus }}.disqus.com">
+  <link rel="preconnect" href="https://c.disquscdn.com" crossorigin>
+  <link rel="dns-prefetch" href="https://c.disquscdn.com">
+  {% endif %}
   {% if page.keywords %}
     <meta name="keywords" content="{{ page.keywords }}">
   {% elsif site.keywords %}
