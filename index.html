@@ -31,6 +31,8 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
             {% else %}
           <meta itemprop="image" content="{{ post.image | absolute_url }}">
             {% endif %}
+          {% elsif site.image %}
+          <meta itemprop="image" content="{{ site.image | absolute_url }}">
           {% endif %}
           <div class="card-body">
             <h3 class="card-title" itemprop="headline">

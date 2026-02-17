@@ -28,6 +28,8 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
           {% else %}
         <meta itemprop="image" content="{{ post.image | absolute_url }}">
           {% endif %}
+        {% elsif site.image %}
+        <meta itemprop="image" content="{{ site.image | absolute_url }}">
         {% endif %}
         <h2 class="blog-entry__title" itemprop="headline"><a href="{{ post.url | relative_url }}" class="text-decoration-none" rel="bookmark" itemprop="url" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h2>
         <p class="text-muted blog-entry__meta">
