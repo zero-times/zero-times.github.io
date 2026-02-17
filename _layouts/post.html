@@ -9,6 +9,20 @@ layout: default
 {% assign author_web = author_data.web | default: author_data.url %}
 {% assign word_count = content | number_of_words %}
 {% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
+{% assign post_image_src = nil %}
+{% if page.image %}
+  {% if page.image contains '://' %}
+    {% assign post_image_src = page.image %}
+  {% else %}
+    {% assign post_image_src = page.image | relative_url %}
+  {% endif %}
+{% elsif site.image %}
+  {% if site.image contains '://' %}
+    {% assign post_image_src = site.image %}
+  {% else %}
+    {% assign post_image_src = site.image | relative_url %}
+  {% endif %}
+{% endif %}
 
 <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
     <meta itemprop="mainEntityOfPage" content="{{ page.url | absolute_url }}">
@@ -16,6 +30,9 @@ layout: default
     <meta itemprop="dateModified" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
     <meta itemprop="wordCount" content="{{ word_count }}">
     <meta itemprop="timeRequired" content="PT{{ reading_minutes }}M">
+    {% if post_image_src %}
+    <meta itemprop="image" content="{{ post_image_src | absolute_url }}">
+    {% endif %}
     {% if page.description %}
     <meta itemprop="description" content="{{ page.description }}">
     {% elsif page.excerpt %}
@@ -25,13 +42,7 @@ layout: default
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 {% if page.image %}
-                {% if page.image contains '://' %}
-                {% assign post_image_src = page.image %}
-                {% else %}
-                {% assign post_image_src = page.image | relative_url %}
-                {% endif %}
                 <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ page.image_alt | default: page.title }}" itemprop="image" loading="eager" decoding="async" fetchpriority="high"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
-                <meta itemprop="image" content="{{ post_image_src | absolute_url }}">
                 {% endif %}
             
                 <div class="post-header">
