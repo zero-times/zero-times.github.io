@@ -654,6 +654,11 @@ select:focus-visible,
   color: rgba(15, 23, 42, 0.7);
 }
 
+.post-meta time,
+.post-reading-time {
+  font-variant-numeric: tabular-nums;
+}
+
 .post-meta-sep {
   color: rgba(15, 23, 42, 0.35);
 }
