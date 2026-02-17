@@ -1347,7 +1347,7 @@ html:lang(pt) .case-card p,
 .store-card {
   border-radius: 28px;
   border: 1px solid rgba(13, 17, 23, 0.08);
-  padding: 28px;
+  padding: clamp(22px, 3vw, 28px);
   background: #fff;
   display: flex;
   align-items: center;
@@ -1361,6 +1361,16 @@ html:lang(pt) .case-card p,
 .store-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 35px 60px rgba(9, 11, 29, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .store-card {
+    transition: none;
+  }
+
+  .store-card:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1424,7 +1434,7 @@ html:lang(pt) .case-card p,
   border-radius: 42px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 45px 90px rgba(2, 6, 23, 0.75);
-  padding: 48px;
+  padding: clamp(28px, 4vw, 48px);
   color: #f5f5f7;
   position: relative;
   overflow: hidden;
