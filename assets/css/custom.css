@@ -189,6 +189,24 @@ Custom CSS for zero-times.github.io
   box-shadow: 0 20px 44px rgba(0, 39, 118, 0.12);
 }
 
+.contact-form__box .form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 39, 118, 0.18);
+  border-color: rgba(0, 39, 118, 0.35);
+}
+
+.contact-form__box .form-control:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(0, 39, 118, 0.28);
+}
+
+.contact-form__box .form-control.is-invalid:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.contact-form__box .form-control.is-invalid:focus-visible {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.35);
+}
+
 .featured-image {
   width: 100%;
   height: auto;
