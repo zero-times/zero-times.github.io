@@ -38,9 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
       requiredFields.forEach(field => {
         if (!field.value.trim()) {
           field.classList.add('is-invalid');
+          field.setAttribute('aria-invalid', 'true');
           isValid = false;
         } else {
           field.classList.remove('is-invalid');
+          field.removeAttribute('aria-invalid');
         }
       });
 
@@ -65,8 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const updateValidity = function() {
         if (!this.value.trim()) {
           this.classList.add('is-invalid');
+          this.setAttribute('aria-invalid', 'true');
         } else {
           this.classList.remove('is-invalid');
+          this.removeAttribute('aria-invalid');
         }
       };
       input.addEventListener('blur', updateValidity);
