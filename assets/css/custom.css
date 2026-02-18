@@ -631,6 +631,17 @@ select:focus-visible,
   border-radius: 999px;
 }
 
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .page-link,
+  .navbar-toggler,
+  .store-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
+  }
+}
+
 .card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
