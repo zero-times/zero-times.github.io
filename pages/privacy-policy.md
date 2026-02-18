@@ -44,7 +44,7 @@ keywords: "privacidade, dados pessoais, cookies, analytics, conformidade"
     <li>Cancelar assinatura de e-mails ou outras autorizações de marketing a qualquer momento.</li>
     <li>Opor-se ao processamento com base em interesse legítimo; responderemos prontamente.</li>
   </ul>
-  <p>Para exercer esses direitos, entre em contato pela página ou pelo e-mail <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+  <p>Para exercer esses direitos, entre em contato pela página ou pelo e-mail <a href="mailto:{{ site.email }}" aria-label="Enviar email para {{ site.email }}">{{ site.email }}</a>.</p>
 
   <h3>Atualizações</h3>
   <p>Esta política pode ser atualizada conforme mudanças legais ou de negócio. As novas versões entram em vigor imediatamente após publicação.</p>

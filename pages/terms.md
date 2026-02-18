@@ -25,7 +25,7 @@ keywords: "termos de uso, condições, responsabilidade, propriedade intelectual
   <p>Este site pode conter links para serviços de terceiros. Não controlamos o conteúdo desses sites e não nos responsabilizamos por suas políticas.</p>
 
   <h3>5. Contato</h3>
-  <p>Em caso de dúvidas, fale conosco pela página de contato ou pelo e-mail <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+  <p>Em caso de dúvidas, fale conosco pela página de contato ou pelo e-mail <a href="mailto:{{ site.email }}" aria-label="Enviar email para {{ site.email }}">{{ site.email }}</a>.</p>
 
   <h3>6. Alterações</h3>
   <p>Estes termos podem ser revisados a qualquer momento. As mudanças entram em vigor imediatamente após a publicação.</p>
