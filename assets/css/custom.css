@@ -646,6 +646,13 @@ select:focus-visible,
     touch-action: manipulation;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
   }
+
+  .navbar-toggler {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
+    border-radius: 0.85rem;
+  }
 }
 
 .card {
