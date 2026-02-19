@@ -46,7 +46,7 @@ image: /assets/images/logo.png
         
         <div class="contact-section mt-5">
           <h3>Entre em Contato</h3>
-          <p class="share-card__label">Website: <a href="{{site.url}}" aria-label="Abrir site {{ site.url }}">{{site.url}}</a></p>
+          <p class="share-card__label">Website: <a href="{{ '/' | absolute_url }}" aria-label="Abrir site {{ site.url }}">{{ site.url }}</a></p>
           <p class="share-card__label">Email: <a href="mailto:{{site.email}}" aria-label="Enviar email para {{ site.email }}">{{site.email}}</a></p>
           <p class="share-card__label">Redes Sociais: Siga-nos nas redes sociais</p>
         </div>
@@ -78,7 +78,7 @@ image: /assets/images/logo.png
                   </svg>
                 </div>
                 <div class="store-info">
-                  <p class="store-label">Apple Store</p>
+                  <p class="store-label">App Store</p>
                   <h3>Disponível na App Store</h3>
                   <p class="text-muted">Baixe nossos aplicativos</p>
                 </div>
