@@ -1574,6 +1574,16 @@ html:lang(pt) .case-card p,
 }
 
 @media (max-width: 575.98px) {
+  .share-card h1 {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
+  .share-card__tagline {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
   .stats-card {
     padding: 16px;
   }
