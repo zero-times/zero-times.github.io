@@ -965,6 +965,24 @@ select:focus-visible,
   color: rgba(2, 8, 23, 0.6);
 }
 
+.newsletter {
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(160deg, rgba(0, 39, 118, 0.06), rgba(0, 155, 58, 0.08));
+  border: 1px solid rgba(0, 39, 118, 0.14);
+  box-shadow: 0 16px 36px rgba(2, 8, 23, 0.08);
+}
+
+.newsletter h2 {
+  margin-bottom: 0.75rem;
+}
+
+.newsletter-form .btn {
+  min-height: 48px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
 @media (prefers-color-scheme: dark) {
   .newsletter .form-control,
   .newsletter-form .form-control {
@@ -980,6 +998,18 @@ select:focus-visible,
 
   .newsletter-hint {
     color: rgba(226, 232, 240, 0.7);
+  }
+
+  .newsletter {
+    background: linear-gradient(160deg, rgba(15, 23, 42, 0.6), rgba(12, 20, 36, 0.85));
+    border-color: rgba(148, 163, 184, 0.35);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .newsletter {
+    padding: 1.1rem 1.15rem;
   }
 }
 
