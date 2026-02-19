@@ -425,12 +425,21 @@ body {
   text-decoration: none;
   border-bottom: 1px solid rgba(0, 39, 118, 0.2);
   transition: color 0.2s ease, border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0;
+  border-radius: 0.35rem;
 }
 
 .site-footer a:hover,
 .site-footer a:focus-visible {
   color: var(--br-blue);
   border-color: var(--br-blue);
+}
+
+.site-footer a:focus-visible {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 3px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -449,6 +458,16 @@ body {
   .site-footer a:focus-visible {
     color: #ffffff;
     border-color: #ffffff;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .site-footer a {
+    padding: 0.35rem 0;
+  }
+
+  .site-footer .text-md-end {
+    margin-top: 0.5rem;
   }
 }
 
