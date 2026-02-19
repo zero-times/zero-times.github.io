@@ -60,7 +60,16 @@ document.addEventListener('DOMContentLoaded', function() {
             block: 'center'
           });
         }
-        announceToScreenReader('Por favor, preencha todos os campos obrigatórios.');
+        let announceMessage = 'Por favor, preencha todos os campos obrigatórios.';
+        if (firstInvalid) {
+          const trimmedValue = firstInvalid.value.trim();
+          if (firstInvalid.type === 'email' && trimmedValue && !firstInvalid.validity.valid) {
+            announceMessage = 'Por favor, insira um email válido.';
+          } else if (firstInvalid.type === 'url' && trimmedValue && !firstInvalid.validity.valid) {
+            announceMessage = 'Por favor, insira um link válido.';
+          }
+        }
+        announceToScreenReader(announceMessage);
       }
     });
 
