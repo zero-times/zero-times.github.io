@@ -887,6 +887,19 @@ select:focus-visible,
   .blog-entry__title {
     font-size: clamp(1.35rem, 5.2vw, 1.65rem);
   }
+
+  .post-meta {
+    gap: 0.3rem;
+  }
+
+  .post-meta-sep {
+    display: none;
+  }
+
+  .post-reading-time {
+    padding: 0.18rem 0.6rem;
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 575.98px) {

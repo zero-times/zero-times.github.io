@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-19T13:02:30+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post Meta Responsiveness",
+          "result": "Needs Improvement",
+          "details": "Small-screen meta row felt dense; separators and badge spacing crowded on 360px width."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Manual scan for placeholder URLs only; no obvious placeholder domains found."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured Data Coverage",
+          "result": "Good",
+          "details": "BlogPosting and WebSite schema present; minor polish opportunities remain."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent daily posts present; no empty placeholders detected."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 9.0/10 (placeholder scan only)",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 8.2/10"
+  },
+  "recommendations": [
+    "Tighten post meta layout on small screens for readability",
+    "Continue periodic external link verification as posts grow"
+  ]
+}
