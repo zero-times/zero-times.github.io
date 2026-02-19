@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-19T12:04:07+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post CTA behavior",
+          "result": "Improved",
+          "details": "Post site CTA now opens in a new tab only for off-site destinations to reduce unnecessary tab spawning on same-site links."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Protocol and placeholder scan",
+          "result": "No issues found",
+          "details": "Manual scan for http:// and placeholder domains in templates/pages/posts did not surface issues. External link availability not verified (network restricted)."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Link semantics",
+          "result": "Improved",
+          "details": "External-only rel/target behavior for the post site CTA reduces mixed navigation signals and improves user flow."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.9,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content structure",
+          "result": "Good",
+          "details": "Recent content maintains consistent summaries, metadata, and CTA structure."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.9/10"
+  },
+  "recommendations": [
+    "Continue verifying external news links with network checks when available",
+    "Consider adding same-site CTA tracking if analytics needs per-post outbound metrics"
+  ]
+}
