@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-20T05:04:54+0800",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Tap Targets",
+          "result": "Opportunity",
+          "details": "Navigation links rely on default padding. Increasing tap target size on coarse pointer devices improves mobile usability."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Manual Scan Only",
+          "details": "Scanned templates and recent posts for placeholder domains; no obvious placeholders found. Live validation requires network access."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "Pages include descriptions/keywords, and default layout uses jekyll-seo-tag with robots directives."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Typography and spacing are consistent; minor mobile touch optimizations remain."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.0/10 (manual only)",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Increase navigation tap targets on coarse pointer devices",
+    "Run automated link validation when network access is available"
+  ]
+}

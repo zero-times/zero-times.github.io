@@ -691,6 +691,13 @@ select:focus-visible,
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
   }
 
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 0.85rem;
+  }
+
   .navbar-toggler {
     min-width: 44px;
     min-height: 44px;
