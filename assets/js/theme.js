@@ -36,7 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
       let isValid = true;
 
       requiredFields.forEach(field => {
-        if (!field.value.trim()) {
+        const trimmedValue = field.value.trim();
+        const fieldValid = trimmedValue.length > 0 && field.validity.valid;
+
+        if (!fieldValid) {
           field.classList.add('is-invalid');
           field.setAttribute('aria-invalid', 'true');
           isValid = false;
@@ -65,7 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputs = form.querySelectorAll('input[required], textarea[required]');
     inputs.forEach(input => {
       const updateValidity = function() {
-        if (!this.value.trim()) {
+        const trimmedValue = this.value.trim();
+        const fieldValid = trimmedValue.length > 0 && this.validity.valid;
+
+        if (!fieldValid) {
           this.classList.add('is-invalid');
           this.setAttribute('aria-invalid', 'true');
         } else {
