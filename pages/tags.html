@@ -25,7 +25,7 @@ keywords: "tags, índice, blog, Flutter, arquitetura móvel"
           {% for post in tag[1] %}
             <li class="mb-3 pb-3 border-bottom">
               <a class="fw-semibold text-decoration-none" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
-              <div class="small text-muted">{{ post.date | date: "%d/%m/%Y" }}</div>
+              <time class="small text-muted" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
             </li>
           {% endfor %}
         </ul>
