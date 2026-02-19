@@ -184,6 +184,16 @@ Custom CSS for zero-times.github.io
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
 }
 
+.contact-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 39, 118, 0.18);
+  box-shadow: 0 24px 55px rgba(15, 23, 42, 0.14);
+}
+
 .contact-form__box:focus-within {
   border-color: rgba(0, 39, 118, 0.25);
   box-shadow: 0 20px 44px rgba(0, 39, 118, 0.12);
@@ -250,6 +260,11 @@ Custom CSS for zero-times.github.io
     background: rgba(15, 23, 42, 0.75);
     border-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 24px 55px rgba(0, 0, 0, 0.35);
+  }
+
+  .contact-card:hover {
+    border-color: rgba(148, 197, 255, 0.25);
+    box-shadow: 0 28px 65px rgba(0, 0, 0, 0.5);
   }
 
   .contact-form__box:focus-within {
