@@ -1602,10 +1602,21 @@ html:lang(pt) .case-card p,
   background: rgba(255, 255, 255, 0.04);
 }
 
-.stats-card strong {
+.stats-card__value {
+  display: block;
+  margin: 0;
   font-size: 1.8rem;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.01em;
+}
+
+.stats-card__label {
+  display: block;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  color: rgba(245, 245, 247, 0.7);
 }
 
 @media (max-width: 575.98px) {
@@ -1623,12 +1634,12 @@ html:lang(pt) .case-card p,
     padding: 16px;
   }
 
-  .stats-card strong {
+  .stats-card__value {
     font-size: 1.5rem;
   }
 
-  .stats-card span {
-    font-size: 0.95rem;
+  .stats-card__label {
+    font-size: 0.7rem;
   }
 }
 
