@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-19T17:04:20+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Page Hero Images",
+          "result": "Optimization Available",
+          "details": "Page layout images were always eager/high priority; on non-critical pages this can increase mobile bandwidth and delay other resources."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Placeholder Links",
+          "result": "No Issues Found",
+          "details": "Manual scan did not detect example.com or obvious placeholders in content files. External URLs not live-checked due to offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "Base SEO tags, keywords, and structured data are present via layout templates."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent posts are present; no placeholder copy found in audited pages."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.3/10",
+    "links": "Links: 8.8/10 (manual scan, no live checks)",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.0/10"
+  },
+  "recommendations": [
+    "Allow page-level control of featured image priority to reduce mobile bandwidth on non-critical pages"
+  ]
+}
