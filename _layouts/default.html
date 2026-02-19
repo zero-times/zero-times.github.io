@@ -37,8 +37,10 @@
   {% endif %}
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  {% if page.url contains '/contact/' or page.url contains '/blog/' or page.layout == 'post' %}
   <link rel="preconnect" href="https://formspree.io" crossorigin>
   <link rel="dns-prefetch" href="https://formspree.io">
+  {% endif %}
   {% if site.disqus and page.layout == 'post' %}
   <link rel="preconnect" href="https://{{ site.disqus }}.disqus.com" crossorigin>
   <link rel="dns-prefetch" href="https://{{ site.disqus }}.disqus.com">

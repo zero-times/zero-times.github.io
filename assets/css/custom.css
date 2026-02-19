@@ -1601,7 +1601,28 @@ html:lang(pt) .case-card p,
 .achievements-list {
   display: grid;
   gap: 12px;
-  padding-left: 18px;
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.help-list li,
+.achievements-list li {
+  position: relative;
+  padding-left: 1.8rem;
+}
+
+.help-list li::before,
+.achievements-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.9), rgba(14, 116, 144, 0.7));
+  box-shadow: 0 6px 14px rgba(14, 116, 144, 0.35);
 }
 
 html:lang(pt) .eyebrow,
