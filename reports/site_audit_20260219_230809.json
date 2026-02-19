@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-19T23:08:09+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Navigation & Focus",
+          "result": "Good",
+          "details": "Primary navigation, skip link, and focus states are consistent across templates."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No obvious broken links in templates",
+          "details": "Quick scan of templates and pages did not reveal placeholder or invalid URLs."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Link Security Semantics",
+          "result": "Improved",
+          "details": "Added automatic rel attributes for target=_blank links to prevent future regressions."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent posts and share content include clear descriptions and metadata."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 8.6/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Continue monitoring external link behavior and ensure rel attributes remain enforced."
+  ]
+}

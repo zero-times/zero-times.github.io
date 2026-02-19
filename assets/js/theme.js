@@ -110,6 +110,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // Ensure security rel attributes for external links that open in new tabs
+  const newTabLinks = document.querySelectorAll('a[target="_blank"]');
+  newTabLinks.forEach(link => {
+    const relValue = link.getAttribute('rel') || '';
+    const relTokens = relValue.split(/\s+/).filter(Boolean);
+    let changed = false;
+    ['noopener', 'noreferrer'].forEach(token => {
+      if (!relTokens.includes(token)) {
+        relTokens.push(token);
+        changed = true;
+      }
+    });
+    if (changed) {
+      link.setAttribute('rel', relTokens.join(' '));
+    }
+  });
+
   // Add language attribute to html tag if not present
   if (!document.documentElement.getAttribute('lang')) {
     document.documentElement.setAttribute('lang', 'pt-BR');
