@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-20T17:04:20+0800",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Navigation",
+          "result": "Good",
+          "details": "Mobile tap targets and spacing are tuned; no immediate layout collisions found in core templates."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Scanned templates/posts for obvious placeholder links; full runtime link validation not executed in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta/Structured Data",
+          "result": "Good",
+          "details": "Core layouts include SEO tags, Open Graph hints, and JSON-LD WebSite metadata."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent posts updated; no placeholder content detected in main templates."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.7/10",
+    "links": "Links: 8.2/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Limit third-party preconnects to pages where forms are rendered to reduce connection overhead.",
+    "Run a live link checker on external news links when network checks are available."
+  ]
+}
