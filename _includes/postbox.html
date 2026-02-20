@@ -9,7 +9,7 @@
       <span aria-hidden="true">•</span>
       <span class="postbox-reading">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
     </p>
-    <p class="card-text">{{ post.excerpt | strip_html | truncate: 100 }}</p>
+    <p class="card-text">{{ post.excerpt | strip_html | strip_newlines | truncate: 100 }}</p>
     <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary postbox-cta" rel="bookmark" aria-label="Leia mais: {{ post.title }}">Leia mais</a>
   </div>
 </div>

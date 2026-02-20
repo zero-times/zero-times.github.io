@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-21T20:11:00+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 9.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 9.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post cards excerpt readability",
+          "result": "Minor issue",
+          "details": "Excerpt text in post cards may include line breaks from Markdown content, which can produce uneven spacing in compact cards."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal links",
+          "result": "Good",
+          "details": "No broken internal links detected in key templates checked."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post list snippets",
+          "result": "Improved",
+          "details": "Strip newlines in post card excerpts to improve snippet consistency for SEO previews."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Excerpt presentation",
+          "result": "Minor issue",
+          "details": "Post card excerpt can contain leftover newlines that reduce scannability."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 9.4/10",
+    "links": "Links: 9.2/10",
+    "seo": "SEO: 9.4/10",
+    "content": "Content: 9.2/10"
+  },
+  "recommendations": [
+    "Strip newlines from postbox excerpts to keep card summaries compact and consistent"
+  ]
+}
