@@ -8,6 +8,7 @@ keywords: "termos de uso, condições, responsabilidade, propriedade intelectual
 ---
 
 <section class="terms-of-use">
+  <p class="text-muted">Última atualização: 20/02/2026</p>
   <h3>1. Aceitação dos termos</h3>
   <p>Ao acessar este site, você concorda com estes Termos de Uso e com a Política de Privacidade. Caso não concorde, interrompa a navegação.</p>
 

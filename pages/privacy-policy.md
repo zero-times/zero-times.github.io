@@ -8,6 +8,7 @@ keywords: "privacidade, dados pessoais, cookies, analytics, conformidade"
 ---
 
 <section class="privacy-policy">
+  <p class="text-muted">Última atualização: 20/02/2026</p>
   <h3>Introdução</h3>
   <p>Valorizamos sua privacidade e segurança de dados. Este documento explica, de forma transparente, como coletamos, processamos e compartilhamos informações ao acessar o site, deixar mensagens ou interagir conosco.</p>
 
