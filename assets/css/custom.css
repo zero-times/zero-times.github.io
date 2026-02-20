@@ -361,7 +361,7 @@ body {
 
 .home-hero::before,
 .home-hero::after {
-  content: ;
+  content: "";
   position: absolute;
   border-radius: 999px;
   filter: blur(0);
