@@ -1174,6 +1174,17 @@ select:focus-visible,
   font-variant-numeric: tabular-nums;
 }
 
+@media (max-width: 575.98px) {
+  .blog-entry__meta span[aria-hidden="true"] {
+    display: none;
+  }
+
+  .blog-entry__badge {
+    padding: 0.15rem 0.55rem;
+    font-size: 0.85rem;
+  }
+}
+
 .legal-page {
   display: grid;
   gap: 1.5rem;
