@@ -78,6 +78,10 @@
     {% if paginator.next_page %}
       <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
     {% endif %}
+    {% if page.url contains '/blog/' and paginator.total_pages > 1 %}
+      <link rel="first" href="{{ '/blog/' | absolute_url }}">
+      <link rel="last" href="{{ site.paginate_path | absolute_url | replace: ':num', paginator.total_pages }}">
+    {% endif %}
   {% endif %}
   
   <!-- Bootstrap 5 样式 -->
