@@ -7,6 +7,21 @@ keywords: "arquitetura móvel, Flutter, HarmonyOS, soluções multiplataforma, c
 hide_title: true
 ---
 
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ site.author.name | escape }}",
+    "url": "{{ '/about/' | absolute_url }}",
+    "image": "{{ site.author.avatar | absolute_url }}",
+    "jobTitle": "Arquitetura móvel e soluções multiplataforma",
+    "description": "{{ site.author.bio | escape }}",
+    "email": "{{ site.email }}"{% if site.social and site.social.links %},
+    "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+    {% endif %}
+  }
+</script>
+
 <!-- About Hero
 ================================================== -->
 <section class="hero-tech mb-5">
