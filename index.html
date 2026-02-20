@@ -41,7 +41,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
             <h3 class="card-title" itemprop="headline">
               <a href="{{ post.url | relative_url }}" class="card-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url">{{ post.title }}</a>
             </h3>
-            <p class="card-text" itemprop="description">{{ post.excerpt | strip_html | truncate: 150 }}</p>
+            <p class="card-text" itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 150 }}</p>
             <p class="text-muted blog-entry__meta mb-0">
               <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
               <span aria-hidden="true">•</span>

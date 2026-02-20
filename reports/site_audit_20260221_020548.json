@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-21T02:06:06+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Blog/Home excerpts",
+          "result": "Needs cleanup",
+          "details": "Excerpts can retain hard line breaks from markdown, affecting scanability and meta summaries."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "Not verified",
+          "details": "Network checks were skipped (restricted). Manual review only."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Snippet cleanliness",
+          "result": "Improved",
+          "details": "Removed stray newlines from blog/home excerpts for cleaner SEO snippets and cards."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Improved",
+          "details": "Excerpt rendering is now more consistent for mobile/SEO preview text."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.0/10 (manual-only)",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Run a network-enabled broken-link audit for daily news posts",
+    "Consider adding per-post image dimensions in front matter to reduce CLS on featured images"
+  ]
+}
