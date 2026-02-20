@@ -1356,6 +1356,14 @@ html:lang(pt) .case-card p,
   border-collapse: collapse;
 }
 
+@media (max-width: 768px) {
+  .post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 .post-content th,
 .post-content td {
   padding: 0.65rem 0.75rem;
