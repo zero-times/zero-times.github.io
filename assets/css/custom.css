@@ -1677,6 +1677,8 @@ html:lang(pt) .case-card p,
   color: rgba(245, 245, 247, 0.85);
   max-width: 32rem;
   margin: 0.75rem auto 0;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
 }
 
 .share-card__label {
@@ -1747,6 +1749,8 @@ html:lang(pt) .case-card p,
 .achievements-list li {
   position: relative;
   padding-left: 1.8rem;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
 }
 
 .help-list li::before,
