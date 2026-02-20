@@ -1,0 +1,46 @@
+{
+  "audit_timestamp": "2026-02-20T15:02:51-03:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 9.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 9.4,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Page Structure", "result": "Good", "details": "Layouts remain consistent across default/share templates with responsive containers." }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.5,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "External Links", "result": "No issues found", "details": "Manual scan found no http/placeholder links in content." }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Open Graph Locale", "result": "Missing", "details": "Default/share layouts lacked og:locale hint for social previews." }
+      ]
+    },
+    "content_quality": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Content Freshness", "result": "Good", "details": "Homepage and blog content show recent updates." }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 9.4/10",
+    "links": "Links: 9.5/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 9.2/10"
+  },
+  "recommendations": [
+    "Add og:locale meta to improve social preview localization"
+  ]
+}

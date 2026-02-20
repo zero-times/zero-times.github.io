@@ -19,6 +19,8 @@
   {% else %}
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% endif %}
+  {% assign og_locale = page.lang | default: site.lang | default: site.default_lang | replace: '-', '_' %}
+  <meta property="og:locale" content="{{ og_locale }}">
   {% assign social_image_alt = page.image_alt | default: page.title | default: site.title %}
   {% assign social_image_src = page.image | default: site.image %}
   {% if social_image_src %}
