@@ -607,6 +607,15 @@ main table {
   object-fit: cover;
 }
 
+@media (max-width: 575.98px) {
+  .news-inline-thumb {
+    float: none;
+    display: block;
+    max-width: 100%;
+    margin: 0.25rem auto 0.75rem;
+  }
+}
+
 .store-card:focus-visible {
   outline: 3px solid var(--br-yellow);
   outline-offset: 4px;
