@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-20T01:03:26Z",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Hero badge readability",
+          "result": "Needs minor adjustment",
+          "details": "On small screens the hero eyebrow badge feels slightly dense; minor spacing and size tuning would improve readability."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal/External links",
+          "result": "No obvious broken links in templates",
+          "details": "Scanned layout and key pages; no placeholder or http:// links found."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Preload alignment",
+          "result": "Optimization opportunity",
+          "details": "Homepage avatar is lazy/low priority but still preloaded in the head; removing the preload avoids wasted early bandwidth."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Descriptions",
+          "result": "Good",
+          "details": "Key pages include title/description/keywords in front matter."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 9.2/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 9.0/10"
+  },
+  "recommendations": [
+    "Refine hero eyebrow badge sizing/spacing on mobile for readability",
+    "Avoid preloading assets that are explicitly lazy-loaded"
+  ]
+}

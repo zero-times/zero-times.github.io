@@ -387,6 +387,12 @@ body {
     padding: 2rem 1.5rem;
   }
 
+  .home-hero__eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    padding: 0.3rem 0.8rem;
+  }
+
   .home-hero__title {
     font-size: clamp(2.1rem, 7vw, 2.75rem);
   }
