@@ -1,0 +1,47 @@
+{
+  "audit_timestamp": "2026-02-21T01:03:39+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.8,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Page Structure", "result": "Good", "details": "Layout and mobile behavior consistent across primary templates." }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "External Links", "result": "Not Exhaustively Checked", "details": "Manual scan of recent content only; no automated link checker available." }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Metadata Coverage", "result": "Improved", "details": "Added missing lang/description/keywords for a blog entry to strengthen SEO context." }
+      ]
+    },
+    "content_quality": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Clarity", "result": "Good", "details": "Content is descriptive; updated summary improves search snippet quality." }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 9.0/10",
+    "links": "Links: 8.5/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 8.8/10"
+  },
+  "recommendations": [
+    "Add descriptions/keywords to older posts that lack metadata",
+    "Consider automated link checking in CI for external URLs"
+  ]
+}
