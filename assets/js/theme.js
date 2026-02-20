@@ -135,8 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add image defaults for performance (avoid overriding eager images)
   const images = document.querySelectorAll('img');
   images.forEach(img => {
+    const fetchPriority = img.getAttribute('fetchpriority');
     if (!img.hasAttribute('loading')) {
-      img.setAttribute('loading', 'lazy');
+      img.setAttribute('loading', fetchPriority === 'high' ? 'eager' : 'lazy');
     }
     if (!img.hasAttribute('decoding')) {
       img.setAttribute('decoding', 'async');

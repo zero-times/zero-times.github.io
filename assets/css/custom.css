@@ -380,6 +380,7 @@ body {
 .home-hero__lead {
   color: rgba(29, 29, 31, 0.78);
   max-width: 40rem;
+  text-wrap: pretty;
 }
 
 @media (max-width: 575.98px) {
