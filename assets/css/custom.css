@@ -184,6 +184,21 @@ Custom CSS for zero-times.github.io
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
 }
 
+@media (max-width: 575.98px) {
+  .contact-hero {
+    padding: 24px;
+  }
+
+  .contact-chip {
+    width: 100%;
+  }
+
+  .contact-card,
+  .contact-form__box {
+    padding: 20px;
+  }
+}
+
 .contact-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
