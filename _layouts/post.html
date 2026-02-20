@@ -137,7 +137,7 @@ layout: default
                     <div class="row align-items-center">
                         <div class="col-md-2 text-center">
                             {% if author_avatar %}
-                            <img class="author-thumb rounded-circle" src="{{ author_avatar | relative_url }}" alt="{{ author_name }}" itemprop="image" loading="lazy" decoding="async" width="72" height="72">
+                            <img class="author-thumb rounded-circle" src="{{ author_avatar | relative_url }}" alt="{{ author_name }}" itemprop="image" loading="lazy" decoding="async" fetchpriority="low" width="72" height="72">
                             {% endif %}
                         </div>
                         <div class="col-md-10">
