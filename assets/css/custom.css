@@ -355,6 +355,38 @@ body {
   background: linear-gradient(135deg, rgba(0, 155, 58, 0.08), rgba(0, 39, 118, 0.08));
   border: 1px solid rgba(0, 39, 118, 0.12);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.home-hero::before,
+.home-hero::after {
+  content: ;
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(0);
+  z-index: 0;
+}
+
+.home-hero::before {
+  width: 420px;
+  height: 420px;
+  top: -220px;
+  right: -160px;
+  background: radial-gradient(circle, rgba(0, 155, 58, 0.18), rgba(0, 155, 58, 0));
+}
+
+.home-hero::after {
+  width: 380px;
+  height: 380px;
+  bottom: -220px;
+  left: -180px;
+  background: radial-gradient(circle, rgba(0, 39, 118, 0.16), rgba(0, 39, 118, 0));
+}
+
+.home-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .home-hero__eyebrow {
@@ -408,6 +440,14 @@ body {
     background: linear-gradient(135deg, rgba(0, 39, 118, 0.35), rgba(0, 155, 58, 0.2));
     border-color: rgba(255, 255, 255, 0.12);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .home-hero::before {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.22), rgba(56, 189, 248, 0));
+  }
+
+  .home-hero::after {
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.18), rgba(34, 197, 94, 0));
   }
 
   .home-hero__eyebrow {
