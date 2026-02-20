@@ -159,8 +159,8 @@
           <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}. Todos os direitos reservados.</p>
         </div>
         <div class="col-md-6 text-md-end">
-          <a href="{{ '/privacy-policy/' | relative_url }}" class="me-3"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>Política de Privacidade</a>
-          <a href="{{ '/terms/' | relative_url }}"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos de Uso</a>
+          <a href="{{ '/privacy-policy/' | relative_url }}" class="me-3" aria-label="Abrir Política de Privacidade"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>Política de Privacidade</a>
+          <a href="{{ '/terms/' | relative_url }}" aria-label="Abrir Termos de Uso"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos de Uso</a>
         </div>
       </div>
     </div>
