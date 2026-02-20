@@ -26,6 +26,8 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
           <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
           <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
           <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
+          {% assign words = post.content | number_of_words %}
+          <meta itemprop="wordCount" content="{{ words }}">
           {% if post.image %}
             {% if post.image contains '://' %}
           <meta itemprop="image" content="{{ post.image }}">
@@ -43,7 +45,6 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
             <p class="text-muted blog-entry__meta mb-0">
               <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
               <span aria-hidden="true">•</span>
-              {% assign words = post.content | number_of_words %}
               <span class="blog-entry__badge">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
             </p>
           </div>
