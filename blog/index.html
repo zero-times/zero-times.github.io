@@ -24,6 +24,14 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
         <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
         {% assign words = post.content | number_of_words %}
         <meta itemprop="wordCount" content="{{ words }}">
+        {% if site.author.name %}
+        <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="{{ site.author.name }}">
+          {% if site.author.url %}
+          <meta itemprop="url" content="{{ site.author.url }}">
+          {% endif %}
+        </span>
+        {% endif %}
         {% if post.image %}
           {% if post.image contains '://' %}
         <meta itemprop="image" content="{{ post.image }}">

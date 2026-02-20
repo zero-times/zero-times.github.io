@@ -30,6 +30,14 @@ layout: default
     <meta itemprop="dateModified" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
     <meta itemprop="wordCount" content="{{ word_count }}">
     <meta itemprop="timeRequired" content="PT{{ reading_minutes }}M">
+    {% if site.author.name %}
+    <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
+        <meta itemprop="name" content="{{ site.author.name }}">
+        {% if site.author.url %}
+        <meta itemprop="url" content="{{ site.author.url }}">
+        {% endif %}
+    </span>
+    {% endif %}
     {% if post_image_src %}
     <meta itemprop="image" content="{{ post_image_src | absolute_url }}">
     {% endif %}
