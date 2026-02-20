@@ -23,6 +23,14 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
             <meta itemprop="url" content="{{ site.author.url }}">
             {% endif %}
           </span>
+          {% if site.author.name %}
+          <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
+            <meta itemprop="name" content="{{ site.author.name }}">
+            {% if site.author.url %}
+            <meta itemprop="url" content="{{ site.author.url }}">
+            {% endif %}
+          </span>
+          {% endif %}
           <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
           <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
           <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">

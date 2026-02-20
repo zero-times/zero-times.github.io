@@ -410,12 +410,14 @@ body {
   padding: 0.35rem 0.95rem;
   border-radius: 999px;
   background: rgba(0, 39, 118, 0.12);
+  border: 1px solid rgba(0, 39, 118, 0.18);
   color: #0f1f48;
   font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 600;
   margin-bottom: 1.25rem;
+  box-shadow: 0 10px 24px rgba(0, 39, 118, 0.12);
 }
 
 .home-hero__title {
@@ -467,7 +469,9 @@ body {
 
   .home-hero__eyebrow {
     background: rgba(15, 23, 42, 0.55);
+    border-color: rgba(148, 163, 184, 0.28);
     color: rgba(248, 250, 252, 0.92);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
   }
 
   .home-hero__lead {
