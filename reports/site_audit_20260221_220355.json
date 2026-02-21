@@ -1,0 +1,74 @@
+{
+  "audit_timestamp": "2026-02-21T22:03:55+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 7.9,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Above-the-fold",
+          "result": "Good",
+          "details": "Hero + latest posts layout remains clean; sidebar card is prominent on desktop."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Links",
+          "result": "No issues found in inspected templates",
+          "details": "Checked layout + key pages for relative_url usage."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "SEO tag + per-page description/keywords are present on homepage."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Intro",
+          "result": "Good",
+          "details": "Clear value proposition and concise lead paragraph."
+        }
+      ]
+    },
+    "performance": {
+      "score": 7.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "LCP Asset Priority",
+          "result": "Improve",
+          "details": "Homepage avatar is preloaded but still marked lazy/low priority."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.0/10",
+    "links": "Links: 7.5/10",
+    "seo": "SEO: 8.2/10",
+    "content": "Content: 8.0/10",
+    "performance": "Performance: 7.8/10"
+  },
+  "recommendations": [
+    "Align preload and fetchpriority for homepage avatar to improve LCP stability."
+  ]
+}
