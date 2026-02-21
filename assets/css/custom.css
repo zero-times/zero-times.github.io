@@ -4,6 +4,16 @@ Custom CSS for zero-times.github.io
 
 /* Add your custom styles here */
 
+html {
+  scroll-padding-top: 6rem;
+}
+
+@media (max-width: 575.98px) {
+  html {
+    scroll-padding-top: 5rem;
+  }
+}
+
 /* Multi-language switcher styles */
 .language-switcher {
   margin-left: 1rem;
