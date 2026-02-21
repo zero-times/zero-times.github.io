@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-21T09:03:50+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post readability on mobile",
+          "result": "Opportunity",
+          "details": "Long URLs and inline code can overflow small screens in post content. Adding safe word wrapping improves mobile readability without affecting desktop layout."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal links",
+          "result": "No obvious issues found",
+          "details": "Core navigation and policy pages resolve to existing pages."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta coverage",
+          "result": "Good",
+          "details": "Global description/keywords and per-page descriptions are present; seo-tag included."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.1,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content freshness",
+          "result": "Good",
+          "details": "Recent posts are present; no placeholder content observed in primary pages."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.2/10",
+    "links": "Links: 8.8/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.1/10"
+  },
+  "recommendations": [
+    "Prevent long URLs from overflowing on mobile post pages"
+  ]
+}
