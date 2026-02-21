@@ -1649,6 +1649,23 @@ section[id] {
   border-radius: 0.2rem;
 }
 
+@media (prefers-color-scheme: dark) {
+  .post-content a {
+    color: #c7ddff;
+    text-decoration-color: rgba(148, 197, 255, 0.6);
+  }
+
+  .post-content a:hover,
+  .post-content a:focus-visible {
+    color: #ffffff;
+    text-decoration-color: rgba(148, 197, 255, 0.9);
+  }
+
+  .post-content a:focus-visible {
+    outline: 2px solid rgba(148, 197, 255, 0.65);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     scroll-behavior: auto !important;
