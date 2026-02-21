@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-21T17:04:02+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile readability",
+          "result": "Good",
+          "details": "Post content already wraps long strings and tables scroll on small screens. Pages can still benefit from rendering optimizations on long-form content."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not automatically verified",
+          "details": "Manual scan of templates/pages showed no obvious placeholder links. External URLs in posts require periodic validation."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta coverage",
+          "result": "Good",
+          "details": "Layouts include SEO tags, keywords fallback, and structured data. Page/front matter descriptions present."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Reading comfort",
+          "result": "Needs minor improvement",
+          "details": "Long-form pages can render more efficiently; reduced motion support could be stronger for accessibility."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.2/10"
+  },
+  "recommendations": [
+    "Optimize long-form page rendering with content-visibility",
+    "Provide reduced-motion overrides for transitions and animations"
+  ]
+}

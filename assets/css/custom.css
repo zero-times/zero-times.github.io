@@ -1490,6 +1490,14 @@ html:lang(pt) .case-card p,
   contain-intrinsic-size: 1200px;
 }
 
+.article-post {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-wrap: pretty;
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
 .post-content h2,
 .post-content h3,
 .post-content h4,
@@ -1601,6 +1609,20 @@ html:lang(pt) .case-card p,
   outline: 2px solid rgba(0, 39, 118, 0.35);
   outline-offset: 2px;
   border-radius: 0.2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Post site CTA styling */
