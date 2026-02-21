@@ -1524,6 +1524,17 @@ html:lang(pt) .case-card p,
   .article-post h2::after {
     background: linear-gradient(90deg, rgba(148, 197, 255, 0.9), rgba(34, 197, 94, 0.75));
   }
+
+  .post-site .btn {
+    border-color: rgba(148, 197, 255, 0.35);
+    color: rgba(248, 250, 252, 0.92);
+    background: linear-gradient(120deg, rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.45));
+  }
+
+  .post-site .btn:hover {
+    border-color: rgba(148, 197, 255, 0.6);
+    box-shadow: 0 12px 26px rgba(2, 6, 23, 0.55);
+  }
 }
 
 .post-content table {
@@ -1553,6 +1564,21 @@ html:lang(pt) .case-card p,
   background: rgba(2, 8, 23, 0.04);
 }
 
+.previous-next-post .btn {
+  text-wrap: balance;
+  white-space: normal;
+}
+
+@media (max-width: 767.98px) {
+  .previous-next-post .btn {
+    width: 100%;
+  }
+
+  .previous-next-post .col-md-6 + .col-md-6 {
+    margin-top: 0.75rem;
+  }
+}
+
 .post-content a {
   color: inherit;
   overflow-wrap: anywhere;
@@ -1567,6 +1593,28 @@ html:lang(pt) .case-card p,
 .post-content a:focus-visible {
   color: #002776;
   text-decoration-color: rgba(0, 39, 118, 0.75);
+}
+
+/* Post site CTA styling */
+.post-site .btn {
+  border-radius: 999px;
+  padding: 0.45rem 1.15rem;
+  font-weight: 600;
+  border-color: rgba(0, 39, 118, 0.35);
+  color: #0f1f48;
+  background: linear-gradient(120deg, rgba(0, 39, 118, 0.08), rgba(0, 155, 58, 0.1));
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.post-site .btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(0, 39, 118, 0.55);
+  box-shadow: 0 10px 22px rgba(2, 8, 23, 0.12);
+}
+
+.post-site .btn:focus-visible {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
