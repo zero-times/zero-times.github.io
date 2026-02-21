@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-21T12:03:07+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Sticky header offset",
+          "result": "Needs Improvement",
+          "details": "In-page anchor navigation can land under the sticky header; add scroll margin for post/page headings."
+        },
+        {
+          "aspect": "Reading hierarchy",
+          "result": "Opportunity",
+          "details": "Section headings could be more visually scannable, especially on mobile." 
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Manual Scan",
+          "details": "No obvious placeholder/example.com links detected in content scan. External URLs not live-checked in offline audit." 
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "Pages include description/keywords and SEO tags in layout."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Post content typography is solid; heading hierarchy could use stronger visual anchors." 
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.0/10"
+  },
+  "recommendations": [
+    "Add scroll margin for headings to avoid sticky header overlap",
+    "Add subtle heading accents to improve section scannability on long posts"
+  ]
+}

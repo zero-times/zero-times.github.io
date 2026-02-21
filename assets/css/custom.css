@@ -1488,6 +1488,44 @@ html:lang(pt) .case-card p,
   contain-intrinsic-size: 1200px;
 }
 
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6,
+.article-post h2,
+.article-post h3,
+.article-post h4,
+.article-post h5,
+.article-post h6 {
+  scroll-margin-top: 6rem;
+}
+
+.post-content h2,
+.article-post h2 {
+  position: relative;
+  padding-bottom: 0.4rem;
+  margin-top: 2.25rem;
+}
+
+.post-content h2::after,
+.article-post h2::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  border-radius: 999px;
+  margin-top: 0.4rem;
+  background: linear-gradient(90deg, rgba(0, 39, 118, 0.85), rgba(0, 155, 58, 0.6));
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-content h2::after,
+  .article-post h2::after {
+    background: linear-gradient(90deg, rgba(148, 197, 255, 0.9), rgba(34, 197, 94, 0.75));
+  }
+}
+
 .post-content table {
   width: 100%;
   border-collapse: collapse;
