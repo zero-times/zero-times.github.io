@@ -1595,6 +1595,12 @@ html:lang(pt) .case-card p,
   text-decoration-color: rgba(0, 39, 118, 0.75);
 }
 
+.post-content a:focus-visible {
+  outline: 2px solid rgba(0, 39, 118, 0.35);
+  outline-offset: 2px;
+  border-radius: 0.2rem;
+}
+
 /* Post site CTA styling */
 .post-site .btn {
   border-radius: 999px;

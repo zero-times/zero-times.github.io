@@ -1,0 +1,73 @@
+{
+  "audit_timestamp": "2026-02-21T15:05:26+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Responsive typography",
+          "result": "Good",
+          "details": "Homepage and post typography already adapt with clamp() and balanced wrapping."
+        },
+        {
+          "aspect": "Post content focus visibility",
+          "result": "Needs Improvement",
+          "details": "Focus styles for article links were color-only; add visible outline for keyboard users."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links in content",
+          "result": "No obvious placeholders",
+          "details": "Scanned posts/pages for http(s) links; no placeholder domains detected."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata coverage",
+          "result": "Good",
+          "details": "Pages include description/keywords; layout uses jekyll-seo-tag and OpenGraph defaults."
+        },
+        {
+          "aspect": "LCP image hints",
+          "result": "Opportunity",
+          "details": "Preload the homepage avatar to speed first paint when it is in view."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Consistent typography and spacing; article link styling is clear."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 9.5/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Add visible focus outline for article links for keyboard navigation",
+    "Preload homepage avatar to improve LCP for the hero section"
+  ]
+}
