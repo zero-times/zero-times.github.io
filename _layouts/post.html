@@ -24,7 +24,7 @@ layout: default
   {% endif %}
 {% endif %}
 
-<article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+<article class="post{% if page.categories contains 'news' %} post--news{% endif %}" itemscope itemtype="https://schema.org/BlogPosting">
     <meta itemprop="mainEntityOfPage" content="{{ page.url | absolute_url }}">
     <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
     <meta itemprop="dateModified" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">

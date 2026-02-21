@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T01:03:01+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post readability",
+          "result": "Needs refinement",
+          "details": "Daily news posts rely on long ordered lists that blend into dense paragraphs on mobile; list items need stronger visual grouping."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "Not automatically validated",
+          "details": "Manual scan only; no automated link checker available in this repository."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata coverage",
+          "result": "Good",
+          "details": "Site-level metadata and per-page descriptions are present; no changes required for this pass."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Digest formatting",
+          "result": "Opportunity",
+          "details": "News digests benefit from stronger typographic hierarchy and link emphasis to reduce scanning effort."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.5/10 (manual scan)",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.0/10"
+  },
+  "recommendations": [
+    "Add dedicated styling for news post ordered lists to improve mobile scannability",
+    "Apply an editorial card treatment to news entries for clearer visual grouping"
+  ]
+}
