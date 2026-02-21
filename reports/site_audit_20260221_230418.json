@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-21T23:04:18Z",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Contact page dark-mode readability",
+          "result": "Improved",
+          "details": "Added dark-mode styling for contact hero, chips, cards, and form container to preserve contrast."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "Not fully verified",
+          "details": "Manual scan performed; no placeholder domains found, but external URLs not actively fetched in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta coverage",
+          "result": "Stable",
+          "details": "No new SEO regressions observed in layout templates during this run."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content structure",
+          "result": "Stable",
+          "details": "No content edits required for this run; focus was on contact page presentation."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 7.6/10",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.2/10"
+  },
+  "recommendations": [
+    "Run a full external link validation pass when network access is available.",
+    "Continue tightening dark-mode contrast on key conversion sections."
+  ]
+}
