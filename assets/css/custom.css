@@ -1484,6 +1484,8 @@ html:lang(pt) .case-card p,
 .post-content {
   overflow-wrap: anywhere;
   word-break: break-word;
+  content-visibility: auto;
+  contain-intrinsic-size: 1200px;
 }
 
 .post-content table {
