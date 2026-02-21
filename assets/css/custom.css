@@ -1012,6 +1012,7 @@ select:focus-visible,
   -webkit-box-orient: vertical;
   line-clamp: 3;
   overflow: hidden;
+  text-wrap: pretty;
 }
 
 .blog-entry::before {
@@ -1484,6 +1485,7 @@ html:lang(pt) .case-card p,
 .post-content {
   overflow-wrap: anywhere;
   word-break: break-word;
+  text-wrap: pretty;
   content-visibility: auto;
   contain-intrinsic-size: 1200px;
 }
