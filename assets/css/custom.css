@@ -1255,8 +1255,17 @@ select:focus-visible,
   }
 
   .pagination .page-item {
-    margin: 0 0.15rem;
+    margin: 0;
   }
+}
+
+.pagination {
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.pagination .page-item {
+  margin: 0;
 }
 
 .newsletter,

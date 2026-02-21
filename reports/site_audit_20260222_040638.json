@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T04:06:55+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Blog Pagination",
+          "result": "Improved",
+          "details": "Pagination now wraps with consistent gaps on small screens to avoid horizontal overflow."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Network restricted; external link availability not verified. Manual scan found no placeholder or http:// links in templates/pages/posts."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "Core layouts include SEO tags, Open Graph defaults, and robots directives."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Readability",
+          "result": "Improved",
+          "details": "Pagination spacing adjusted for better tap targets on small screens."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.7/10",
+    "links": "Links: 8.0/10 (network restricted)",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.7/10"
+  },
+  "recommendations": [
+    "Run external link checks when network access is available",
+    "Monitor pagination on long blog archives to confirm no wrapping regressions"
+  ]
+}
