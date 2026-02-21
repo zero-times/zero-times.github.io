@@ -54,6 +54,26 @@ layout: default
                 {% endif %}
             
                 <div class="post-header">
+                    <nav class="post-breadcrumbs" aria-label="Breadcrumb">
+                        <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <a itemprop="item" href="{{ '/' | relative_url }}">
+                                    <span itemprop="name">Início</span>
+                                </a>
+                                <meta itemprop="position" content="1">
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <a itemprop="item" href="{{ '/blog/' | relative_url }}">
+                                    <span itemprop="name">Blog</span>
+                                </a>
+                                <meta itemprop="position" content="2">
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+                                <span itemprop="name">{{ page.title }}</span>
+                                <meta itemprop="position" content="3">
+                            </li>
+                        </ol>
+                    </nav>
                     <h1 class="posttitle" itemprop="name headline">{{ page.title }}</h1>
                 
                     <div class="post-meta">
