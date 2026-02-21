@@ -339,6 +339,16 @@ html {
     border-top: 1px solid #e9ecef;
   }
 
+  .navbar-nav .nav-link {
+    padding: 0.65rem 1rem;
+    border-radius: 0.85rem;
+  }
+
+  .navbar-nav .nav-link.active,
+  .navbar-nav .nav-link[aria-current="page"] {
+    background: rgba(0, 39, 118, 0.12);
+  }
+
   .language-switcher select {
     width: 100%;
   }
