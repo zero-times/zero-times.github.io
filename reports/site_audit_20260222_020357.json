@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T02:03:57+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Embedded media responsiveness",
+          "result": "Needs improvement",
+          "details": "Post/page embedded iframes or videos can overflow on small screens without explicit responsive rules."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal links",
+          "result": "No obvious issues",
+          "details": "Checked common navigation targets and key pages; no missing internal paths found."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured metadata",
+          "result": "Good",
+          "details": "Jekyll SEO tag is in place; pages include title/description keywords in front matter."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Multimedia performance",
+          "result": "Needs improvement",
+          "details": "Iframes do not default to lazy loading, which can delay LCP on media-heavy posts."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 8.6/10",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.0/10"
+  },
+  "recommendations": [
+    "Add responsive rules for embedded iframes/video to prevent overflow on mobile",
+    "Lazy-load iframes to avoid blocking initial render"
+  ]
+}

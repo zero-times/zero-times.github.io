@@ -147,6 +147,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  const iframes = document.querySelectorAll('iframe');
+  iframes.forEach(frame => {
+    if (!frame.hasAttribute('loading')) {
+      frame.setAttribute('loading', 'lazy');
+    }
+  });
+
   const lazyImages = document.querySelectorAll('img[data-src]');
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {

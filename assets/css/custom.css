@@ -1590,6 +1590,23 @@ html:lang(pt) .case-card p,
   height: auto;
 }
 
+.article-post iframe,
+.post-content iframe,
+.article-post video,
+.post-content video,
+.article-post embed,
+.post-content embed {
+  max-width: 100%;
+  width: 100%;
+  display: block;
+}
+
+.article-post iframe,
+.post-content iframe {
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
 .post-content img:not(.news-inline-thumb) {
   border-radius: 14px;
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
