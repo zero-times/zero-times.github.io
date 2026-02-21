@@ -1,0 +1,70 @@
+{
+  "audit_timestamp": "2026-02-21T13:01:52+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Footer Navigation",
+          "result": "Issue Found",
+          "details": "Footer linked to /terms/ but page did not exist, creating a dead-end for users."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Links",
+          "result": "Issues Found (1)",
+          "details": "Missing Terms of Use page caused a broken internal link in the footer."
+        }
+      ],
+      "broken_links": [
+        {
+          "url": "https://youllbe.cn/terms/",
+          "text": "Termos de Uso",
+          "location": "_layouts/default.html",
+          "issue": "Page not found"
+        }
+      ]
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "Core SEO tags and structured data already in place."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Policy Pages",
+          "result": "Improvement Opportunity",
+          "details": "Privacy policy exists; Terms of Use page was missing."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 8.8/10"
+  },
+  "recommendations": [
+    "Add a Terms of Use page to resolve the footer link",
+    "Periodically recheck internal navigation for missing pages"
+  ]
+}
