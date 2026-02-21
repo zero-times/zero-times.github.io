@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-21T20:03:50+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Keyboard Focus Visibility",
+          "result": "Needs Improvement",
+          "details": "Header and footer links lacked explicit focus-visible styling for keyboard navigation."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links (sampled)",
+          "result": "No obvious placeholders",
+          "details": "No example.com placeholders detected in posts/pages."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "Default layout already provides meta tags and structured data via seo tag." 
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 7.9,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability & UX",
+          "result": "Good",
+          "details": "Post content styling is consistent; minor focus visibility gaps remained in nav/footer before fix."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 7.9/10"
+  },
+  "recommendations": [
+    "Add explicit focus-visible styles to header and footer links for keyboard users."
+  ]
+}

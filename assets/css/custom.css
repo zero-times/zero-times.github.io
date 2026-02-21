@@ -54,6 +54,19 @@ Custom CSS for zero-times.github.io
   height: calc(1.5em + 0.75rem + 2px);
 }
 
+.navbar .nav-link:focus-visible,
+.navbar-toggler:focus-visible {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+.site-footer a:focus-visible {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
 /* Share page language switcher */
 .share-background {
   position: relative;
