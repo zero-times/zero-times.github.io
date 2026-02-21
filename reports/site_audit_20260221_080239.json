@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-21T08:02:43+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Acessibilidade",
+          "result": "Melhoria necessária",
+          "details": "Layout não expunha link de pular para o conteúdo principal, o que dificulta a navegação por teclado."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Parcial",
+          "details": "Auditoria offline: links externos listados, sem validação de disponibilidade ao vivo."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Tags",
+          "result": "Bom",
+          "details": "Default layout mantém SEO tag, keywords e descrições configuradas em páginas principais."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Conteúdo",
+          "result": "Bom",
+          "details": "Posts recentes estão completos, sem placeholders evidentes nos conteúdos auditados localmente."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.2/10"
+  },
+  "recommendations": [
+    "Adicionar link de pular para o conteúdo no layout para melhorar acessibilidade",
+    "Realizar verificação online de links externos quando a rede estiver disponível"
+  ]
+}
