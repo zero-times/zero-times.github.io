@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-21T23:06:32+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage visuals",
+          "result": "Good",
+          "details": "Homepage layout remains clear with consistent spacing and card hierarchy."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "Not verified",
+          "details": "External URLs were enumerated locally; no live link validation in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata",
+          "result": "Good",
+          "details": "Site-wide meta/SEO tags remain present and consistent across layouts."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage performance",
+          "result": "Improved",
+          "details": "Reduced above-the-fold resource priority for the sidebar avatar."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 7.5/10",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 8.6/10"
+  },
+  "recommendations": [
+    "Run live link validation when network access is available",
+    "Continue deferring non-critical homepage assets to improve LCP"
+  ]
+}
