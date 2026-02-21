@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-21T19:04:53+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Keyboard Focus",
+          "result": "Improved",
+          "details": "Store cards now show visible focus emphasis on the CTA text for keyboard users."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Network-restricted run; external link verification skipped."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Navigation & Discovery",
+          "result": "Improved",
+          "details": "Prefetch added for the About page on the homepage to speed up common navigation."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Messaging",
+          "result": "Good",
+          "details": "Homepage and about messaging are cohesive and up to date."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 7.5/10 (external verification skipped)",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.7/10"
+  },
+  "recommendations": [
+    "Validate external links when network access is available",
+    "Consider prefetching additional high-intent pages if analytics show frequent paths"
+  ]
+}
