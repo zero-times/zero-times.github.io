@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-21T10:03:28+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post imagery",
+          "result": "Needs refinement",
+          "details": "Post images render edge-to-edge without consistent rounding/shadow, reducing visual hierarchy on mobile."
+        },
+        {
+          "aspect": "Motion preferences",
+          "result": "Needs improvement",
+          "details": "Global transitions/animations lack a prefers-reduced-motion override."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not scanned",
+          "details": "Automated link validation not run; manual spot checks only."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta coverage",
+          "result": "Good",
+          "details": "Core meta tags and structured data are present."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Post typography and spacing are consistent after prior improvements."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.7/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Add consistent styling for post images to improve visual hierarchy",
+    "Respect prefers-reduced-motion for accessibility"
+  ]
+}
