@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-21T18:06:03+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Anchor Navigation",
+          "result": "Opportunity",
+          "details": "Section anchor jumps on long pages can land under the sticky header on mobile; add scroll-margin-top to section anchors."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Links",
+          "result": "No issues found",
+          "details": "Checked key templates and page links; no broken internal references observed."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Navigation Performance",
+          "result": "Opportunity",
+          "details": "Homepage can prefetch high-intent routes to reduce perceived navigation latency."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent daily posts are present; no placeholder content identified in templates."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.0/10"
+  },
+  "recommendations": [
+    "Add scroll-margin-top for section anchors to avoid sticky header overlap",
+    "Prefetch /blog and /contact from the homepage to speed up first navigation"
+  ]
+}

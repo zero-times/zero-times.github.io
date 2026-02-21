@@ -1511,6 +1511,16 @@ html:lang(pt) .case-card p,
   scroll-margin-top: 6rem;
 }
 
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+@media (max-width: 575.98px) {
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
 .post-content h2,
 .article-post h2 {
   position: relative;

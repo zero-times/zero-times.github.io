@@ -37,6 +37,10 @@
   {% if page.hero_avatar_preload %}
   <link rel="preload" as="image" href="{{ site.author.avatar | relative_url }}">
   {% endif %}
+  {% if page.url == '/' %}
+  <link rel="prefetch" href="{{ '/blog/' | relative_url }}">
+  <link rel="prefetch" href="{{ '/contact/' | relative_url }}">
+  {% endif %}
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   {% if page.url contains '/contact/' or page.url contains '/blog/' %}
