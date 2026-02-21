@@ -1,0 +1,12 @@
+{
+  audit_timestamp: 2026-02-22T05:04:32+08:00,
+  website_url: https://youllbe.cn,
+  overall_score: 8.6,
+  max_possible_score: 10.0,
+  sections: {
+    layout_assessment: {
+      score: 8.7,
+      max_score: 10.0,
+      findings: [
+        {
+          aspect: Homepage

@@ -455,6 +455,27 @@ body {
   text-wrap: pretty;
 }
 
+.home-hero__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.home-hero__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(0, 39, 118, 0.08);
+  border: 1px solid rgba(0, 39, 118, 0.18);
+  color: rgba(12, 26, 58, 0.9);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 10px 22px rgba(0, 39, 118, 0.08);
+}
+
 @media (max-width: 575.98px) {
   .home-hero {
     padding: 2rem 1.5rem;
@@ -472,6 +493,15 @@ body {
 
   .home-hero__lead {
     font-size: 1.05rem;
+  }
+
+  .home-hero__chips {
+    gap: 0.5rem;
+  }
+
+  .home-hero__chip {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.85rem;
   }
 }
 
@@ -499,6 +529,13 @@ body {
 
   .home-hero__lead {
     color: rgba(243, 244, 246, 0.78);
+  }
+
+  .home-hero__chip {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(148, 163, 184, 0.25);
+    color: rgba(248, 250, 252, 0.9);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.4);
   }
 }
 
