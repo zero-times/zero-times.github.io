@@ -834,6 +834,10 @@ img.news-inline-thumb--lazy[loading="lazy"] {
   gap: 0.5rem;
 }
 
+.category-section {
+  scroll-margin-top: 6rem;
+}
+
 .category-link {
   display: inline-flex;
   align-items: center;

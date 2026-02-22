@@ -7,17 +7,21 @@ layout: default
             <h1>Categorias</h1>
             
             {% for category in site.categories %}
-            <h4 class="mt-5 mb-4 pb-2 border-bottom" id="{{ category[0] | slugify }}"><span class="text-capitalize small font-weight-bold">Categoria: "{{ category[0] }}"</span></h4>
-            
-            {% for post in category[1] %}
-            <div class="card mb-3 category-post-card">
-                <div class="card-body">
-                    <h5 class="card-title"><a class="category-post-link" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h5>
-                    <p class="card-text">{{ post.excerpt | strip_html | truncate: 120 }}</p>
-                    <small class="text-muted"><time class="category-post-date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%B %d, %Y" }}</time></small>
+            <section class="category-section" id="{{ category[0] | slugify }}" aria-labelledby="category-{{ category[0] | slugify }}">
+                <h2 class="mt-5 mb-4 pb-2 border-bottom" id="category-{{ category[0] | slugify }}">
+                    <span class="text-capitalize small font-weight-bold">Categoria: {{ category[0] }}</span>
+                </h2>
+                
+                {% for post in category[1] %}
+                <div class="card mb-3 category-post-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a class="category-post-link" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h5>
+                        <p class="card-text">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+                        <small class="text-muted"><time class="category-post-date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%B %d, %Y" }}</time></small>
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+            </section>
             {% endfor %}
         </div>
         

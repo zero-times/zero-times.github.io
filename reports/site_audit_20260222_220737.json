@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T22:07:37+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Category anchors",
+          "result": "Improved",
+          "details": "Added semantic section wrappers and scroll margin for sticky header offset."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "Not checked (offline)",
+          "details": "Network restricted; requires online validation for external URLs."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Heading structure",
+          "result": "Improved",
+          "details": "Category page headings promoted to H2 with labeled sections for better semantics."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Navigation clarity",
+          "result": "Good",
+          "details": "Category navigation remains consistent with list of anchors."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.0/10 (offline)",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 8.2/10"
+  },
+  "recommendations": [
+    "Run online broken link check when network is available.",
+    "Consider adding a visual divider between category sections on small screens."
+  ]
+}
