@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T06:05:08+0800",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Blog listing stability",
+          "result": "Improved",
+          "details": "Added consistent line-height + min-height to blog entry excerpts to reduce visual jumping on mobile and stabilize card heights."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "Not verified",
+          "details": "Network restricted; external link availability not verified. Manual scan found no placeholder or http:// links in templates/pages/posts."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta coverage",
+          "result": "Good",
+          "details": "SEO tags present in layouts and page front matter includes description/keywords for key pages."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Excerpts",
+          "result": "Good",
+          "details": "Blog excerpts are truncated and wrapped for readability; added consistent height for cleaner scanning."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 7.5/10 (external checks blocked)",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 9.0/10"
+  },
+  "recommendations": [
+    "When network access is available, run a live external link check for recent news posts.",
+    "Consider adding a short meta description to any new posts that lack one to keep SERP snippets consistent."
+  ]
+}

@@ -1322,6 +1322,8 @@ select:focus-visible,
   line-clamp: 3;
   overflow: hidden;
   text-wrap: pretty;
+  line-height: 1.6;
+  min-height: calc(1.6em * 3);
 }
 
 .blog-entry::before {
