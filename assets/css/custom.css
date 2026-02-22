@@ -795,7 +795,7 @@ main table {
   aspect-ratio: 7 / 5;
   object-fit: cover;
   content-visibility: auto;
-  contain-intrinsic-size: 100px 140px;
+  contain-intrinsic-size: 140px 100px;
 }
 
 @media (max-width: 575.98px) {

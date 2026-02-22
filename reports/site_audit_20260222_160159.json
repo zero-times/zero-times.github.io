@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T16:02:17+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "News thumbnails",
+          "result": "Minor layout shift risk",
+          "details": "News inline thumbnails had contain-intrinsic-size values reversed (height/width), which can cause incorrect placeholder sizing on slow connections."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not validated in this run",
+          "details": "Manual scan only; no automated link checker script available in repo."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata",
+          "result": "Good",
+          "details": "Meta keywords and theme-color are present; SEO tag enabled in default layout."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content freshness",
+          "result": "Good",
+          "details": "Recent daily news posts are present."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 8.2/10 (manual scan)",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Fix news inline thumbnail placeholder sizing to reduce layout shift",
+    "Add automated link checking script if future audits need verified link status"
+  ]
+}
