@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T10:04:50+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post readability",
+          "result": "Opportunity",
+          "details": "Blockquotes and code snippets blend into the body text on long posts, especially on mobile."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not audited",
+          "details": "Manual pass only; no broken links discovered during spot check."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata coverage",
+          "result": "Good",
+          "details": "Core SEO tags present; no immediate gaps detected in templates."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Formatting",
+          "result": "Opportunity",
+          "details": "Highlighting quoted text and code improves scanability for technical posts."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 9.2/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Style blockquotes and code blocks for clearer hierarchy in post content",
+    "Continue periodic external link verification with automated tooling"
+  ]
+}

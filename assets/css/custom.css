@@ -1756,6 +1756,73 @@ html:lang(pt) .case-card p,
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
 }
 
+.post-content blockquote,
+.article-post blockquote {
+  margin: 1.5rem 0;
+  padding: 1.1rem 1.4rem;
+  border-radius: 16px;
+  border-left: 4px solid rgba(0, 39, 118, 0.5);
+  background: rgba(0, 39, 118, 0.06);
+  color: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+.post-content blockquote p:last-child,
+.article-post blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.post-content pre,
+.article-post pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(15, 23, 42, 0.04);
+  overflow-x: auto;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+}
+
+.post-content code,
+.article-post code {
+  color: #0f1f48;
+  background: rgba(0, 39, 118, 0.08);
+  border-radius: 6px;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.95em;
+}
+
+.post-content pre code,
+.article-post pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.92em;
+  color: inherit;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-content blockquote,
+  .article-post blockquote {
+    border-left-color: rgba(148, 197, 255, 0.65);
+    background: rgba(15, 23, 42, 0.6);
+    color: rgba(226, 232, 240, 0.85);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  .post-content pre,
+  .article-post pre {
+    border-color: rgba(148, 163, 184, 0.35);
+    background: rgba(15, 23, 42, 0.75);
+    box-shadow: 0 18px 32px rgba(0, 0, 0, 0.35);
+  }
+
+  .post-content code,
+  .article-post code {
+    color: rgba(226, 232, 240, 0.95);
+    background: rgba(148, 197, 255, 0.18);
+  }
+}
+
 /* Post content readability + mobile table handling */
 .post-content {
   overflow-wrap: anywhere;
