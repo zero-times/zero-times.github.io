@@ -1,0 +1,48 @@
+{
+  "audit_timestamp": "2026-02-22T19:05:27+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {"aspect": "Share Page Scannability", "result": "Improved", "details": "Added visual separators and a subtle glass effect for share stats to improve readability on mobile and dark backgrounds."},
+        {"aspect": "Mobile Spacing", "result": "Good", "details": "Existing spacing and tap targets remain consistent after adjustments."}
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {"aspect": "Content Scan", "result": "No Issues Found", "details": "Manual scan found no placeholder/example.com links in posts/pages. External URLs not live-checked in offline audit."}
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {"aspect": "Meta Coverage", "result": "Good", "details": "SEO tags, keywords, and Open Graph metadata remain present via layouts."}
+      ]
+    },
+    "content_quality": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {"aspect": "Share Page Messaging", "result": "Good", "details": "Copy remains clear and CTA-focused; updated styling supports quick scanning."}
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.3/10",
+    "content": "Content: 8.7/10"
+  },
+  "recommendations": [
+    "Continue monitoring external links with a live checker in future runs.",
+    "Consider adding lightweight iconography for share stats if brand direction allows."
+  ]
+}

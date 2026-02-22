@@ -2374,6 +2374,7 @@ section[id] {
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
 }
 
 .stats-card__value {
@@ -2391,6 +2392,20 @@ section[id] {
   letter-spacing: 0.12em;
   font-size: 0.75rem;
   color: rgba(245, 245, 247, 0.7);
+}
+
+.stats-card .col-md-4 {
+  position: relative;
+}
+
+.stats-card .col-md-4:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 0;
+  width: 1px;
+  height: calc(100% - 24px);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 575.98px) {
@@ -2414,6 +2429,17 @@ section[id] {
 
   .stats-card__label {
     font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .stats-card .col-md-4:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
   }
 }
 
