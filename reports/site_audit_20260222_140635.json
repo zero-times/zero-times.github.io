@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-22T14:06:35+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Responsive Images",
+          "result": "Needs Improvement",
+          "details": "Post/page body images lacked explicit max-width and block layout, risking overflow on small screens."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Manual scan only; network checks not executed in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "Default SEO tags, keywords, and structured data remain consistent."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent news posts present; no content edits required for this run."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.7/10",
+    "links": "Links: 8.5/10 (manual scan)",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Ensure post/page body images never overflow on small screens by enforcing responsive image styles."
+  ]
+}

@@ -1762,7 +1762,11 @@ html:lang(pt) .case-card p,
   height: auto;
 }
 
-.post-content img:not(.news-inline-thumb) {
+.post-content img:not(.news-inline-thumb),
+.article-post img {
+  max-width: 100%;
+  height: auto;
+  display: block;
   border-radius: 14px;
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
 }
