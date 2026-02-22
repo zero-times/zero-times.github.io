@@ -88,6 +88,14 @@
       <link rel="last" href="{{ site.paginate_path | absolute_url | replace: ':num', paginator.total_pages }}">
     {% endif %}
   {% endif %}
+  {% if page.layout == 'post' %}
+    {% if page.previous %}
+      <link rel="prefetch" href="{{ page.previous.url | relative_url }}">
+    {% endif %}
+    {% if page.next %}
+      <link rel="prefetch" href="{{ page.next.url | relative_url }}">
+    {% endif %}
+  {% endif %}
   
   <!-- Bootstrap 5 样式 -->
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" crossorigin>

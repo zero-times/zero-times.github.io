@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-22T08:05:10.182654+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Navigation Continuity",
+          "result": "Improve",
+          "details": "Post pages can prefetch adjacent posts to speed navigation."
+        },
+        {
+          "aspect": "Excerpt Readability",
+          "result": "Improve",
+          "details": "Bold text inside blog excerpts lacks visual consistency."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not validated",
+          "details": "External links present; validation requires network."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta/Structured Data",
+          "result": "Good",
+          "details": "SEO tags, breadcrumbs, and schema markup present."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Excerpts",
+          "result": "Improve",
+          "details": "Blog list excerpts need consistent emphasis styling for bold inline text."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 8.0/10 (external validation pending)",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.3/10"
+  },
+  "recommendations": [
+    "Prefetch adjacent posts on post pages to improve navigation performance",
+    "Normalize bold text styling inside blog excerpts for consistent readability"
+  ]
+}

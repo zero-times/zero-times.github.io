@@ -1250,6 +1250,11 @@ select:focus-visible,
   contain-intrinsic-size: 240px;
 }
 
+.blog-entry p[itemprop="description"] strong {
+  color: inherit;
+  font-weight: 600;
+}
+
 .blog-entry p[itemprop="description"] {
   display: -webkit-box;
   -webkit-line-clamp: 3;
