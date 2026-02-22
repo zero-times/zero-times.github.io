@@ -155,6 +155,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!frame.hasAttribute('loading')) {
       frame.setAttribute('loading', 'lazy');
     }
+    if (!frame.hasAttribute('title')) {
+      const fallbackTitle = frame.getAttribute('data-title') || frame.getAttribute('aria-label') || 'Embedded content';
+      frame.setAttribute('title', fallbackTitle);
+    }
+  });
+
+  const mediaElements = document.querySelectorAll('video, audio');
+  mediaElements.forEach(media => {
+    if (!media.hasAttribute('preload')) {
+      media.setAttribute('preload', 'metadata');
+    }
+    if (media.tagName.toLowerCase() === 'video' && !media.hasAttribute('playsinline')) {
+      media.setAttribute('playsinline', '');
+    }
   });
 
   const lazyImages = document.querySelectorAll('img[data-src]');

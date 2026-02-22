@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T12:03:24+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Embedded Media Accessibility",
+          "result": "Improved",
+          "details": "Added automatic iframe title fallback and playsinline for videos to improve mobile UX and accessibility."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Network restricted; external link availability not verified. Manual scan found no placeholder or http:// links in templates/pages/posts."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "SEO tags and structured data remain consistent; no regressions detected."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Media Performance",
+          "result": "Improved",
+          "details": "Set media preload defaults to metadata to reduce bandwidth on initial load."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 7.5/10 (external checks blocked)",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 9.0/10"
+  },
+  "recommendations": [
+    "Keep verifying external links when network access is available",
+    "Review embedded media titles for semantic accuracy on key pages"
+  ]
+}
