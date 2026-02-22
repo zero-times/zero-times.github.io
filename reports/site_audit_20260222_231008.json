@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-22T23:10:08+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Keyboard Navigation",
+          "result": "Needs Improvement",
+          "details": "Pagination links lacked a strong focus-visible treatment, reducing keyboard visibility on mobile and desktop."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal/External Links",
+          "result": "No issues detected in code scan",
+          "details": "Reviewed static templates and recent posts for placeholder links and http:// usage; none found."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "SEO tags, descriptions, and keywords are present across layouts and pages."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability & UX",
+          "result": "Good",
+          "details": "Homepage and post layouts are well-structured; minor focus styling gap in pagination addressed."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Add visible focus treatment for pagination links to improve keyboard navigation."
+  ]
+}
