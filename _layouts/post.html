@@ -77,15 +77,16 @@ layout: default
                     <h1 class="posttitle" itemprop="name headline">{{ page.title }}</h1>
                 
                     <div class="post-meta">
-                        <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}" itemprop="datePublished">{{ page.date | date_to_string }}</time></span>           
+                        <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}" itemprop="datePublished">{{ page.date | date_to_string }}</time></span>
                         <span class="post-meta-sep" aria-hidden="true">•</span>
                         <span class="post-reading-time" aria-label="Tempo de leitura estimado">{{ reading_minutes }} min de leitura</span>
-                    
+
                         {% if page.last_modified_at %}
                         <span class="post-updated">(<time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">Atualizado em {{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)</span>
                         {% endif %}
-                    
+
                         {% if author_name %}
+                            <span class="post-meta-sep" aria-hidden="true">•</span>
                             <span class="post-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
                                 {% if author_web %}
                                     <a href="{{ author_web }}" itemprop="url" rel="author noopener noreferrer" target="_blank">
@@ -96,7 +97,7 @@ layout: default
                                 {% endif %}
                             </span>
                         {% endif %}
-                    
+
                         {% if page.categories %}
                             <div class="post-categories">
                                 {% for category in page.categories %}
