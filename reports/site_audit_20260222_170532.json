@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T17:05:32+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.5,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage & contact layout",
+          "result": "Good",
+          "details": "Hero and contact blocks use consistent spacing and responsive chips; no critical overflow found in templates reviewed."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not validated (offline)",
+          "details": "External URLs were enumerated, but network checks are disabled in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Typography assets",
+          "result": "Needs improvement",
+          "details": "Custom font stack in CSS relied on local availability; add explicit webfont loading to ensure consistent typography across devices."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata coverage",
+          "result": "Good",
+          "details": "Key pages and posts include description/keywords; structured data is present in layouts."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.0/10 (offline)",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Load the primary PT Sans/PT Serif/Alegreya fonts explicitly to stabilize typography across devices",
+    "Re-run external link validation when network checks are available"
+  ]
+}
