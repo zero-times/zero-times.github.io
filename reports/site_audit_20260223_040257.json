@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T04:02:57+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Pagination Accessibility",
+          "result": "Issue Found",
+          "details": "Blog pagination links contain a malformed aria-label attribute (missing closing quote), which can break HTML parsing and assistive tech labels."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Fully Verified",
+          "details": "External news links present; not revalidated in this run due to restricted network access."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "Site-wide SEO tags, keywords, theme-color, and structured data are present in the default layout."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent daily news posts are present; no content edits made in this run."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.3/10",
+    "seo": "SEO: 8.7/10",
+    "content": "Content: 8.0/10"
+  },
+  "recommendations": [
+    "Keep pagination markup valid to preserve screen reader labels",
+    "Spot-check a sample of external news links when network access is available"
+  ]
+}
