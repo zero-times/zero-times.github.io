@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-23T02:02:51+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Anchor Target Visibility",
+          "result": "Needs Improvement",
+          "details": "Heading anchors had no visual highlight when navigated via hash links, making deep-linking less obvious on mobile."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No obvious placeholders",
+          "details": "News and external references appear intentional; no example.com placeholders found in active pages."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "SEO tags, hreflang, and structured data are present on primary layouts."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Typography and spacing are consistent; anchor feedback was the main gap."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.2/10",
+    "links": "Links: 8.5/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.3/10"
+  },
+  "recommendations": [
+    "Add a visual highlight for :target headings to improve deep-linking clarity on mobile"
+  ]
+}

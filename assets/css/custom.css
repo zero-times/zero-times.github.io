@@ -1920,6 +1920,21 @@ section[id] {
   margin-top: 2.25rem;
 }
 
+.post-content h2:target,
+.post-content h3:target,
+.post-content h4:target,
+.post-content h5:target,
+.post-content h6:target,
+.article-post h2:target,
+.article-post h3:target,
+.article-post h4:target,
+.article-post h5:target,
+.article-post h6:target {
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 0.35rem rgba(0, 39, 118, 0.12);
+  background: rgba(0, 39, 118, 0.08);
+}
+
 .post-content h2::after,
 .article-post h2::after {
   content: "";
@@ -1932,6 +1947,20 @@ section[id] {
 }
 
 @media (prefers-color-scheme: dark) {
+  .post-content h2:target,
+  .post-content h3:target,
+  .post-content h4:target,
+  .post-content h5:target,
+  .post-content h6:target,
+  .article-post h2:target,
+  .article-post h3:target,
+  .article-post h4:target,
+  .article-post h5:target,
+  .article-post h6:target {
+    box-shadow: 0 0 0 0.35rem rgba(148, 197, 255, 0.18);
+    background: rgba(15, 23, 42, 0.45);
+  }
+
   .post-content h2::after,
   .article-post h2::after {
     background: linear-gradient(90deg, rgba(148, 197, 255, 0.9), rgba(34, 197, 94, 0.75));
