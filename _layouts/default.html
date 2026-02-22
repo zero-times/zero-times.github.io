@@ -42,6 +42,12 @@
   <link rel="prefetch" href="{{ '/contact/' | relative_url }}">
   <link rel="prefetch" href="{{ '/about/' | relative_url }}">
   {% endif %}
+  {% if page.categories contains 'news' %}
+  <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://s2-g1.glbimg.com">
+  <link rel="preconnect" href="https://i.s3.glbimg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://i.s3.glbimg.com">
+  {% endif %}
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   {% if page.url contains '/contact/' or page.url contains '/blog/' %}

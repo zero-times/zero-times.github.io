@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T13:06:43+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "News Digests",
+          "result": "Opportunity",
+          "details": "Inline thumbnails in news posts load without explicit lazy/priority hints; can improve perceived performance and avoid layout jank."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No critical issues found",
+          "details": "No obvious placeholder or http links detected in key templates and recent posts."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Media Hints",
+          "result": "Opportunity",
+          "details": "News pages embed media from G1 CDN; preconnect/dns-prefetch can speed up image fetches."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "News layouts are structured with cards and strong hierarchy."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 8.5/10",
+    "seo": "SEO: 8.7/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Add lazy-loading defaults and subtle loading affordances for news inline thumbnails.",
+    "Preconnect to the most common news image CDNs on news pages."
+  ]
+}

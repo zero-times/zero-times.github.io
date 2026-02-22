@@ -794,6 +794,8 @@ main table {
   border-radius: 0.35rem;
   aspect-ratio: 7 / 5;
   object-fit: cover;
+  content-visibility: auto;
+  contain-intrinsic-size: 100px 140px;
 }
 
 @media (max-width: 575.98px) {
@@ -803,6 +805,15 @@ main table {
     max-width: 100%;
     margin: 0.25rem auto 0.75rem;
   }
+}
+
+.news-inline-thumb--lazy {
+  filter: saturate(0.92);
+  transition: filter 0.25s ease;
+}
+
+img.news-inline-thumb--lazy[loading="lazy"] {
+  filter: saturate(0.85);
 }
 
 .store-card:focus-visible {

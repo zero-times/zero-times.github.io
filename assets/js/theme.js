@@ -187,6 +187,23 @@ document.addEventListener('DOMContentLoaded', function() {
     lazyImages.forEach(img => imageObserver.observe(img));
   }
 
+  const newsInlineThumbs = document.querySelectorAll('img.news-inline-thumb');
+  newsInlineThumbs.forEach(img => {
+    if (!img.hasAttribute('loading')) {
+      img.setAttribute('loading', 'lazy');
+    }
+    if (!img.hasAttribute('decoding')) {
+      img.setAttribute('decoding', 'async');
+    }
+    if (!img.hasAttribute('fetchpriority')) {
+      img.setAttribute('fetchpriority', 'low');
+    }
+    if (!img.hasAttribute('alt')) {
+      img.setAttribute('alt', 'Imagem relacionada à notícia');
+    }
+    img.classList.add('news-inline-thumb--lazy');
+  });
+
   // Add focus management for dropdowns
   const dropdowns = document.querySelectorAll('.dropdown-toggle');
   dropdowns.forEach(dropdown => {
