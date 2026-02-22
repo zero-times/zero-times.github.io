@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T15:03:59+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Page Structure",
+          "result": "Good",
+          "details": "Layouts remain consistent with structured headings and main landmark."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Automatically Scanned",
+          "details": "Manual template review only; no automated link validation executed in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Hreflang Coverage",
+          "result": "Improved",
+          "details": "Added alternate hreflang and x-default links for canonical locale signals."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent news posts present; no content changes in this run."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 7.0/10 (manual review only)",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 8.3/10"
+  },
+  "recommendations": [
+    "Run automated link validation on posts when network is available",
+    "Consider adding localized Open Graph locale alternates if additional languages are introduced"
+  ]
+}
