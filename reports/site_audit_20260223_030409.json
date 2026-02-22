@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-23T03:04:09+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Responsive Layout",
+          "result": "Good",
+          "details": "Mobile-friendly styling and responsive media handling are in place across posts and pages."
+        },
+        {
+          "aspect": "Anchor Navigation",
+          "result": "Minor Issue",
+          "details": "Tag anchors could be partially hidden by the sticky header; scroll offset needed."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Robots Discovery",
+          "result": "Issue Found",
+          "details": "robots.txt was missing, reducing discoverability hints for crawlers."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta/Structured Data",
+          "result": "Good",
+          "details": "SEO tags and structured data present; minor improvement to crawler directives identified."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent posts and summaries are up-to-date with consistent descriptions."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 8.2/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.7/10"
+  },
+  "recommendations": [
+    "Add robots.txt to explicitly expose sitemap location",
+    "Add scroll offset for tag anchors to avoid sticky header overlap"
+  ]
+}

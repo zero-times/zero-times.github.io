@@ -1,7 +1,4 @@
----
-layout: null
-permalink: /robots.txt
----
 User-agent: *
 Allow: /
-Sitemap: {{ '/sitemap.xml' | absolute_url }}
+
+Sitemap: https://youllbe.cn/sitemap.xml

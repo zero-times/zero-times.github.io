@@ -1548,6 +1548,10 @@ select:focus-visible,
   contain-intrinsic-size: 72px;
 }
 
+.tags-archive section {
+  scroll-margin-top: 6rem;
+}
+
 @media (prefers-color-scheme: dark) {
   .blog-entry {
     border-bottom-color: rgba(255, 255, 255, 0.12);
