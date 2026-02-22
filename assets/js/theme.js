@@ -27,6 +27,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // Reading progress indicator for post pages
+  const progressBar = document.querySelector('.reading-progress__bar');
+  if (progressBar) {
+    let ticking = false;
+    const updateProgress = () => {
+      const docHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      const maxScroll = Math.max(docHeight - winHeight, 1);
+      const progress = Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100));
+      progressBar.style.width = `${progress.toFixed(2)}%`;
+      ticking = false;
+    };
+    const requestTick = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateProgress);
+      }
+    };
+    updateProgress();
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', requestTick);
+  }
+
   // Enhance form validation
   const forms = document.querySelectorAll('form');
   forms.forEach(form => {

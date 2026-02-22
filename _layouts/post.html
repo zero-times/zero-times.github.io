@@ -24,6 +24,9 @@ layout: default
   {% endif %}
 {% endif %}
 
+<div class="reading-progress" aria-hidden="true">
+    <span class="reading-progress__bar"></span>
+</div>
 <article class="post{% if page.categories contains 'news' %} post--news{% endif %}" itemscope itemtype="https://schema.org/BlogPosting">
     <meta itemprop="mainEntityOfPage" content="{{ page.url | absolute_url }}">
     <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
