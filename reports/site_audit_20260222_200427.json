@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T20:04:27+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Excerpt Rhythm",
+          "result": "Needs polish",
+          "details": "Card excerpts clamp to 3 lines but lack consistent line-height/min-height, causing uneven card heights on mobile."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No critical breaks found",
+          "details": "Recent news posts use valid sources; continue monitoring."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta & Structured Data",
+          "result": "Good",
+          "details": "Default layout includes seo tag, canonical, and structured data."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 7.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Excerpts",
+          "result": "Improve readability",
+          "details": "Add text-wrap and line-height so excerpts are more legible and consistent across cards."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.2/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 7.8/10"
+  },
+  "recommendations": [
+    "Normalize excerpt line-height and height for consistent card rhythm",
+    "Continue routine link checks for news digests"
+  ]
+}

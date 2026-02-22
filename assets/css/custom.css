@@ -1223,6 +1223,15 @@ select:focus-visible,
   -webkit-box-orient: vertical;
   line-clamp: 3;
   overflow: hidden;
+  text-wrap: pretty;
+  line-height: 1.55;
+  min-height: calc(1.55em * 3);
+}
+
+.postbox-card .card-text {
+  text-wrap: pretty;
+  line-height: 1.55;
+  min-height: calc(1.55em * 3);
 }
 
 .blog-archive-link {
