@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-22T21:06:31+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile CTA Tap Targets",
+          "result": "Improvement Applied",
+          "details": "Set blog list CTA buttons to full width on small screens for easier tapping and alignment."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Scan",
+          "result": "No Issues Found",
+          "details": "Manual scan found no placeholder/example.com links in posts/pages. External URLs not live-checked in offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "Key pages include title/description/keywords, and layout includes seo tag and structured data."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Blog summaries are clamped for consistency; CTA sizing refined for mobile UX."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.3/10",
+    "links": "Links: 8.0/10",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.0/10"
+  },
+  "recommendations": [
+    "Continue monitoring external links with an online checker when network access is available.",
+    "Consider adding lightweight CTA emphasis on the homepage blog cards to match mobile tap target improvements."
+  ]
+}

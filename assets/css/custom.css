@@ -1338,6 +1338,12 @@ select:focus-visible,
     font-size: clamp(1.35rem, 5.2vw, 1.65rem);
   }
 
+  .blog-entry .btn {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+  }
+
   .post-meta {
     gap: 0.3rem;
   }
