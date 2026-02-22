@@ -1820,6 +1820,8 @@ html:lang(pt) .case-card p,
   border: 1px solid rgba(15, 23, 42, 0.12);
   background: rgba(15, 23, 42, 0.04);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
   box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
 }
 
@@ -1838,6 +1840,14 @@ html:lang(pt) .case-card p,
   padding: 0;
   font-size: 0.92em;
   color: inherit;
+}
+
+.post-content p code,
+.post-content li code,
+.article-post p code,
+.article-post li code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 @media (prefers-color-scheme: dark) {
