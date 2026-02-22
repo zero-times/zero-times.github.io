@@ -2818,3 +2818,37 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
     width: 100%;
   }
 }
+
+
+/* Touch device refinements for smoother mobile interactions */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover {
+    transform: none;
+    box-shadow: var(--box-shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
+  }
+
+  .btn:hover,
+  .btn:focus,
+  .btn:active,
+  .btn-primary:hover,
+  .btn-primary:focus,
+  .btn-primary:active,
+  .btn-outline-primary:hover,
+  .btn-outline-primary:focus,
+  .btn-outline-primary:active {
+    transform: none;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: transparent;
+  }
+}
+
+.btn,
+.page-link,
+.nav-link,
+.store-card,
+.postbox-cta,
+.previous-next-post .btn {
+  touch-action: manipulation;
+}

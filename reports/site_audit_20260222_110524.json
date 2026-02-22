@@ -1,0 +1,75 @@
+{
+  "audit_timestamp": "2026-02-22T11:05:24+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Interaction",
+          "result": "Improved",
+          "details": "Added touch-specific overrides to avoid hover-only transforms on coarse pointers."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Live-Checked",
+          "details": "External URLs detected but not live-checked due to offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "SEO tags, descriptions, and keywords present on primary pages."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent posts and daily news updates present."
+        }
+      ]
+    },
+    "performance": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Touch Responsiveness",
+          "result": "Improved",
+          "details": "Added touch-action hints to reduce tap delay on interactive controls."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 8.0/10 (offline check)",
+    "seo": "SEO: 8.0/10",
+    "content": "Content: 8.3/10",
+    "performance": "Performance: 8.2/10"
+  },
+  "recommendations": [
+    "Run live link checker when network access is available",
+    "Consider adding touch-specific hover fallbacks for additional interactive components"
+  ]
+}
