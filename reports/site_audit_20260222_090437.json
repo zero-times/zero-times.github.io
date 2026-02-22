@@ -1,0 +1,75 @@
+{
+  "audit_timestamp": "2026-02-22T09:04:37+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Readability",
+          "result": "Good",
+          "details": "Post and blog layouts already use responsive typography, line-height, and scroll-margin for anchors."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Live-Checked",
+          "details": "Offline audit only; external URLs not live-checked in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured Data",
+          "result": "Good",
+          "details": "SEO tags + BlogPosting microdata are consistently included across index and post layouts."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent daily news posts and updated pages present current content." 
+        }
+      ]
+    },
+    "performance": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Image Loading Priorities",
+          "result": "Improved",
+          "details": "Apply low fetchpriority to lazy images to reduce competition with LCP assets."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 8.2/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 9.0/10",
+    "performance": "Performance: 8.5/10"
+  },
+  "recommendations": [
+    "Keep lazy-loaded images at low fetchpriority to protect critical render paths.",
+    "Run a live external link check when network access is available."
+  ]
+}

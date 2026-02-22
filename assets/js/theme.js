@@ -145,6 +145,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!img.hasAttribute('alt')) {
       img.setAttribute('alt', '');
     }
+    if (!img.hasAttribute('fetchpriority') && img.getAttribute('loading') === 'lazy') {
+      img.setAttribute('fetchpriority', 'low');
+    }
   });
 
   const iframes = document.querySelectorAll('iframe');
