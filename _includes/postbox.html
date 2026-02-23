@@ -1,15 +1,15 @@
-<div class="card mb-4 postbox-card shadow-sm">
+<div class="card mb-4 postbox-card shadow-sm" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="card-body">
     <h3 class="card-title">
-      <a href="{{ post.url | relative_url }}" class="postbox-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a>
+      <a href="{{ post.url | relative_url }}" class="postbox-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a>
     </h3>
     {% assign words = post.content | number_of_words %}
     <p class="text-muted postbox-meta">
-      <time datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
+      <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
       <span aria-hidden="true">•</span>
       <span class="postbox-reading">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
     </p>
-    <p class="card-text">{{ post.excerpt | strip_html | strip_newlines | truncate: 100 }}</p>
+    <p class="card-text" itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 100 }}</p>
     <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary postbox-cta" rel="bookmark" aria-label="Leia mais: {{ post.title }}">Leia mais</a>
   </div>
 </div>

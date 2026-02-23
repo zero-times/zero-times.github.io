@@ -1,0 +1,46 @@
+{
+  "audit_timestamp": "2026-02-23T17:07:03+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Card Semantics", "result": "Improve", "details": "Post listing cards lacked full BlogPosting microdata in some templates." }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Internal Links", "result": "No issues found", "details": "Checked key layout and include templates for obvious internal link issues." }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Structured Data", "result": "Needs minor improvement", "details": "Postbox listings should expose datePublished/headline/description for richer snippets." }
+      ]
+    },
+    "content_quality": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Content Freshness", "result": "Good", "details": "Recent posts and news digests are present." }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.6/10"
+  },
+  "recommendations": [
+    "Improve BlogPosting microdata for post listing cards."
+  ]
+}
