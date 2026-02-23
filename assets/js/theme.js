@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Reading progress indicator for post pages
   const progressBar = document.querySelector('.reading-progress__bar');
+  const progressRoot = progressBar ? progressBar.closest('.reading-progress') : null;
   if (progressBar) {
     let ticking = false;
     const updateProgress = () => {
@@ -37,6 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const maxScroll = Math.max(docHeight - winHeight, 1);
       const progress = Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100));
       progressBar.style.width = `${progress.toFixed(2)}%`;
+      if (progressRoot) {
+        progressRoot.setAttribute('aria-valuenow', `${Math.round(progress)}`);
+      }
       ticking = false;
     };
     const requestTick = () => {
