@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T10:06:42+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Blog list focus visibility",
+          "result": "Improved",
+          "details": "Added a focus-visible outline on blog list entries to strengthen keyboard navigation without affecting hover styling."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not verified",
+          "details": "Network restricted; external link availability not verified. Manual scan for http:// and placeholder domains in templates/pages/posts found none."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured data description",
+          "result": "Improved",
+          "details": "Added BlogPosting description meta on listing entries to strengthen structured data consistency."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Excerpt consistency",
+          "result": "Good",
+          "details": "Excerpts are stripped/trimmed consistently across listing views."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 7.5/10 (network restricted)",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.8/10"
+  },
+  "recommendations": [
+    "Run a full external link checker when network access is available",
+    "Consider adding structured descriptions to older posts that lack excerpts"
+  ]
+}

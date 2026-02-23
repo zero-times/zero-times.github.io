@@ -1346,6 +1346,11 @@ select:focus-visible,
   transform: translateY(-1px);
 }
 
+.blog-entry:focus-within {
+  outline: 3px solid var(--br-yellow);
+  outline-offset: 4px;
+}
+
 @media (prefers-color-scheme: dark) {
   .post-meta {
     color: rgba(226, 232, 240, 0.7);

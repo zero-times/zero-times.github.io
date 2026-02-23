@@ -41,6 +41,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
         {% elsif site.image %}
         <meta itemprop="image" content="{{ site.image | absolute_url }}">
         {% endif %}
+        <meta itemprop="description" content="{{ post.excerpt | strip_html | strip_newlines | truncate: 160 }}">
         <h2 class="blog-entry__title" itemprop="headline"><a href="{{ post.url | relative_url }}" class="text-decoration-none" rel="bookmark" itemprop="url" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h2>
         <p class="text-muted blog-entry__meta">
           <time class="blog-entry__date" datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
