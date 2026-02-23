@@ -1,9 +1,35 @@
 <div class="card mb-4 postbox-card shadow-sm" itemscope itemtype="https://schema.org/BlogPosting">
+  <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
+  <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
+  {% assign words = post.content | number_of_words %}
+  <meta itemprop="wordCount" content="{{ words }}">
+  {% if site.author.name %}
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+    <meta itemprop="name" content="{{ site.author.name }}">
+    {% if site.author.url %}
+    <meta itemprop="url" content="{{ site.author.url }}">
+    {% endif %}
+  </span>
+  <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
+    <meta itemprop="name" content="{{ site.author.name }}">
+    {% if site.author.url %}
+    <meta itemprop="url" content="{{ site.author.url }}">
+    {% endif %}
+  </span>
+  {% endif %}
+  {% if post.image %}
+    {% if post.image contains '://' %}
+  <meta itemprop="image" content="{{ post.image }}">
+    {% else %}
+  <meta itemprop="image" content="{{ post.image | absolute_url }}">
+    {% endif %}
+  {% elsif site.image %}
+  <meta itemprop="image" content="{{ site.image | absolute_url }}">
+  {% endif %}
   <div class="card-body">
     <h3 class="card-title">
       <a href="{{ post.url | relative_url }}" class="postbox-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a>
     </h3>
-    {% assign words = post.content | number_of_words %}
     <p class="text-muted postbox-meta">
       <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
       <span aria-hidden="true">•</span>

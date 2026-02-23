@@ -2187,6 +2187,7 @@ section[id] {
 
 .post-content pre {
   overflow-x: auto;
+  scrollbar-gutter: stable both-edges;
   padding: 1rem 1.2rem;
   border-radius: 0.85rem;
   background: rgba(2, 8, 23, 0.04);
