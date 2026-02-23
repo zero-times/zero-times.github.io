@@ -716,6 +716,21 @@ body {
     transition: none;
   }
 
+  .blog-entry,
+  .postbox-card,
+  .category-post-card {
+    transition: none;
+  }
+
+  .blog-entry:hover,
+  .blog-entry:focus-within,
+  .postbox-card:hover,
+  .postbox-card:focus-within,
+  .category-post-card:hover,
+  .category-post-card:focus-within {
+    transform: none;
+  }
+
   html:focus-within {
     scroll-behavior: auto;
   }

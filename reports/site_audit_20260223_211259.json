@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T21:12:59+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.9,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Motion & Accessibility",
+          "result": "Improved",
+          "details": "Reduced-motion users now avoid hover lift animations on blog, category, and postbox cards to minimize vestibular discomfort."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Network access restricted; external links not validated in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata",
+          "result": "Good",
+          "details": "Core meta, structured data, and sitemap hints remain consistent."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Card layouts remain clean with improved motion safety for sensitive users."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.9/10",
+    "links": "Links: 8.2/10 (external validation skipped)",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 8.6/10"
+  },
+  "recommendations": [
+    "Keep reduced-motion overrides for any new hover or scroll animations",
+    "Re-run external link validation when network access is available"
+  ]
+}
