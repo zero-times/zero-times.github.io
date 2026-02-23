@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-24T05:06:11+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.8,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post metadata semantics",
+          "result": "Improvement opportunity",
+          "details": "Categorias/tags render as plain divs; assistive tech benefits from list semantics."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal links",
+          "result": "No issues found",
+          "details": "Checked core layout templates and navigation anchors."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.1,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata coverage",
+          "result": "Good",
+          "details": "Key pages include description/keywords and structured data." 
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content freshness",
+          "result": "Good",
+          "details": "Recent news posts and updated layouts present." 
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 9.1/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Add list semantics to post categories/tags for clearer assistive navigation."
+  ]
+}
