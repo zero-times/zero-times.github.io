@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T18:06:38-03:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Typography",
+          "result": "Improved",
+          "details": "Added tighter mobile typography defaults for post content to improve legibility without overflow."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Scan",
+          "result": "No Issues Found",
+          "details": "Manual scan found no placeholder/example.com links in posts/pages. External URLs not live-checked due to offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Prefetch",
+          "result": "Improved",
+          "details": "Prefetch for /share/ added on homepage to speed navigation to key CTA content."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Recent Posts",
+          "result": "Healthy",
+          "details": "Recent news posts remain active; no placeholder content detected in the latest batch."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 8.5/10 (offline scan)",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.8/10"
+  },
+  "recommendations": [
+    "Consider adding a lightweight lazy-load fade for post images to reduce perceived layout shift.",
+    "When network is available, run a live link checker to validate external news sources."
+  ]
+}

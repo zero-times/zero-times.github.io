@@ -2101,6 +2101,13 @@ section[id] {
   border-collapse: collapse;
 }
 
+@media (max-width: 575.98px) {
+  .post-content {
+    font-size: 1.02rem;
+    line-height: 1.72;
+  }
+}
+
 @media (max-width: 768px) {
   .post-content table {
     display: block;
