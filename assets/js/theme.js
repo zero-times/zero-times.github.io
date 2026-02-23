@@ -56,6 +56,31 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', requestTick);
   }
 
+  // Back-to-top button for long pages
+  const backToTop = document.querySelector('.back-to-top');
+  if (backToTop) {
+    const toggleBackToTop = () => {
+      const shouldShow = window.scrollY > 480;
+      if (shouldShow) {
+        backToTop.hidden = false;
+        backToTop.classList.add('is-visible');
+      } else {
+        backToTop.classList.remove('is-visible');
+        backToTop.hidden = true;
+      }
+    };
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
+    };
+    backToTop.addEventListener('click', scrollToTop);
+    toggleBackToTop();
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    window.addEventListener('resize', toggleBackToTop);
+  }
+
   // Enhance form validation
   const forms = document.querySelectorAll('form');
   forms.forEach(form => {

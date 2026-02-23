@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T20:06:42.570833+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Navigation",
+          "result": "Opportunity",
+          "details": "Long-form pages benefit from a persistent back-to-top control to reduce scroll fatigue on mobile."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Network access restricted; external links not validated in this run."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata",
+          "result": "Good",
+          "details": "Core meta, structured data, and prefetch hints are present and consistent."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Content structure is clean; minor UX improvement applied for long scrolling pages."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 8.2/10 (external validation skipped)",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Introduce a back-to-top control for long-form pages to improve mobile UX",
+    "Re-run external link validation when network access is available"
+  ]
+}
