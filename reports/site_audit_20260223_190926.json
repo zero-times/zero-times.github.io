@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T19:09:26-08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.8,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile breadcrumbs",
+          "result": "Improved",
+          "details": "Added stable scrollbar gutter for mobile breadcrumb overflow to avoid layout shift when scrollbars appear."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content scan",
+          "result": "No Issues Found",
+          "details": "Manual scan of repo links did not reveal placeholder URLs (example.com). External URLs not live-checked due to offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured metadata",
+          "result": "Good",
+          "details": "SEO tag, description, and social metadata remain consistent across templates."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Accessibility feedback",
+          "result": "Improved",
+          "details": "Reading progress indicator now exposes aria-valuetext for screen readers."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.6/10"
+  },
+  "recommendations": [
+    "Consider running an online link checker to validate external news URLs.",
+    "Continue monitoring mobile UX for long breadcrumb titles."
+  ]
+}

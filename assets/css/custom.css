@@ -1133,6 +1133,7 @@ select:focus-visible,
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 0.25rem;
+    scrollbar-gutter: stable;
   }
 
   .post-breadcrumbs li {

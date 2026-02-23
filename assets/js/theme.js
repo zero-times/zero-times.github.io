@@ -39,7 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const progress = Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100));
       progressBar.style.width = `${progress.toFixed(2)}%`;
       if (progressRoot) {
-        progressRoot.setAttribute('aria-valuenow', `${Math.round(progress)}`);
+        const roundedProgress = Math.round(progress);
+        progressRoot.setAttribute('aria-valuenow', `${roundedProgress}`);
+        progressRoot.setAttribute('aria-valuetext', `Progresso de leitura: ${roundedProgress}%`);
       }
       ticking = false;
     };
