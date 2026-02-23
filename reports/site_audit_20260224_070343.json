@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-24T07:03:43+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Sidebar Cards",
+          "result": "Needs refinement",
+          "details": "Sidebar cards lacked visual cohesion with the hero system and hierarchy cues on desktop." 
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal Links",
+          "result": "No issues found",
+          "details": "Footer privacy/terms links resolve to existing pages." 
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Visibility",
+          "result": "Opportunity",
+          "details": "Long blog/card lists can defer offscreen rendering to improve paint performance." 
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Messaging",
+          "result": "Good",
+          "details": "Hero copy is clear; supporting cards can be reinforced visually." 
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 8.2/10"
+  },
+  "recommendations": [
+    "Enhance homepage sidebar cards to align with hero styling",
+    "Apply content-visibility to blog list items to improve scroll performance"
+  ]
+}
