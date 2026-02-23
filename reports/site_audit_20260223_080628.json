@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T08:06:28+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.8,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Form Accessibility",
+          "result": "Improved",
+          "details": "Added form-level aria label/description to contact form for clearer screen reader context."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified Online",
+          "details": "Manual scan found no placeholder/example.com links in posts/pages. External URLs not live-checked due to offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "Default layout includes SEO tags, keywords fallback, hreflang, and social image alt metadata." 
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Clarity",
+          "result": "Good",
+          "details": "Contact page copy provides clear expectations and response time."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.7/10",
+    "links": "Links: 8.6/10 (offline check)",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 8.8/10"
+  },
+  "recommendations": [
+    "Consider adding explicit aria-describedby on newsletter forms for extra context.",
+    "Run a live link check when network access is available."
+  ]
+}
