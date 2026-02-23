@@ -1,0 +1,68 @@
+{
+  "audit_timestamp": "2026-02-24T00:06:15+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Tap Targets",
+          "result": "Minor Issue",
+          "details": "Back-to-top button uses 46px sizing; acceptable but can be larger for coarse pointers."
+        },
+        {
+          "aspect": "Keyboard Focus",
+          "result": "Minor Issue",
+          "details": "Back-to-top button lacks explicit focus-visible outline styling."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Scan",
+          "result": "No Issues Found",
+          "details": "Manual scan found no placeholder/example.com links in posts/pages. External URLs not live-checked due to offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "Core meta tags and JSON-LD are present; no blocking issues found in templates."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Recent enhancements improve scannability; minor interaction polish remains."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Increase back-to-top button tap target size for coarse pointer devices",
+    "Add explicit focus-visible outline to the back-to-top button"
+  ]
+}
