@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T14:06:29+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Share Page Semantics",
+          "result": "Issue Found",
+          "details": "Share page used a <dl> with <div> wrappers, which breaks definition list semantics for assistive tech."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Scan",
+          "result": "No Issues Found",
+          "details": "Manual scan found no placeholder/example.com links in posts/pages. External URLs not live-checked due to offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured Metadata",
+          "result": "Good",
+          "details": "Core SEO tags and structured data are present; share page benefits from semantic list structures."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Clarity & Consistency",
+          "result": "Good",
+          "details": "Share page content remains concise and consistent; minor semantic refinements recommended."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.3/10",
+    "links": "Links: 8.5/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.3/10"
+  },
+  "recommendations": [
+    "Replace definition list markup with a semantic list structure on share stats",
+    "Continue periodic link checks when network access is available"
+  ]
+}
