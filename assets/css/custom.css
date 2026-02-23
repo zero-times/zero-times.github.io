@@ -526,6 +526,18 @@ body {
   padding-top: 2rem;
 }
 
+.home-hero__latest .card {
+  border: 1px solid rgba(0, 39, 118, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.home-hero__latest .card:hover,
+.home-hero__latest .card:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(0, 39, 118, 0.35);
+  box-shadow: 0 18px 40px rgba(15, 31, 72, 0.18);
+}
+
 @media (max-width: 575.98px) {
   .home-hero {
     padding: 2rem 1.5rem;
@@ -594,6 +606,17 @@ body {
 
   .home-hero__latest {
     border-top-color: rgba(148, 163, 184, 0.25);
+  }
+
+  .home-hero__latest .card {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(148, 163, 184, 0.25);
+  }
+
+  .home-hero__latest .card:hover,
+  .home-hero__latest .card:focus-within {
+    border-color: rgba(148, 163, 184, 0.5);
+    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
   }
 }
 

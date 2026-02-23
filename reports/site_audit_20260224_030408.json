@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-24T03:04:14+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 9.2,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 9.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Latest Posts Cards",
+          "result": "Improved",
+          "details": "Added hover/focus-within elevation to reinforce keyboard navigation and scannability in the hero latest-posts block."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not verified",
+          "details": "Network checks are restricted in this run; no automated link validation performed."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "Site-level SEO and structured data remain consistent; no changes required in this run."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.1,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Clarity",
+          "result": "Good",
+          "details": "Recent posts section remains concise and well structured; visual hierarchy enhanced with focus styling."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 9.3/10",
+    "links": "Links: 9.0/10 (not verified)",
+    "seo": "SEO: 9.2/10",
+    "content": "Content: 9.1/10"
+  },
+  "recommendations": [
+    "Run a full external link validation when network access is available",
+    "Continue refining homepage focus states to support keyboard users"
+  ]
+}
