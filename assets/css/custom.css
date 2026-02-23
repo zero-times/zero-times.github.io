@@ -2093,6 +2093,7 @@ section[id] {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: stable both-edges;
   }
 }
 

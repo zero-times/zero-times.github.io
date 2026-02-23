@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T15:07:19+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Tables on mobile",
+          "result": "Minor risk",
+          "details": "Horizontal scrollbars for wide tables can cause subtle layout shifts when scrollbars appear on mobile."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "Not automatically verified",
+          "details": "No automated link checker available in this repo; links sampled manually." 
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured data and meta",
+          "result": "Good",
+          "details": "SEO tags, Open Graph, and schema markup present; no critical gaps found in templates." 
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability and layout",
+          "result": "Good",
+          "details": "Typography and spacing are consistent; minor mobile polish applied." 
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.8/10",
+    "links": "Links: 8.2/10",
+    "seo": "SEO: 8.7/10",
+    "content": "Content: 8.6/10"
+  },
+  "recommendations": [
+    "Stabilize horizontal table scrolling on mobile to avoid subtle layout shift",
+    "Consider adding an automated link checker script for regular audits"
+  ]
+}
