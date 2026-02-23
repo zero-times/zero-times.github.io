@@ -18,8 +18,8 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         <span class="home-hero__chip">Entrega do zero ao um</span>
       </div>
       
-      <div class="mt-5">
-        <h2 class="mb-4">Últimas Postagens</h2>
+      <section class="mt-5 home-hero__latest" aria-labelledby="home-latest-title">
+        <h2 class="mb-4" id="home-latest-title">Últimas Postagens</h2>
         {% for post in site.posts limit: 3 %}
         <article class="card mb-4 shadow-sm" itemscope itemtype="https://schema.org/BlogPosting">
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -67,7 +67,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         <div class="text-center mt-4">
           <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary" aria-label="Ver todos os artigos do blog">Ver todos os artigos</a>
         </div>
-      </div>
+      </section>
     </div>
     
     <div class="col-lg-4">

@@ -519,6 +519,11 @@ body {
   box-shadow: 0 10px 22px rgba(0, 39, 118, 0.08);
 }
 
+.home-hero__latest {
+  border-top: 1px solid rgba(0, 39, 118, 0.12);
+  padding-top: 2rem;
+}
+
 @media (max-width: 575.98px) {
   .home-hero {
     padding: 2rem 1.5rem;
@@ -545,6 +550,10 @@ body {
   .home-hero__chip {
     font-size: 0.8rem;
     padding: 0.4rem 0.85rem;
+  }
+
+  .home-hero__latest {
+    padding-top: 1.5rem;
   }
 }
 
@@ -579,6 +588,10 @@ body {
     border-color: rgba(148, 163, 184, 0.25);
     color: rgba(248, 250, 252, 0.9);
     box-shadow: 0 10px 22px rgba(15, 23, 42, 0.4);
+  }
+
+  .home-hero__latest {
+    border-top-color: rgba(148, 163, 184, 0.25);
   }
 }
 

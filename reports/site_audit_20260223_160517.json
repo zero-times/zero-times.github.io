@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T16:05:17+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage hierarchy",
+          "result": "Improved",
+          "details": "Added semantic sectioning for latest posts to improve document structure and accessibility."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "Not audited",
+          "details": "Manual spot-check only; automated checker not available."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Semantic structure",
+          "result": "Improved",
+          "details": "Homepage latest posts now grouped with section and heading for better SEO semantics."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Improved",
+          "details": "Added visual separation between hero content and latest posts on homepage."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.5/10",
+    "seo": "SEO: 8.7/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Continue adding semantic grouping for homepage content blocks",
+    "Run automated link checker when available"
+  ]
+}
