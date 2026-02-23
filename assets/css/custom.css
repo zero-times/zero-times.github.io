@@ -2752,8 +2752,19 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 
 @media (prefers-reduced-motion: reduce) {
   .card,
-  .post-content a {
+  .post-content a,
+  .blog-entry,
+  .store-card {
     transition: none;
+  }
+
+  .blog-entry:hover,
+  .blog-entry:focus-within,
+  .category-post-card:hover,
+  .category-post-card:focus-within,
+  .store-card:hover,
+  .store-card:focus-visible {
+    transform: none;
   }
 }
 
