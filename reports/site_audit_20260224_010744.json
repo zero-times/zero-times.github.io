@@ -1,0 +1,47 @@
+{
+  "audit_timestamp": "2026-02-24T01:07:44+0800",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Card Rendering", "result": "Good", "details": "Blog cards use stable layout and hover/focus affordances." }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "External Links", "result": "Manual spot-check", "details": "No new broken links detected in scanned templates." }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Structured Data", "result": "Improved", "details": "Added dateModified to BlogPosting cards for freshness signals." }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        { "aspect": "Summaries", "result": "Good", "details": "Excerpts are consistent and readable across cards." }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.2/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Continue enriching structured data on list cards",
+    "Monitor external news links for rot"
+  ]
+}
