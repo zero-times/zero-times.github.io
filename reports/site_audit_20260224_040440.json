@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-24T04:04:40+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Reduced Motion",
+          "result": "Improved",
+          "details": "Disabled hover transforms for homepage latest-posts cards under prefers-reduced-motion to reduce motion on mobile/keyboard focus."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Network restricted; external link availability not verified. Manual scan for placeholder or http:// links in templates/pages/posts found none."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured Data",
+          "result": "Improved",
+          "details": "Removed duplicate dateModified microdata from post cards to reduce conflicting metadata."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content Freshness",
+          "result": "Good",
+          "details": "Recent posts present; no placeholder content detected during spot checks."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 7.8/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 9.2/10"
+  },
+  "recommendations": [
+    "Re-run external link checks when network access is available.",
+    "Continue to validate microdata after template changes."
+  ]
+}

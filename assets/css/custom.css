@@ -757,7 +757,8 @@ body {
 
   .blog-entry,
   .postbox-card,
-  .category-post-card {
+  .category-post-card,
+  .home-hero__latest .card {
     transition: none;
   }
 
@@ -766,7 +767,9 @@ body {
   .postbox-card:hover,
   .postbox-card:focus-within,
   .category-post-card:hover,
-  .category-post-card:focus-within {
+  .category-post-card:focus-within,
+  .home-hero__latest .card:hover,
+  .home-hero__latest .card:focus-within {
     transform: none;
   }
 
