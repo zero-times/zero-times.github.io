@@ -1115,6 +1115,18 @@ select:focus-visible,
   font-weight: 600;
 }
 
+@media (max-width: 575.98px) {
+  .post-breadcrumbs ol {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+  }
+
+  .post-breadcrumbs li {
+    white-space: nowrap;
+  }
+}
+
 .post-meta {
   display: flex;
   flex-wrap: wrap;

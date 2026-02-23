@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-23T11:08:44+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile breadcrumb navigation",
+          "result": "Needs improvement",
+          "details": "Post breadcrumb trail can wrap into multiple lines on small screens, increasing vertical jump and reducing scanability."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not verified",
+          "details": "Network restricted; external link availability not verified. Manual scan for placeholder or http:// links in templates/pages/posts found none."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta coverage",
+          "result": "Good",
+          "details": "Pages include title/description/keywords and use jekyll-seo-tag."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content structure",
+          "result": "Good",
+          "details": "Posts and listings have consistent summaries and structured metadata."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.4/10",
+    "links": "Links: 7.8/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.4/10"
+  },
+  "recommendations": [
+    "Improve mobile breadcrumb behavior to avoid multi-line jumps",
+    "Re-check external link availability when network access is available"
+  ]
+}
