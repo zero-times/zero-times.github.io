@@ -1,0 +1,62 @@
+{
+  "audit_timestamp": "2026-02-24T02:04:44+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Post list scannability",
+          "result": "Good",
+          "details": "Card spacing, headings, and pagination patterns remain consistent on mobile and desktop."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "No obvious issues in sampled content",
+          "details": "Scanned current posts/pages for URL patterns; no placeholder domains found."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured data (BlogPosting)",
+          "result": "Improvement needed",
+          "details": "Blog post cards rendered via _includes/postbox.html lacked datePublished/dateModified microdata."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata coverage",
+          "result": "Good",
+          "details": "Key pages include title/description/keywords and consistent language metadata."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 9.0/10",
+    "links": "Links: 8.5/10",
+    "seo": "SEO: 8.2/10",
+    "content": "Content: 8.7/10"
+  },
+  "recommendations": [
+    "Add datePublished/dateModified microdata to blog listing cards for richer SERP snippets."
+  ]
+}

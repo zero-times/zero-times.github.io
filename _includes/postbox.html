@@ -4,6 +4,8 @@
   <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
   {% assign words = post.content | number_of_words %}
   <meta itemprop="wordCount" content="{{ words }}">
+  <meta itemprop="datePublished" content="{{ post.date | date_to_xmlschema }}">
+  <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
   {% if site.author.name %}
   <span itemprop="author" itemscope itemtype="https://schema.org/Person">
     <meta itemprop="name" content="{{ site.author.name }}">
