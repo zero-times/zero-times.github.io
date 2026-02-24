@@ -1423,6 +1423,16 @@ select:focus-visible,
   padding: 0.45rem 1.1rem;
 }
 
+@media (max-width: 575.98px) {
+  .postbox-cta {
+    width: 100%;
+    min-height: 44px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .card-link {
   color: inherit;
   text-decoration: none;
@@ -1605,6 +1615,14 @@ select:focus-visible,
   .post-reading-time {
     padding: 0.18rem 0.6rem;
     font-size: 0.8rem;
+  }
+
+  .post-site .btn {
+    width: 100%;
+    min-height: 44px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 

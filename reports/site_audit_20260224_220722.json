@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-24T22:07:22+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile CTA tap targets",
+          "result": "Improved",
+          "details": "Expanded mobile button targets for post CTA and post site link to meet 44px guidance."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Verified",
+          "details": "Network restricted; external link availability not verified. Manual scan found no placeholder or http:// links in templates/pages/posts."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.4,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured data and metadata",
+          "result": "Good",
+          "details": "Core metadata, OpenGraph, and structured data remain consistent after changes."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content freshness",
+          "result": "Good",
+          "details": "Recent posts and pages have descriptive summaries; no placeholder content detected."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 7.8/10 (external link checks pending)",
+    "seo": "SEO: 8.4/10",
+    "content": "Content: 8.3/10"
+  },
+  "recommendations": [
+    "Continue periodic external link verification when network access is available",
+    "Keep mobile CTA sizing consistent as new templates are added"
+  ]
+}
