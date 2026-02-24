@@ -1,0 +1,74 @@
+{
+  "audit_timestamp": "2026-02-24T08:04:36+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.9,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Home latest cards",
+          "result": "Good",
+          "details": "Cards already styled with hover/focus states and reduced-motion overrides."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External links",
+          "result": "No obvious placeholders",
+          "details": "Reviewed http(s) links across posts, pages, layouts, includes."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured data",
+          "result": "Good",
+          "details": "Default layout uses seo tag + WebSite schema; post cards include BlogPosting microdata."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Typography and excerpts already optimized for mobile scanning."
+        }
+      ]
+    },
+    "performance": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Script loading",
+          "result": "Improvement available",
+          "details": "Preload main theme script to reduce startup latency."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 9.0/10",
+    "links": "Links: 8.5/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content: 9.0/10",
+    "performance": "Performance: 9.0/10"
+  },
+  "recommendations": [
+    "Preload the main theme.js script to speed interactive readiness."
+  ]
+}
