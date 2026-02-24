@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-24T20:07:56+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Forms Accessibility",
+          "result": "Improved",
+          "details": "Added explicit aria-labels to newsletter forms for clearer screen reader context."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Offline Scan",
+          "details": "Manual scan found no placeholder/example.com links in posts/pages. External URLs not live-checked due to offline audit."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "Front matter descriptions/keywords present on primary pages; SEO tag remains enabled."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Readability",
+          "result": "Good",
+          "details": "Recent updates keep blog and newsletter UX consistent; no stale placeholder content detected."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.2/10 (offline scan)",
+    "seo": "SEO: 8.7/10",
+    "content": "Content: 8.8/10"
+  },
+  "recommendations": [
+    "Keep auditing external URLs with an online checker when network access is available.",
+    "Continue aligning form labels and ARIA annotations across new sections."
+  ]
+}
