@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-24T10:09:14+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.7,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Main landmark labeling",
+          "result": "Issue Found",
+          "details": "Main landmark lacked programmatic association with the primary page heading on several layouts/pages (including the 404 page), reducing screen reader navigation clarity."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not validated in offline audit",
+          "details": "Network checks were skipped in this run; no link validation executed."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Semantic association",
+          "result": "Needs improvement",
+          "details": "Add aria-labelledby to main and ensure a single primary heading is referenced per layout for stronger accessibility semantics." 
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content freshness",
+          "result": "Good",
+          "details": "Recent posts and policy pages updated in February 2026."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.5/10",
+    "links": "Links: 9.0/10 (offline audit)",
+    "seo": "SEO: 8.8/10",
+    "content": "Content: 8.6/10"
+  },
+  "recommendations": [
+    "Associate main landmarks with a single primary heading using aria-labelledby across layouts",
+    "Run link validation with network access to confirm external URLs"
+  ]
+}

@@ -27,7 +27,7 @@ layout: default
 <div class="reading-progress" role="progressbar" aria-label="Progresso de leitura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
     <span class="reading-progress__bar"></span>
 </div>
-<article class="post{% if page.categories contains 'news' %} post--news{% endif %}" itemscope itemtype="https://schema.org/BlogPosting">
+<article class="post{% if page.categories contains 'news' %} post--news{% endif %}" itemscope itemtype="https://schema.org/BlogPosting" aria-labelledby="post-title">
     <meta itemprop="mainEntityOfPage" content="{{ page.url | absolute_url }}">
     <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
     <meta itemprop="dateModified" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
@@ -77,7 +77,7 @@ layout: default
                             </li>
                         </ol>
                     </nav>
-                    <h1 class="posttitle" itemprop="name headline">{{ page.title }}</h1>
+                    <h1 class="posttitle" id="page-title" itemprop="name headline">{{ page.title }}</h1>
                 
                     <div class="post-meta">
                         <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}" itemprop="datePublished">{{ page.date | date_to_string }}</time></span>

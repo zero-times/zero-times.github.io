@@ -4,7 +4,7 @@ layout: default
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h1>Categorias</h1>
+            <h1 id="page-title">Categorias</h1>
             
             {% for category in site.categories %}
             <section class="category-section" id="{{ category[0] | slugify }}" aria-labelledby="category-{{ category[0] | slugify }}">
