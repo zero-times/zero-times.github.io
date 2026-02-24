@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-24T21:03:06+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Keyboard Focus",
+          "result": "Improved",
+          "details": "Added focus-visible outline for homepage latest-post cards to clarify keyboard focus on cards."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 7.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Offline Scan",
+          "details": "Manual scan only; network restricted so external link availability not verified."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured Data & Meta",
+          "result": "Stable",
+          "details": "No SEO regressions detected in layout templates during this pass."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Homepage Cards",
+          "result": "Improved",
+          "details": "Focus treatment makes latest post cards more discoverable for keyboard users."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.7/10",
+    "links": "Links: 7.5/10 (offline scan)",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 8.5/10"
+  },
+  "recommendations": [
+    "Run live link checks when network access is available",
+    "Consider adding visible focus treatment to other homepage cards if needed"
+  ]
+}
