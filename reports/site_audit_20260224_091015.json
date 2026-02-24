@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-24T09:10:15+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.3,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Readability",
+          "result": "Opportunity",
+          "details": "Small-screen post body line-height can be increased for easier scanning."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "Not Checked",
+          "details": "Offline audit. Manual scan found no placeholder/example.com links in posts/pages."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.5,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Metadata Coverage",
+          "result": "Good",
+          "details": "Pages and posts include description/keywords with Jekyll SEO tag enabled."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.1,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Legibility",
+          "result": "Improve",
+          "details": "Increase body type size/line-height for small screens to reduce reading friction."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.6/10",
+    "links": "Links: 8.0/10 offline scan",
+    "seo": "SEO: 8.5/10",
+    "content": "Content: 8.1/10"
+  },
+  "recommendations": [
+    "Increase mobile post body type size/line-height for better readability",
+    "Run live link check when network permits"
+  ]
+}

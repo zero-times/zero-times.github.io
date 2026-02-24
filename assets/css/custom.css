@@ -1225,6 +1225,14 @@ select:focus-visible,
   line-height: 1.75;
 }
 
+@media (max-width: 575.98px) {
+  .post-content,
+  .article-post {
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+}
+
 .post-breadcrumbs {
   margin-bottom: 0.9rem;
   font-size: 0.85rem;
