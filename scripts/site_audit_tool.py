@@ -33,6 +33,8 @@ SCAN_TARGETS = [
 URL_RE = re.compile(r'https?://[^\s\)\]>\'"]+')
 DUP_PROTOCOL_RE = re.compile(r'https?://[^\s\)\]]*https?://')
 PLACEHOLDER_RE = re.compile(r'example\.com|localhost|127\.0\.0\.1|\bTODO\b|\bTBD\b')
+INTERNAL_LINK_RE = re.compile(r'\]\((/[^)\s?#][^)\s]*)')
+FRONT_MATTER_VALUE_RE = re.compile(r'^[ \t]*([A-Za-z0-9_-]+)[ \t]*:[ \t]*(.+)$', re.MULTILINE)
 
 
 def read_text(path: Path) -> str:
@@ -50,6 +52,95 @@ def iter_files() -> Iterable[Path]:
         elif p.is_dir():
             for ext in ('*.md', '*.markdown', '*.html', '*.yml', '*.yaml', '*.scss', '*.css', '*.js'):
                 yield from p.rglob(ext)
+
+
+def extract_front_matter_value(text: str, key: str) -> str | None:
+    if not text.startswith('---'):
+        return None
+    parts = text.split('---', 2)
+    if len(parts) < 3:
+        return None
+    for match in FRONT_MATTER_VALUE_RE.finditer(parts[1]):
+        if match.group(1) == key:
+            return match.group(2).strip().strip('"\'')
+    return None
+
+
+def normalize_route(path: str) -> str:
+    if not path:
+        return '/'
+    if not path.startswith('/'):
+        path = '/' + path
+    if path != '/' and path.endswith('/'):
+        return path
+    if path.endswith('.html'):
+        stem = path[:-5]
+        return stem + '/' if stem else '/'
+    return path + '/'
+
+
+def collect_known_routes() -> set[str]:
+    routes = {'/'}
+
+    for pages_file in (ROOT / 'pages').glob('*'):
+        if pages_file.suffix not in ('.md', '.markdown', '.html'):
+            continue
+        text = read_text(pages_file)
+        permalink = extract_front_matter_value(text, 'permalink')
+        if permalink:
+            routes.add(normalize_route(permalink))
+        else:
+            routes.add(normalize_route('/' + pages_file.stem + '/'))
+
+    for collection in ('_posts', '_blogs'):
+        for post_file in (ROOT / collection).glob('*'):
+            if post_file.suffix not in ('.md', '.markdown', '.html'):
+                continue
+            text = read_text(post_file)
+            permalink = extract_front_matter_value(text, 'permalink')
+            if permalink:
+                routes.add(normalize_route(permalink))
+                continue
+            slug = post_file.stem
+            parts = slug.split('-', 3)
+            if len(parts) == 4:
+                slug = parts[3]
+            routes.add(normalize_route('/' + slug + '/'))
+
+    return routes
+
+
+def collect_missing_internal_links() -> list[dict]:
+    known_routes = collect_known_routes()
+    missing: list[dict] = []
+    targets = ['_posts', '_blogs', 'pages', 'index.html', '404.html']
+
+    for target in targets:
+        p = ROOT / target
+        files: list[Path] = []
+        if p.is_file():
+            files = [p]
+        elif p.is_dir():
+            for ext in ('*.md', '*.markdown', '*.html'):
+                files.extend(p.rglob(ext))
+        for fp in files:
+            rel = fp.relative_to(ROOT)
+            text = read_text(fp)
+            for match in INTERNAL_LINK_RE.finditer(text):
+                raw = match.group(1)
+                link_path = raw.split('#', 1)[0].split('?', 1)[0]
+                if not link_path or link_path.startswith('/assets/'):
+                    continue
+                normalized = normalize_route(link_path)
+                if normalized not in known_routes:
+                    missing.append(
+                        {
+                            'location': str(rel),
+                            'issue': 'internal link target not found',
+                            'value': raw,
+                        }
+                    )
+    return missing
 
 
 def collect_external_urls() -> list[str]:
@@ -108,6 +199,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
 
     malformed_links: list[dict] = []
     placeholder_hits: list[dict] = []
+    missing_internal_links = collect_missing_internal_links()
     urls_count = 0
     external_urls = collect_external_urls()
     http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
@@ -159,7 +251,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         },
         'broken_links_check': {
             'score': 9.0
-            if not malformed_links and not placeholder_hits and (not http_check or not http_failures)
+            if not malformed_links
+            and not placeholder_hits
+            and not missing_internal_links
+            and (not http_check or not http_failures)
             else 6.5,
             'max_score': 10.0,
             'findings': [
@@ -171,6 +266,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Regex scan for duplicated protocol and placeholder domains/markers.',
                 },
                 {
+                    'aspect': 'Internal Link Targets',
+                    'result': 'Clean'
+                    if not missing_internal_links
+                    else f'Issues found ({len(missing_internal_links)})',
+                    'details': 'Checks markdown root-relative links like ](/path/) against known site routes.',
+                },
+                {
                     'aspect': 'HTTP Reachability Sample',
                     'result': 'Skipped'
                     if not http_check
@@ -180,7 +282,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s.',
                 },
             ],
-            'broken_links': malformed_links + placeholder_hits,
+            'broken_links': malformed_links + placeholder_hits + missing_internal_links,
             'http_check': http_check_result,
         },
         'seo_evaluation': {
