@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-25T08:17:43+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.4,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.3,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Page media performance",
+          "result": "Opportunity",
+          "details": "Page layout supports responsive images; some page-level featured images lack explicit fetch priority defaults."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "External Links",
+          "result": "No critical issues found",
+          "details": "No obvious http:// links in content/templates (excluding SVG doctype references)."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Structured data and meta",
+          "result": "Good",
+          "details": "Post and card microdata present; consider tightening image fetch priority for page hero images."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 7.6,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Content freshness",
+          "result": "Needs review",
+          "details": "No automated freshness checks run; manual review recommended for older posts."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.3/10",
+    "links": "Links: 9.2/10",
+    "seo": "SEO: 8.6/10",
+    "content": "Content: 7.6/10"
+  },
+  "recommendations": [
+    "Add explicit fetchpriority defaults for page featured images to reduce LCP competition.",
+    "Continue periodic manual review for older content." 
+  ]
+}

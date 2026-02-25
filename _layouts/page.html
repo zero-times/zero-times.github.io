@@ -10,7 +10,16 @@ layout: default
     {% else %}
     {% assign page_image_src = page.image | relative_url %}
     {% endif %}
-    <img class="featured-image text-center mx-auto rounded" src="{{ page_image_src }}" alt="{{ page.image_alt | default: page.title }}" loading="{{ page.image_loading | default: 'lazy' }}" decoding="async" fetchpriority="{{ page.image_fetchpriority | default: 'auto' }}"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
+    {% assign page_image_loading = page.image_loading | default: 'lazy' %}
+    {% assign page_image_fetchpriority = page.image_fetchpriority %}
+    {% if page_image_fetchpriority == nil %}
+      {% if page_image_loading == 'eager' %}
+        {% assign page_image_fetchpriority = 'high' %}
+      {% else %}
+        {% assign page_image_fetchpriority = 'low' %}
+      {% endif %}
+    {% endif %}
+    <img class="featured-image text-center mx-auto rounded" src="{{ page_image_src }}" alt="{{ page.image_alt | default: page.title }}" loading="{{ page_image_loading }}" decoding="async" fetchpriority="{{ page_image_fetchpriority }}"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
   </div>
   {% endif %}
 
