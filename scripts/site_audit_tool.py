@@ -8,8 +8,12 @@ mobile/accessibility guardrails, and basic performance hygiene.
 from __future__ import annotations
 
 import datetime as dt
+import argparse
 import json
 import re
+import urllib.error
+import urllib.parse
+import urllib.request
 from pathlib import Path
 from typing import Iterable
 
@@ -48,7 +52,49 @@ def iter_files() -> Iterable[Path]:
                 yield from p.rglob(ext)
 
 
-def build_report() -> dict:
+def collect_external_urls() -> list[str]:
+    urls: set[str] = set()
+    for fp in iter_files():
+        text = read_text(fp)
+        for url in URL_RE.findall(text):
+            parsed = urllib.parse.urlparse(url)
+            if parsed.scheme in ('http', 'https') and parsed.netloc:
+                urls.add(url.rstrip('.,;:!?)'))
+    return sorted(urls)
+
+
+def probe_url(url: str, timeout: float) -> dict:
+    headers = {'User-Agent': 'JekyllSiteAudit/1.0 (+https://youllbe.cn)'}
+    req = urllib.request.Request(url, headers=headers, method='HEAD')
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return {'url': url, 'status': int(getattr(resp, 'status', 200)), 'ok': True, 'method': 'HEAD'}
+    except Exception:
+        # Some endpoints reject HEAD; fall back to GET so the sample can still be validated.
+        get_req = urllib.request.Request(url, headers=headers, method='GET')
+        try:
+            with urllib.request.urlopen(get_req, timeout=timeout) as resp:
+                return {'url': url, 'status': int(getattr(resp, 'status', 200)), 'ok': True, 'method': 'GET'}
+        except urllib.error.HTTPError as exc:
+            return {'url': url, 'status': int(exc.code), 'ok': False, 'method': 'GET', 'error': str(exc)}
+        except Exception as exc:  # noqa: BLE001 - keep audit script resilient to network/runtime issues
+            return {'url': url, 'status': None, 'ok': False, 'method': 'GET', 'error': str(exc)}
+
+
+def sample_http_urls(urls: list[str], sample_size: int, timeout: float) -> dict:
+    sampled = urls[: max(sample_size, 0)]
+    results = [probe_url(url, timeout=timeout) for url in sampled]
+    failures = [r for r in results if not r.get('ok')]
+    return {
+        'enabled': True,
+        'sample_size': len(sampled),
+        'timeout_seconds': timeout,
+        'failures': failures,
+        'results': results,
+    }
+
+
+def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: float = 4.0) -> dict:
     timestamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=8))).isoformat()
     config_text = read_text(ROOT / '_config.yml')
     default_layout = read_text(ROOT / '_layouts/default.html')
@@ -63,6 +109,8 @@ def build_report() -> dict:
     malformed_links: list[dict] = []
     placeholder_hits: list[dict] = []
     urls_count = 0
+    external_urls = collect_external_urls()
+    http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
 
     for fp in iter_files():
         rel = fp.relative_to(ROOT)
@@ -87,6 +135,12 @@ def build_report() -> dict:
                 }
             )
 
+    if http_check:
+        http_check_result = sample_http_urls(external_urls, sample_size=http_sample, timeout=http_timeout)
+
+    http_failures = http_check_result.get('failures', [])
+    http_sample_size = http_check_result.get('sample_size', 0)
+
     formspree_blog_preconnect = "page.url contains '/contact/' or page.url contains '/blog/'" in default_layout
 
     sections = {
@@ -104,7 +158,9 @@ def build_report() -> dict:
             ],
         },
         'broken_links_check': {
-            'score': 9.0 if not malformed_links and not placeholder_hits else 6.5,
+            'score': 9.0
+            if not malformed_links and not placeholder_hits and (not http_check or not http_failures)
+            else 6.5,
             'max_score': 10.0,
             'findings': [
                 {
@@ -113,9 +169,19 @@ def build_report() -> dict:
                     if not malformed_links and not placeholder_hits
                     else f"Issues found ({len(malformed_links) + len(placeholder_hits)})",
                     'details': 'Regex scan for duplicated protocol and placeholder domains/markers.',
-                }
+                },
+                {
+                    'aspect': 'HTTP Reachability Sample',
+                    'result': 'Skipped'
+                    if not http_check
+                    else ('Healthy' if not http_failures else f'Issues Found ({len(http_failures)})'),
+                    'details': 'Enable with --http-check to sample external URLs.'
+                    if not http_check
+                    else f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s.',
+                },
             ],
             'broken_links': malformed_links + placeholder_hits,
+            'http_check': http_check_result,
         },
         'seo_evaluation': {
             'score': 9.0 if has_seo_tag and not seo_missing else 7.0,
@@ -167,15 +233,39 @@ def build_report() -> dict:
         },
         'recommendations': [
             'Run this audit after each content batch and fix any placeholder/malformed links.',
-            'Periodically validate high-traffic external links with an HTTP checker in CI.',
+            'Run with --http-check periodically (or in CI) to validate sampled external URL reachability.',
         ],
     }
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description='Generate a lightweight Jekyll site audit report.')
+    parser.add_argument(
+        '--http-check',
+        action='store_true',
+        help='Sample external URLs and perform lightweight HTTP reachability checks.',
+    )
+    parser.add_argument(
+        '--http-sample',
+        type=int,
+        default=20,
+        help='Maximum number of external URLs to check when --http-check is enabled (default: 20).',
+    )
+    parser.add_argument(
+        '--http-timeout',
+        type=float,
+        default=4.0,
+        help='HTTP timeout in seconds for each URL check (default: 4.0).',
+    )
+    args = parser.parse_args()
+
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    report = build_report()
-    stamp = dt.datetime.now().strftime('%Y%m%d_%H%M%S')
+    report = build_report(
+        http_check=args.http_check,
+        http_sample=args.http_sample,
+        http_timeout=args.http_timeout,
+    )
+    stamp = dt.datetime.now().strftime('%Y%m%d_%H%M%S_%f')
     out = REPORTS_DIR / f'site_audit_{stamp}.json'
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(out)
