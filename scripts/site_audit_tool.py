@@ -308,6 +308,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     formspree_blog_preconnect = "page.url contains '/contact/' or page.url contains '/blog/'" in default_layout
     has_home_avatar_preload_flag = 'hero_avatar_preload: true' in homepage
     has_home_avatar_priority = 'fetchpriority="high"' in homepage and 'loading="eager"' in homepage
+    has_theme_js_preload = "rel=\"preload\" href=\"{{ '/assets/js/theme.js' | relative_url }}\" as=\"script\"" in default_layout
 
     sections = {
         'layout_assessment': {
@@ -383,7 +384,12 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             ],
         },
         'content_quality': {
-            'score': 8.8 if not formspree_blog_preconnect and has_home_avatar_preload_flag and has_home_avatar_priority else 7.2,
+            'score': 9.0
+            if not formspree_blog_preconnect
+            and has_home_avatar_preload_flag
+            and has_home_avatar_priority
+            and not has_theme_js_preload
+            else 7.2,
             'max_score': 10.0,
             'findings': [
                 {
@@ -401,6 +407,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Homepage avatar uses hero preload flag and eager/high fetch priority to reduce above-the-fold delays.'
                     if has_home_avatar_preload_flag and has_home_avatar_priority
                     else 'Set hero_avatar_preload and eager/high fetchpriority for the above-the-fold homepage avatar image.',
+                },
+                {
+                    'aspect': 'Script preload pressure',
+                    'result': 'Improved' if not has_theme_js_preload else 'Needs tuning',
+                    'details': 'theme.js is deferred without preload to avoid competing with render-critical CSS/image downloads.'
+                    if not has_theme_js_preload
+                    else 'Remove theme.js preload because deferred script fetch is non-critical during initial render.',
                 },
                 {
                     'aspect': 'External URL volume',
