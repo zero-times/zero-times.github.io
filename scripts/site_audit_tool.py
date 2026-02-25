@@ -37,6 +37,7 @@ INTERNAL_LINK_RE = re.compile(r'\]\((/[^)\s?#][^)\s]*)')
 LIQUID_RELATIVE_URL_RE = re.compile(
     r'(?:href|src)\s*=\s*["\']\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}["\']'
 )
+LIQUID_LINK_TAG_RE = re.compile(r'\{%\s*link\s+([^\s%]+)\s*%\}')
 FRONT_MATTER_VALUE_RE = re.compile(r'^[ \t]*([A-Za-z0-9_-]+)[ \t]*:[ \t]*(.+)$', re.MULTILINE)
 
 
@@ -180,6 +181,37 @@ def collect_missing_liquid_internal_links() -> list[dict]:
     return missing
 
 
+def collect_missing_liquid_link_tag_targets() -> list[dict]:
+    missing: list[dict] = []
+    targets = ['_layouts', '_includes', 'pages', '_posts', '_blogs', 'index.html', '404.html']
+
+    for target in targets:
+        p = ROOT / target
+        files: list[Path] = []
+        if p.is_file():
+            files = [p]
+        elif p.is_dir():
+            for ext in ('*.html', '*.md', '*.markdown'):
+                files.extend(p.rglob(ext))
+        for fp in files:
+            rel = fp.relative_to(ROOT)
+            text = read_text(fp)
+            for match in LIQUID_LINK_TAG_RE.finditer(text):
+                raw = match.group(1).strip().strip('\'"')
+                if not raw or '{{' in raw:
+                    continue
+                repo_rel = raw.lstrip('/')
+                if not (ROOT / repo_rel).exists():
+                    missing.append(
+                        {
+                            'location': str(rel),
+                            'issue': 'liquid link tag target not found',
+                            'value': raw,
+                        }
+                    )
+    return missing
+
+
 def collect_external_urls() -> list[str]:
     urls: set[str] = set()
     for fp in iter_files():
@@ -239,6 +271,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     placeholder_hits: list[dict] = []
     missing_internal_links = collect_missing_internal_links()
     missing_liquid_internal_links = collect_missing_liquid_internal_links()
+    missing_liquid_link_tag_targets = collect_missing_liquid_link_tag_targets()
     urls_count = 0
     external_urls = collect_external_urls()
     http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
@@ -296,6 +329,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not placeholder_hits
             and not missing_internal_links
             and not missing_liquid_internal_links
+            and not missing_liquid_link_tag_targets
             and (not http_check or not http_failures)
             else 6.5,
             'max_score': 10.0,
@@ -310,9 +344,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'Internal Link Targets',
                     'result': 'Clean'
-                    if not missing_internal_links and not missing_liquid_internal_links
-                    else f'Issues found ({len(missing_internal_links) + len(missing_liquid_internal_links)})',
-                    'details': 'Checks markdown links ](/path/) and Liquid href/src {{ "/path/" | relative_url }} targets.',
+                    if not missing_internal_links
+                    and not missing_liquid_internal_links
+                    and not missing_liquid_link_tag_targets
+                    else (
+                        f'Issues found ({len(missing_internal_links) + len(missing_liquid_internal_links) + len(missing_liquid_link_tag_targets)})'
+                    ),
+                    'details': 'Checks markdown links ](/path/), Liquid href/src {{ "/path/" | relative_url }}, and {% link ... %} targets.',
                 },
                 {
                     'aspect': 'HTTP Reachability Sample',
@@ -324,7 +362,11 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s.',
                 },
             ],
-            'broken_links': malformed_links + placeholder_hits + missing_internal_links + missing_liquid_internal_links,
+            'broken_links': malformed_links
+            + placeholder_hits
+            + missing_internal_links
+            + missing_liquid_internal_links
+            + missing_liquid_link_tag_targets,
             'http_check': http_check_result,
         },
         'seo_evaluation': {
