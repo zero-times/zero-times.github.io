@@ -49,12 +49,6 @@
   {% if page.url == '/' %}
   <link rel="prefetch" href="{{ '/blog/' | relative_url }}">
   <link rel="prefetch" href="{{ '/contact/' | relative_url }}">
-  <link rel="prefetch" href="{{ '/share/' | relative_url }}">
-  <link rel="prefetch" href="{{ '/about/' | relative_url }}">
-  <link rel="prefetch" href="{{ '/tags/' | relative_url }}">
-  <link rel="prefetch" href="{{ '/categories/' | relative_url }}">
-  <link rel="prefetch" href="{{ '/privacy-policy/' | relative_url }}">
-  <link rel="prefetch" href="{{ '/terms/' | relative_url }}">
   {% endif %}
   {% if page.categories contains 'news' %}
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
