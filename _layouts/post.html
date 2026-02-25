@@ -104,7 +104,8 @@ layout: default
                         {% if page.categories %}
                             <div class="post-categories" role="list" aria-label="Categorias">
                                 {% for category in page.categories %}
-                                <a href="{{ '/categories#' | append: category | slugify | relative_url }}" rel="tag" role="listitem" aria-label="Categoria: {{ category }}">{{ category }}</a>
+                                {% assign category_slug = category | slugify %}
+                                <a href="{{ '/categories#' | append: category_slug | relative_url }}" rel="tag" role="listitem" aria-label="Categoria: {{ category }}">{{ category }}</a>
                                 {% endfor %}
                             </div>
                         {% endif %}
@@ -135,7 +136,8 @@ layout: default
                 {% if page.tags %}
                 <div class="post-tags" role="list" aria-label="Tags">
                     {% for tag in page.tags %}
-                    <a class="badge rounded-pill bg-light text-dark" href="{{ '/tags#' | append: tag | slugify | relative_url }}" rel="tag" role="listitem" aria-label="Tag: {{ tag }}">{{ tag }}</a>
+                    {% assign tag_slug = tag | slugify %}
+                    <a class="badge rounded-pill bg-light text-dark" href="{{ '/tags#' | append: tag_slug | relative_url }}" rel="tag" role="listitem" aria-label="Tag: {{ tag }}">{{ tag }}</a>
                     {% endfor %}
                 </div>
                 {% endif %}
