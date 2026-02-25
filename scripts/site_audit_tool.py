@@ -34,6 +34,9 @@ URL_RE = re.compile(r'https?://[^\s\)\]>\'"]+')
 DUP_PROTOCOL_RE = re.compile(r'https?://[^\s\)\]]*https?://')
 PLACEHOLDER_RE = re.compile(r'example\.com|localhost|127\.0\.0\.1|\bTODO\b|\bTBD\b')
 INTERNAL_LINK_RE = re.compile(r'\]\((/[^)\s?#][^)\s]*)')
+LIQUID_RELATIVE_URL_RE = re.compile(
+    r'(?:href|src)\s*=\s*["\']\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}["\']'
+)
 FRONT_MATTER_VALUE_RE = re.compile(r'^[ \t]*([A-Za-z0-9_-]+)[ \t]*:[ \t]*(.+)$', re.MULTILINE)
 
 
@@ -110,6 +113,15 @@ def collect_known_routes() -> set[str]:
     return routes
 
 
+def internal_target_exists(raw_path: str, known_routes: set[str]) -> bool:
+    link_path = raw_path.split('#', 1)[0].split('?', 1)[0]
+    if not link_path or link_path.startswith('/assets/'):
+        return True
+    if (ROOT / link_path.lstrip('/')).exists():
+        return True
+    return normalize_route(link_path) in known_routes
+
+
 def collect_missing_internal_links() -> list[dict]:
     known_routes = collect_known_routes()
     missing: list[dict] = []
@@ -128,15 +140,40 @@ def collect_missing_internal_links() -> list[dict]:
             text = read_text(fp)
             for match in INTERNAL_LINK_RE.finditer(text):
                 raw = match.group(1)
-                link_path = raw.split('#', 1)[0].split('?', 1)[0]
-                if not link_path or link_path.startswith('/assets/'):
-                    continue
-                normalized = normalize_route(link_path)
-                if normalized not in known_routes:
+                if not internal_target_exists(raw, known_routes):
                     missing.append(
                         {
                             'location': str(rel),
                             'issue': 'internal link target not found',
+                            'value': raw,
+                        }
+                    )
+    return missing
+
+
+def collect_missing_liquid_internal_links() -> list[dict]:
+    known_routes = collect_known_routes()
+    missing: list[dict] = []
+    targets = ['_layouts', '_includes', 'pages', 'index.html', '404.html']
+
+    for target in targets:
+        p = ROOT / target
+        files: list[Path] = []
+        if p.is_file():
+            files = [p]
+        elif p.is_dir():
+            for ext in ('*.html', '*.md', '*.markdown'):
+                files.extend(p.rglob(ext))
+        for fp in files:
+            rel = fp.relative_to(ROOT)
+            text = read_text(fp)
+            for match in LIQUID_RELATIVE_URL_RE.finditer(text):
+                raw = match.group(1)
+                if not internal_target_exists(raw, known_routes):
+                    missing.append(
+                        {
+                            'location': str(rel),
+                            'issue': 'liquid relative_url target not found',
                             'value': raw,
                         }
                     )
@@ -200,6 +237,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     malformed_links: list[dict] = []
     placeholder_hits: list[dict] = []
     missing_internal_links = collect_missing_internal_links()
+    missing_liquid_internal_links = collect_missing_liquid_internal_links()
     urls_count = 0
     external_urls = collect_external_urls()
     http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
@@ -254,6 +292,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             if not malformed_links
             and not placeholder_hits
             and not missing_internal_links
+            and not missing_liquid_internal_links
             and (not http_check or not http_failures)
             else 6.5,
             'max_score': 10.0,
@@ -268,9 +307,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'Internal Link Targets',
                     'result': 'Clean'
-                    if not missing_internal_links
-                    else f'Issues found ({len(missing_internal_links)})',
-                    'details': 'Checks markdown root-relative links like ](/path/) against known site routes.',
+                    if not missing_internal_links and not missing_liquid_internal_links
+                    else f'Issues found ({len(missing_internal_links) + len(missing_liquid_internal_links)})',
+                    'details': 'Checks markdown links ](/path/) and Liquid href/src {{ "/path/" | relative_url }} targets.',
                 },
                 {
                     'aspect': 'HTTP Reachability Sample',
@@ -282,7 +321,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s.',
                 },
             ],
-            'broken_links': malformed_links + placeholder_hits + missing_internal_links,
+            'broken_links': malformed_links + placeholder_hits + missing_internal_links + missing_liquid_internal_links,
             'http_check': http_check_result,
         },
         'seo_evaluation': {
