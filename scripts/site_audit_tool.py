@@ -226,6 +226,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     timestamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=8))).isoformat()
     config_text = read_text(ROOT / '_config.yml')
     default_layout = read_text(ROOT / '_layouts/default.html')
+    homepage = read_text(ROOT / 'index.html')
 
     seo_keys = ['title:', 'description:', 'keywords:', 'logo:']
     seo_missing = [k.rstrip(':') for k in seo_keys if k not in config_text]
@@ -272,6 +273,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     http_sample_size = http_check_result.get('sample_size', 0)
 
     formspree_blog_preconnect = "page.url contains '/contact/' or page.url contains '/blog/'" in default_layout
+    has_home_avatar_preload_flag = 'hero_avatar_preload: true' in homepage
+    has_home_avatar_priority = 'fetchpriority="high"' in homepage and 'loading="eager"' in homepage
 
     sections = {
         'layout_assessment': {
@@ -338,7 +341,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             ],
         },
         'content_quality': {
-            'score': 8.5 if not formspree_blog_preconnect else 7.2,
+            'score': 8.8 if not formspree_blog_preconnect and has_home_avatar_preload_flag and has_home_avatar_priority else 7.2,
             'max_score': 10.0,
             'findings': [
                 {
@@ -347,6 +350,15 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Formspree preconnect is restricted to contact pages to reduce unnecessary third-party handshakes.'
                     if not formspree_blog_preconnect
                     else 'Formspree preconnect still applies to non-contact pages.',
+                },
+                {
+                    'aspect': 'Homepage hero image priority',
+                    'result': 'Improved'
+                    if has_home_avatar_preload_flag and has_home_avatar_priority
+                    else 'Needs tuning',
+                    'details': 'Homepage avatar uses hero preload flag and eager/high fetch priority to reduce above-the-fold delays.'
+                    if has_home_avatar_preload_flag and has_home_avatar_priority
+                    else 'Set hero_avatar_preload and eager/high fetchpriority for the above-the-fold homepage avatar image.',
                 },
                 {
                     'aspect': 'External URL volume',
