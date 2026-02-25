@@ -1,0 +1,63 @@
+{
+  "audit_timestamp": "2026-02-25T12:57:47.964976+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 8.6,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Experience",
+          "result": "Good",
+          "details": "No new overflow/tap-target regressions found in core templates during manual review."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 8.8,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Internal/External Link Scan",
+          "result": "No obvious malformed links",
+          "details": "Regex scan over _posts/_blogs/pages/layouts found no duplicated protocol or placeholder URLs."
+        }
+      ],
+      "broken_links": []
+    },
+    "seo_evaluation": {
+      "score": 8.7,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta Coverage",
+          "result": "Good",
+          "details": "Core pages keep title/description/keywords and SEO tags enabled."
+        }
+      ]
+    },
+    "content_quality": {
+      "score": 8.2,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Template Performance Hygiene",
+          "result": "Improved",
+          "details": "Conditionalized page image preload to avoid forcing low-priority images into critical path."
+        }
+      ]
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.7/10",
+    "links": "Links: 8.8/10",
+    "seo": "SEO: 8.7/10",
+    "content": "Content/Perf: 8.2/10"
+  },
+  "recommendations": [
+    "Track CLS/LCP on pages with featured images after preload rule change",
+    "Consider adding an automated HTTP link checker script in CI"
+  ]
+}

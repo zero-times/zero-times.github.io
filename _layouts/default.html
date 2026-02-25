@@ -30,7 +30,13 @@
     <meta property="og:image:alt" content="{{ social_image_alt | escape }}">
     <meta name="twitter:image:alt" content="{{ social_image_alt | escape }}">
   {% endif %}
+  {% assign should_preload_page_image = false %}
   {% if page.image %}
+    {% if page.layout == 'post' or page.image_loading == 'eager' or page.image_fetchpriority == 'high' %}
+      {% assign should_preload_page_image = true %}
+    {% endif %}
+  {% endif %}
+  {% if should_preload_page_image %}
     {% if page.image contains '://' %}
       <link rel="preload" as="image" href="{{ page.image }}">
     {% else %}
