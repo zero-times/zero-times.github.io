@@ -14,6 +14,24 @@ html {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .postbox-card,
+  .contact-card,
+  .home-hero__latest .card,
+  .postbox-link,
+  .postbox-cta {
+    transition: none !important;
+  }
+
+  .postbox-card:hover,
+  .postbox-card:focus-within,
+  .contact-card:hover,
+  .home-hero__latest .card:hover,
+  .home-hero__latest .card:focus-within {
+    transform: none !important;
+  }
+}
+
 /* Multi-language switcher styles */
 .language-switcher {
   margin-left: 1rem;
