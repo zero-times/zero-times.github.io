@@ -212,6 +212,34 @@ def collect_missing_liquid_link_tag_targets() -> list[dict]:
     return missing
 
 
+def collect_posts_missing_image_dimensions() -> list[dict]:
+    missing: list[dict] = []
+    for collection in ('_posts', '_blogs'):
+        folder = ROOT / collection
+        if not folder.exists():
+            continue
+        for post_file in folder.glob('*'):
+            if post_file.suffix not in ('.md', '.markdown', '.html'):
+                continue
+            text = read_text(post_file)
+            image = extract_front_matter_value(text, 'image')
+            if not image:
+                continue
+            has_width = extract_front_matter_value(text, 'image_width')
+            has_height = extract_front_matter_value(text, 'image_height')
+            if has_width and has_height:
+                continue
+            rel = post_file.relative_to(ROOT)
+            missing.append(
+                {
+                    'location': str(rel),
+                    'issue': 'post image dimensions missing',
+                    'value': image,
+                }
+            )
+    return missing
+
+
 def collect_external_urls() -> list[str]:
     urls: set[str] = set()
     for fp in iter_files():
@@ -272,6 +300,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     missing_internal_links = collect_missing_internal_links()
     missing_liquid_internal_links = collect_missing_liquid_internal_links()
     missing_liquid_link_tag_targets = collect_missing_liquid_link_tag_targets()
+    posts_missing_image_dimensions = collect_posts_missing_image_dimensions()
     urls_count = 0
     external_urls = collect_external_urls()
     http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
@@ -391,6 +420,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_home_avatar_priority
             and has_home_avatar_responsive_sources
             and not has_theme_js_preload
+            and not posts_missing_image_dimensions
             else 7.2,
             'max_score': 10.0,
             'findings': [
@@ -429,7 +459,15 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'result': 'Observed',
                     'details': f'Detected {urls_count} http(s) links across scanned files.',
                 },
+                {
+                    'aspect': 'Post featured image dimensions',
+                    'result': 'Improved' if not posts_missing_image_dimensions else 'Needs tuning',
+                    'details': 'Posts/blog entries with front matter image now include image_width/image_height to reduce layout shift.'
+                    if not posts_missing_image_dimensions
+                    else f"Found {len(posts_missing_image_dimensions)} post(s) with image but without image_width/image_height.",
+                },
             ],
+            'missing_post_image_dimensions': posts_missing_image_dimensions,
         },
     }
 
