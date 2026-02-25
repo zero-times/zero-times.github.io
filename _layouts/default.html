@@ -44,7 +44,7 @@
     {% endif %}
   {% endif %}
   {% if page.hero_avatar_preload %}
-  <link rel="preload" as="image" href="{{ site.author.avatar | relative_url }}">
+  <link rel="preload" as="image" href="{{ '/assets/images/sal-300.jpg' | relative_url }}" imagesrcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" imagesizes="(max-width: 991.98px) 96px, 150px">
   {% endif %}
   {% if page.url == '/' %}
   <link rel="prefetch" href="{{ '/blog/' | relative_url }}">

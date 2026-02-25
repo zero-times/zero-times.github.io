@@ -308,6 +308,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     formspree_blog_preconnect = "page.url contains '/contact/' or page.url contains '/blog/'" in default_layout
     has_home_avatar_preload_flag = 'hero_avatar_preload: true' in homepage
     has_home_avatar_priority = 'fetchpriority="high"' in homepage and 'loading="eager"' in homepage
+    has_home_avatar_responsive_sources = 'srcset=' in homepage and 'sizes=' in homepage
     has_theme_js_preload = "rel=\"preload\" href=\"{{ '/assets/js/theme.js' | relative_url }}\" as=\"script\"" in default_layout
 
     sections = {
@@ -388,6 +389,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             if not formspree_blog_preconnect
             and has_home_avatar_preload_flag
             and has_home_avatar_priority
+            and has_home_avatar_responsive_sources
             and not has_theme_js_preload
             else 7.2,
             'max_score': 10.0,
@@ -407,6 +409,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Homepage avatar uses hero preload flag and eager/high fetch priority to reduce above-the-fold delays.'
                     if has_home_avatar_preload_flag and has_home_avatar_priority
                     else 'Set hero_avatar_preload and eager/high fetchpriority for the above-the-fold homepage avatar image.',
+                },
+                {
+                    'aspect': 'Responsive hero image variants',
+                    'result': 'Improved' if has_home_avatar_responsive_sources else 'Needs tuning',
+                    'details': 'Homepage hero image provides srcset/sizes variants to avoid over-downloading on mobile.'
+                    if has_home_avatar_responsive_sources
+                    else 'Add srcset/sizes to the homepage hero image so smaller viewports fetch smaller assets.',
                 },
                 {
                     'aspect': 'Script preload pressure',
