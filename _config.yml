@@ -14,6 +14,7 @@ author:
   url: "https://youllbe.cn"
 logo: /assets/images/logo.png
 image: /assets/images/screenshot.png
+image_alt: "Captura de tela da página inicial do blog Hoa"
 
 # Build settings
 markdown: kramdown

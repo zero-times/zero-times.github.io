@@ -348,6 +348,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     seo_keys = ['title:', 'description:', 'keywords:', 'logo:']
     seo_missing = [k.rstrip(':') for k in seo_keys if k not in config_text]
     site_social_image = extract_yaml_value(config_text, 'image')
+    site_social_image_alt = extract_yaml_value(config_text, 'image_alt')
     site_social_image_path = resolve_local_image_path(site_social_image)
     site_social_image_dimensions = get_image_dimensions(site_social_image_path) if site_social_image_path else None
     has_large_social_image = bool(
@@ -355,6 +356,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and site_social_image_dimensions[0] >= 1200
         and site_social_image_dimensions[1] >= 630
     )
+    has_social_image_alt = bool(site_social_image_alt and site_social_image_alt.strip())
 
     has_seo_tag = '{% seo %}' in default_layout
     has_viewport = 'name="viewport"' in default_layout
@@ -474,7 +476,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'http_check': http_check_result,
         },
         'seo_evaluation': {
-            'score': 9.0 if has_seo_tag and not seo_missing and has_large_social_image else 7.0,
+            'score': 9.0
+            if has_seo_tag and not seo_missing and has_large_social_image and has_social_image_alt
+            else 7.0,
             'max_score': 10.0,
             'findings': [
                 {
@@ -490,6 +494,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': f"_config.yml image points to {site_social_image_path.relative_to(ROOT)} ({site_social_image_dimensions[0]}x{site_social_image_dimensions[1]})."
                     if has_large_social_image and site_social_image_path and site_social_image_dimensions
                     else 'Set _config.yml image to a local asset >=1200x630 for better OG/Twitter previews.',
+                },
+                {
+                    'aspect': 'Social preview image alt',
+                    'result': 'Good' if has_social_image_alt else 'Needs improvement',
+                    'details': f"_config.yml image_alt is set: {site_social_image_alt}"
+                    if has_social_image_alt
+                    else 'Set _config.yml image_alt so OG/Twitter image metadata has an accessible fallback description.',
                 },
             ],
         },

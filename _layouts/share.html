@@ -18,7 +18,7 @@
 {% assign page_lang = page.lang | default: site.lang | default: site.default_lang %}
 <link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">
 <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
-{% assign social_image_alt = page.image_alt | default: page.title | default: site.title %}
+{% assign social_image_alt = page.image_alt | default: site.image_alt | default: page.title | default: site.title %}
 {% assign social_image_src = page.image | default: site.image %}
 {% if social_image_src %}
   <meta property="og:image:alt" content="{{ social_image_alt | escape }}">
