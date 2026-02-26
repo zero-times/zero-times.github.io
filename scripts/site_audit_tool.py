@@ -715,6 +715,28 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     }
 
 
+def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]:
+    sections = report.get('sections', {})
+    broken = sections.get('broken_links_check', {}).get('broken_links', [])
+    missing_entry_alt = sections.get('seo_evaluation', {}).get('missing_entry_image_alt', [])
+    missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
+    invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
+    http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
+
+    failures: list[str] = []
+    if broken:
+        failures.append(f'broken_links={len(broken)}')
+    if missing_entry_alt:
+        failures.append(f'missing_entry_image_alt={len(missing_entry_alt)}')
+    if missing_dimensions:
+        failures.append(f'missing_post_image_dimensions={len(missing_dimensions)}')
+    if invalid_perf_flags:
+        failures.append(f'invalid_front_matter_perf_flags={len(invalid_perf_flags)}')
+    if http_check_enabled and http_failures:
+        failures.append(f'http_failures={len(http_failures)}')
+    return failures
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description='Generate a lightweight Jekyll site audit report.')
     parser.add_argument(
@@ -734,6 +756,11 @@ def main() -> None:
         default=4.0,
         help='HTTP timeout in seconds for each URL check (default: 4.0).',
     )
+    parser.add_argument(
+        '--strict',
+        action='store_true',
+        help='Exit with code 2 when broken links or key metadata/performance guardrails regress.',
+    )
     args = parser.parse_args()
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -746,6 +773,12 @@ def main() -> None:
     out = REPORTS_DIR / f'site_audit_{stamp}.json'
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(out)
+
+    if args.strict:
+        failures = collect_strict_failures(report, http_check_enabled=args.http_check)
+        if failures:
+            print(f"STRICT_FAIL: {', '.join(failures)}")
+            raise SystemExit(2)
 
 
 if __name__ == '__main__':

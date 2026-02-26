@@ -1,0 +1,43 @@
+name: Site Audit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "_config.yml"
+      - "_layouts/**"
+      - "_includes/**"
+      - "_posts/**"
+      - "_blogs/**"
+      - "pages/**"
+      - "index.html"
+      - "scripts/site_audit_tool.py"
+  pull_request:
+    paths:
+      - "_config.yml"
+      - "_layouts/**"
+      - "_includes/**"
+      - "_posts/**"
+      - "_blogs/**"
+      - "pages/**"
+      - "index.html"
+      - "scripts/site_audit_tool.py"
+  schedule:
+    - cron: "20 2 * * 1"
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run strict site audit
+        run: python3 scripts/site_audit_tool.py --strict
