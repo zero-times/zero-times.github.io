@@ -437,6 +437,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_home_avatar_responsive_sources = 'srcset=' in homepage and 'sizes=' in homepage
     has_theme_js_preload = "rel=\"preload\" href=\"{{ '/assets/js/theme.js' | relative_url }}\" as=\"script\"" in default_layout
     has_guarded_share_social_image_preload = '{% if page.preload_social_image and page.image %}' in share_layout
+    has_guarded_adjacent_post_prefetch = "{% if page.layout == 'post' and page.prefetch_adjacent_posts %}" in default_layout
 
     sections = {
         'layout_assessment': {
@@ -554,6 +555,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_home_avatar_responsive_sources
             and not has_theme_js_preload
             and has_guarded_share_social_image_preload
+            and has_guarded_adjacent_post_prefetch
             and not posts_missing_image_dimensions
             else 7.2,
             'max_score': 10.0,
@@ -594,6 +596,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Share layout only preloads social image when page.preload_social_image is explicitly enabled, reducing default mobile bandwidth use.'
                     if has_guarded_share_social_image_preload
                     else 'Guard share layout social image preload behind page.preload_social_image to avoid unnecessary image prefetching.',
+                },
+                {
+                    'aspect': 'Adjacent post prefetch policy',
+                    'result': 'Improved' if has_guarded_adjacent_post_prefetch else 'Needs tuning',
+                    'details': 'Adjacent post prefetch is opt-in via page.prefetch_adjacent_posts, avoiding unconditional mobile bandwidth consumption.'
+                    if has_guarded_adjacent_post_prefetch
+                    else 'Only enable adjacent post prefetch when page.prefetch_adjacent_posts is explicitly set.',
                 },
                 {
                     'aspect': 'External URL volume',

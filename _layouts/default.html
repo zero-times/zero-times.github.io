@@ -107,7 +107,7 @@
       <link rel="last" href="{{ site.paginate_path | absolute_url | replace: ':num', paginator.total_pages }}">
     {% endif %}
   {% endif %}
-  {% if page.layout == 'post' %}
+  {% if page.layout == 'post' and page.prefetch_adjacent_posts %}
     {% if page.previous %}
       <link rel="prefetch" href="{{ page.previous.url | relative_url }}">
     {% endif %}
