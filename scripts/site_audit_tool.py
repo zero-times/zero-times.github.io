@@ -11,6 +11,7 @@ import datetime as dt
 import argparse
 import json
 import re
+import struct
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -240,6 +241,62 @@ def collect_posts_missing_image_dimensions() -> list[dict]:
     return missing
 
 
+def extract_yaml_value(text: str, key: str) -> str | None:
+    match = re.search(rf'^[ \t]*{re.escape(key)}[ \t]*:[ \t]*(.+)$', text, re.MULTILINE)
+    if not match:
+        return None
+    return match.group(1).strip().strip('"\'')
+
+
+def resolve_local_image_path(value: str | None) -> Path | None:
+    if not value:
+        return None
+    if '://' in value:
+        return None
+    candidate = value
+    if candidate.startswith('/'):
+        candidate = candidate[1:]
+    path = ROOT / candidate
+    return path if path.exists() else None
+
+
+def get_image_dimensions(path: Path) -> tuple[int, int] | None:
+    with path.open('rb') as f:
+        sig = f.read(12)
+        f.seek(0)
+        if sig.startswith(b'\x89PNG\r\n\x1a\n'):
+            f.read(8)  # signature
+            f.read(8)  # chunk length + chunk type(IHDR)
+            width, height = struct.unpack('>II', f.read(8))
+            return int(width), int(height)
+        if sig.startswith(b'\xff\xd8'):
+            f.read(2)
+            while True:
+                marker_start = f.read(1)
+                if not marker_start:
+                    return None
+                if marker_start != b'\xff':
+                    continue
+                marker = f.read(1)
+                while marker == b'\xff':
+                    marker = f.read(1)
+                if marker in (b'\xc0', b'\xc1', b'\xc2', b'\xc3', b'\xc5', b'\xc6', b'\xc7', b'\xc9', b'\xca', b'\xcb', b'\xcd', b'\xce', b'\xcf'):
+                    f.read(2)  # segment length
+                    f.read(1)  # precision
+                    height, width = struct.unpack('>HH', f.read(4))
+                    return int(width), int(height)
+                if marker in (b'\xd8', b'\xd9'):
+                    continue
+                seg_len_bytes = f.read(2)
+                if len(seg_len_bytes) != 2:
+                    return None
+                seg_len = struct.unpack('>H', seg_len_bytes)[0]
+                if seg_len < 2:
+                    return None
+                f.seek(seg_len - 2, 1)
+    return None
+
+
 def collect_external_urls() -> list[str]:
     urls: set[str] = set()
     for fp in iter_files():
@@ -290,6 +347,14 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
 
     seo_keys = ['title:', 'description:', 'keywords:', 'logo:']
     seo_missing = [k.rstrip(':') for k in seo_keys if k not in config_text]
+    site_social_image = extract_yaml_value(config_text, 'image')
+    site_social_image_path = resolve_local_image_path(site_social_image)
+    site_social_image_dimensions = get_image_dimensions(site_social_image_path) if site_social_image_path else None
+    has_large_social_image = bool(
+        site_social_image_dimensions
+        and site_social_image_dimensions[0] >= 1200
+        and site_social_image_dimensions[1] >= 630
+    )
 
     has_seo_tag = '{% seo %}' in default_layout
     has_viewport = 'name="viewport"' in default_layout
@@ -409,7 +474,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'http_check': http_check_result,
         },
         'seo_evaluation': {
-            'score': 9.0 if has_seo_tag and not seo_missing else 7.0,
+            'score': 9.0 if has_seo_tag and not seo_missing and has_large_social_image else 7.0,
             'max_score': 10.0,
             'findings': [
                 {
@@ -418,7 +483,14 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'default.html contains {% seo %}; _config.yml includes core SEO keys.'
                     if not seo_missing
                     else f"Missing keys in _config.yml: {', '.join(seo_missing)}",
-                }
+                },
+                {
+                    'aspect': 'Social preview image size',
+                    'result': 'Good' if has_large_social_image else 'Needs improvement',
+                    'details': f"_config.yml image points to {site_social_image_path.relative_to(ROOT)} ({site_social_image_dimensions[0]}x{site_social_image_dimensions[1]})."
+                    if has_large_social_image and site_social_image_path and site_social_image_dimensions
+                    else 'Set _config.yml image to a local asset >=1200x630 for better OG/Twitter previews.',
+                },
             ],
         },
         'content_quality': {
