@@ -370,6 +370,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     timestamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=8))).isoformat()
     config_text = read_text(ROOT / '_config.yml')
     default_layout = read_text(ROOT / '_layouts/default.html')
+    share_layout = read_text(ROOT / '_layouts/share.html')
     homepage = read_text(ROOT / 'index.html')
 
     seo_keys = ['title:', 'description:', 'keywords:', 'logo:']
@@ -435,6 +436,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_home_avatar_priority = 'fetchpriority="high"' in homepage and 'loading="eager"' in homepage
     has_home_avatar_responsive_sources = 'srcset=' in homepage and 'sizes=' in homepage
     has_theme_js_preload = "rel=\"preload\" href=\"{{ '/assets/js/theme.js' | relative_url }}\" as=\"script\"" in default_layout
+    has_guarded_share_social_image_preload = '{% if page.preload_social_image and page.image %}' in share_layout
 
     sections = {
         'layout_assessment': {
@@ -551,6 +553,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_home_avatar_priority
             and has_home_avatar_responsive_sources
             and not has_theme_js_preload
+            and has_guarded_share_social_image_preload
             and not posts_missing_image_dimensions
             else 7.2,
             'max_score': 10.0,
@@ -584,6 +587,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'theme.js is deferred without preload to avoid competing with render-critical CSS/image downloads.'
                     if not has_theme_js_preload
                     else 'Remove theme.js preload because deferred script fetch is non-critical during initial render.',
+                },
+                {
+                    'aspect': 'Share page social image preload',
+                    'result': 'Improved' if has_guarded_share_social_image_preload else 'Needs tuning',
+                    'details': 'Share layout only preloads social image when page.preload_social_image is explicitly enabled, reducing default mobile bandwidth use.'
+                    if has_guarded_share_social_image_preload
+                    else 'Guard share layout social image preload behind page.preload_social_image to avoid unnecessary image prefetching.',
                 },
                 {
                     'aspect': 'External URL volume',

@@ -29,7 +29,7 @@
 {% elsif site.keywords %}
 <meta name="keywords" content="{{ site.keywords }}">
 {% endif %}
-{% if page.image %}
+{% if page.preload_social_image and page.image %}
   {% if page.image contains '://' %}
     <link rel="preload" as="image" href="{{ page.image }}">
   {% else %}
