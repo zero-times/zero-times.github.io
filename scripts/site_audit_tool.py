@@ -241,6 +241,33 @@ def collect_posts_missing_image_dimensions() -> list[dict]:
     return missing
 
 
+def collect_entries_missing_image_alt() -> list[dict]:
+    missing: list[dict] = []
+    for collection in ('_posts', '_blogs', 'pages'):
+        folder = ROOT / collection
+        if not folder.exists():
+            continue
+        for source_file in folder.glob('*'):
+            if source_file.suffix not in ('.md', '.markdown', '.html'):
+                continue
+            text = read_text(source_file)
+            image = extract_front_matter_value(text, 'image')
+            if not image:
+                continue
+            image_alt = extract_front_matter_value(text, 'image_alt')
+            if image_alt:
+                continue
+            rel = source_file.relative_to(ROOT)
+            missing.append(
+                {
+                    'location': str(rel),
+                    'issue': 'entry image_alt missing',
+                    'value': image,
+                }
+            )
+    return missing
+
+
 def extract_yaml_value(text: str, key: str) -> str | None:
     match = re.search(rf'^[ \t]*{re.escape(key)}[ \t]*:[ \t]*(.+)$', text, re.MULTILINE)
     if not match:
@@ -369,6 +396,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     missing_liquid_internal_links = collect_missing_liquid_internal_links()
     missing_liquid_link_tag_targets = collect_missing_liquid_link_tag_targets()
     posts_missing_image_dimensions = collect_posts_missing_image_dimensions()
+    entries_missing_image_alt = collect_entries_missing_image_alt()
     urls_count = 0
     external_urls = collect_external_urls()
     http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
@@ -477,7 +505,11 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         },
         'seo_evaluation': {
             'score': 9.0
-            if has_seo_tag and not seo_missing and has_large_social_image and has_social_image_alt
+            if has_seo_tag
+            and not seo_missing
+            and has_large_social_image
+            and has_social_image_alt
+            and not entries_missing_image_alt
             else 7.0,
             'max_score': 10.0,
             'findings': [
@@ -502,7 +534,15 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if has_social_image_alt
                     else 'Set _config.yml image_alt so OG/Twitter image metadata has an accessible fallback description.',
                 },
+                {
+                    'aspect': 'Entry social image alt coverage',
+                    'result': 'Good' if not entries_missing_image_alt else 'Needs improvement',
+                    'details': 'Entries with front matter image include image_alt for social preview and accessibility metadata.'
+                    if not entries_missing_image_alt
+                    else f"Found {len(entries_missing_image_alt)} entry file(s) with image but missing image_alt.",
+                },
             ],
+            'missing_entry_image_alt': entries_missing_image_alt,
         },
         'content_quality': {
             'score': 9.0

@@ -1,0 +1,121 @@
+{
+  "audit_timestamp": "2026-02-26T12:04:01.701495+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 9.0,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.9,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Experience",
+          "result": "Good",
+          "details": "Viewport meta and skip-link checked in default layout."
+        },
+        {
+          "aspect": "Main landmark labeling",
+          "result": "Improved",
+          "details": "Main landmark uses aria-label to avoid broken aria-labelledby references across mixed layouts."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "URL Pattern Scan",
+          "result": "Clean",
+          "details": "Regex scan for duplicated protocol and placeholder domains/markers."
+        },
+        {
+          "aspect": "Internal Link Targets",
+          "result": "Clean",
+          "details": "Checks markdown links ](/path/), Liquid href/src {{ \"/path/\" | relative_url }}, and {% link ... %} targets."
+        },
+        {
+          "aspect": "HTTP Reachability Sample",
+          "result": "Skipped",
+          "details": "Enable with --http-check to sample external URLs."
+        }
+      ],
+      "broken_links": [],
+      "http_check": {
+        "enabled": false,
+        "sample_size": 0,
+        "failures": [],
+        "results": []
+      }
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta/SEO baseline",
+          "result": "Good",
+          "details": "default.html contains {% seo %}; _config.yml includes core SEO keys."
+        },
+        {
+          "aspect": "Social preview image size",
+          "result": "Good",
+          "details": "_config.yml image points to assets/images/screenshot.png (1280x719)."
+        },
+        {
+          "aspect": "Entry social image alt coverage",
+          "result": "Good",
+          "details": "Entries with front matter image include image_alt for social preview and accessibility metadata."
+        }
+      ],
+      "missing_entry_image_alt": []
+    },
+    "content_quality": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Performance hygiene",
+          "result": "Improved",
+          "details": "Formspree preconnect is restricted to contact pages to reduce unnecessary third-party handshakes."
+        },
+        {
+          "aspect": "Homepage hero image priority",
+          "result": "Improved",
+          "details": "Homepage avatar uses hero preload flag and eager/high fetch priority to reduce above-the-fold delays."
+        },
+        {
+          "aspect": "Responsive hero image variants",
+          "result": "Improved",
+          "details": "Homepage hero image provides srcset/sizes variants to avoid over-downloading on mobile."
+        },
+        {
+          "aspect": "Script preload pressure",
+          "result": "Improved",
+          "details": "theme.js is deferred without preload to avoid competing with render-critical CSS/image downloads."
+        },
+        {
+          "aspect": "External URL volume",
+          "result": "Observed",
+          "details": "Detected 256 http(s) links across scanned files."
+        },
+        {
+          "aspect": "Post featured image dimensions",
+          "result": "Improved",
+          "details": "Posts/blog entries with front matter image now include image_width/image_height to reduce layout shift."
+        }
+      ],
+      "missing_post_image_dimensions": []
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.9/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content/Perf: 9.0/10"
+  },
+  "recommendations": [
+    "Run this audit after each content batch and fix any placeholder/malformed links.",
+    "Run with --http-check periodically (or in CI) to validate sampled external URL reachability."
+  ]
+}
