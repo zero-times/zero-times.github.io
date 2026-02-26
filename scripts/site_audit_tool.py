@@ -294,6 +294,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_seo_tag = '{% seo %}' in default_layout
     has_viewport = 'name="viewport"' in default_layout
     has_skip_link = 'skip-link' in default_layout
+    has_main_landmark_aria_label = '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
 
     malformed_links: list[dict] = []
     placeholder_hits: list[dict] = []
@@ -342,7 +343,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
 
     sections = {
         'layout_assessment': {
-            'score': 8.8 if has_viewport and has_skip_link else 7.0,
+            'score': 8.9 if has_viewport and has_skip_link and has_main_landmark_aria_label else 7.0,
             'max_score': 10.0,
             'findings': [
                 {
@@ -351,6 +352,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Viewport meta and skip-link checked in default layout.'
                     if has_skip_link
                     else 'Viewport exists but skip-link missing from default layout.',
+                },
+                {
+                    'aspect': 'Main landmark labeling',
+                    'result': 'Improved' if has_main_landmark_aria_label else 'Needs tuning',
+                    'details': 'Main landmark uses aria-label to avoid broken aria-labelledby references across mixed layouts.'
+                    if has_main_landmark_aria_label
+                    else 'Set a stable aria-label on #main-content instead of relying on page-title id in every layout.',
                 }
             ],
         },
