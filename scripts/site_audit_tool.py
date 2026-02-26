@@ -40,6 +40,7 @@ LIQUID_RELATIVE_URL_RE = re.compile(
 )
 LIQUID_LINK_TAG_RE = re.compile(r'\{%\s*link\s+([^\s%]+)\s*%\}')
 FRONT_MATTER_VALUE_RE = re.compile(r'^[ \t]*([A-Za-z0-9_-]+)[ \t]*:[ \t]*(.+)$', re.MULTILINE)
+BOOLEAN_LITERALS = {'true', 'false'}
 
 
 def read_text(path: Path) -> str:
@@ -69,6 +70,18 @@ def extract_front_matter_value(text: str, key: str) -> str | None:
         if match.group(1) == key:
             return match.group(2).strip().strip('"\'')
     return None
+
+
+def parse_front_matter_values(text: str) -> dict[str, str]:
+    if not text.startswith('---'):
+        return {}
+    parts = text.split('---', 2)
+    if len(parts) < 3:
+        return {}
+    values: dict[str, str] = {}
+    for match in FRONT_MATTER_VALUE_RE.finditer(parts[1]):
+        values[match.group(1)] = match.group(2).strip().strip('"\'')
+    return values
 
 
 def normalize_route(path: str) -> str:
@@ -268,6 +281,41 @@ def collect_entries_missing_image_alt() -> list[dict]:
     return missing
 
 
+def collect_invalid_boolean_front_matter_flags(keys: list[str]) -> list[dict]:
+    invalid: list[dict] = []
+    targets = ['_posts', '_blogs', 'pages', 'index.html']
+
+    for target in targets:
+        p = ROOT / target
+        files: list[Path] = []
+        if p.is_file():
+            files = [p]
+        elif p.is_dir():
+            for ext in ('*.md', '*.markdown', '*.html'):
+                files.extend(p.rglob(ext))
+
+        for fp in files:
+            rel = fp.relative_to(ROOT)
+            values = parse_front_matter_values(read_text(fp))
+            if not values:
+                continue
+            for key in keys:
+                if key not in values:
+                    continue
+                value = values[key].strip().lower()
+                if value in BOOLEAN_LITERALS:
+                    continue
+                invalid.append(
+                    {
+                        'location': str(rel),
+                        'issue': f'front matter flag `{key}` must be boolean',
+                        'value': values[key],
+                    }
+                )
+
+    return invalid
+
+
 def extract_yaml_value(text: str, key: str) -> str | None:
     match = re.search(rf'^[ \t]*{re.escape(key)}[ \t]*:[ \t]*(.+)$', text, re.MULTILINE)
     if not match:
@@ -398,6 +446,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     missing_liquid_link_tag_targets = collect_missing_liquid_link_tag_targets()
     posts_missing_image_dimensions = collect_posts_missing_image_dimensions()
     entries_missing_image_alt = collect_entries_missing_image_alt()
+    invalid_perf_flags = collect_invalid_boolean_front_matter_flags(
+        ['hero_avatar_preload', 'preload_social_image', 'prefetch_adjacent_posts']
+    )
     urls_count = 0
     external_urls = collect_external_urls()
     http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
@@ -556,6 +607,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not has_theme_js_preload
             and has_guarded_share_social_image_preload
             and has_guarded_adjacent_post_prefetch
+            and not invalid_perf_flags
             and not posts_missing_image_dimensions
             else 7.2,
             'max_score': 10.0,
@@ -605,6 +657,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Only enable adjacent post prefetch when page.prefetch_adjacent_posts is explicitly set.',
                 },
                 {
+                    'aspect': 'Front matter performance toggles',
+                    'result': 'Improved' if not invalid_perf_flags else 'Needs tuning',
+                    'details': 'hero_avatar_preload/preload_social_image/prefetch_adjacent_posts use explicit true/false values.'
+                    if not invalid_perf_flags
+                    else f'Found {len(invalid_perf_flags)} invalid toggle value(s); use true/false booleans in front matter.',
+                },
+                {
                     'aspect': 'External URL volume',
                     'result': 'Observed',
                     'details': f'Detected {urls_count} http(s) links across scanned files.',
@@ -618,6 +677,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
+            'invalid_front_matter_perf_flags': invalid_perf_flags,
         },
     }
 
