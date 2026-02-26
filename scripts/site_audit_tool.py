@@ -487,6 +487,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_home_avatar_priority = 'fetchpriority="high"' in homepage and 'loading="eager"' in homepage
     has_home_avatar_responsive_sources = 'srcset=' in homepage and 'sizes=' in homepage
     has_theme_js_preload = "rel=\"preload\" href=\"{{ '/assets/js/theme.js' | relative_url }}\" as=\"script\"" in default_layout
+    has_local_css_preload = (
+        "rel=\"preload\" href=\"{{ '/assets/css/theme.css' | relative_url }}\" as=\"style\"" in default_layout
+        or "rel=\"preload\" href=\"{{ '/assets/css/custom.css' | relative_url }}\" as=\"style\"" in default_layout
+    )
     has_guarded_share_social_image_preload = '{% if page.preload_social_image and page.image %}' in share_layout
     has_guarded_adjacent_post_prefetch = "{% if page.layout == 'post' and page.prefetch_adjacent_posts %}" in default_layout
 
@@ -605,6 +609,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_home_avatar_priority
             and has_home_avatar_responsive_sources
             and not has_theme_js_preload
+            and not has_local_css_preload
             and has_guarded_share_social_image_preload
             and has_guarded_adjacent_post_prefetch
             and not invalid_perf_flags
@@ -641,6 +646,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'theme.js is deferred without preload to avoid competing with render-critical CSS/image downloads.'
                     if not has_theme_js_preload
                     else 'Remove theme.js preload because deferred script fetch is non-critical during initial render.',
+                },
+                {
+                    'aspect': 'Local stylesheet preload policy',
+                    'result': 'Improved' if not has_local_css_preload else 'Needs tuning',
+                    'details': 'theme.css/custom.css are discovered early via normal stylesheet links, avoiding redundant preload hints.'
+                    if not has_local_css_preload
+                    else 'Remove local stylesheet preload hints for theme.css/custom.css to reduce duplicate high-priority fetch pressure.',
                 },
                 {
                     'aspect': 'Share page social image preload',
