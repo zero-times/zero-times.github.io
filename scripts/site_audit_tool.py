@@ -41,6 +41,7 @@ LIQUID_RELATIVE_URL_RE = re.compile(
 LIQUID_LINK_TAG_RE = re.compile(r'\{%\s*link\s+([^\s%]+)\s*%\}')
 PRECONNECT_HINT_RE = re.compile(r'<link\s+rel="preconnect"\s+href="([^"]+)"')
 DNS_PREFETCH_HINT_RE = re.compile(r'<link\s+rel="dns-prefetch"\s+href="([^"]+)"')
+APPLE_TOUCH_ICON_RE = re.compile(r'<link\s+rel="apple-touch-icon"[^>]*href="([^"]+)"[^>]*>')
 FORM_POST_ACTION_RE = re.compile(
     r'<form\b[^>]*\bmethod\s*=\s*["\']post["\'][^>]*\baction\s*=\s*["\'](https?://[^"\']+)["\']|'
     r'<form\b[^>]*\baction\s*=\s*["\'](https?://[^"\']+)["\'][^>]*\bmethod\s*=\s*["\']post["\']',
@@ -364,9 +365,12 @@ def extract_yaml_value(text: str, key: str) -> str | None:
 def resolve_local_image_path(value: str | None) -> Path | None:
     if not value:
         return None
-    if '://' in value:
+    candidate = value.strip()
+    liquid_relative = re.search(r'\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}', candidate)
+    if liquid_relative:
+        candidate = liquid_relative.group(1)
+    if '://' in candidate:
         return None
-    candidate = value
     if candidate.startswith('/'):
         candidate = candidate[1:]
     path = ROOT / candidate
@@ -594,6 +598,19 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     preconnect_hints = {normalize_hint_href(value) for value in PRECONNECT_HINT_RE.findall(default_layout)}
     dns_prefetch_hints = {normalize_hint_href(value) for value in DNS_PREFETCH_HINT_RE.findall(default_layout)}
     duplicate_resource_hint_hosts = sorted(preconnect_hints.intersection(dns_prefetch_hints))
+    apple_touch_icon_href = APPLE_TOUCH_ICON_RE.search(default_layout)
+    apple_touch_icon_value = apple_touch_icon_href.group(1) if apple_touch_icon_href else None
+    apple_touch_icon_path = resolve_local_image_path(apple_touch_icon_value)
+    apple_touch_icon_dimensions = get_image_dimensions(apple_touch_icon_path) if apple_touch_icon_path else None
+    has_apple_touch_icon_sizes = bool(
+        re.search(r'<link\s+rel="apple-touch-icon"[^>]*sizes="180x180"[^>]*>', default_layout)
+    )
+    has_mobile_ready_apple_touch_icon = bool(
+        has_apple_touch_icon_sizes
+        and apple_touch_icon_dimensions
+        and apple_touch_icon_dimensions[0] == apple_touch_icon_dimensions[1]
+        and apple_touch_icon_dimensions[0] >= 180
+    )
 
     sections = {
         'layout_assessment': {
@@ -745,6 +762,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not invalid_perf_flags
             and not posts_missing_image_dimensions
             and not pages_missing_image_dimensions
+            and has_mobile_ready_apple_touch_icon
             else 7.2,
             'max_score': 10.0,
             'findings': [
@@ -853,11 +871,22 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if not pages_missing_image_dimensions
                     else f"Found {len(pages_missing_image_dimensions)} page(s) with image but without image_width/image_height.",
                 },
+                {
+                    'aspect': 'Apple touch icon readiness',
+                    'result': 'Improved' if has_mobile_ready_apple_touch_icon else 'Needs tuning',
+                    'details': (
+                        f"apple-touch-icon points to {apple_touch_icon_path.relative_to(ROOT)} "
+                        f"({apple_touch_icon_dimensions[0]}x{apple_touch_icon_dimensions[1]}) with sizes=180x180 for iOS home-screen installs."
+                    )
+                    if has_mobile_ready_apple_touch_icon and apple_touch_icon_path and apple_touch_icon_dimensions
+                    else 'Use a square local apple-touch-icon (>=180x180) and declare sizes="180x180" for mobile install quality.',
+                },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
             'missing_page_image_dimensions': pages_missing_image_dimensions,
             'duplicate_resource_hint_hosts': duplicate_resource_hint_hosts,
             'invalid_front_matter_perf_flags': invalid_perf_flags,
+            'apple_touch_icon_ready': has_mobile_ready_apple_touch_icon,
         },
     }
 
@@ -891,6 +920,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
     missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
     invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
+    apple_touch_icon_ready = sections.get('content_quality', {}).get('apple_touch_icon_ready', False)
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
 
     failures: list[str] = []
@@ -906,6 +936,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'missing_page_image_dimensions={len(missing_page_dimensions)}')
     if invalid_perf_flags:
         failures.append(f'invalid_front_matter_perf_flags={len(invalid_perf_flags)}')
+    if not apple_touch_icon_ready:
+        failures.append('apple_touch_icon_ready=0')
     if http_check_enabled and http_failures:
         failures.append(f'http_failures={len(http_failures)}')
     return failures
