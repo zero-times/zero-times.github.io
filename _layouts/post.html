@@ -9,6 +9,8 @@ layout: default
 {% assign author_web = author_data.web | default: author_data.url %}
 {% assign word_count = content | number_of_words %}
 {% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
+{% assign featured_image_loading = page.image_loading | default: 'lazy' %}
+{% assign featured_image_fetchpriority = page.image_fetchpriority | default: 'auto' %}
 {% assign post_image_src = nil %}
 {% if page.image %}
   {% if page.image contains '://' %}
@@ -53,7 +55,7 @@ layout: default
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 {% if page.image %}
-                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ page.image_alt | default: page.title }}" itemprop="image" loading="eager" decoding="async" fetchpriority="high"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
+                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ page.image_alt | default: page.title }}" itemprop="image" loading="{{ featured_image_loading }}" decoding="async" fetchpriority="{{ featured_image_fetchpriority }}"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
                 {% endif %}
             
                 <div class="post-header">
