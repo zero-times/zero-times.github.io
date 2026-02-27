@@ -441,6 +441,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_social_image_alt = bool(site_social_image_alt and site_social_image_alt.strip())
 
     has_seo_tag = '{% seo %}' in default_layout
+    has_manual_canonical = '<link rel="canonical"' in default_layout
     has_viewport = 'name="viewport"' in default_layout
     has_skip_link = 'skip-link' in default_layout
     has_main_landmark_aria_label = '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
@@ -455,6 +456,14 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and '<link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">' in default_layout
         and '{% endunless %}' in default_layout
     )
+    has_paginated_rel_navigation = (
+        '{% if paginator %}' in default_layout
+        and '<link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">' in default_layout
+        and '<link rel="next" href="{{ paginator.next_page_path | absolute_url }}">' in default_layout
+        and '<link rel="first" href="{{ \'/blog/\' | absolute_url }}">' in default_layout
+        and '<link rel="last" href="{{ site.paginate_path | absolute_url | replace: \':num\', paginator.total_pages }}">' in default_layout
+    )
+    has_canonical_signal_consistency = has_seo_tag and not has_manual_canonical and has_paginated_rel_navigation
 
     malformed_links: list[dict] = []
     placeholder_hits: list[dict] = []
@@ -598,6 +607,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not entries_missing_image_alt
             and has_paginated_noindex_policy
             and has_paginated_hreflang_guard
+            and has_canonical_signal_consistency
             else 7.0,
             'max_score': 10.0,
             'findings': [
@@ -643,8 +653,16 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if has_paginated_hreflang_guard
                     else 'Wrap alternate hreflang links in a page > 1 guard so noindex paginated archives do not emit duplicate language alternates.',
                 },
+                {
+                    'aspect': 'Canonical signal consistency',
+                    'result': 'Good' if has_canonical_signal_consistency else 'Needs improvement',
+                    'details': 'Canonical tag generation stays centralized in jekyll-seo-tag, and paginated archives expose prev/next/first/last rel signals for crawler consistency.'
+                    if has_canonical_signal_consistency
+                    else 'Keep canonical generation in one place (jekyll-seo-tag) and ensure paginator rel prev/next/first/last links exist in default layout.',
+                },
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
+            'canonical_signal_consistency': has_canonical_signal_consistency,
         },
         'content_quality': {
             'score': 9.0
@@ -796,6 +814,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     sections = report.get('sections', {})
     broken = sections.get('broken_links_check', {}).get('broken_links', [])
     missing_entry_alt = sections.get('seo_evaluation', {}).get('missing_entry_image_alt', [])
+    canonical_signal_consistency = sections.get('seo_evaluation', {}).get('canonical_signal_consistency', False)
     missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
     invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
@@ -805,6 +824,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'broken_links={len(broken)}')
     if missing_entry_alt:
         failures.append(f'missing_entry_image_alt={len(missing_entry_alt)}')
+    if not canonical_signal_consistency:
+        failures.append('canonical_signal_consistency=0')
     if missing_dimensions:
         failures.append(f'missing_post_image_dimensions={len(missing_dimensions)}')
     if invalid_perf_flags:
