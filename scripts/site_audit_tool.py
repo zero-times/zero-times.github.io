@@ -506,6 +506,18 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and site_social_image_dimensions[1] >= 630
     )
     has_social_image_alt = bool(site_social_image_alt and site_social_image_alt.strip())
+    share_page_file = ROOT / 'pages/share.html'
+    share_page_text = read_text(share_page_file) if share_page_file.exists() else ''
+    share_page_social_image = extract_front_matter_value(share_page_text, 'image')
+    share_page_social_image_path = resolve_local_image_path(share_page_social_image)
+    share_page_social_image_dimensions = (
+        get_image_dimensions(share_page_social_image_path) if share_page_social_image_path else None
+    )
+    has_share_page_large_social_image = bool(
+        share_page_social_image_dimensions
+        and share_page_social_image_dimensions[0] >= 1200
+        and share_page_social_image_dimensions[1] >= 630
+    )
 
     has_seo_tag = '{% seo %}' in default_layout
     has_manual_canonical = '<link rel="canonical"' in default_layout
@@ -734,6 +746,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_large_social_image
             and has_social_image_alt
             and not entries_missing_image_alt
+            and has_share_page_large_social_image
             and has_social_alt_fallback_template
             and has_paginated_noindex_policy
             and has_paginated_hreflang_guard
@@ -770,6 +783,16 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else f"Found {len(entries_missing_image_alt)} entry file(s) with image but missing image_alt.",
                 },
                 {
+                    'aspect': 'Share page social image size',
+                    'result': 'Good' if has_share_page_large_social_image else 'Needs improvement',
+                    'details': (
+                        f"pages/share.html image points to {share_page_social_image_path.relative_to(ROOT)} "
+                        f"({share_page_social_image_dimensions[0]}x{share_page_social_image_dimensions[1]})."
+                    )
+                    if has_share_page_large_social_image and share_page_social_image_path and share_page_social_image_dimensions
+                    else 'Set pages/share.html image to a local asset >=1200x630 for stronger social preview quality.',
+                },
+                {
                     'aspect': 'Social image alt fallback template',
                     'result': 'Good' if has_social_alt_fallback_template else 'Needs improvement',
                     'details': 'default/share layouts both expose social_image_alt fallback chain (page.image_alt -> site.image_alt -> page.title -> site.title) for OG/Twitter alt metadata.'
@@ -799,6 +822,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 },
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
+            'share_page_social_image_ready': has_share_page_large_social_image,
             'social_alt_fallback_template': has_social_alt_fallback_template,
             'paginated_noindex_policy': has_paginated_noindex_policy,
             'paginated_hreflang_policy': has_paginated_hreflang_guard,
@@ -1007,6 +1031,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     share_main_landmark_labeled = sections.get('layout_assessment', {}).get('share_main_landmark_labeled', False)
     broken = sections.get('broken_links_check', {}).get('broken_links', [])
     missing_entry_alt = sections.get('seo_evaluation', {}).get('missing_entry_image_alt', [])
+    share_page_social_image_ready = sections.get('seo_evaluation', {}).get('share_page_social_image_ready', False)
     social_alt_fallback_template = sections.get('seo_evaluation', {}).get('social_alt_fallback_template', False)
     paginated_noindex_policy = sections.get('seo_evaluation', {}).get('paginated_noindex_policy', False)
     paginated_hreflang_policy = sections.get('seo_evaluation', {}).get('paginated_hreflang_policy', False)
@@ -1028,6 +1053,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'broken_links={len(broken)}')
     if missing_entry_alt:
         failures.append(f'missing_entry_image_alt={len(missing_entry_alt)}')
+    if not share_page_social_image_ready:
+        failures.append('share_page_social_image_ready=0')
     if not social_alt_fallback_template:
         failures.append('social_alt_fallback_template=0')
     if not paginated_noindex_policy:
