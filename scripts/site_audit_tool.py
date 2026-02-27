@@ -609,6 +609,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     has_guarded_adjacent_post_prefetch = "{% if page.layout == 'post' and page.prefetch_adjacent_posts %}" in default_layout
     has_guarded_disqus_preconnect = "{% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}" in default_layout
+    has_share_font_preconnect = (
+        'rel="preconnect" href="https://fonts.googleapis.com"' in share_layout
+        or 'rel="preconnect" href="https://fonts.gstatic.com"' in share_layout
+    )
     has_share_font_css_preload = 'rel="preload" as="style" href="https://fonts.googleapis.com/css2?' in share_layout
     has_share_local_css_preload = (
         "rel=\"preload\" href=\"{{ '/assets/css/theme.css' | relative_url }}\" as=\"style\"" in share_layout
@@ -815,6 +819,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_guarded_featured_image_preload
             and has_guarded_adjacent_post_prefetch
             and has_guarded_disqus_preconnect
+            and not has_share_font_preconnect
             and not duplicate_resource_hint_hosts
             and not invalid_perf_flags
             and not posts_missing_image_dimensions
@@ -904,6 +909,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Guard Disqus preconnect behind page.preconnect_disqus to reduce default third-party connection cost on post pages.',
                 },
                 {
+                    'aspect': 'Share font preconnect policy',
+                    'result': 'Improved' if not has_share_font_preconnect else 'Needs tuning',
+                    'details': 'Share layout avoids Google Fonts preconnect hints so third-party handshakes only occur when async stylesheet fetching is actually needed.'
+                    if not has_share_font_preconnect
+                    else 'Remove share layout Google Fonts preconnect hints to reduce up-front third-party connection cost on mobile.',
+                },
+                {
                     'aspect': 'Resource hint deduplication',
                     'result': 'Improved' if not duplicate_resource_hint_hosts else 'Needs tuning',
                     'details': 'Domains with preconnect avoid duplicated dns-prefetch hints to keep head metadata lean and avoid redundant hints.'
@@ -961,6 +973,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'missing_page_image_dimensions': pages_missing_image_dimensions,
             'duplicate_resource_hint_hosts': duplicate_resource_hint_hosts,
             'invalid_front_matter_perf_flags': invalid_perf_flags,
+            'share_font_preconnect_policy': not has_share_font_preconnect,
             'apple_touch_icon_ready': has_mobile_ready_apple_touch_icon,
             'share_apple_touch_icon_ready': has_share_mobile_ready_apple_touch_icon,
         },
@@ -1001,6 +1014,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
     missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
     invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
+    share_font_preconnect_policy = sections.get('content_quality', {}).get('share_font_preconnect_policy', False)
     apple_touch_icon_ready = sections.get('content_quality', {}).get('apple_touch_icon_ready', False)
     share_apple_touch_icon_ready = sections.get('content_quality', {}).get('share_apple_touch_icon_ready', False)
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
@@ -1028,6 +1042,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'missing_page_image_dimensions={len(missing_page_dimensions)}')
     if invalid_perf_flags:
         failures.append(f'invalid_front_matter_perf_flags={len(invalid_perf_flags)}')
+    if not share_font_preconnect_policy:
+        failures.append('share_font_preconnect_policy=0')
     if not apple_touch_icon_ready:
         failures.append('apple_touch_icon_ready=0')
     if not share_apple_touch_icon_ready:
