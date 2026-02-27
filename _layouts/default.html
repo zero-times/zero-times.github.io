@@ -57,25 +57,19 @@
   {% endif %}
   {% if page.categories contains 'news' %}
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
-  <link rel="dns-prefetch" href="https://s2-g1.glbimg.com">
   <link rel="preconnect" href="https://i.s3.glbimg.com" crossorigin>
-  <link rel="dns-prefetch" href="https://i.s3.glbimg.com">
   {% endif %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=PT+Serif:wght@400;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=PT+Serif:wght@400;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap"></noscript>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   {% if page.url contains '/contact/' %}
   <link rel="preconnect" href="https://formspree.io" crossorigin>
-  <link rel="dns-prefetch" href="https://formspree.io">
   {% endif %}
   {% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}
   <link rel="preconnect" href="https://{{ site.disqus }}.disqus.com" crossorigin>
-  <link rel="dns-prefetch" href="https://{{ site.disqus }}.disqus.com">
   <link rel="preconnect" href="https://c.disquscdn.com" crossorigin>
-  <link rel="dns-prefetch" href="https://c.disquscdn.com">
   {% endif %}
   {% if page.keywords %}
     <meta name="keywords" content="{{ page.keywords }}">
@@ -138,9 +132,7 @@
   <!-- Google Analytics (GA4) -->
   {% if site.google_analytics %}
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
-  <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

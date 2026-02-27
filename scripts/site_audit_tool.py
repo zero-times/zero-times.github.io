@@ -39,6 +39,8 @@ LIQUID_RELATIVE_URL_RE = re.compile(
     r'(?:href|src)\s*=\s*["\']\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}["\']'
 )
 LIQUID_LINK_TAG_RE = re.compile(r'\{%\s*link\s+([^\s%]+)\s*%\}')
+PRECONNECT_HINT_RE = re.compile(r'<link\s+rel="preconnect"\s+href="([^"]+)"')
+DNS_PREFETCH_HINT_RE = re.compile(r'<link\s+rel="dns-prefetch"\s+href="([^"]+)"')
 FRONT_MATTER_VALUE_RE = re.compile(r'^[ \t]*([A-Za-z0-9_-]+)[ \t]*:[ \t]*(.+)$', re.MULTILINE)
 BOOLEAN_LITERALS = {'true', 'false'}
 
@@ -82,6 +84,10 @@ def parse_front_matter_values(text: str) -> dict[str, str]:
     for match in FRONT_MATTER_VALUE_RE.finditer(parts[1]):
         values[match.group(1)] = match.group(2).strip().strip('"\'')
     return values
+
+
+def normalize_hint_href(value: str) -> str:
+    return value.strip().rstrip('/').lower()
 
 
 def normalize_route(path: str) -> str:
@@ -502,6 +508,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_guarded_share_social_image_preload = '{% if page.preload_social_image and page.image %}' in share_layout
     has_guarded_adjacent_post_prefetch = "{% if page.layout == 'post' and page.prefetch_adjacent_posts %}" in default_layout
     has_guarded_disqus_preconnect = "{% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}" in default_layout
+    preconnect_hints = {normalize_hint_href(value) for value in PRECONNECT_HINT_RE.findall(default_layout)}
+    dns_prefetch_hints = {normalize_hint_href(value) for value in DNS_PREFETCH_HINT_RE.findall(default_layout)}
+    duplicate_resource_hint_hosts = sorted(preconnect_hints.intersection(dns_prefetch_hints))
 
     sections = {
         'layout_assessment': {
@@ -631,6 +640,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_guarded_share_social_image_preload
             and has_guarded_adjacent_post_prefetch
             and has_guarded_disqus_preconnect
+            and not duplicate_resource_hint_hosts
             and not invalid_perf_flags
             and not posts_missing_image_dimensions
             else 7.2,
@@ -702,6 +712,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Guard Disqus preconnect behind page.preconnect_disqus to reduce default third-party connection cost on post pages.',
                 },
                 {
+                    'aspect': 'Resource hint deduplication',
+                    'result': 'Improved' if not duplicate_resource_hint_hosts else 'Needs tuning',
+                    'details': 'Domains with preconnect avoid duplicated dns-prefetch hints to keep head metadata lean and avoid redundant hints.'
+                    if not duplicate_resource_hint_hosts
+                    else f'Duplicate preconnect+dns-prefetch hints found for: {", ".join(duplicate_resource_hint_hosts)}.',
+                },
+                {
                     'aspect': 'Front matter performance toggles',
                     'result': 'Improved' if not invalid_perf_flags else 'Needs tuning',
                     'details': 'hero_avatar_preload/preload_social_image/prefetch_adjacent_posts/preconnect_disqus use explicit true/false values.'
@@ -722,6 +739,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
+            'duplicate_resource_hint_hosts': duplicate_resource_hint_hosts,
             'invalid_front_matter_perf_flags': invalid_perf_flags,
         },
     }
