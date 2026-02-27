@@ -648,6 +648,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         'rel="preconnect" href="https://fonts.googleapis.com"' in share_layout
         or 'rel="preconnect" href="https://fonts.gstatic.com"' in share_layout
     )
+    has_share_font_stylesheet = 'fonts.googleapis.com/css2?family=' in share_layout
     has_share_font_css_preload = 'rel="preload" as="style" href="https://fonts.googleapis.com/css2?' in share_layout
     has_share_local_css_preload = (
         "rel=\"preload\" href=\"{{ '/assets/css/theme.css' | relative_url }}\" as=\"style\"" in share_layout
@@ -869,6 +870,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_guarded_analytics_preconnect
             and has_guarded_default_font_preconnect
             and not has_share_font_preconnect
+            and not has_share_font_stylesheet
             and not duplicate_resource_hint_hosts
             and not invalid_perf_flags
             and not posts_missing_image_dimensions
@@ -983,6 +985,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Remove share layout Google Fonts preconnect hints to reduce up-front third-party connection cost on mobile.',
                 },
                 {
+                    'aspect': 'Share font stylesheet policy',
+                    'result': 'Improved' if not has_share_font_stylesheet else 'Needs tuning',
+                    'details': 'Share layout uses local/system typography only, removing Google Fonts stylesheet fetches for faster mobile first paint.'
+                    if not has_share_font_stylesheet
+                    else 'Remove share layout Google Fonts stylesheet to cut third-party render-blocking dependency on mobile.',
+                },
+                {
                     'aspect': 'Resource hint deduplication',
                     'result': 'Improved' if not duplicate_resource_hint_hosts else 'Needs tuning',
                     'details': 'Domains with preconnect avoid duplicated dns-prefetch hints to keep head metadata lean and avoid redundant hints.'
@@ -1043,6 +1052,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'analytics_preconnect_policy': has_guarded_analytics_preconnect,
             'default_font_preconnect_policy': has_guarded_default_font_preconnect,
             'share_font_preconnect_policy': not has_share_font_preconnect,
+            'share_font_stylesheet_policy': not has_share_font_stylesheet,
             'apple_touch_icon_ready': has_mobile_ready_apple_touch_icon,
             'share_apple_touch_icon_ready': has_share_mobile_ready_apple_touch_icon,
         },
@@ -1087,6 +1097,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     analytics_preconnect_policy = sections.get('content_quality', {}).get('analytics_preconnect_policy', False)
     default_font_preconnect_policy = sections.get('content_quality', {}).get('default_font_preconnect_policy', False)
     share_font_preconnect_policy = sections.get('content_quality', {}).get('share_font_preconnect_policy', False)
+    share_font_stylesheet_policy = sections.get('content_quality', {}).get('share_font_stylesheet_policy', False)
     apple_touch_icon_ready = sections.get('content_quality', {}).get('apple_touch_icon_ready', False)
     share_apple_touch_icon_ready = sections.get('content_quality', {}).get('share_apple_touch_icon_ready', False)
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
@@ -1122,6 +1133,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('default_font_preconnect_policy=0')
     if not share_font_preconnect_policy:
         failures.append('share_font_preconnect_policy=0')
+    if not share_font_stylesheet_policy:
+        failures.append('share_font_stylesheet_policy=0')
     if not apple_touch_icon_ready:
         failures.append('apple_touch_icon_ready=0')
     if not share_apple_touch_icon_ready:
