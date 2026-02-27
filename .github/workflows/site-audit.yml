@@ -40,6 +40,11 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
       - name: Run strict site audit (content changes)
         if: github.event_name != 'schedule'
         run: python3 scripts/site_audit_tool.py --strict
@@ -51,6 +56,25 @@ jobs:
       - name: Run strict site audit with deep external sample (monthly scheduled)
         if: github.event_name == 'schedule' && github.event.schedule == '35 2 1 * *'
         run: python3 scripts/site_audit_tool.py --strict --http-check --http-sample 50 --http-timeout 4.0
+
+      - name: Build site for rendered SEO smoke check
+        run: bundle exec jekyll build
+
+      - name: Assert rendered canonical/noindex signals on paginated archive
+        run: |
+          PAGE2="_site/blog/page2/index.html"
+          if [ ! -f "$PAGE2" ]; then
+            echo "SKIP: $PAGE2 not generated (insufficient posts for page 2)."
+            exit 0
+          fi
+          grep -q '<meta name="robots" content="noindex,follow' "$PAGE2"
+          grep -q '<meta name="googlebot" content="noindex,follow' "$PAGE2"
+          grep -q 'rel="canonical"' "$PAGE2"
+          CANONICAL_COUNT=$(grep -o 'rel="canonical"' "$PAGE2" | wc -l | tr -d ' ')
+          if [ "$CANONICAL_COUNT" -ne 1 ]; then
+            echo "Expected exactly 1 canonical tag on page 2, found $CANONICAL_COUNT"
+            exit 1
+          fi
 
       - name: Upload site audit report
         if: always()
