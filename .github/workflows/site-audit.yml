@@ -77,6 +77,18 @@ jobs:
             exit 1
           fi
 
+      - name: Assert paginated archive omits hreflang alternates
+        run: |
+          PAGE2="_site/blog/page2/index.html"
+          if [ ! -f "$PAGE2" ]; then
+            echo "SKIP: $PAGE2 not generated (insufficient posts for page 2)."
+            exit 0
+          fi
+          if grep -q 'rel="alternate" hreflang=' "$PAGE2"; then
+            echo "Expected no hreflang alternate links on paginated archive page 2"
+            exit 1
+          fi
+
       - name: Assert rendered apple touch icon policy
         run: |
           HOME="_site/index.html"

@@ -761,6 +761,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
             'social_alt_fallback_template': has_social_alt_fallback_template,
+            'paginated_noindex_policy': has_paginated_noindex_policy,
+            'paginated_hreflang_policy': has_paginated_hreflang_guard,
             'canonical_signal_consistency': has_canonical_signal_consistency,
         },
         'content_quality': {
@@ -935,6 +937,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     broken = sections.get('broken_links_check', {}).get('broken_links', [])
     missing_entry_alt = sections.get('seo_evaluation', {}).get('missing_entry_image_alt', [])
     social_alt_fallback_template = sections.get('seo_evaluation', {}).get('social_alt_fallback_template', False)
+    paginated_noindex_policy = sections.get('seo_evaluation', {}).get('paginated_noindex_policy', False)
+    paginated_hreflang_policy = sections.get('seo_evaluation', {}).get('paginated_hreflang_policy', False)
     canonical_signal_consistency = sections.get('seo_evaluation', {}).get('canonical_signal_consistency', False)
     missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
     missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
@@ -949,6 +953,10 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'missing_entry_image_alt={len(missing_entry_alt)}')
     if not social_alt_fallback_template:
         failures.append('social_alt_fallback_template=0')
+    if not paginated_noindex_policy:
+        failures.append('paginated_noindex_policy=0')
+    if not paginated_hreflang_policy:
+        failures.append('paginated_hreflang_policy=0')
     if not canonical_signal_consistency:
         failures.append('canonical_signal_consistency=0')
     if missing_dimensions:
