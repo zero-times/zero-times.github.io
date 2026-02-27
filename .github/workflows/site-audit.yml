@@ -25,6 +25,7 @@ on:
       - "scripts/site_audit_tool.py"
   schedule:
     - cron: "20 2 * * 1"
+    - cron: "35 2 1 * *"
   workflow_dispatch:
 
 jobs:
@@ -43,9 +44,13 @@ jobs:
         if: github.event_name != 'schedule'
         run: python3 scripts/site_audit_tool.py --strict
 
-      - name: Run strict site audit with external sample (scheduled)
-        if: github.event_name == 'schedule'
+      - name: Run strict site audit with external sample (weekly scheduled)
+        if: github.event_name == 'schedule' && github.event.schedule == '20 2 * * 1'
         run: python3 scripts/site_audit_tool.py --strict --http-check --http-sample 20 --http-timeout 4.0
+
+      - name: Run strict site audit with deep external sample (monthly scheduled)
+        if: github.event_name == 'schedule' && github.event.schedule == '35 2 1 * *'
+        run: python3 scripts/site_audit_tool.py --strict --http-check --http-sample 50 --http-timeout 4.0
 
       - name: Upload site audit report
         if: always()

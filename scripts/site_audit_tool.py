@@ -447,7 +447,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     posts_missing_image_dimensions = collect_posts_missing_image_dimensions()
     entries_missing_image_alt = collect_entries_missing_image_alt()
     invalid_perf_flags = collect_invalid_boolean_front_matter_flags(
-        ['hero_avatar_preload', 'preload_social_image', 'prefetch_adjacent_posts']
+        ['hero_avatar_preload', 'preload_social_image', 'prefetch_adjacent_posts', 'preconnect_disqus']
     )
     urls_count = 0
     external_urls = collect_external_urls()
@@ -493,6 +493,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     has_guarded_share_social_image_preload = '{% if page.preload_social_image and page.image %}' in share_layout
     has_guarded_adjacent_post_prefetch = "{% if page.layout == 'post' and page.prefetch_adjacent_posts %}" in default_layout
+    has_guarded_disqus_preconnect = "{% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}" in default_layout
 
     sections = {
         'layout_assessment': {
@@ -612,6 +613,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not has_local_css_preload
             and has_guarded_share_social_image_preload
             and has_guarded_adjacent_post_prefetch
+            and has_guarded_disqus_preconnect
             and not invalid_perf_flags
             and not posts_missing_image_dimensions
             else 7.2,
@@ -669,9 +671,16 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Only enable adjacent post prefetch when page.prefetch_adjacent_posts is explicitly set.',
                 },
                 {
+                    'aspect': 'Disqus preconnect policy',
+                    'result': 'Improved' if has_guarded_disqus_preconnect else 'Needs tuning',
+                    'details': 'Disqus preconnect is opt-in via page.preconnect_disqus so post pages avoid default third-party handshakes on mobile.'
+                    if has_guarded_disqus_preconnect
+                    else 'Guard Disqus preconnect behind page.preconnect_disqus to reduce default third-party connection cost on post pages.',
+                },
+                {
                     'aspect': 'Front matter performance toggles',
                     'result': 'Improved' if not invalid_perf_flags else 'Needs tuning',
-                    'details': 'hero_avatar_preload/preload_social_image/prefetch_adjacent_posts use explicit true/false values.'
+                    'details': 'hero_avatar_preload/preload_social_image/prefetch_adjacent_posts/preconnect_disqus use explicit true/false values.'
                     if not invalid_perf_flags
                     else f'Found {len(invalid_perf_flags)} invalid toggle value(s); use true/false booleans in front matter.',
                 },
