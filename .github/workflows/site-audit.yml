@@ -86,6 +86,16 @@ jobs:
           fi
           grep -Eq '<link rel="apple-touch-icon" sizes="180x180" href="[^"]*assets/images/sal.png"' "$HOME"
 
+      - name: Assert rendered social image alt fallback on share page
+        run: |
+          SHARE="_site/share/index.html"
+          if [ ! -f "$SHARE" ]; then
+            echo "Missing rendered share page: $SHARE"
+            exit 1
+          fi
+          grep -q '<meta property="og:image:alt" content=' "$SHARE"
+          grep -q '<meta name="twitter:image:alt" content=' "$SHARE"
+
       - name: Upload site audit report
         if: always()
         uses: actions/upload-artifact@v4

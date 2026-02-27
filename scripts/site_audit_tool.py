@@ -589,6 +589,15 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         or "rel=\"preload\" href=\"{{ '/assets/css/custom.css' | relative_url }}\" as=\"style\"" in default_layout
     )
     has_guarded_share_social_image_preload = '{% if page.preload_social_image and page.image %}' in share_layout
+    social_alt_fallback_expr = '{% assign social_image_alt = page.image_alt | default: site.image_alt | default: page.title | default: site.title %}'
+    has_social_alt_fallback_template = (
+        social_alt_fallback_expr in default_layout
+        and social_alt_fallback_expr in share_layout
+        and '<meta property="og:image:alt" content="{{ social_image_alt | escape }}">' in default_layout
+        and '<meta name="twitter:image:alt" content="{{ social_image_alt | escape }}">' in default_layout
+        and '<meta property="og:image:alt" content="{{ social_image_alt | escape }}">' in share_layout
+        and '<meta name="twitter:image:alt" content="{{ social_image_alt | escape }}">' in share_layout
+    )
     has_guarded_featured_image_preload = (
         "{% if page.preload_featured_image or page.image_loading == 'eager' or page.image_fetchpriority == 'high' %}" in default_layout
         and "page.layout == 'post' or page.image_loading == 'eager' or page.image_fetchpriority == 'high'" not in default_layout
@@ -686,6 +695,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_large_social_image
             and has_social_image_alt
             and not entries_missing_image_alt
+            and has_social_alt_fallback_template
             and has_paginated_noindex_policy
             and has_paginated_hreflang_guard
             and has_canonical_signal_consistency
@@ -721,6 +731,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else f"Found {len(entries_missing_image_alt)} entry file(s) with image but missing image_alt.",
                 },
                 {
+                    'aspect': 'Social image alt fallback template',
+                    'result': 'Good' if has_social_alt_fallback_template else 'Needs improvement',
+                    'details': 'default/share layouts both expose social_image_alt fallback chain (page.image_alt -> site.image_alt -> page.title -> site.title) for OG/Twitter alt metadata.'
+                    if has_social_alt_fallback_template
+                    else 'Keep matching social_image_alt fallback chain and OG/Twitter alt tags in both default and share layouts.',
+                },
+                {
                     'aspect': 'Paginated archive indexing policy',
                     'result': 'Good' if has_paginated_noindex_policy else 'Needs improvement',
                     'details': 'Paginated archive pages (page > 1) are marked noindex,follow to reduce duplicate listing-page indexing.'
@@ -743,6 +760,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 },
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
+            'social_alt_fallback_template': has_social_alt_fallback_template,
             'canonical_signal_consistency': has_canonical_signal_consistency,
         },
         'content_quality': {
@@ -916,6 +934,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     sections = report.get('sections', {})
     broken = sections.get('broken_links_check', {}).get('broken_links', [])
     missing_entry_alt = sections.get('seo_evaluation', {}).get('missing_entry_image_alt', [])
+    social_alt_fallback_template = sections.get('seo_evaluation', {}).get('social_alt_fallback_template', False)
     canonical_signal_consistency = sections.get('seo_evaluation', {}).get('canonical_signal_consistency', False)
     missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
     missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
@@ -928,6 +947,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'broken_links={len(broken)}')
     if missing_entry_alt:
         failures.append(f'missing_entry_image_alt={len(missing_entry_alt)}')
+    if not social_alt_fallback_template:
+        failures.append('social_alt_fallback_template=0')
     if not canonical_signal_consistency:
         failures.append('canonical_signal_consistency=0')
     if missing_dimensions:
