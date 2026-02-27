@@ -42,6 +42,7 @@ LIQUID_LINK_TAG_RE = re.compile(r'\{%\s*link\s+([^\s%]+)\s*%\}')
 PRECONNECT_HINT_RE = re.compile(r'<link\s+rel="preconnect"\s+href="([^"]+)"')
 DNS_PREFETCH_HINT_RE = re.compile(r'<link\s+rel="dns-prefetch"\s+href="([^"]+)"')
 APPLE_TOUCH_ICON_RE = re.compile(r'<link\s+rel="apple-touch-icon"[^>]*href="([^"]+)"[^>]*>')
+WEB_MANIFEST_RE = re.compile(r'<link\s+rel="manifest"[^>]*href="([^"]+)"[^>]*>')
 FORM_POST_ACTION_RE = re.compile(
     r'<form\b[^>]*\bmethod\s*=\s*["\']post["\'][^>]*\baction\s*=\s*["\'](https?://[^"\']+)["\']|'
     r'<form\b[^>]*\baction\s*=\s*["\'](https?://[^"\']+)["\'][^>]*\bmethod\s*=\s*["\']post["\']',
@@ -414,6 +415,35 @@ def get_image_dimensions(path: Path) -> tuple[int, int] | None:
     return None
 
 
+def parse_web_manifest(path: Path | None) -> dict | None:
+    if not path or not path.exists():
+        return None
+    try:
+        data = json.loads(read_text(path))
+    except (json.JSONDecodeError, OSError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def has_manifest_icon(manifest: dict | None, min_size: int) -> bool:
+    if not manifest:
+        return False
+    icons = manifest.get('icons')
+    if not isinstance(icons, list):
+        return False
+    for icon in icons:
+        if not isinstance(icon, dict):
+            continue
+        src = icon.get('src')
+        if not isinstance(src, str) or not src.strip():
+            continue
+        icon_path = resolve_local_image_path(src)
+        dims = get_image_dimensions(icon_path) if icon_path else None
+        if dims and dims[0] >= min_size and dims[1] >= min_size:
+            return True
+    return False
+
+
 def collect_external_urls() -> list[str]:
     urls: set[str] = set()
     for fp in iter_files():
@@ -689,6 +719,33 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and share_apple_touch_icon_dimensions[0] == share_apple_touch_icon_dimensions[1]
         and share_apple_touch_icon_dimensions[0] >= 180
     )
+    default_manifest_href_match = WEB_MANIFEST_RE.search(default_layout)
+    default_manifest_href = default_manifest_href_match.group(1) if default_manifest_href_match else None
+    default_manifest_path = resolve_local_image_path(default_manifest_href)
+    share_manifest_href_match = WEB_MANIFEST_RE.search(share_layout)
+    share_manifest_href = share_manifest_href_match.group(1) if share_manifest_href_match else None
+    share_manifest_path = resolve_local_image_path(share_manifest_href)
+    has_default_manifest_link = bool(default_manifest_href and default_manifest_path)
+    has_share_manifest_link = bool(share_manifest_href and share_manifest_path)
+    manifest_paths_match = bool(default_manifest_path and share_manifest_path and default_manifest_path == share_manifest_path)
+    web_manifest = parse_web_manifest(default_manifest_path if manifest_paths_match else None)
+    has_manifest_baseline = bool(
+        web_manifest
+        and web_manifest.get('name')
+        and web_manifest.get('short_name')
+        and web_manifest.get('start_url')
+        and web_manifest.get('display')
+    )
+    has_manifest_icon_192 = has_manifest_icon(web_manifest, min_size=192)
+    has_manifest_icon_512 = has_manifest_icon(web_manifest, min_size=512)
+    has_mobile_ready_web_manifest = bool(
+        has_default_manifest_link
+        and has_share_manifest_link
+        and manifest_paths_match
+        and has_manifest_baseline
+        and has_manifest_icon_192
+        and has_manifest_icon_512
+    )
 
     sections = {
         'layout_assessment': {
@@ -877,6 +934,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not pages_missing_image_dimensions
             and has_mobile_ready_apple_touch_icon
             and has_share_mobile_ready_apple_touch_icon
+            and has_mobile_ready_web_manifest
             else 7.2,
             'max_score': 10.0,
             'findings': [
@@ -1044,6 +1102,15 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if has_share_mobile_ready_apple_touch_icon and share_apple_touch_icon_path and share_apple_touch_icon_dimensions
                     else 'Use a square local apple-touch-icon (>=180x180) and declare sizes="180x180" in share layout for mobile install quality.',
                 },
+                {
+                    'aspect': 'Web app manifest readiness',
+                    'result': 'Improved' if has_mobile_ready_web_manifest else 'Needs tuning',
+                    'details': (
+                        f"default/share layouts reference {default_manifest_path.relative_to(ROOT)} with name/short_name/start_url/display and local 192px+512px icons."
+                    )
+                    if has_mobile_ready_web_manifest and default_manifest_path
+                    else 'Add one shared local manifest link in default/share layouts and provide local 192px/512px icons for installable mobile experience.',
+                },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
             'missing_page_image_dimensions': pages_missing_image_dimensions,
@@ -1055,6 +1122,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'share_font_stylesheet_policy': not has_share_font_stylesheet,
             'apple_touch_icon_ready': has_mobile_ready_apple_touch_icon,
             'share_apple_touch_icon_ready': has_share_mobile_ready_apple_touch_icon,
+            'web_app_manifest_ready': has_mobile_ready_web_manifest,
         },
     }
 
@@ -1100,6 +1168,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     share_font_stylesheet_policy = sections.get('content_quality', {}).get('share_font_stylesheet_policy', False)
     apple_touch_icon_ready = sections.get('content_quality', {}).get('apple_touch_icon_ready', False)
     share_apple_touch_icon_ready = sections.get('content_quality', {}).get('share_apple_touch_icon_ready', False)
+    web_app_manifest_ready = sections.get('content_quality', {}).get('web_app_manifest_ready', False)
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
 
     failures: list[str] = []
@@ -1139,6 +1208,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('apple_touch_icon_ready=0')
     if not share_apple_touch_icon_ready:
         failures.append('share_apple_touch_icon_ready=0')
+    if not web_app_manifest_ready:
+        failures.append('web_app_manifest_ready=0')
     if http_check_enabled and http_failures:
         failures.append(f'http_failures={len(http_failures)}')
     return failures
