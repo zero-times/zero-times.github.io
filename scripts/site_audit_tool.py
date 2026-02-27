@@ -674,6 +674,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Set a stable aria-label on #main-content in both default and share layouts instead of relying on page-title ids.',
                 }
             ],
+            'default_main_landmark_labeled': has_default_main_landmark_aria_label,
+            'share_main_landmark_labeled': has_share_main_landmark_aria_label,
         },
         'broken_links_check': {
             'score': 9.0
@@ -988,6 +990,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
 
 def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]:
     sections = report.get('sections', {})
+    default_main_landmark_labeled = sections.get('layout_assessment', {}).get('default_main_landmark_labeled', False)
+    share_main_landmark_labeled = sections.get('layout_assessment', {}).get('share_main_landmark_labeled', False)
     broken = sections.get('broken_links_check', {}).get('broken_links', [])
     missing_entry_alt = sections.get('seo_evaluation', {}).get('missing_entry_image_alt', [])
     social_alt_fallback_template = sections.get('seo_evaluation', {}).get('social_alt_fallback_template', False)
@@ -1002,6 +1006,10 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
 
     failures: list[str] = []
+    if not default_main_landmark_labeled:
+        failures.append('default_main_landmark_labeled=0')
+    if not share_main_landmark_labeled:
+        failures.append('share_main_landmark_labeled=0')
     if broken:
         failures.append(f'broken_links={len(broken)}')
     if missing_entry_alt:

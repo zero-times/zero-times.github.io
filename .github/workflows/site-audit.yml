@@ -108,6 +108,22 @@ jobs:
           grep -q '<meta property="og:image:alt" content=' "$SHARE"
           grep -q '<meta name="twitter:image:alt" content=' "$SHARE"
 
+      - name: Assert rendered mobile landmarks and share touch icon policy
+        run: |
+          HOME="_site/index.html"
+          SHARE="_site/share/index.html"
+          if [ ! -f "$HOME" ]; then
+            echo "Missing rendered homepage: $HOME"
+            exit 1
+          fi
+          if [ ! -f "$SHARE" ]; then
+            echo "Missing rendered share page: $SHARE"
+            exit 1
+          fi
+          grep -q '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label="Conteúdo principal">' "$HOME"
+          grep -q '<main id="main-content" role="main" tabindex="-1" aria-label="Conteúdo principal">' "$SHARE"
+          grep -Eq '<link rel="apple-touch-icon" sizes="180x180" href="[^"]*assets/images/sal.png"' "$SHARE"
+
       - name: Upload site audit report
         if: always()
         uses: actions/upload-artifact@v4
