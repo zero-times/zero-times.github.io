@@ -449,6 +449,12 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and '<meta name="robots" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">' in default_layout
         and '<meta name="googlebot" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">' in default_layout
     )
+    has_paginated_hreflang_guard = (
+        '{% unless is_paginated_archive_page %}' in default_layout
+        and '<link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">' in default_layout
+        and '<link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">' in default_layout
+        and '{% endunless %}' in default_layout
+    )
 
     malformed_links: list[dict] = []
     placeholder_hits: list[dict] = []
@@ -587,6 +593,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_social_image_alt
             and not entries_missing_image_alt
             and has_paginated_noindex_policy
+            and has_paginated_hreflang_guard
             else 7.0,
             'max_score': 10.0,
             'findings': [
@@ -624,6 +631,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Paginated archive pages (page > 1) are marked noindex,follow to reduce duplicate listing-page indexing.'
                     if has_paginated_noindex_policy
                     else 'Add paginated page > 1 noindex,follow fallback for robots/googlebot in default layout while preserving page-level overrides.',
+                },
+                {
+                    'aspect': 'Paginated hreflang policy',
+                    'result': 'Good' if has_paginated_hreflang_guard else 'Needs improvement',
+                    'details': 'Paginated archive pages (page > 1) skip alternate hreflang tags to avoid sending duplicate language signals on noindex listings.'
+                    if has_paginated_hreflang_guard
+                    else 'Wrap alternate hreflang links in a page > 1 guard so noindex paginated archives do not emit duplicate language alternates.',
                 },
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
