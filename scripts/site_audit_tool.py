@@ -260,6 +260,33 @@ def collect_posts_missing_image_dimensions() -> list[dict]:
     return missing
 
 
+def collect_pages_missing_image_dimensions() -> list[dict]:
+    missing: list[dict] = []
+    folder = ROOT / 'pages'
+    if not folder.exists():
+        return missing
+    for page_file in folder.glob('*'):
+        if page_file.suffix not in ('.md', '.markdown', '.html'):
+            continue
+        text = read_text(page_file)
+        image = extract_front_matter_value(text, 'image')
+        if not image:
+            continue
+        has_width = extract_front_matter_value(text, 'image_width')
+        has_height = extract_front_matter_value(text, 'image_height')
+        if has_width and has_height:
+            continue
+        rel = page_file.relative_to(ROOT)
+        missing.append(
+            {
+                'location': str(rel),
+                'issue': 'page image dimensions missing',
+                'value': image,
+            }
+        )
+    return missing
+
+
 def collect_entries_missing_image_alt() -> list[dict]:
     missing: list[dict] = []
     for collection in ('_posts', '_blogs', 'pages'):
@@ -471,6 +498,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     missing_liquid_internal_links = collect_missing_liquid_internal_links()
     missing_liquid_link_tag_targets = collect_missing_liquid_link_tag_targets()
     posts_missing_image_dimensions = collect_posts_missing_image_dimensions()
+    pages_missing_image_dimensions = collect_pages_missing_image_dimensions()
     entries_missing_image_alt = collect_entries_missing_image_alt()
     invalid_perf_flags = collect_invalid_boolean_front_matter_flags(
         ['hero_avatar_preload', 'preload_social_image', 'preload_featured_image', 'prefetch_adjacent_posts', 'preconnect_disqus']
@@ -680,6 +708,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not duplicate_resource_hint_hosts
             and not invalid_perf_flags
             and not posts_missing_image_dimensions
+            and not pages_missing_image_dimensions
             else 7.2,
             'max_score': 10.0,
             'findings': [
@@ -781,8 +810,16 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if not posts_missing_image_dimensions
                     else f"Found {len(posts_missing_image_dimensions)} post(s) with image but without image_width/image_height.",
                 },
+                {
+                    'aspect': 'Page featured image dimensions',
+                    'result': 'Improved' if not pages_missing_image_dimensions else 'Needs tuning',
+                    'details': 'Pages with front matter image include image_width/image_height to reduce mobile layout shift.'
+                    if not pages_missing_image_dimensions
+                    else f"Found {len(pages_missing_image_dimensions)} page(s) with image but without image_width/image_height.",
+                },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
+            'missing_page_image_dimensions': pages_missing_image_dimensions,
             'duplicate_resource_hint_hosts': duplicate_resource_hint_hosts,
             'invalid_front_matter_perf_flags': invalid_perf_flags,
         },
@@ -816,6 +853,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     missing_entry_alt = sections.get('seo_evaluation', {}).get('missing_entry_image_alt', [])
     canonical_signal_consistency = sections.get('seo_evaluation', {}).get('canonical_signal_consistency', False)
     missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
+    missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
     invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
 
@@ -828,6 +866,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('canonical_signal_consistency=0')
     if missing_dimensions:
         failures.append(f'missing_post_image_dimensions={len(missing_dimensions)}')
+    if missing_page_dimensions:
+        failures.append(f'missing_page_image_dimensions={len(missing_page_dimensions)}')
     if invalid_perf_flags:
         failures.append(f'invalid_front_matter_perf_flags={len(invalid_perf_flags)}')
     if http_check_enabled and http_failures:
