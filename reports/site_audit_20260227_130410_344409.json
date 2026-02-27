@@ -1,0 +1,178 @@
+{
+  "audit_timestamp": "2026-02-27T13:04:10.327284+08:00",
+  "website_url": "https://youllbe.cn",
+  "overall_score": 9.0,
+  "max_possible_score": 10.0,
+  "sections": {
+    "layout_assessment": {
+      "score": 8.9,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Mobile Experience",
+          "result": "Good",
+          "details": "Viewport meta and skip-link checked in default layout."
+        },
+        {
+          "aspect": "Main landmark labeling",
+          "result": "Improved",
+          "details": "Main landmark uses aria-label to avoid broken aria-labelledby references across mixed layouts."
+        }
+      ]
+    },
+    "broken_links_check": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "URL Pattern Scan",
+          "result": "Clean",
+          "details": "Regex scan for duplicated protocol and placeholder domains/markers."
+        },
+        {
+          "aspect": "Internal Link Targets",
+          "result": "Clean",
+          "details": "Checks markdown links ](/path/), Liquid href/src {{ \"/path/\" | relative_url }}, and {% link ... %} targets."
+        },
+        {
+          "aspect": "HTTP Reachability Sample",
+          "result": "Skipped",
+          "details": "Enable with --http-check to sample external URLs."
+        }
+      ],
+      "broken_links": [],
+      "http_check": {
+        "enabled": false,
+        "sample_size": 0,
+        "failures": [],
+        "results": []
+      }
+    },
+    "seo_evaluation": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Meta/SEO baseline",
+          "result": "Good",
+          "details": "default.html contains {% seo %}; _config.yml includes core SEO keys."
+        },
+        {
+          "aspect": "Social preview image size",
+          "result": "Good",
+          "details": "_config.yml image points to assets/images/screenshot.png (1280x719)."
+        },
+        {
+          "aspect": "Social preview image alt",
+          "result": "Good",
+          "details": "_config.yml image_alt is set: Captura de tela da página inicial do blog Hoa"
+        },
+        {
+          "aspect": "Entry social image alt coverage",
+          "result": "Good",
+          "details": "Entries with front matter image include image_alt for social preview and accessibility metadata."
+        },
+        {
+          "aspect": "Paginated archive indexing policy",
+          "result": "Good",
+          "details": "Paginated archive pages (page > 1) are marked noindex,follow to reduce duplicate listing-page indexing."
+        },
+        {
+          "aspect": "Paginated hreflang policy",
+          "result": "Good",
+          "details": "Paginated archive pages (page > 1) skip alternate hreflang tags to avoid sending duplicate language signals on noindex listings."
+        }
+      ],
+      "missing_entry_image_alt": []
+    },
+    "content_quality": {
+      "score": 9.0,
+      "max_score": 10.0,
+      "findings": [
+        {
+          "aspect": "Performance hygiene",
+          "result": "Improved",
+          "details": "Formspree preconnect is restricted to contact pages to reduce unnecessary third-party handshakes."
+        },
+        {
+          "aspect": "Homepage hero image priority",
+          "result": "Improved",
+          "details": "Homepage avatar uses hero preload flag and eager/high fetch priority to reduce above-the-fold delays."
+        },
+        {
+          "aspect": "Responsive hero image variants",
+          "result": "Improved",
+          "details": "Homepage hero image provides srcset/sizes variants to avoid over-downloading on mobile."
+        },
+        {
+          "aspect": "Script preload pressure",
+          "result": "Improved",
+          "details": "theme.js is deferred without preload to avoid competing with render-critical CSS/image downloads."
+        },
+        {
+          "aspect": "Bootstrap stylesheet preload policy",
+          "result": "Improved",
+          "details": "Bootstrap CSS loads via stylesheet link only, avoiding extra preload hint contention on mobile."
+        },
+        {
+          "aspect": "Local stylesheet preload policy",
+          "result": "Improved",
+          "details": "theme.css/custom.css are discovered early via normal stylesheet links, avoiding redundant preload hints."
+        },
+        {
+          "aspect": "Share page social image preload",
+          "result": "Improved",
+          "details": "Share layout only preloads social image when page.preload_social_image is explicitly enabled, reducing default mobile bandwidth use."
+        },
+        {
+          "aspect": "Featured image preload policy",
+          "result": "Improved",
+          "details": "Featured image preload is opt-in via preload_featured_image (or explicit eager/high priority), preventing unconditional preload on all post pages."
+        },
+        {
+          "aspect": "Adjacent post prefetch policy",
+          "result": "Improved",
+          "details": "Adjacent post prefetch is opt-in via page.prefetch_adjacent_posts, avoiding unconditional mobile bandwidth consumption."
+        },
+        {
+          "aspect": "Disqus preconnect policy",
+          "result": "Improved",
+          "details": "Disqus preconnect is opt-in via page.preconnect_disqus so post pages avoid default third-party handshakes on mobile."
+        },
+        {
+          "aspect": "Resource hint deduplication",
+          "result": "Improved",
+          "details": "Domains with preconnect avoid duplicated dns-prefetch hints to keep head metadata lean and avoid redundant hints."
+        },
+        {
+          "aspect": "Front matter performance toggles",
+          "result": "Improved",
+          "details": "hero_avatar_preload/preload_social_image/preload_featured_image/prefetch_adjacent_posts/preconnect_disqus use explicit true/false values."
+        },
+        {
+          "aspect": "External URL volume",
+          "result": "Observed",
+          "details": "Detected 256 http(s) links across scanned files."
+        },
+        {
+          "aspect": "Post featured image dimensions",
+          "result": "Improved",
+          "details": "Posts/blog entries with front matter image now include image_width/image_height to reduce layout shift."
+        }
+      ],
+      "missing_post_image_dimensions": [],
+      "duplicate_resource_hint_hosts": [],
+      "invalid_front_matter_perf_flags": []
+    }
+  },
+  "summary": {
+    "layout": "Layout: 8.9/10",
+    "links": "Links: 9.0/10",
+    "seo": "SEO: 9.0/10",
+    "content": "Content/Perf: 9.0/10"
+  },
+  "recommendations": [
+    "Run this audit after each content batch and fix any placeholder/malformed links.",
+    "Run with --http-check periodically (or in CI) to validate sampled external URL reachability."
+  ]
+}

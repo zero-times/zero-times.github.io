@@ -464,7 +464,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     posts_missing_image_dimensions = collect_posts_missing_image_dimensions()
     entries_missing_image_alt = collect_entries_missing_image_alt()
     invalid_perf_flags = collect_invalid_boolean_front_matter_flags(
-        ['hero_avatar_preload', 'preload_social_image', 'prefetch_adjacent_posts', 'preconnect_disqus']
+        ['hero_avatar_preload', 'preload_social_image', 'preload_featured_image', 'prefetch_adjacent_posts', 'preconnect_disqus']
     )
     urls_count = 0
     external_urls = collect_external_urls()
@@ -512,6 +512,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         or "rel=\"preload\" href=\"{{ '/assets/css/custom.css' | relative_url }}\" as=\"style\"" in default_layout
     )
     has_guarded_share_social_image_preload = '{% if page.preload_social_image and page.image %}' in share_layout
+    has_guarded_featured_image_preload = (
+        "{% if page.preload_featured_image or page.image_loading == 'eager' or page.image_fetchpriority == 'high' %}" in default_layout
+        and "page.layout == 'post' or page.image_loading == 'eager' or page.image_fetchpriority == 'high'" not in default_layout
+    )
     has_guarded_adjacent_post_prefetch = "{% if page.layout == 'post' and page.prefetch_adjacent_posts %}" in default_layout
     has_guarded_disqus_preconnect = "{% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}" in default_layout
     preconnect_hints = {normalize_hint_href(value) for value in PRECONNECT_HINT_RE.findall(default_layout)}
@@ -652,6 +656,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not has_bootstrap_css_preload
             and not has_local_css_preload
             and has_guarded_share_social_image_preload
+            and has_guarded_featured_image_preload
             and has_guarded_adjacent_post_prefetch
             and has_guarded_disqus_preconnect
             and not duplicate_resource_hint_hosts
@@ -712,6 +717,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Guard share layout social image preload behind page.preload_social_image to avoid unnecessary image prefetching.',
                 },
                 {
+                    'aspect': 'Featured image preload policy',
+                    'result': 'Improved' if has_guarded_featured_image_preload else 'Needs tuning',
+                    'details': 'Featured image preload is opt-in via preload_featured_image (or explicit eager/high priority), preventing unconditional preload on all post pages.'
+                    if has_guarded_featured_image_preload
+                    else 'Avoid auto-preloading featured images on every post page; gate preload behind preload_featured_image or explicit eager/high image priority flags.',
+                },
+                {
                     'aspect': 'Adjacent post prefetch policy',
                     'result': 'Improved' if has_guarded_adjacent_post_prefetch else 'Needs tuning',
                     'details': 'Adjacent post prefetch is opt-in via page.prefetch_adjacent_posts, avoiding unconditional mobile bandwidth consumption.'
@@ -735,7 +747,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'Front matter performance toggles',
                     'result': 'Improved' if not invalid_perf_flags else 'Needs tuning',
-                    'details': 'hero_avatar_preload/preload_social_image/prefetch_adjacent_posts/preconnect_disqus use explicit true/false values.'
+                    'details': 'hero_avatar_preload/preload_social_image/preload_featured_image/prefetch_adjacent_posts/preconnect_disqus use explicit true/false values.'
                     if not invalid_perf_flags
                     else f'Found {len(invalid_perf_flags)} invalid toggle value(s); use true/false booleans in front matter.',
                 },

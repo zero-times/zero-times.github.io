@@ -39,7 +39,7 @@
   {% endif %}
   {% assign should_preload_page_image = false %}
   {% if page.image %}
-    {% if page.layout == 'post' or page.image_loading == 'eager' or page.image_fetchpriority == 'high' %}
+    {% if page.preload_featured_image or page.image_loading == 'eager' or page.image_fetchpriority == 'high' %}
       {% assign should_preload_page_image = true %}
     {% endif %}
   {% endif %}
