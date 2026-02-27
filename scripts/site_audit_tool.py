@@ -487,6 +487,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_home_avatar_priority = 'fetchpriority="high"' in homepage and 'loading="eager"' in homepage
     has_home_avatar_responsive_sources = 'srcset=' in homepage and 'sizes=' in homepage
     has_theme_js_preload = "rel=\"preload\" href=\"{{ '/assets/js/theme.js' | relative_url }}\" as=\"script\"" in default_layout
+    has_bootstrap_css_preload = (
+        'rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style"' in default_layout
+    )
     has_local_css_preload = (
         "rel=\"preload\" href=\"{{ '/assets/css/theme.css' | relative_url }}\" as=\"style\"" in default_layout
         or "rel=\"preload\" href=\"{{ '/assets/css/custom.css' | relative_url }}\" as=\"style\"" in default_layout
@@ -610,6 +613,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_home_avatar_priority
             and has_home_avatar_responsive_sources
             and not has_theme_js_preload
+            and not has_bootstrap_css_preload
             and not has_local_css_preload
             and has_guarded_share_social_image_preload
             and has_guarded_adjacent_post_prefetch
@@ -648,6 +652,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'theme.js is deferred without preload to avoid competing with render-critical CSS/image downloads.'
                     if not has_theme_js_preload
                     else 'Remove theme.js preload because deferred script fetch is non-critical during initial render.',
+                },
+                {
+                    'aspect': 'Bootstrap stylesheet preload policy',
+                    'result': 'Improved' if not has_bootstrap_css_preload else 'Needs tuning',
+                    'details': 'Bootstrap CSS loads via stylesheet link only, avoiding extra preload hint contention on mobile.'
+                    if not has_bootstrap_css_preload
+                    else 'Remove Bootstrap CSS preload hint and keep the stylesheet link to reduce redundant high-priority fetch pressure.',
                 },
                 {
                     'aspect': 'Local stylesheet preload policy',
