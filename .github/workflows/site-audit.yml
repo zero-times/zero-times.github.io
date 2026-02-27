@@ -77,6 +77,15 @@ jobs:
             exit 1
           fi
 
+      - name: Assert rendered apple touch icon policy
+        run: |
+          HOME="_site/index.html"
+          if [ ! -f "$HOME" ]; then
+            echo "Missing rendered homepage: $HOME"
+            exit 1
+          fi
+          grep -Eq '<link rel="apple-touch-icon" sizes="180x180" href="[^"]*assets/images/sal.png"' "$HOME"
+
       - name: Upload site audit report
         if: always()
         uses: actions/upload-artifact@v4
