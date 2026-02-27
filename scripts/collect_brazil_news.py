@@ -18,6 +18,32 @@ from bs4 import BeautifulSoup
 
 SITE_TZ = ZoneInfo("Asia/Shanghai")
 
+
+def normalize_news_link(raw_link):
+    """Normalize RSS links and unwrap redirect wrappers when possible."""
+    if not raw_link:
+        return ""
+
+    link = unescape(raw_link).strip()
+    if not link:
+        return ""
+
+    # Some feeds wrap the real URL like ".../*https://target".
+    wrapped_index = link.find("*https://")
+    if wrapped_index != -1:
+        link = link[wrapped_index + 1 :]
+
+    # Handle generic query-param redirects that embed target URLs.
+    parsed = urllib.parse.urlparse(link)
+    query = urllib.parse.parse_qs(parsed.query)
+    for key in ("url", "u", "target", "redirect"):
+        value = query.get(key, [])
+        if value and value[0].startswith(("http://", "https://")):
+            link = value[0]
+            break
+
+    return link
+
 def get_brazilian_news():
     """从主流巴西新闻源收集新闻"""
     news_sources = [
@@ -67,7 +93,8 @@ def get_brazilian_news():
                         if title_elem is not None:
                             title = title_elem.text.strip()
                             desc = desc_elem.text.strip() if desc_elem is not None and desc_elem.text else ''
-                            link = link_elem.text.strip() if link_elem is not None and link_elem.text else ''
+                            raw_link = link_elem.text.strip() if link_elem is not None and link_elem.text else ''
+                            link = normalize_news_link(raw_link)
                             pubdate = pubdate_elem.text.strip() if pubdate_elem is not None and pubdate_elem.text else ''
                             
                             all_news.append({
@@ -98,6 +125,7 @@ def get_brazilian_news():
                             link = title_elem.get('href', '') if title_elem.name == 'a' else ''
                             if link and not link.startswith('http'):
                                 link = urllib.parse.urljoin(source['url'], link)
+                            link = normalize_news_link(link)
                             
                             all_news.append({
                                 'title': title,
