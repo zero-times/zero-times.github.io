@@ -46,8 +46,10 @@
 <link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet">
 <link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet">
 {% if site.google_analytics %}
+{% if page.preconnect_analytics %}
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+{% endif %}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
