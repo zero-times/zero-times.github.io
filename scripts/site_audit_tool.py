@@ -41,6 +41,11 @@ LIQUID_RELATIVE_URL_RE = re.compile(
 LIQUID_LINK_TAG_RE = re.compile(r'\{%\s*link\s+([^\s%]+)\s*%\}')
 PRECONNECT_HINT_RE = re.compile(r'<link\s+rel="preconnect"\s+href="([^"]+)"')
 DNS_PREFETCH_HINT_RE = re.compile(r'<link\s+rel="dns-prefetch"\s+href="([^"]+)"')
+FORM_POST_ACTION_RE = re.compile(
+    r'<form\b[^>]*\bmethod\s*=\s*["\']post["\'][^>]*\baction\s*=\s*["\'](https?://[^"\']+)["\']|'
+    r'<form\b[^>]*\baction\s*=\s*["\'](https?://[^"\']+)["\'][^>]*\bmethod\s*=\s*["\']post["\']',
+    re.IGNORECASE,
+)
 FRONT_MATTER_VALUE_RE = re.compile(r'^[ \t]*([A-Za-z0-9_-]+)[ \t]*:[ \t]*(.+)$', re.MULTILINE)
 BOOLEAN_LITERALS = {'true', 'false'}
 
@@ -416,6 +421,31 @@ def collect_external_urls() -> list[str]:
     return sorted(urls)
 
 
+def collect_post_only_external_urls() -> set[str]:
+    post_only_urls: set[str] = set()
+    for fp in iter_files():
+        text = read_text(fp)
+        for match in FORM_POST_ACTION_RE.finditer(text):
+            action_url = match.group(1) or match.group(2)
+            if action_url:
+                post_only_urls.add(action_url.rstrip('.,;:!?)'))
+    return post_only_urls
+
+
+def collect_preconnect_root_urls() -> set[str]:
+    default_layout_path = ROOT / '_layouts/default.html'
+    if not default_layout_path.exists():
+        return set()
+    default_layout = read_text(default_layout_path)
+    roots: set[str] = set()
+    for href in PRECONNECT_HINT_RE.findall(default_layout):
+        parsed = urllib.parse.urlparse(href)
+        if parsed.scheme not in ('http', 'https') or not parsed.netloc:
+            continue
+        roots.add(f'{parsed.scheme}://{parsed.netloc}'.rstrip('/'))
+    return roots
+
+
 def probe_url(url: str, timeout: float) -> dict:
     headers = {'User-Agent': 'JekyllSiteAudit/1.0 (+https://youllbe.cn)'}
     req = urllib.request.Request(url, headers=headers, method='HEAD')
@@ -435,7 +465,13 @@ def probe_url(url: str, timeout: float) -> dict:
 
 
 def sample_http_urls(urls: list[str], sample_size: int, timeout: float) -> dict:
-    sampled = urls[: max(sample_size, 0)]
+    post_only_urls = collect_post_only_external_urls()
+    preconnect_root_urls = collect_preconnect_root_urls()
+    filtered_urls = [
+        url for url in urls
+        if url.rstrip('/') not in post_only_urls and url.rstrip('/') not in preconnect_root_urls
+    ]
+    sampled = filtered_urls[: max(sample_size, 0)]
     results = [probe_url(url, timeout=timeout) for url in sampled]
     failures = [r for r in results if not r.get('ok')]
     return {
