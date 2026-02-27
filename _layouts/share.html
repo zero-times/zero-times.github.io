@@ -38,23 +38,18 @@
 {% endif %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=PT+Serif:wght@400;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=PT+Serif:wght@400;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=PT+Serif:wght@400;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap"></noscript>
 <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
-<link rel="apple-touch-icon" href="{{ '/assets/images/logo.png' | relative_url }}">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="{{ '/assets/images/sal.png' | relative_url }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
 <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ '/sitemap.xml' | absolute_url }}">
 {% seo %}
-<link rel="preload" href="{{ '/assets/css/theme.css' | relative_url }}" as="style">
-<link rel="preload" href="{{ '/assets/css/custom.css' | relative_url }}" as="style">
 <link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet">
 <link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet">
 {% if site.google_analytics %}
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-<link rel="dns-prefetch" href="https://www.googletagmanager.com">
 <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
-<link rel="dns-prefetch" href="https://www.google-analytics.com">
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -66,7 +61,7 @@
 </head>
 <body class="share-page">
   <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
-  <main id="main-content" role="main" tabindex="-1" aria-labelledby="page-title">
+  <main id="main-content" role="main" tabindex="-1" aria-label="Conteúdo principal">
     {{ content }}
   </main>
 </body>

@@ -511,7 +511,12 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_manual_canonical = '<link rel="canonical"' in default_layout
     has_viewport = 'name="viewport"' in default_layout
     has_skip_link = 'skip-link' in default_layout
-    has_main_landmark_aria_label = '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
+    has_default_main_landmark_aria_label = (
+        '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
+    )
+    has_share_main_landmark_aria_label = (
+        '<main id="main-content" role="main" tabindex="-1" aria-label=' in share_layout
+    )
     has_paginated_noindex_policy = (
         "{% assign is_paginated_archive_page = paginator and paginator.page and paginator.page > 1 %}" in default_layout
         and '<meta name="robots" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">' in default_layout
@@ -604,8 +609,19 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     has_guarded_adjacent_post_prefetch = "{% if page.layout == 'post' and page.prefetch_adjacent_posts %}" in default_layout
     has_guarded_disqus_preconnect = "{% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}" in default_layout
-    preconnect_hints = {normalize_hint_href(value) for value in PRECONNECT_HINT_RE.findall(default_layout)}
-    dns_prefetch_hints = {normalize_hint_href(value) for value in DNS_PREFETCH_HINT_RE.findall(default_layout)}
+    has_share_font_css_preload = 'rel="preload" as="style" href="https://fonts.googleapis.com/css2?' in share_layout
+    has_share_local_css_preload = (
+        "rel=\"preload\" href=\"{{ '/assets/css/theme.css' | relative_url }}\" as=\"style\"" in share_layout
+        or "rel=\"preload\" href=\"{{ '/assets/css/custom.css' | relative_url }}\" as=\"style\"" in share_layout
+    )
+    preconnect_hints = {
+        normalize_hint_href(value)
+        for value in PRECONNECT_HINT_RE.findall(default_layout + '\n' + share_layout)
+    }
+    dns_prefetch_hints = {
+        normalize_hint_href(value)
+        for value in DNS_PREFETCH_HINT_RE.findall(default_layout + '\n' + share_layout)
+    }
     duplicate_resource_hint_hosts = sorted(preconnect_hints.intersection(dns_prefetch_hints))
     apple_touch_icon_href = APPLE_TOUCH_ICON_RE.search(default_layout)
     apple_touch_icon_value = apple_touch_icon_href.group(1) if apple_touch_icon_href else None
@@ -620,10 +636,25 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and apple_touch_icon_dimensions[0] == apple_touch_icon_dimensions[1]
         and apple_touch_icon_dimensions[0] >= 180
     )
+    share_apple_touch_icon_href = APPLE_TOUCH_ICON_RE.search(share_layout)
+    share_apple_touch_icon_value = share_apple_touch_icon_href.group(1) if share_apple_touch_icon_href else None
+    share_apple_touch_icon_path = resolve_local_image_path(share_apple_touch_icon_value)
+    share_apple_touch_icon_dimensions = get_image_dimensions(share_apple_touch_icon_path) if share_apple_touch_icon_path else None
+    has_share_apple_touch_icon_sizes = bool(
+        re.search(r'<link\s+rel="apple-touch-icon"[^>]*sizes="180x180"[^>]*>', share_layout)
+    )
+    has_share_mobile_ready_apple_touch_icon = bool(
+        has_share_apple_touch_icon_sizes
+        and share_apple_touch_icon_dimensions
+        and share_apple_touch_icon_dimensions[0] == share_apple_touch_icon_dimensions[1]
+        and share_apple_touch_icon_dimensions[0] >= 180
+    )
 
     sections = {
         'layout_assessment': {
-            'score': 8.9 if has_viewport and has_skip_link and has_main_landmark_aria_label else 7.0,
+            'score': 8.9
+            if has_viewport and has_skip_link and has_default_main_landmark_aria_label and has_share_main_landmark_aria_label
+            else 7.0,
             'max_score': 10.0,
             'findings': [
                 {
@@ -635,10 +666,12 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 },
                 {
                     'aspect': 'Main landmark labeling',
-                    'result': 'Improved' if has_main_landmark_aria_label else 'Needs tuning',
+                    'result': 'Improved'
+                    if has_default_main_landmark_aria_label and has_share_main_landmark_aria_label
+                    else 'Needs tuning',
                     'details': 'Main landmark uses aria-label to avoid broken aria-labelledby references across mixed layouts.'
-                    if has_main_landmark_aria_label
-                    else 'Set a stable aria-label on #main-content instead of relying on page-title id in every layout.',
+                    if has_default_main_landmark_aria_label and has_share_main_landmark_aria_label
+                    else 'Set a stable aria-label on #main-content in both default and share layouts instead of relying on page-title ids.',
                 }
             ],
         },
@@ -774,6 +807,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not has_theme_js_preload
             and not has_bootstrap_css_preload
             and not has_local_css_preload
+            and not has_share_font_css_preload
+            and not has_share_local_css_preload
             and has_guarded_share_social_image_preload
             and has_guarded_featured_image_preload
             and has_guarded_adjacent_post_prefetch
@@ -783,6 +818,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not posts_missing_image_dimensions
             and not pages_missing_image_dimensions
             and has_mobile_ready_apple_touch_icon
+            and has_share_mobile_ready_apple_touch_icon
             else 7.2,
             'max_score': 10.0,
             'findings': [
@@ -829,6 +865,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'theme.css/custom.css are discovered early via normal stylesheet links, avoiding redundant preload hints.'
                     if not has_local_css_preload
                     else 'Remove local stylesheet preload hints for theme.css/custom.css to reduce duplicate high-priority fetch pressure.',
+                },
+                {
+                    'aspect': 'Share layout stylesheet preload policy',
+                    'result': 'Improved' if not has_share_font_css_preload and not has_share_local_css_preload else 'Needs tuning',
+                    'details': 'Share layout avoids font/local stylesheet preload hints and relies on deferred stylesheet loading to reduce mobile bandwidth contention.'
+                    if not has_share_font_css_preload and not has_share_local_css_preload
+                    else 'Remove share layout font/local stylesheet preload hints to avoid redundant high-priority fetch pressure.',
                 },
                 {
                     'aspect': 'Share page social image preload',
@@ -901,12 +944,23 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if has_mobile_ready_apple_touch_icon and apple_touch_icon_path and apple_touch_icon_dimensions
                     else 'Use a square local apple-touch-icon (>=180x180) and declare sizes="180x180" for mobile install quality.',
                 },
+                {
+                    'aspect': 'Share page apple touch icon readiness',
+                    'result': 'Improved' if has_share_mobile_ready_apple_touch_icon else 'Needs tuning',
+                    'details': (
+                        f"share layout apple-touch-icon points to {share_apple_touch_icon_path.relative_to(ROOT)} "
+                        f"({share_apple_touch_icon_dimensions[0]}x{share_apple_touch_icon_dimensions[1]}) with sizes=180x180 for iOS home-screen installs."
+                    )
+                    if has_share_mobile_ready_apple_touch_icon and share_apple_touch_icon_path and share_apple_touch_icon_dimensions
+                    else 'Use a square local apple-touch-icon (>=180x180) and declare sizes="180x180" in share layout for mobile install quality.',
+                },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
             'missing_page_image_dimensions': pages_missing_image_dimensions,
             'duplicate_resource_hint_hosts': duplicate_resource_hint_hosts,
             'invalid_front_matter_perf_flags': invalid_perf_flags,
             'apple_touch_icon_ready': has_mobile_ready_apple_touch_icon,
+            'share_apple_touch_icon_ready': has_share_mobile_ready_apple_touch_icon,
         },
     }
 
@@ -944,6 +998,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
     invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
     apple_touch_icon_ready = sections.get('content_quality', {}).get('apple_touch_icon_ready', False)
+    share_apple_touch_icon_ready = sections.get('content_quality', {}).get('share_apple_touch_icon_ready', False)
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
 
     failures: list[str] = []
@@ -967,6 +1022,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'invalid_front_matter_perf_flags={len(invalid_perf_flags)}')
     if not apple_touch_icon_ready:
         failures.append('apple_touch_icon_ready=0')
+    if not share_apple_touch_icon_ready:
+        failures.append('share_apple_touch_icon_ready=0')
     if http_check_enabled and http_failures:
         failures.append(f'http_failures={len(http_failures)}')
     return failures
