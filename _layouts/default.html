@@ -9,13 +9,18 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="format-detection" content="telephone=no">
   <meta name="author" content="{{ site.author.name }}">
+  {% assign is_paginated_archive_page = paginator and paginator.page and paginator.page > 1 %}
   {% if page.robots %}
   <meta name="robots" content="{{ page.robots }}">
+  {% elsif is_paginated_archive_page %}
+  <meta name="robots" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% else %}
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% endif %}
   {% if page.googlebot %}
   <meta name="googlebot" content="{{ page.googlebot }}">
+  {% elsif is_paginated_archive_page %}
+  <meta name="googlebot" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% else %}
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% endif %}

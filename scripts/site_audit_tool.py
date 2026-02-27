@@ -438,6 +438,11 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_viewport = 'name="viewport"' in default_layout
     has_skip_link = 'skip-link' in default_layout
     has_main_landmark_aria_label = '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
+    has_paginated_noindex_policy = (
+        "{% assign is_paginated_archive_page = paginator and paginator.page and paginator.page > 1 %}" in default_layout
+        and '<meta name="robots" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">' in default_layout
+        and '<meta name="googlebot" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">' in default_layout
+    )
 
     malformed_links: list[dict] = []
     placeholder_hits: list[dict] = []
@@ -572,6 +577,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_large_social_image
             and has_social_image_alt
             and not entries_missing_image_alt
+            and has_paginated_noindex_policy
             else 7.0,
             'max_score': 10.0,
             'findings': [
@@ -602,6 +608,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Entries with front matter image include image_alt for social preview and accessibility metadata.'
                     if not entries_missing_image_alt
                     else f"Found {len(entries_missing_image_alt)} entry file(s) with image but missing image_alt.",
+                },
+                {
+                    'aspect': 'Paginated archive indexing policy',
+                    'result': 'Good' if has_paginated_noindex_policy else 'Needs improvement',
+                    'details': 'Paginated archive pages (page > 1) are marked noindex,follow to reduce duplicate listing-page indexing.'
+                    if has_paginated_noindex_policy
+                    else 'Add paginated page > 1 noindex,follow fallback for robots/googlebot in default layout while preserving page-level overrides.',
                 },
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
