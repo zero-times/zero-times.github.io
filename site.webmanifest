@@ -1,6 +1,9 @@
 {
   "name": "Hoa Blog",
   "short_name": "Hoa",
+  "description": "Portfolio and blog of Hoa (Wang Xionghao) about products, projects, and notes.",
+  "lang": "en-US",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

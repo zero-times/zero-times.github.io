@@ -733,6 +733,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         web_manifest
         and web_manifest.get('name')
         and web_manifest.get('short_name')
+        and web_manifest.get('description')
+        and web_manifest.get('lang')
+        and web_manifest.get('id')
         and web_manifest.get('start_url')
         and web_manifest.get('display')
     )
@@ -1106,10 +1109,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'aspect': 'Web app manifest readiness',
                     'result': 'Improved' if has_mobile_ready_web_manifest else 'Needs tuning',
                     'details': (
-                        f"default/share layouts reference {default_manifest_path.relative_to(ROOT)} with name/short_name/start_url/display and local 192px+512px icons."
+                        f"default/share layouts reference {default_manifest_path.relative_to(ROOT)} with name/short_name/description/lang/id/start_url/display and local 192px+512px icons."
                     )
                     if has_mobile_ready_web_manifest and default_manifest_path
-                    else 'Add one shared local manifest link in default/share layouts and provide local 192px/512px icons for installable mobile experience.',
+                    else 'Add one shared local manifest link in default/share layouts, include description/lang/id metadata, and provide local 192px/512px icons for installable mobile experience.',
                 },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
