@@ -444,6 +444,28 @@ def has_manifest_icon(manifest: dict | None, min_size: int) -> bool:
     return False
 
 
+def has_manifest_maskable_icon(manifest: dict | None, min_size: int = 192) -> bool:
+    if not manifest:
+        return False
+    icons = manifest.get('icons')
+    if not isinstance(icons, list):
+        return False
+    for icon in icons:
+        if not isinstance(icon, dict):
+            continue
+        purpose = str(icon.get('purpose', '')).lower()
+        if 'maskable' not in purpose:
+            continue
+        src = icon.get('src')
+        if not isinstance(src, str) or not src.strip():
+            continue
+        icon_path = resolve_local_image_path(src)
+        dims = get_image_dimensions(icon_path) if icon_path else None
+        if dims and dims[0] >= min_size and dims[1] >= min_size:
+            return True
+    return False
+
+
 def collect_external_urls() -> list[str]:
     urls: set[str] = set()
     for fp in iter_files():
@@ -741,6 +763,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     has_manifest_icon_192 = has_manifest_icon(web_manifest, min_size=192)
     has_manifest_icon_512 = has_manifest_icon(web_manifest, min_size=512)
+    has_manifest_maskable_icon_192 = has_manifest_maskable_icon(web_manifest, min_size=192)
     has_mobile_ready_web_manifest = bool(
         has_default_manifest_link
         and has_share_manifest_link
@@ -748,6 +771,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and has_manifest_baseline
         and has_manifest_icon_192
         and has_manifest_icon_512
+        and has_manifest_maskable_icon_192
     )
 
     sections = {
@@ -1109,10 +1133,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'aspect': 'Web app manifest readiness',
                     'result': 'Improved' if has_mobile_ready_web_manifest else 'Needs tuning',
                     'details': (
-                        f"default/share layouts reference {default_manifest_path.relative_to(ROOT)} with name/short_name/description/lang/id/start_url/display and local 192px+512px icons."
+                        f"default/share layouts reference {default_manifest_path.relative_to(ROOT)} with name/short_name/description/lang/id/start_url/display, local 192px+512px icons, and a >=192px maskable icon."
                     )
                     if has_mobile_ready_web_manifest and default_manifest_path
-                    else 'Add one shared local manifest link in default/share layouts, include description/lang/id metadata, and provide local 192px/512px icons for installable mobile experience.',
+                    else 'Add one shared local manifest link in default/share layouts, include description/lang/id metadata, provide local 192px/512px icons, and include a maskable icon for better Android adaptive install visuals.',
                 },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
@@ -1126,6 +1150,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'apple_touch_icon_ready': has_mobile_ready_apple_touch_icon,
             'share_apple_touch_icon_ready': has_share_mobile_ready_apple_touch_icon,
             'web_app_manifest_ready': has_mobile_ready_web_manifest,
+            'web_app_manifest_maskable_icon_ready': has_manifest_maskable_icon_192,
         },
     }
 
@@ -1172,6 +1197,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     apple_touch_icon_ready = sections.get('content_quality', {}).get('apple_touch_icon_ready', False)
     share_apple_touch_icon_ready = sections.get('content_quality', {}).get('share_apple_touch_icon_ready', False)
     web_app_manifest_ready = sections.get('content_quality', {}).get('web_app_manifest_ready', False)
+    web_app_manifest_maskable_icon_ready = sections.get('content_quality', {}).get('web_app_manifest_maskable_icon_ready', False)
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
 
     failures: list[str] = []
@@ -1213,6 +1239,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('share_apple_touch_icon_ready=0')
     if not web_app_manifest_ready:
         failures.append('web_app_manifest_ready=0')
+    if not web_app_manifest_maskable_icon_ready:
+        failures.append('web_app_manifest_maskable_icon_ready=0')
     if http_check_enabled and http_failures:
         failures.append(f'http_failures={len(http_failures)}')
     return failures
