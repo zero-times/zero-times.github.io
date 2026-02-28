@@ -126,9 +126,11 @@ jobs:
           grep -q '<meta name="mobile-web-app-capable" content="yes">' "$HOME"
           grep -q '<meta name="apple-mobile-web-app-capable" content="yes">' "$HOME"
           grep -q '<meta name="apple-mobile-web-app-title" content=' "$HOME"
+          grep -q '<meta name="application-name" content=' "$HOME"
           grep -q '<meta name="mobile-web-app-capable" content="yes">' "$SHARE"
           grep -q '<meta name="apple-mobile-web-app-capable" content="yes">' "$SHARE"
           grep -q '<meta name="apple-mobile-web-app-title" content=' "$SHARE"
+          grep -q '<meta name="application-name" content=' "$SHARE"
 
       - name: Assert rendered manifest link policy
         run: |

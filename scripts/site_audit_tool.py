@@ -585,6 +585,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     has_default_mobile_web_app_title = 'name="apple-mobile-web-app-title" content="{{ site.title | escape }}"' in default_layout
     has_share_mobile_web_app_title = 'name="apple-mobile-web-app-title" content="{{ site.title | escape }}"' in share_layout
+    has_default_application_name_meta = 'name="application-name" content="{{ site.title | escape }}"' in default_layout
+    has_share_application_name_meta = 'name="application-name" content="{{ site.title | escape }}"' in share_layout
     has_default_main_landmark_aria_label = (
         '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
     )
@@ -793,6 +795,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_share_mobile_web_app_meta
             and has_default_mobile_web_app_title
             and has_share_mobile_web_app_title
+            and has_default_application_name_meta
+            and has_share_application_name_meta
             and has_default_main_landmark_aria_label
             and has_share_main_landmark_aria_label
             else 7.0,
@@ -824,6 +828,15 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Add apple-mobile-web-app-title meta tags to both default and share layouts.',
                 },
                 {
+                    'aspect': 'Application name meta',
+                    'result': 'Improved'
+                    if has_default_application_name_meta and has_share_application_name_meta
+                    else 'Needs tuning',
+                    'details': 'Default and share layouts define application-name with site.title for consistent install/browser identity.'
+                    if has_default_application_name_meta and has_share_application_name_meta
+                    else 'Add application-name meta tags to both default and share layouts using site.title.',
+                },
+                {
                     'aspect': 'Main landmark labeling',
                     'result': 'Improved'
                     if has_default_main_landmark_aria_label and has_share_main_landmark_aria_label
@@ -837,6 +850,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'share_mobile_web_app_meta': has_share_mobile_web_app_meta,
             'default_mobile_web_app_title': has_default_mobile_web_app_title,
             'share_mobile_web_app_title': has_share_mobile_web_app_title,
+            'default_application_name_meta': has_default_application_name_meta,
+            'share_application_name_meta': has_share_application_name_meta,
             'default_main_landmark_labeled': has_default_main_landmark_aria_label,
             'share_main_landmark_labeled': has_share_main_landmark_aria_label,
         },
@@ -1221,6 +1236,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     share_mobile_web_app_meta = sections.get('layout_assessment', {}).get('share_mobile_web_app_meta', False)
     default_mobile_web_app_title = sections.get('layout_assessment', {}).get('default_mobile_web_app_title', False)
     share_mobile_web_app_title = sections.get('layout_assessment', {}).get('share_mobile_web_app_title', False)
+    default_application_name_meta = sections.get('layout_assessment', {}).get('default_application_name_meta', False)
+    share_application_name_meta = sections.get('layout_assessment', {}).get('share_application_name_meta', False)
     default_main_landmark_labeled = sections.get('layout_assessment', {}).get('default_main_landmark_labeled', False)
     share_main_landmark_labeled = sections.get('layout_assessment', {}).get('share_main_landmark_labeled', False)
     broken = sections.get('broken_links_check', {}).get('broken_links', [])
@@ -1252,6 +1269,10 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('default_mobile_web_app_title=0')
     if not share_mobile_web_app_title:
         failures.append('share_mobile_web_app_title=0')
+    if not default_application_name_meta:
+        failures.append('default_application_name_meta=0')
+    if not share_application_name_meta:
+        failures.append('share_application_name_meta=0')
     if not default_main_landmark_labeled:
         failures.append('default_main_landmark_labeled=0')
     if not share_main_landmark_labeled:
