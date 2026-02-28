@@ -588,12 +588,24 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_default_application_name_meta = 'name="application-name" content="{{ site.title | escape }}"' in default_layout
     has_share_application_name_meta = 'name="application-name" content="{{ site.title | escape }}"' in share_layout
     has_default_theme_color_meta = (
-        'name="theme-color" content="#2c3e50"' in default_layout
-        and 'name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320"' in default_layout
+        (
+            'name="theme-color" content="#2c3e50"' in default_layout
+            or "name=\"theme-color\" content=\"{{ site.theme_color_light | default: '#2c3e50' }}\"" in default_layout
+        )
+        and (
+            'name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320"' in default_layout
+            or "name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"{{ site.theme_color_dark | default: '#0b1320' }}\"" in default_layout
+        )
     )
     has_share_theme_color_meta = (
-        'name="theme-color" content="#2c3e50"' in share_layout
-        and 'name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320"' in share_layout
+        (
+            'name="theme-color" content="#2c3e50"' in share_layout
+            or "name=\"theme-color\" content=\"{{ site.theme_color_light | default: '#2c3e50' }}\"" in share_layout
+        )
+        and (
+            'name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320"' in share_layout
+            or "name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"{{ site.theme_color_dark | default: '#0b1320' }}\"" in share_layout
+        )
     )
     has_default_main_landmark_aria_label = (
         '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
