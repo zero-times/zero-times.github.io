@@ -125,8 +125,10 @@ jobs:
           grep -Eq '<link rel="apple-touch-icon" sizes="180x180" href="[^"]*assets/images/sal.png"' "$SHARE"
           grep -q '<meta name="mobile-web-app-capable" content="yes">' "$HOME"
           grep -q '<meta name="apple-mobile-web-app-capable" content="yes">' "$HOME"
+          grep -q '<meta name="apple-mobile-web-app-title" content=' "$HOME"
           grep -q '<meta name="mobile-web-app-capable" content="yes">' "$SHARE"
           grep -q '<meta name="apple-mobile-web-app-capable" content="yes">' "$SHARE"
+          grep -q '<meta name="apple-mobile-web-app-title" content=' "$SHARE"
 
       - name: Assert rendered manifest link policy
         run: |
