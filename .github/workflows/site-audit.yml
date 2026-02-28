@@ -108,7 +108,7 @@ jobs:
           grep -q '<meta property="og:image:alt" content=' "$SHARE"
           grep -q '<meta name="twitter:image:alt" content=' "$SHARE"
 
-      - name: Assert rendered mobile landmarks and share touch icon policy
+      - name: Assert rendered mobile landmarks, touch icon, and web app meta policy
         run: |
           HOME="_site/index.html"
           SHARE="_site/share/index.html"
@@ -123,6 +123,10 @@ jobs:
           grep -q '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label="Conteúdo principal">' "$HOME"
           grep -q '<main id="main-content" role="main" tabindex="-1" aria-label="Conteúdo principal">' "$SHARE"
           grep -Eq '<link rel="apple-touch-icon" sizes="180x180" href="[^"]*assets/images/sal.png"' "$SHARE"
+          grep -q '<meta name="mobile-web-app-capable" content="yes">' "$HOME"
+          grep -q '<meta name="apple-mobile-web-app-capable" content="yes">' "$HOME"
+          grep -q '<meta name="mobile-web-app-capable" content="yes">' "$SHARE"
+          grep -q '<meta name="apple-mobile-web-app-capable" content="yes">' "$SHARE"
 
       - name: Assert rendered manifest link policy
         run: |
