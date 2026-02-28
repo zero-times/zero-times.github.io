@@ -575,6 +575,14 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_manual_canonical = '<link rel="canonical"' in default_layout
     has_viewport = 'name="viewport"' in default_layout
     has_skip_link = 'skip-link' in default_layout
+    has_default_mobile_web_app_meta = (
+        'name="mobile-web-app-capable" content="yes"' in default_layout
+        and 'name="apple-mobile-web-app-capable" content="yes"' in default_layout
+    )
+    has_share_mobile_web_app_meta = (
+        'name="mobile-web-app-capable" content="yes"' in share_layout
+        and 'name="apple-mobile-web-app-capable" content="yes"' in share_layout
+    )
     has_default_main_landmark_aria_label = (
         '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
     )
@@ -777,7 +785,12 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     sections = {
         'layout_assessment': {
             'score': 8.9
-            if has_viewport and has_skip_link and has_default_main_landmark_aria_label and has_share_main_landmark_aria_label
+            if has_viewport
+            and has_skip_link
+            and has_default_mobile_web_app_meta
+            and has_share_mobile_web_app_meta
+            and has_default_main_landmark_aria_label
+            and has_share_main_landmark_aria_label
             else 7.0,
             'max_score': 10.0,
             'findings': [
@@ -789,6 +802,15 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Viewport exists but skip-link missing from default layout.',
                 },
                 {
+                    'aspect': 'Mobile web app capability hints',
+                    'result': 'Improved'
+                    if has_default_mobile_web_app_meta and has_share_mobile_web_app_meta
+                    else 'Needs tuning',
+                    'details': 'Both default and share layouts expose mobile-web-app-capable and apple-mobile-web-app-capable metas for better mobile install/browser treatment.'
+                    if has_default_mobile_web_app_meta and has_share_mobile_web_app_meta
+                    else 'Add mobile-web-app-capable and apple-mobile-web-app-capable meta tags to both default and share layouts.',
+                },
+                {
                     'aspect': 'Main landmark labeling',
                     'result': 'Improved'
                     if has_default_main_landmark_aria_label and has_share_main_landmark_aria_label
@@ -798,6 +820,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Set a stable aria-label on #main-content in both default and share layouts instead of relying on page-title ids.',
                 }
             ],
+            'default_mobile_web_app_meta': has_default_mobile_web_app_meta,
+            'share_mobile_web_app_meta': has_share_mobile_web_app_meta,
             'default_main_landmark_labeled': has_default_main_landmark_aria_label,
             'share_main_landmark_labeled': has_share_main_landmark_aria_label,
         },
@@ -1178,6 +1202,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
 
 def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]:
     sections = report.get('sections', {})
+    default_mobile_web_app_meta = sections.get('layout_assessment', {}).get('default_mobile_web_app_meta', False)
+    share_mobile_web_app_meta = sections.get('layout_assessment', {}).get('share_mobile_web_app_meta', False)
     default_main_landmark_labeled = sections.get('layout_assessment', {}).get('default_main_landmark_labeled', False)
     share_main_landmark_labeled = sections.get('layout_assessment', {}).get('share_main_landmark_labeled', False)
     broken = sections.get('broken_links_check', {}).get('broken_links', [])
@@ -1201,6 +1227,10 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
 
     failures: list[str] = []
+    if not default_mobile_web_app_meta:
+        failures.append('default_mobile_web_app_meta=0')
+    if not share_mobile_web_app_meta:
+        failures.append('share_mobile_web_app_meta=0')
     if not default_main_landmark_labeled:
         failures.append('default_main_landmark_labeled=0')
     if not share_main_landmark_labeled:
