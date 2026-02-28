@@ -127,10 +127,14 @@ jobs:
           grep -q '<meta name="apple-mobile-web-app-capable" content="yes">' "$HOME"
           grep -q '<meta name="apple-mobile-web-app-title" content=' "$HOME"
           grep -q '<meta name="application-name" content=' "$HOME"
+          grep -q '<meta name="theme-color" content="#2c3e50">' "$HOME"
+          grep -q '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320">' "$HOME"
           grep -q '<meta name="mobile-web-app-capable" content="yes">' "$SHARE"
           grep -q '<meta name="apple-mobile-web-app-capable" content="yes">' "$SHARE"
           grep -q '<meta name="apple-mobile-web-app-title" content=' "$SHARE"
           grep -q '<meta name="application-name" content=' "$SHARE"
+          grep -q '<meta name="theme-color" content="#2c3e50">' "$SHARE"
+          grep -q '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320">' "$SHARE"
 
       - name: Assert rendered manifest link policy
         run: |
