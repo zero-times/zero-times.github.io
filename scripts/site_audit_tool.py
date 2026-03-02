@@ -51,6 +51,9 @@ FORM_POST_ACTION_RE = re.compile(
 )
 FRONT_MATTER_VALUE_RE = re.compile(r'^[ \t]*([A-Za-z0-9_-]+)[ \t]*:[ \t]*(.+)$', re.MULTILINE)
 BOOLEAN_LITERALS = {'true', 'false'}
+MARKDOWN_FENCE_RE = re.compile(r'```[\s\S]*?```')
+MARKDOWN_INLINE_CODE_RE = re.compile(r'`[^`\n]+`')
+HTML_CODE_BLOCK_RE = re.compile(r'<(?:pre|code)\b[^>]*>[\s\S]*?</(?:pre|code)>', re.IGNORECASE)
 
 
 def read_text(path: Path) -> str:
@@ -96,6 +99,18 @@ def parse_front_matter_values(text: str) -> dict[str, str]:
 
 def normalize_hint_href(value: str) -> str:
     return value.strip().rstrip('/').lower()
+
+
+def strip_code_context(text: str, path: Path) -> str:
+    """Remove code snippets so URL scans focus on real content links."""
+    cleaned = text
+    suffix = path.suffix.lower()
+    if suffix in {'.md', '.markdown'}:
+        cleaned = MARKDOWN_FENCE_RE.sub('', cleaned)
+        cleaned = MARKDOWN_INLINE_CODE_RE.sub('', cleaned)
+    elif suffix == '.html':
+        cleaned = HTML_CODE_BLOCK_RE.sub('', cleaned)
+    return cleaned
 
 
 def normalize_route(path: str) -> str:
@@ -470,7 +485,7 @@ def has_manifest_maskable_icon(manifest: dict | None, min_size: int = 192) -> bo
 def collect_external_urls() -> list[str]:
     urls: set[str] = set()
     for fp in iter_files():
-        text = read_text(fp)
+        text = strip_code_context(read_text(fp), fp)
         for url in URL_RE.findall(text):
             parsed = urllib.parse.urlparse(url)
             if parsed.scheme in ('http', 'https') and parsed.netloc:
@@ -717,7 +732,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     for fp in iter_files():
         rel = fp.relative_to(ROOT)
         text = read_text(fp)
-        urls_count += len(URL_RE.findall(text))
+        text_for_url_scan = strip_code_context(text, fp)
+        urls_count += len(URL_RE.findall(text_for_url_scan))
 
         for m in DUP_PROTOCOL_RE.finditer(text):
             malformed_links.append(
