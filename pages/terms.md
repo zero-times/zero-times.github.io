@@ -3,6 +3,7 @@ layout: page
 title: Termos de Uso
 permalink: /terms/
 comments: false
+robots: noindex,follow
 description: Termos de uso, responsabilidades e condições de acesso do site
 keywords: "termos de uso, condições, responsabilidade, licenças"
 load_webfonts: false
