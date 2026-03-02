@@ -224,6 +224,41 @@ article h2 a:hover {
 .post-content {
   line-height: 1.8;
   font-size: 1.05rem;
+  overflow-wrap: anywhere;
+}
+
+.post-content img,
+.post-content video,
+.post-content iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-content pre,
+.post-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.post-content pre {
+  padding: 0.9rem 1rem;
+  border-radius: calc(var(--border-radius) - 2px);
+  background: #f6f8fa;
+}
+
+.post-content table {
+  border-collapse: collapse;
+  width: max-content;
+  min-width: 100%;
+}
+
+.post-content th,
+.post-content td {
+  border: 1px solid #d9dee3;
+  padding: 0.55rem 0.75rem;
+  white-space: nowrap;
 }
 
 .post-content p {
@@ -290,6 +325,11 @@ footer a {
 
   .post-content {
     font-size: 1rem;
+  }
+
+  .post-content pre,
+  .post-content table {
+    font-size: 0.95rem;
   }
 }
 
