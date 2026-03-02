@@ -7,8 +7,27 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
   "background_color": "#ffffff",
   "theme_color": "#2c3e50",
+  "shortcuts": [
+    {
+      "name": "Blog",
+      "short_name": "Blog",
+      "description": "Read the latest posts",
+      "url": "/blog/"
+    },
+    {
+      "name": "Contato",
+      "short_name": "Contato",
+      "description": "Open contact page",
+      "url": "/contact/"
+    }
+  ],
   "icons": [
     {
       "src": "/assets/images/icon-192.png",
