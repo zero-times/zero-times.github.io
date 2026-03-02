@@ -87,6 +87,11 @@
   {% elsif site.keywords %}
     <meta name="keywords" content="{{ site.keywords }}">
   {% endif %}
+  {% if site.social and site.social.links %}
+    {% for social_link in site.social.links %}
+    <link rel="me" href="{{ social_link }}">
+    {% endfor %}
+  {% endif %}
   {% seo %}
   {% assign publisher_image = site.logo | default: site.author.avatar %}
   {% if publisher_image %}

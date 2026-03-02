@@ -18,14 +18,22 @@
     {
       "name": "Blog",
       "short_name": "Blog",
-      "description": "Read the latest posts",
+      "description": "Leia os artigos mais recentes",
       "url": "/blog/"
     },
     {
       "name": "Contato",
       "short_name": "Contato",
-      "description": "Open contact page",
+      "description": "Abra a página de contato",
       "url": "/contact/"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot.png",
+      "sizes": "1280x719",
+      "type": "image/png",
+      "label": "Página inicial do blog Hoa"
     }
   ],
   "icons": [

@@ -34,6 +34,11 @@
 {% elsif site.keywords %}
 <meta name="keywords" content="{{ site.keywords }}">
 {% endif %}
+{% if site.social and site.social.links %}
+{% for social_link in site.social.links %}
+<link rel="me" href="{{ social_link }}">
+{% endfor %}
+{% endif %}
 {% if page.preload_social_image and page.image %}
   {% if page.image contains '://' %}
     <link rel="preload" as="image" href="{{ page.image }}">
