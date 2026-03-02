@@ -5,6 +5,7 @@ permalink: /terms/
 comments: false
 description: Termos de uso, responsabilidades e condições de acesso do site
 keywords: "termos de uso, condições, responsabilidade, licenças"
+load_webfonts: false
 ---
 
 <section class="terms-of-use">

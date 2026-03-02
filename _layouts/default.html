@@ -70,8 +70,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   {% endif %}
+  {% unless page.load_webfonts == false %}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=PT+Serif:wght@400;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=PT+Serif:wght@400;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap"></noscript>
+  {% endunless %}
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   {% if page.url contains '/contact/' %}
   <link rel="preconnect" href="https://formspree.io" crossorigin>
