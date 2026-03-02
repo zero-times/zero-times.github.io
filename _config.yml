@@ -74,3 +74,4 @@ defaults:
       layout: "post"
       lang: "pt-BR"
       preconnect_fonts: false
+      load_webfonts: false
