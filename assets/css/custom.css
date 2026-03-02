@@ -2607,6 +2607,13 @@ section[id] {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+@supports (content-visibility: auto) {
+  .store-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 208px;
+  }
+}
+
 .store-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 35px 60px rgba(9, 11, 29, 0.16);
@@ -3630,6 +3637,13 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   border-radius: 0.9rem;
   background: #ffffff;
   padding: 1rem;
+}
+
+@supports (content-visibility: auto) {
+  .home-v2__post-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 280px;
+  }
 }
 
 .home-v2__post-title {
