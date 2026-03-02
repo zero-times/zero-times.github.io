@@ -5,6 +5,40 @@ title: Blog
 description: Artigos do meu blog pessoal em português
 keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
 ---
+{% assign blog_posts = paginator.posts | default: site.posts %}
+{% capture blog_item_list_json %}
+[
+{% for post in blog_posts %}
+  {
+    "@type": "ListItem",
+    "position": {{ forloop.index }},
+    "url": "{{ post.url | absolute_url }}",
+    "name": "{{ post.title | strip_html | escape }}"
+  }{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]
+{% endcapture %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ page.title | escape }}",
+  "description": "{{ page.description | escape }}",
+  "url": "{{ page.url | absolute_url }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "{{ site.title | escape }}",
+    "url": "{{ site.url }}{{ site.baseurl }}"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListOrder": "https://schema.org/ItemListOrderDescending",
+    "numberOfItems": {{ blog_posts | size }},
+    "itemListElement": {{ blog_item_list_json | strip_newlines | strip }}
+  }
+}
+</script>
 
 <div class="container my-5">
   <div class="row">
