@@ -211,14 +211,40 @@ article h2 a:hover {
 .post-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.5rem 0.65rem;
   font-size: 0.95rem;
   color: var(--text-light);
 }
 
+.post-meta-sep {
+  opacity: 0.7;
+}
+
+.post-categories {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
 .post-categories a {
-  color: var(--secondary-color);
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.22rem 0.7rem;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  color: #0a4f79;
+  background: #e8f4fb;
   font-weight: 500;
+  text-decoration: none;
+}
+
+.post-categories a:hover,
+.post-categories a:focus {
+  color: #0a4f79;
+  background: #d8ecf9;
+  text-decoration: none;
 }
 
 .post-content {
@@ -272,9 +298,19 @@ article h2 a:hover {
 
 .post-content blockquote {
   border-left: 4px solid var(--secondary-color);
-  padding-left: 1rem;
-  color: var(--text-light);
+  padding: 0.95rem 1.1rem;
+  border-radius: 0.65rem;
+  background: #f3f8fb;
+  color: #2b3a47;
   margin: 1.5rem 0;
+}
+
+.post-content blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.post-tags {
+  margin-top: 1.25rem;
 }
 
 .author-box {
@@ -330,6 +366,20 @@ footer a {
   .post-content pre,
   .post-content table {
     font-size: 0.95rem;
+  }
+
+  .post-meta {
+    font-size: 0.9rem;
+    gap: 0.4rem 0.5rem;
+  }
+
+  .post-meta-sep {
+    display: none;
+  }
+
+  .post-categories a {
+    font-size: 0.78rem;
+    padding: 0.2rem 0.6rem;
   }
 }
 
