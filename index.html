@@ -8,22 +8,48 @@ description: "Especialista em arquitetura móvel e soluções multiplataforma co
 keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, Brasil"
 ---
 
-<div class="container my-5 home-hero">
-  <div class="row g-4 g-lg-5">
-    <div class="col-lg-8">
-      <span class="home-hero__eyebrow">Arquitetura mobile · Flutter · HarmonyOS</span>
-      <h1 class="display-4 fw-bold mb-4 home-hero__title" id="page-title">Especialista em Arquitetura Móvel e Soluções Multiplataforma</h1>
-      <p class="lead home-hero__lead">9 anos de experiência prática em desenvolvimento e arquitetura móvel, especializado em entrega combinada de Flutter e tecnologia nativa. Transformo requisitos vagos em soluções multiplataforma viáveis e protejo entregas de produtos do zero ao um.</p>
-      <ul class="home-hero__chips" aria-label="Destaques profissionais" role="list">
-        <li class="home-hero__chip" role="listitem">9 anos em arquitetura móvel</li>
-        <li class="home-hero__chip" role="listitem">Flutter + HarmonyOS</li>
-        <li class="home-hero__chip" role="listitem">Entrega do zero ao um</li>
-      </ul>
-      
-      <section class="mt-5 home-hero__latest" aria-labelledby="home-latest-title">
-        <h2 class="mb-4" id="home-latest-title">Últimas Postagens</h2>
-        {% for post in site.posts limit: 3 %}
-        <article class="card mb-4 shadow-sm" itemscope itemtype="https://schema.org/BlogPosting">
+{% assign recent_posts = site.posts | slice: 0, 3 %}
+
+<div class="container my-5 home-v2">
+  <section class="home-v2__hero" aria-labelledby="page-title">
+    <div class="home-v2__hero-main">
+      <p class="home-v2__eyebrow">Arquitetura mobile · Flutter · HarmonyOS</p>
+      <h1 class="home-v2__title" id="page-title">Especialista em Arquitetura Móvel e Soluções Multiplataforma</h1>
+      <p class="home-v2__lead">9 anos de experiência em desenvolvimento e arquitetura móvel para transformar requisitos vagos em produtos robustos, escaláveis e com entrega previsível.</p>
+      <div class="home-v2__hero-actions">
+        <a class="home-v2__btn home-v2__btn--primary" href="{{ '/blog/' | relative_url }}" aria-label="Ver todos os artigos">Ver todos os artigos</a>
+        <a class="home-v2__btn home-v2__btn--secondary" href="{{ '/about/' | relative_url }}" aria-label="Saber mais sobre Hoa">Saiba mais</a>
+      </div>
+    </div>
+    <figure class="home-v2__hero-visual">
+      <img src="{{ '/assets/images/sal-300.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="(max-width: 991.98px) 100vw, 560px" alt="Consultoria técnica para produtos mobile" loading="eager" decoding="async" fetchpriority="high" width="560" height="360">
+      <figcaption>Da arquitetura ao lançamento com foco em performance e entrega.</figcaption>
+    </figure>
+  </section>
+
+  <section class="home-v2__metrics" aria-label="Indicadores principais">
+    <article class="home-v2__metric-card">
+      <p class="home-v2__metric-value">30+</p>
+      <p class="home-v2__metric-label">Projetos entregues</p>
+    </article>
+    <article class="home-v2__metric-card">
+      <p class="home-v2__metric-value">9</p>
+      <p class="home-v2__metric-label">Anos em mobile</p>
+    </article>
+    <article class="home-v2__metric-card">
+      <p class="home-v2__metric-value">100%</p>
+      <p class="home-v2__metric-label">Foco em resultado</p>
+    </article>
+  </section>
+
+  <section class="home-v2__content" aria-labelledby="home-latest-title">
+    <div class="home-v2__posts">
+      <p class="home-v2__content-eyebrow">Conteúdo recente</p>
+      <h2 class="home-v2__section-title" id="home-latest-title">Últimas postagens</h2>
+
+      {% if recent_posts and recent_posts.size > 0 %}
+        {% for post in recent_posts %}
+        <article class="home-v2__post-card" itemscope itemtype="https://schema.org/BlogPosting">
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <meta itemprop="name" content="{{ site.author.name }}">
             {% if site.author.url %}
@@ -52,55 +78,64 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
           {% elsif site.image %}
           <meta itemprop="image" content="{{ site.image | absolute_url }}">
           {% endif %}
-          <div class="card-body">
-            <h3 class="card-title" itemprop="headline">
-              <a href="{{ post.url | relative_url }}" class="card-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url">{{ post.title }}</a>
-            </h3>
-            <p class="card-text" itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 150 }}</p>
-            <p class="text-muted blog-entry__meta mb-0">
-              <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
-              <span aria-hidden="true">•</span>
-              <span class="blog-entry__badge">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
-            </p>
-          </div>
+
+          <h3 class="home-v2__post-title" itemprop="headline">
+            <a href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url">{{ post.title }}</a>
+          </h3>
+          <p class="home-v2__post-excerpt" itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 150 }}</p>
+          <p class="home-v2__post-meta">
+            <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
+            <span aria-hidden="true">•</span>
+            <span>{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
+          </p>
         </article>
         {% endfor %}
-        
-        <div class="text-center mt-4">
-          <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary" aria-label="Ver todos os artigos do blog">Ver todos os artigos</a>
-        </div>
+
+        {% if recent_posts.size < 3 %}
+        <article class="home-v2__post-card home-v2__post-card--placeholder" role="status" aria-live="polite">
+          <h3 class="home-v2__post-title">Mais conteúdo em breve</h3>
+          <p class="home-v2__post-excerpt">Estamos preparando novos artigos. Enquanto isso, explore o arquivo completo do blog.</p>
+        </article>
+        {% endif %}
+      {% else %}
+      <article class="home-v2__post-card home-v2__post-card--placeholder" role="status" aria-live="polite">
+        <h3 class="home-v2__post-title">Sem postagens publicadas</h3>
+        <p class="home-v2__post-excerpt">Nenhum artigo disponível no momento. Volte em breve para ver novidades.</p>
+      </article>
+      {% endif %}
+
+      <a class="home-v2__btn home-v2__btn--primary home-v2__posts-cta" href="{{ '/blog/' | relative_url }}" aria-label="Ver todos os artigos do blog">Ver todos os artigos</a>
+    </div>
+
+    <aside class="home-v2__sidebar" aria-label="Informações complementares">
+      <section class="home-v2__side-card">
+        <h3>Sobre mim</h3>
+        <p>{{ site.author.bio }}</p>
+        <img src="{{ '/assets/images/sal-150.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="112px" alt="{{ site.author.name }}" loading="lazy" decoding="async" fetchpriority="low" width="112" height="112">
+        <a class="home-v2__btn home-v2__btn--secondary" href="{{ '/about/' | relative_url }}" aria-label="Saiba mais sobre Hoa">Saiba mais</a>
       </section>
-    </div>
-    
-    <div class="col-lg-4">
-      <div class="card mb-4 shadow-sm home-hero__sidecard">
-        <div class="card-header">
-          <h5>Sobre Mim</h5>
-        </div>
-        <div class="card-body">
-          <img src="{{ '/assets/images/sal-150.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="(max-width: 991.98px) 96px, 150px" alt="{{ site.author.name }}" class="img-fluid rounded-circle mb-3" style="max-width: 150px;" loading="eager" decoding="async" fetchpriority="high" width="150" height="150">
-          <p>{{ site.author.bio }}</p>
-          <a href="{{ '/about/' | relative_url }}" class="btn btn-outline-primary" aria-label="Saiba mais sobre Hoa">Saiba mais</a>
-        </div>
-      </div>
-      
-      <div class="card mb-4 shadow-sm home-hero__sidecard">
-        <div class="card-header">
-          <h5>Especialidades</h5>
-        </div>
-        <div class="card-body">
-          <ul class="list-unstyled">
-            <li>Flutter e HarmonyOS</li>
-            <li>Arquitetura móvel</li>
-            <li>Soluções multiplataforma</li>
-            <li>Performance mobile</li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="text-center">
-        <a href="{{ '/contact/' | relative_url }}" class="btn btn-success" aria-label="Entre em contato para consultoria">Entre em contato</a>
-      </div>
-    </div>
-  </div>
+
+      <section class="home-v2__side-card">
+        <h3>Especialidades</h3>
+        <ul>
+          <li>Flutter e HarmonyOS</li>
+          <li>Arquitetura móvel</li>
+          <li>Soluções multiplataforma</li>
+          <li>Performance mobile</li>
+        </ul>
+      </section>
+
+      <section class="home-v2__side-card">
+        <h3>Vamos conversar?</h3>
+        <p>Consultoria em arquitetura mobile para times distribuídos e produtos digitais.</p>
+        <a class="home-v2__btn home-v2__btn--success" href="{{ '/contact/' | relative_url }}" aria-label="Entre em contato para consultoria">Entre em contato</a>
+      </section>
+    </aside>
+  </section>
+
+  <section class="home-v2__final-cta" aria-labelledby="home-final-cta-title">
+    <h2 id="home-final-cta-title">Pronto para acelerar seu próximo produto mobile?</h2>
+    <p>Da estratégia técnica à entrega: ajudo seu time a construir com segurança e velocidade.</p>
+    <a class="home-v2__btn home-v2__btn--primary home-v2__final-cta-btn" href="{{ '/contact/' | relative_url }}" aria-label="Agendar uma conversa">Agendar conversa</a>
+  </section>
 </div>

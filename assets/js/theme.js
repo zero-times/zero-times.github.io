@@ -147,22 +147,73 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Update active nav link based on current page
-  const navLinks = document.querySelectorAll('.nav-link');
-  const currentPage = window.location.pathname;
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    const isBlogSection = href === '/blog/' && currentPage.startsWith('/blog/');
-    const isCurrent = href === currentPage || isBlogSection;
+  // Update active nav state for desktop nav and mobile drawer nav.
+  const normalizePath = (path) => {
+    if (!path) return '/';
+    const trimmed = path.replace(/\/+$/, '');
+    return trimmed || '/';
+  };
 
+  const currentPath = normalizePath(window.location.pathname);
+  const navLinks = document.querySelectorAll('[data-site-nav]');
+  navLinks.forEach(link => {
+    if (link.getAttribute('aria-disabled') === 'true') {
+      return;
+    }
+
+    const href = link.getAttribute('href');
+    if (!href) {
+      return;
+    }
+
+    let resolved;
+    try {
+      resolved = new URL(href, window.location.origin);
+    } catch (err) {
+      return;
+    }
+
+    if (resolved.origin !== window.location.origin) {
+      return;
+    }
+
+    const linkPath = normalizePath(resolved.pathname);
+    const isBlogSection = linkPath === '/blog' && currentPath.startsWith('/blog');
+    const isCurrent = currentPath === linkPath || isBlogSection;
+
+    link.classList.toggle('is-active', isCurrent);
     if (isCurrent) {
       link.setAttribute('aria-current', 'page');
-      link.classList.add('active');
     } else {
       link.removeAttribute('aria-current');
-      link.classList.remove('active');
     }
   });
+
+  // Mobile drawer state sync: Menu <-> Fechar and aria-expanded.
+  const mobileDrawer = document.getElementById('siteMobileDrawer');
+  const mobileMenuButton = document.getElementById('mobileMenuButton');
+  const mobileMenuButtonLabel = document.getElementById('mobileMenuButtonLabel');
+  if (mobileDrawer && mobileMenuButton && window.bootstrap && bootstrap.Offcanvas) {
+    const drawerInstance = bootstrap.Offcanvas.getOrCreateInstance(mobileDrawer);
+    const syncMenuState = (isExpanded) => {
+      mobileMenuButton.setAttribute('aria-expanded', String(isExpanded));
+      mobileMenuButton.setAttribute('aria-label', isExpanded ? 'Fechar menu principal' : 'Abrir menu principal');
+      if (mobileMenuButtonLabel) {
+        mobileMenuButtonLabel.textContent = isExpanded ? 'Fechar' : 'Menu';
+      }
+    };
+
+    mobileDrawer.addEventListener('shown.bs.offcanvas', () => syncMenuState(true));
+    mobileDrawer.addEventListener('hidden.bs.offcanvas', () => syncMenuState(false));
+
+    mobileDrawer.querySelectorAll('a[href]').forEach(link => {
+      link.addEventListener('click', () => {
+        drawerInstance.hide();
+      });
+    });
+
+    syncMenuState(false);
+  }
 
   // Ensure security rel attributes for external links that open in new tabs
   const newTabLinks = document.querySelectorAll('a[target="_blank"]');

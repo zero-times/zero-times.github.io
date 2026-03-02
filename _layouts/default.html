@@ -156,55 +156,75 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
   <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
-  <!-- 页头 -->
-  <header class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top" role="navigation" aria-label="Navegação principal">
-    <div class="container">
-      <a class="navbar-brand" href="{{ '/' | relative_url }}" rel="home" aria-label="Página inicial - {{ site.title }}">{{ site.title }}</a>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
-        <span class="navbar-toggler-icon"></span>
+  {% assign brand_label = site.url | replace: 'https://', '' | replace: 'http://', '' | default: site.title %}
+  {% assign is_home = page.url == '/' %}
+  {% assign is_blog = page.url contains '/blog/' %}
+  {% assign is_about = page.url contains '/about/' %}
+  {% assign is_contact = page.url contains '/contact/' %}
+
+  <header class="site-header-v2 sticky-top" role="navigation" aria-label="Navegação principal">
+    <div class="container site-header-v2__inner">
+      <a class="site-header-v2__brand" href="{{ '/' | relative_url }}" rel="home" aria-label="Página inicial - {{ site.title }}">
+        {{ brand_label }}
+      </a>
+
+      <nav class="site-nav-desktop" aria-label="Seções principais">
+        <a class="site-nav-link{% if is_home %} is-active{% endif %}" href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
+        <a class="site-nav-link{% if is_blog %} is-active{% endif %}" href="{{ '/blog/' | relative_url }}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
+        <a class="site-nav-link{% if is_about %} is-active{% endif %}" href="{{ '/about/' | relative_url }}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
+        <a class="site-nav-link{% if is_contact %} is-active{% endif %}" href="{{ '/contact/' | relative_url }}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
+      </nav>
+
+      <a class="site-header-v2__cta d-none d-lg-inline-flex" href="{{ '/contact/' | relative_url }}" aria-label="Falar com Hoa">Fale comigo</a>
+
+      <button
+        id="mobileMenuButton"
+        class="site-header-v2__menu-btn d-inline-flex d-lg-none"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#siteMobileDrawer"
+        aria-controls="siteMobileDrawer"
+        aria-expanded="false"
+        aria-label="Abrir menu principal">
+        <span id="mobileMenuButtonLabel">Menu</span>
       </button>
-      
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link {% if page.url == '/' %}active{% endif %}" href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Início</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/blog/' %}active{% endif %}" href="{{ '/blog/' | relative_url }}"{% if page.url contains '/blog/' %} aria-current="page"{% endif %}>Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/about/' %}active{% endif %}" href="{{ '/about/' | relative_url }}"{% if page.url contains '/about/' %} aria-current="page"{% endif %}>Sobre</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {% if page.url contains '/contact/' %}active{% endif %}" href="{{ '/contact/' | relative_url }}"{% if page.url contains '/contact/' %} aria-current="page"{% endif %}>Contato</a>
-          </li>
-          
-          <li class="nav-item">
-            <span class="nav-link disabled" aria-disabled="true">PT-BR</span>
-          </li>
-        </ul>
-      </div>
     </div>
   </header>
+
+  <div class="offcanvas offcanvas-top site-mobile-drawer" tabindex="-1" id="siteMobileDrawer" aria-labelledby="siteMobileDrawerTitle">
+    <div class="offcanvas-body">
+      <h2 id="siteMobileDrawerTitle" class="visually-hidden">Menu principal</h2>
+      <nav class="site-mobile-drawer__nav" aria-label="Navegação móvel">
+        <a class="site-mobile-drawer__link{% if is_home %} is-active{% endif %}" href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
+        <a class="site-mobile-drawer__link{% if is_blog %} is-active{% endif %}" href="{{ '/blog/' | relative_url }}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
+        <a class="site-mobile-drawer__link{% if is_about %} is-active{% endif %}" href="{{ '/about/' | relative_url }}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
+        <a class="site-mobile-drawer__link{% if is_contact %} is-active{% endif %}" href="{{ '/contact/' | relative_url }}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
+      </nav>
+      <a class="site-mobile-drawer__cta" href="{{ '/contact/' | relative_url }}" aria-label="Falar com Hoa">Fale comigo</a>
+      <p class="site-mobile-drawer__hint">Toque em Fechar para recolher o menu</p>
+    </div>
+  </div>
 
   <!-- 主内容 -->
   <main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label="Conteúdo principal">
     {{ content }}
   </main>
 
-  <!-- 页脚 -->
-  <footer class="site-footer bg-light py-4 mt-5" role="contentinfo">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}. Todos os direitos reservados.</p>
-        </div>
-        <div class="col-md-6 text-md-end">
-          <a href="{{ '/privacy-policy/' | relative_url }}" class="me-3" aria-label="Abrir Política de Privacidade"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>Política de Privacidade</a>
-          <a href="{{ '/terms/' | relative_url }}" aria-label="Abrir Termos de Uso"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos de Uso</a>
-        </div>
+  <footer class="site-footer site-footer-v2 mt-5" role="contentinfo">
+    <div class="container site-footer-v2__inner">
+      <div class="site-footer-v2__brand">
+        <strong class="site-footer-v2__brand-name">{{ brand_label }}</strong>
+        <p class="site-footer-v2__brand-copy">Arquitetura mobile e blog técnico</p>
+      </div>
+      <div class="site-footer-v2__meta">
+        <nav class="site-footer-v2__links" aria-label="Links do rodapé">
+          <a href="{{ '/blog/' | relative_url }}" aria-label="Abrir Blog"{% if is_blog %} aria-current="page"{% endif %}>Blog</a>
+          <a href="{{ '/about/' | relative_url }}" aria-label="Abrir Sobre"{% if is_about %} aria-current="page"{% endif %}>Sobre</a>
+          <a href="{{ '/contact/' | relative_url }}" aria-label="Abrir Contato"{% if is_contact %} aria-current="page"{% endif %}>Contato</a>
+          <a href="{{ '/privacy-policy/' | relative_url }}" aria-label="Abrir Política de Privacidade"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>Privacidade</a>
+          <a href="{{ '/terms/' | relative_url }}" aria-label="Abrir Termos de Uso"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos</a>
+        </nav>
+        <p class="site-footer-v2__copyright">&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}</p>
       </div>
     </div>
   </footer>
