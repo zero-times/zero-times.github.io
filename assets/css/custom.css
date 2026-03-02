@@ -2333,13 +2333,28 @@ section[id] {
 }
 
 .previous-next-post .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  min-height: 48px;
+  padding: 0.7rem 1rem;
+  line-height: 1.35;
   text-wrap: balance;
   white-space: normal;
+}
+
+.previous-next-post .col-md-6:last-child .btn {
+  justify-content: flex-end;
 }
 
 @media (max-width: 767.98px) {
   .previous-next-post .btn {
     width: 100%;
+  }
+
+  .previous-next-post .col-md-6 {
+    display: flex;
   }
 
   .previous-next-post .col-md-6 + .col-md-6 {
