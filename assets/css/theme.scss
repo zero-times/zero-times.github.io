@@ -2,11 +2,11 @@
 ---
 /* Custom styles for the Portuguese Personal Blog */
 :root {
-  --primary-color: #2c3e50;
+  --primary-color: {{ site.theme_color_light | default: '#2c3e50' }};
   --secondary-color: #3498db;
   --accent-color: #e74c3c;
   --light-bg: #f8f9fa;
-  --dark-bg: #212529;
+  --dark-bg: {{ site.theme_color_dark | default: '#0b1320' }};
   --text-color: #333;
   --text-light: #6c757d;
   --border-radius: .375rem;

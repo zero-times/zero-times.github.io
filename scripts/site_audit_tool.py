@@ -545,6 +545,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     default_layout = read_text(ROOT / '_layouts/default.html')
     share_layout = read_text(ROOT / '_layouts/share.html')
     homepage = read_text(ROOT / 'index.html')
+    theme_scss = read_text(ROOT / 'assets/css/theme.scss')
 
     seo_keys = ['title:', 'description:', 'keywords:', 'logo:']
     seo_missing = [k.rstrip(':') for k in seo_keys if k not in config_text]
@@ -606,6 +607,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320"' in share_layout
             or "name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"{{ site.theme_color_dark | default: '#0b1320' }}\"" in share_layout
         )
+    )
+    has_config_backed_theme_color_tokens = (
+        "--primary-color: {{ site.theme_color_light | default: '#2c3e50' }};" in theme_scss
+        and "--dark-bg: {{ site.theme_color_dark | default: '#0b1320' }};" in theme_scss
     )
     has_default_main_landmark_aria_label = (
         '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
@@ -1049,6 +1054,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_mobile_ready_apple_touch_icon
             and has_share_mobile_ready_apple_touch_icon
             and has_mobile_ready_web_manifest
+            and has_config_backed_theme_color_tokens
             else 7.2,
             'max_score': 10.0,
             'findings': [
@@ -1225,6 +1231,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if has_mobile_ready_web_manifest and default_manifest_path
                     else 'Add one shared local manifest link in default/share layouts, include description/lang/id metadata, provide local 192px/512px icons, and include a maskable icon for better Android adaptive install visuals.',
                 },
+                {
+                    'aspect': 'Theme token consistency',
+                    'result': 'Improved' if has_config_backed_theme_color_tokens else 'Needs tuning',
+                    'details': 'assets/css/theme.scss uses site.theme_color_light/site.theme_color_dark for --primary-color and --dark-bg, keeping CSS tokens aligned with head theme-color metadata.'
+                    if has_config_backed_theme_color_tokens
+                    else 'Use site.theme_color_light and site.theme_color_dark in assets/css/theme.scss for --primary-color/--dark-bg to prevent CSS/head color drift.',
+                },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,
             'missing_page_image_dimensions': pages_missing_image_dimensions,
@@ -1238,6 +1251,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'share_apple_touch_icon_ready': has_share_mobile_ready_apple_touch_icon,
             'web_app_manifest_ready': has_mobile_ready_web_manifest,
             'web_app_manifest_maskable_icon_ready': has_manifest_maskable_icon_192,
+            'theme_color_token_consistency': has_config_backed_theme_color_tokens,
         },
     }
 
@@ -1293,6 +1307,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     share_apple_touch_icon_ready = sections.get('content_quality', {}).get('share_apple_touch_icon_ready', False)
     web_app_manifest_ready = sections.get('content_quality', {}).get('web_app_manifest_ready', False)
     web_app_manifest_maskable_icon_ready = sections.get('content_quality', {}).get('web_app_manifest_maskable_icon_ready', False)
+    theme_color_token_consistency = sections.get('content_quality', {}).get('theme_color_token_consistency', False)
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
 
     failures: list[str] = []
@@ -1352,6 +1367,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('web_app_manifest_ready=0')
     if not web_app_manifest_maskable_icon_ready:
         failures.append('web_app_manifest_maskable_icon_ready=0')
+    if not theme_color_token_consistency:
+        failures.append('theme_color_token_consistency=0')
     if http_check_enabled and http_failures:
         failures.append(f'http_failures={len(http_failures)}')
     return failures
