@@ -59,6 +59,58 @@ jobs:
         if: github.event_name == 'schedule' && github.event.schedule == '35 2 1 * *'
         run: python3 scripts/site_audit_tool.py --strict --http-check --http-sample 50 --http-timeout 4.0
 
+      - name: Summarize monthly external URL sample failures (non-blocking)
+        if: github.event_name == 'schedule' && github.event.schedule == '35 2 1 * *' && always()
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import glob
+          import json
+          from collections import Counter
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          report_paths = sorted(glob.glob('reports/site_audit_*.json'))
+          summary_path = Path('reports/http_failures_summary.md')
+          if not report_paths:
+            summary_path.write_text('# HTTP Failure Summary\n\nNo audit report file found.\n', encoding='utf-8')
+            raise SystemExit(0)
+
+          report_path = Path(report_paths[-1])
+          report = json.loads(report_path.read_text(encoding='utf-8'))
+          http_check = report.get('sections', {}).get('broken_links_check', {}).get('http_check', {})
+          sample_size = int(http_check.get('sample_size') or 0)
+          failures = list(http_check.get('failures') or [])
+          top = list(http_check.get('top_failing_domains') or [])
+
+          if not top and failures:
+            domain_counter = Counter()
+            for row in failures:
+              domain = urlparse((row.get('url') or '')).netloc.lower()
+              if domain:
+                domain_counter[domain] += 1
+            top = [{'domain': d, 'count': c} for d, c in domain_counter.most_common(10)]
+
+          lines = [
+            '# HTTP Failure Summary',
+            '',
+            f'- Report: `{report_path.as_posix()}`',
+            f'- Sampled URLs: {sample_size}',
+            f'- Failed URLs: {len(failures)}',
+            '',
+          ]
+
+          if top:
+            lines.extend(['## Top failing domains', '', '| Domain | Failures |', '| --- | ---: |'])
+            for item in top:
+              lines.append(f"| {item.get('domain', '-')} | {item.get('count', 0)} |")
+          else:
+            lines.append('No failing domains detected in this sample.')
+
+          summary_path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          print(summary_path.read_text(encoding='utf-8'))
+          PY
+
       - name: Build site for rendered SEO smoke check
         run: bundle exec jekyll build
 
@@ -183,4 +235,13 @@ jobs:
         with:
           name: site-audit-report-${{ github.run_id }}
           path: reports/site_audit_*.json
+          if-no-files-found: warn
+
+      - name: Upload monthly HTTP failure summary
+        if: github.event_name == 'schedule' && github.event.schedule == '35 2 1 * *' && always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-audit-http-failure-summary-${{ github.run_id }}
+          path: reports/http_failures_summary.md
           if-no-files-found: warn

@@ -12,6 +12,7 @@ import argparse
 import json
 import re
 import struct
+from collections import Counter
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -530,11 +531,21 @@ def sample_http_urls(urls: list[str], sample_size: int, timeout: float) -> dict:
     sampled = filtered_urls[: max(sample_size, 0)]
     results = [probe_url(url, timeout=timeout) for url in sampled]
     failures = [r for r in results if not r.get('ok')]
+    failure_domains = Counter(
+        urllib.parse.urlparse((result.get('url') or '')).netloc.lower()
+        for result in failures
+        if urllib.parse.urlparse((result.get('url') or '')).netloc
+    )
+    top_failing_domains = [
+        {'domain': domain, 'count': count}
+        for domain, count in failure_domains.most_common(10)
+    ]
     return {
         'enabled': True,
         'sample_size': len(sampled),
         'timeout_seconds': timeout,
         'failures': failures,
+        'top_failing_domains': top_failing_domains,
         'results': results,
     }
 
