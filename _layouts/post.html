@@ -9,8 +9,15 @@ layout: default
 {% assign author_web = author_data.web | default: author_data.url %}
 {% assign word_count = content | number_of_words %}
 {% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
-{% assign featured_image_loading = page.image_loading | default: 'lazy' %}
-{% assign featured_image_fetchpriority = page.image_fetchpriority | default: 'auto' %}
+{% assign featured_image_loading = page.image_loading | default: 'eager' %}
+{% assign featured_image_fetchpriority = page.image_fetchpriority %}
+{% if featured_image_fetchpriority == nil %}
+  {% if featured_image_loading == 'eager' %}
+    {% assign featured_image_fetchpriority = 'high' %}
+  {% else %}
+    {% assign featured_image_fetchpriority = 'low' %}
+  {% endif %}
+{% endif %}
 {% assign post_image_src = nil %}
 {% if page.image %}
   {% if page.image contains '://' %}
