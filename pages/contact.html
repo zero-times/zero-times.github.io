@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: Contato
 permalink: "/contact/"
 comments: false
@@ -8,72 +8,69 @@ keywords: "contato, consultoria Flutter, HarmonyOS, arquitetura móvel, multipla
 hide_title: true
 ---
 
-<section class="contact-wrapper contact-hero mb-5">
-  <div class="contact-hero__badge">Conversa direta</div>
-  <h1 id="page-title">Vamos falar sobre seu produto, arquitetura ou desafios multiplataforma</h1>
-  <p class="lead">Se você precisa de consultoria sobre rotas técnicas HarmonyOS/Flutter ou quer construir capacidade móvel do zero, sinta-se à vontade para falar comigo. Dê-me um objetivo e eu preparo um caminho técnico claro e um plano de ação.</p>
-  <div class="contact-chips">
-    <div class="contact-chip">
-      <span class="contact-chip__label">Email</span>
-      <a class="contact-chip__value" href="mailto:{{ site.email }}" aria-label="Enviar email para {{ site.email }}">{{ site.email }}</a>
+<div class="container my-5 contact-v2">
+  <section class="contact-v2__hero" aria-labelledby="page-title">
+    <p class="contact-v2__eyebrow">Conversa direta</p>
+    <h1 id="page-title">Vamos falar sobre seu produto, arquitetura ou desafios multiplataforma</h1>
+    <p class="contact-v2__lead">Se você precisa de consultoria HarmonyOS/Flutter ou quer construir capacidade móvel do zero, descreva seu objetivo e eu preparo um plano técnico claro.</p>
+    <div class="contact-v2__chips" aria-label="Canais de contato">
+      <article class="contact-v2__chip">
+        <p class="contact-v2__chip-label">Email</p>
+        <a href="mailto:{{ site.email }}" aria-label="Enviar email para {{ site.email }}">{{ site.email }}</a>
+      </article>
+      <article class="contact-v2__chip">
+        <p class="contact-v2__chip-label">WeChat</p>
+        <p class="contact-v2__chip-value">hoaever</p>
+      </article>
     </div>
-    <div class="contact-chip">
-      <span class="contact-chip__label">WeChat</span>
-      <span class="contact-chip__value">hoaever</span>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="contact-wrapper contact-methods mb-5">
-  <div class="row">
-    <div class="col-md-4 mb-4">
-      <div class="contact-card h-100">
+  <section class="contact-v2__methods" aria-labelledby="contact-methods-title">
+    <h2 id="contact-methods-title">Como posso ajudar</h2>
+    <div class="contact-v2__methods-grid">
+      <article class="contact-v2__method-card">
         <h3>Parcerias de projeto</h3>
-        <p>Quer que eu participe do seu projeto crítico? Descreva metas e prazos e alinhamos arquitetura, tecnologia e ritmo de entrega.</p>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="contact-card h-100">
+        <p>Alinhamos metas, escopo e ritmo de entrega para projetos críticos com prazo real de produção.</p>
+      </article>
+      <article class="contact-v2__method-card">
         <h3>Consultoria técnica</h3>
-        <p>Para HarmonyOS/Flutter, performance, SDKs e produto, posso oferecer diagnóstico, avaliação de soluções ou consultoria.</p>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="contact-card h-100">
+        <p>Diagnóstico e direcionamento para HarmonyOS, Flutter, performance, SDKs e arquitetura de produto.</p>
+      </article>
+      <article class="contact-v2__method-card">
         <h3>Colaboração de conteúdo</h3>
-        <p>Aberto a entrevistas, palestras e comunidades para compartilhar experiências reais de multiplataforma.</p>
-      </div>
+        <p>Entrevistas, palestras e trocas com comunidades sobre experiências reais de desenvolvimento multiplataforma.</p>
+      </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="contact-wrapper contact-form mb-5">
-  <h2>Escreva para mim</h2>
-  <p class="text-muted" id="contact-form-hint">Use o formulário para descrever suas necessidades, prazos ou qualquer tema. Responderei em até 48 horas.</p>
-  <form class="contact-form__box" action="https://formspree.io/xvoewlbz" method="POST" aria-label="Formulário de contato" aria-describedby="contact-form-hint">
-    <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <div class="form-group row">
-      <div class="col-md-6">
-        <label class="visually-hidden" for="contact-name">Nome</label>
-        <input id="contact-name" class="form-control" type="text" name="name" placeholder="Nome*" aria-label="Nome" autocomplete="name" required>
+  <section class="contact-v2__form-section" aria-labelledby="contact-form-title">
+    <h2 id="contact-form-title">Escreva para mim</h2>
+    <p id="contact-form-hint">Use o formulário para descrever necessidades e prazos. Responderei em até 48 horas.</p>
+    <form class="contact-v2__form" action="https://formspree.io/xvoewlbz" method="POST" aria-label="Formulário de contato" aria-describedby="contact-form-hint">
+      <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="contact-v2__form-grid">
+        <div class="contact-v2__field">
+          <label for="contact-name">Nome <span aria-hidden="true">*</span></label>
+          <input id="contact-name" class="form-control" type="text" name="name" autocomplete="name" required>
+        </div>
+        <div class="contact-v2__field">
+          <label for="contact-email">Email <span aria-hidden="true">*</span></label>
+          <input id="contact-email" class="form-control" type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
+        </div>
+        <div class="contact-v2__field">
+          <label for="contact-company">Empresa ou equipe</label>
+          <input id="contact-company" class="form-control" type="text" name="company" autocomplete="organization">
+        </div>
+        <div class="contact-v2__field">
+          <label for="contact-topic">Projeto ou tema</label>
+          <input id="contact-topic" class="form-control" type="text" name="topic" autocomplete="off" autocapitalize="off" spellcheck="false">
+        </div>
       </div>
-      <div class="col-md-6">
-        <label class="visually-hidden" for="contact-email">Email</label>
-        <input id="contact-email" class="form-control" type="email" name="email" placeholder="Email*" aria-label="Email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
+      <div class="contact-v2__field contact-v2__field--full">
+        <label for="contact-message">Mensagem <span aria-hidden="true">*</span></label>
+        <textarea id="contact-message" rows="8" class="form-control" name="message" required></textarea>
       </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-md-6">
-        <label class="visually-hidden" for="contact-company">Empresa ou equipe</label>
-        <input id="contact-company" class="form-control" type="text" name="company" placeholder="Empresa / equipe (opcional)" aria-label="Empresa ou equipe" autocomplete="organization">
-      </div>
-      <div class="col-md-6">
-        <label class="visually-hidden" for="contact-topic">Projeto ou tema</label>
-        <input id="contact-topic" class="form-control" type="text" name="topic" placeholder="Projeto ou tema (opcional)" aria-label="Projeto ou tema" autocomplete="off" autocapitalize="off" spellcheck="false">
-      </div>
-    </div>
-    <label class="visually-hidden" for="contact-message">Mensagem</label>
-    <textarea id="contact-message" rows="8" class="form-control mb-3" name="message" placeholder="Descreva seu objetivo, contexto ou o apoio esperado*" aria-label="Mensagem" required></textarea>    
-    <input class="btn btn-apple-primary btn-lg px-5" type="submit" value="Enviar mensagem">
-  </form>
-</section>
+      <button class="home-v2__btn home-v2__btn--primary contact-v2__submit" type="submit">Enviar mensagem</button>
+    </form>
+  </section>
+</div>
