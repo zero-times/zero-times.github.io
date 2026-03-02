@@ -77,6 +77,29 @@ jobs:
             exit 1
           fi
 
+      - name: Assert rendered canonical singularity on homepage/share
+        run: |
+          HOME="_site/index.html"
+          SHARE="_site/share/index.html"
+          if [ ! -f "$HOME" ]; then
+            echo "Missing rendered homepage: $HOME"
+            exit 1
+          fi
+          if [ ! -f "$SHARE" ]; then
+            echo "Missing rendered share page: $SHARE"
+            exit 1
+          fi
+          HOME_CANONICAL_COUNT=$(grep -o 'rel="canonical"' "$HOME" | wc -l | tr -d ' ')
+          SHARE_CANONICAL_COUNT=$(grep -o 'rel="canonical"' "$SHARE" | wc -l | tr -d ' ')
+          if [ "$HOME_CANONICAL_COUNT" -ne 1 ]; then
+            echo "Expected exactly 1 canonical tag on homepage, found $HOME_CANONICAL_COUNT"
+            exit 1
+          fi
+          if [ "$SHARE_CANONICAL_COUNT" -ne 1 ]; then
+            echo "Expected exactly 1 canonical tag on share page, found $SHARE_CANONICAL_COUNT"
+            exit 1
+          fi
+
       - name: Assert paginated archive omits hreflang alternates
         run: |
           PAGE2="_site/blog/page2/index.html"

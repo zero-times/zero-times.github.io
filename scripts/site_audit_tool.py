@@ -573,7 +573,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
 
     has_seo_tag = '{% seo %}' in default_layout
+    has_share_seo_tag = '{% seo %}' in share_layout
     has_manual_canonical = '<link rel="canonical"' in default_layout
+    has_share_manual_canonical = '<link rel="canonical"' in share_layout
     has_viewport = 'name="viewport"' in default_layout
     has_skip_link = 'skip-link' in default_layout
     has_default_mobile_web_app_meta = (
@@ -636,7 +638,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and '<link rel="first" href="{{ \'/blog/\' | absolute_url }}">' in default_layout
         and '<link rel="last" href="{{ site.paginate_path | absolute_url | replace: \':num\', paginator.total_pages }}">' in default_layout
     )
-    has_canonical_signal_consistency = has_seo_tag and not has_manual_canonical and has_paginated_rel_navigation
+    has_canonical_signal_consistency = (
+        has_seo_tag
+        and has_share_seo_tag
+        and not has_manual_canonical
+        and not has_share_manual_canonical
+        and has_paginated_rel_navigation
+    )
 
     malformed_links: list[dict] = []
     placeholder_hits: list[dict] = []
@@ -1016,9 +1024,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'Canonical signal consistency',
                     'result': 'Good' if has_canonical_signal_consistency else 'Needs improvement',
-                    'details': 'Canonical tag generation stays centralized in jekyll-seo-tag, and paginated archives expose prev/next/first/last rel signals for crawler consistency.'
+                    'details': 'Canonical tag generation stays centralized in jekyll-seo-tag for both default/share layouts, and paginated archives expose prev/next/first/last rel signals for crawler consistency.'
                     if has_canonical_signal_consistency
-                    else 'Keep canonical generation in one place (jekyll-seo-tag) and ensure paginator rel prev/next/first/last links exist in default layout.',
+                    else 'Keep canonical generation in jekyll-seo-tag for default/share layouts, avoid manual canonical tags, and ensure paginator rel prev/next/first/last links exist in default layout.',
                 },
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
