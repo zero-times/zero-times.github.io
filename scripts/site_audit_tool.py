@@ -588,6 +588,12 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     has_default_mobile_web_app_title = 'name="apple-mobile-web-app-title" content="{{ site.title | escape }}"' in default_layout
     has_share_mobile_web_app_title = 'name="apple-mobile-web-app-title" content="{{ site.title | escape }}"' in share_layout
+    has_default_mobile_web_app_status_bar = (
+        'name="apple-mobile-web-app-status-bar-style" content="default"' in default_layout
+    )
+    has_share_mobile_web_app_status_bar = (
+        'name="apple-mobile-web-app-status-bar-style" content="default"' in share_layout
+    )
     has_default_application_name_meta = 'name="application-name" content="{{ site.title | escape }}"' in default_layout
     has_share_application_name_meta = 'name="application-name" content="{{ site.title | escape }}"' in share_layout
     has_default_theme_color_meta = (
@@ -828,6 +834,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_share_mobile_web_app_meta
             and has_default_mobile_web_app_title
             and has_share_mobile_web_app_title
+            and has_default_mobile_web_app_status_bar
+            and has_share_mobile_web_app_status_bar
             and has_default_application_name_meta
             and has_share_application_name_meta
             and has_default_theme_color_meta
@@ -863,6 +871,15 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else 'Add apple-mobile-web-app-title meta tags to both default and share layouts.',
                 },
                 {
+                    'aspect': 'Apple mobile status bar style',
+                    'result': 'Improved'
+                    if has_default_mobile_web_app_status_bar and has_share_mobile_web_app_status_bar
+                    else 'Needs tuning',
+                    'details': 'Default and share layouts set apple-mobile-web-app-status-bar-style to keep iOS standalone status bar rendering predictable.'
+                    if has_default_mobile_web_app_status_bar and has_share_mobile_web_app_status_bar
+                    else 'Add apple-mobile-web-app-status-bar-style meta tags to both default and share layouts.',
+                },
+                {
                     'aspect': 'Application name meta',
                     'result': 'Improved'
                     if has_default_application_name_meta and has_share_application_name_meta
@@ -894,6 +911,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'share_mobile_web_app_meta': has_share_mobile_web_app_meta,
             'default_mobile_web_app_title': has_default_mobile_web_app_title,
             'share_mobile_web_app_title': has_share_mobile_web_app_title,
+            'default_mobile_web_app_status_bar': has_default_mobile_web_app_status_bar,
+            'share_mobile_web_app_status_bar': has_share_mobile_web_app_status_bar,
             'default_application_name_meta': has_default_application_name_meta,
             'share_application_name_meta': has_share_application_name_meta,
             'default_theme_color_meta': has_default_theme_color_meta,
@@ -1291,6 +1310,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     share_mobile_web_app_meta = sections.get('layout_assessment', {}).get('share_mobile_web_app_meta', False)
     default_mobile_web_app_title = sections.get('layout_assessment', {}).get('default_mobile_web_app_title', False)
     share_mobile_web_app_title = sections.get('layout_assessment', {}).get('share_mobile_web_app_title', False)
+    default_mobile_web_app_status_bar = sections.get('layout_assessment', {}).get('default_mobile_web_app_status_bar', False)
+    share_mobile_web_app_status_bar = sections.get('layout_assessment', {}).get('share_mobile_web_app_status_bar', False)
     default_application_name_meta = sections.get('layout_assessment', {}).get('default_application_name_meta', False)
     share_application_name_meta = sections.get('layout_assessment', {}).get('share_application_name_meta', False)
     default_theme_color_meta = sections.get('layout_assessment', {}).get('default_theme_color_meta', False)
@@ -1327,6 +1348,10 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('default_mobile_web_app_title=0')
     if not share_mobile_web_app_title:
         failures.append('share_mobile_web_app_title=0')
+    if not default_mobile_web_app_status_bar:
+        failures.append('default_mobile_web_app_status_bar=0')
+    if not share_mobile_web_app_status_bar:
+        failures.append('share_mobile_web_app_status_bar=0')
     if not default_application_name_meta:
         failures.append('default_application_name_meta=0')
     if not share_application_name_meta:
