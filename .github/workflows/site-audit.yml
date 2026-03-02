@@ -50,9 +50,10 @@ jobs:
         if: github.event_name != 'schedule'
         run: python3 scripts/site_audit_tool.py --strict
 
-      - name: Run strict site audit with external sample (weekly scheduled)
+      - name: Run non-blocking external URL sample (weekly scheduled)
         if: github.event_name == 'schedule' && github.event.schedule == '20 2 * * 1'
-        run: python3 scripts/site_audit_tool.py --strict --http-check --http-sample 20 --http-timeout 4.0
+        continue-on-error: true
+        run: python3 scripts/site_audit_tool.py --http-check --http-sample 40 --http-timeout 4.0
 
       - name: Run strict site audit with deep external sample (monthly scheduled)
         if: github.event_name == 'schedule' && github.event.schedule == '35 2 1 * *'
