@@ -503,8 +503,14 @@ def collect_preconnect_root_urls() -> set[str]:
     return roots
 
 
+def _looks_like_timeout_error(exc: Exception) -> bool:
+    message = str(exc).lower()
+    return 'timeout' in message or 'timed out' in message
+
+
 def probe_url(url: str, timeout: float) -> dict:
-    headers = {'User-Agent': 'JekyllSiteAudit/1.0 (+https://youllbe.cn)'}
+    # Use a browser-like UA to reduce anti-bot false negatives during URL sampling.
+    headers = {'User-Agent': 'Mozilla/5.0 (compatible; JekyllSiteAudit/1.0; +https://youllbe.cn)'}
     req = urllib.request.Request(url, headers=headers, method='HEAD')
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -518,6 +524,28 @@ def probe_url(url: str, timeout: float) -> dict:
         except urllib.error.HTTPError as exc:
             return {'url': url, 'status': int(exc.code), 'ok': False, 'method': 'GET', 'error': str(exc)}
         except Exception as exc:  # noqa: BLE001 - keep audit script resilient to network/runtime issues
+            if _looks_like_timeout_error(exc):
+                retry_timeout = max(timeout * 2.5, 8.0)
+                try:
+                    with urllib.request.urlopen(get_req, timeout=retry_timeout) as resp:
+                        return {
+                            'url': url,
+                            'status': int(getattr(resp, 'status', 200)),
+                            'ok': True,
+                            'method': 'GET',
+                            'retried_after_timeout': True,
+                            'retry_timeout_seconds': retry_timeout,
+                        }
+                except Exception as retry_exc:  # noqa: BLE001
+                    return {
+                        'url': url,
+                        'status': None,
+                        'ok': False,
+                        'method': 'GET',
+                        'error': str(retry_exc),
+                        'retried_after_timeout': True,
+                        'retry_timeout_seconds': retry_timeout,
+                    }
             return {'url': url, 'status': None, 'ok': False, 'method': 'GET', 'error': str(exc)}
 
 
