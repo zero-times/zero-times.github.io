@@ -426,9 +426,8 @@ html {
   --apple-error: #ff3b30;
   --font-body: "PT Sans", "Helvetica Neue", Arial, sans-serif;
   --font-heading: "PT Sans", "Helvetica Neue", Arial, sans-serif;
-  --font-serif: "PT Serif", Georgia, "Times New Roman", serif;
   --font-body-pt: "Alegreya Sans", "PT Sans", "Helvetica Neue", Arial, sans-serif;
-  --font-heading-pt: "Alegreya", "PT Serif", Georgia, "Times New Roman", serif;
+  --font-heading-pt: "Alegreya", Georgia, "Times New Roman", serif;
   --font-mono: "SFMono-Regular", "Menlo", "Consolas", "Liberation Mono", monospace;
   --br-green: #009b3a;
   --br-green-soft: #20b461;
