@@ -54,12 +54,42 @@
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
 {% endif %}
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', '{{ site.google_analytics }}');
+  (function () {
+    var dnt = window.doNotTrack === '1' || navigator.doNotTrack === '1' || navigator.msDoNotTrack === '1';
+    if (dnt) {
+      return;
+    }
+
+    var trackingId = '{{ site.google_analytics }}';
+    var loaded = false;
+
+    function initGa() {
+      if (loaded) {
+        return;
+      }
+      loaded = true;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(trackingId);
+      script.onload = function () {
+        window.gtag('js', new Date());
+        window.gtag('config', trackingId);
+      };
+      document.head.appendChild(script);
+    }
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(initGa, { timeout: 2500 });
+    } else {
+      window.addEventListener('load', function () {
+        window.setTimeout(initGa, 1200);
+      }, { once: true });
+    }
+  })();
 </script>
 {% endif %}
 </head>

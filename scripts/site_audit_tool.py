@@ -782,7 +782,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         or 'rel="preconnect" href="https://fonts.gstatic.com"' in default_layout
     )
     has_guarded_default_font_preconnect = (
-        '{% if page.preconnect_fonts %}' in default_layout
+        (
+            '{% if page.preconnect_fonts %}' in default_layout
+            or '{% if page.preconnect_fonts and page.load_webfonts != false %}' in default_layout
+        )
         and 'rel="preconnect" href="https://fonts.googleapis.com"' in default_layout
         and 'rel="preconnect" href="https://fonts.gstatic.com" crossorigin' in default_layout
     )
