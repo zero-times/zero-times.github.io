@@ -66,9 +66,11 @@ defaults:
     values:
       layout: "default"
       lang: "pt-BR"
+      preconnect_fonts: true
   - scope:
       path: "_posts"
       type: "posts"
     values:
       layout: "post"
       lang: "pt-BR"
+      preconnect_fonts: true
