@@ -117,8 +117,19 @@ layout: default
                         {% assign post_site_link = page.site %}
                         {% assign post_site_external = false %}
                         {% if page.site contains '://' %}
-                            {% if site.url and page.site contains site.url %}
-                                {% assign post_site_external = false %}
+                            {% assign site_host = site.url | replace: 'https://', '' | replace: 'http://', '' | split: '/' | first %}
+                            {% assign page_site_host = page.site | replace: 'https://', '' | replace: 'http://', '' | split: '/' | first %}
+                            {% if site_host and page_site_host == site_host %}
+                                {% assign internal_site_path = page.site | remove_first: site.url %}
+                                {% if site.baseurl and site.baseurl != '' and internal_site_path contains site.baseurl %}
+                                    {% assign internal_site_path = internal_site_path | remove_first: site.baseurl %}
+                                {% endif %}
+                                {% if internal_site_path == '' %}
+                                    {% assign internal_site_path = '/' %}
+                                {% elsif internal_site_path | slice: 0, 1 != '/' %}
+                                    {% assign internal_site_path = '/' | append: internal_site_path %}
+                                {% endif %}
+                                {% assign post_site_link = internal_site_path | relative_url %}
                             {% else %}
                                 {% assign post_site_external = true %}
                             {% endif %}
