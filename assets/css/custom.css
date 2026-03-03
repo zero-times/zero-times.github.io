@@ -8,9 +8,24 @@ html {
   scroll-padding-top: 6rem;
 }
 
+/* Speed up long feeds by skipping off-screen card rendering until needed */
+.postbox-card,
+.home-hero__latest .card {
+  content-visibility: auto;
+  contain-intrinsic-size: 320px;
+}
+
 @media (max-width: 575.98px) {
   html {
     scroll-padding-top: 5rem;
+  }
+
+  .site-header-v2__nav-link,
+  .hero-actions .btn,
+  .postbox-cta {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
 }
 
