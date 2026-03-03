@@ -333,21 +333,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Enhance modal dialogs (if any)
-  const modals = document.querySelectorAll('.modal');
-  modals.forEach(modal => {
-    const modalElement = new bootstrap.Modal(modal);
-    
-    // Trap focus inside modal
-    modal.addEventListener('shown.bs.modal', function() {
-      const focusableElements = modal.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusableElements.length > 0) {
-        focusableElements[0].focus();
-      }
+  // Enhance modal dialogs (if any) without forcing eager Bootstrap instances.
+  if (window.bootstrap && window.bootstrap.Modal) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+      modal.addEventListener('shown.bs.modal', function() {
+        const focusableElements = modal.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusableElements.length > 0) {
+          focusableElements[0].focus();
+        }
+      });
     });
-  });
+  }
 });
 
 // Utility function for dynamic content updates

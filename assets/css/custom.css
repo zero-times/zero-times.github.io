@@ -1679,6 +1679,10 @@ select:focus-visible,
   .pagination .page-link {
     padding: 0.55rem 0.75rem;
     min-width: 2.6rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
   }
 
