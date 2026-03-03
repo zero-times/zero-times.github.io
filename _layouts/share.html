@@ -105,15 +105,27 @@
       document.head.appendChild(script);
     }
 
+    function initGaWhenVisible() {
+      if (document.visibilityState === 'hidden') {
+        document.addEventListener('visibilitychange', function onVisibilityChange() {
+          if (document.visibilityState === 'visible') {
+            initGa();
+          }
+        }, { once: true });
+        return;
+      }
+      initGa();
+    }
+
     ['pointerdown', 'keydown', 'scroll'].forEach(function (eventName) {
       window.addEventListener(eventName, initGa, { once: true, passive: true });
     });
 
     if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(initGa, { timeout: 5000 });
+      window.requestIdleCallback(initGaWhenVisible, { timeout: 5000 });
     } else {
       window.addEventListener('load', function () {
-        window.setTimeout(initGa, 3000);
+        window.setTimeout(initGaWhenVisible, 3000);
       }, { once: true });
     }
   })();

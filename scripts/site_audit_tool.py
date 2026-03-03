@@ -972,6 +972,19 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and '{% if site.google_analytics %}' in share_layout
         and '{% if page.preconnect_analytics %}' in share_layout
     )
+    has_default_analytics_visibility_guard = (
+        "document.visibilityState === 'hidden'" in default_layout
+        and "'visibilitychange'" in default_layout
+        and 'requestIdleCallback(initGaWhenVisible' in default_layout
+    )
+    has_share_analytics_visibility_guard = (
+        "document.visibilityState === 'hidden'" in share_layout
+        and "'visibilitychange'" in share_layout
+        and 'requestIdleCallback(initGaWhenVisible' in share_layout
+    )
+    has_analytics_visibility_guard = (
+        has_default_analytics_visibility_guard and has_share_analytics_visibility_guard
+    )
     has_default_font_preconnect = (
         'rel="preconnect" href="https://fonts.googleapis.com"' in default_layout
         or 'rel="preconnect" href="https://fonts.gstatic.com"' in default_layout
@@ -1322,6 +1335,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_guarded_adjacent_post_prefetch
             and has_guarded_disqus_preconnect
             and has_guarded_analytics_preconnect
+            and has_analytics_visibility_guard
             and has_guarded_default_font_preconnect
             and not has_share_font_preconnect
             and not has_share_font_stylesheet
@@ -1421,6 +1435,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Google Analytics preconnect is opt-in via page.preconnect_analytics, so default pages avoid extra third-party handshakes on mobile.'
                     if has_guarded_analytics_preconnect
                     else 'Guard GA preconnect behind page.preconnect_analytics in default/share layouts to reduce default third-party connection cost.',
+                },
+                {
+                    'aspect': 'Analytics hidden-tab loading policy',
+                    'result': 'Improved' if has_analytics_visibility_guard else 'Needs tuning',
+                    'details': 'GA fallback loading now waits for a visible tab in default/share layouts, reducing background-tab third-party fetches on mobile.'
+                    if has_analytics_visibility_guard
+                    else 'Route GA idle/load fallback through a visibility guard (document.visibilityState + visibilitychange) in default/share layouts to avoid loading analytics while the tab is hidden.',
                 },
                 {
                     'aspect': 'Default font preconnect policy',
@@ -1529,6 +1550,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'duplicate_resource_hint_hosts': duplicate_resource_hint_hosts,
             'invalid_front_matter_perf_flags': invalid_perf_flags,
             'analytics_preconnect_policy': has_guarded_analytics_preconnect,
+            'analytics_visibility_guard_policy': has_analytics_visibility_guard,
             'default_font_preconnect_policy': has_guarded_default_font_preconnect,
             'share_font_preconnect_policy': not has_share_font_preconnect,
             'share_font_stylesheet_policy': not has_share_font_stylesheet,
@@ -1587,6 +1609,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
     invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
     analytics_preconnect_policy = sections.get('content_quality', {}).get('analytics_preconnect_policy', False)
+    analytics_visibility_guard_policy = sections.get('content_quality', {}).get('analytics_visibility_guard_policy', False)
     default_font_preconnect_policy = sections.get('content_quality', {}).get('default_font_preconnect_policy', False)
     share_font_preconnect_policy = sections.get('content_quality', {}).get('share_font_preconnect_policy', False)
     share_font_stylesheet_policy = sections.get('content_quality', {}).get('share_font_stylesheet_policy', False)
@@ -1644,6 +1667,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'invalid_front_matter_perf_flags={len(invalid_perf_flags)}')
     if not analytics_preconnect_policy:
         failures.append('analytics_preconnect_policy=0')
+    if not analytics_visibility_guard_policy:
+        failures.append('analytics_visibility_guard_policy=0')
     if not default_font_preconnect_policy:
         failures.append('default_font_preconnect_policy=0')
     if not share_font_preconnect_policy:
