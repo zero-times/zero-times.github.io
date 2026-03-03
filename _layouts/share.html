@@ -16,8 +16,16 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="format-detection" content="telephone=no">
 <meta name="author" content="{{ site.author.name }}">
+{% if page.robots %}
+<meta name="robots" content="{{ page.robots }}">
+{% else %}
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+{% endif %}
+{% if page.googlebot %}
+<meta name="googlebot" content="{{ page.googlebot }}">
+{% else %}
 <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+{% endif %}
 {% assign og_locale = page.lang | default: site.lang | default: site.default_lang | replace: '-', '_' %}
 <meta property="og:locale" content="{{ og_locale }}">
 {% assign page_lang = page.lang | default: site.lang | default: site.default_lang %}
@@ -55,6 +63,7 @@
 <link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet">
 <link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet">
 {% if site.google_analytics %}
+{% if page.load_analytics != false %}
 {% if page.preconnect_analytics %}
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
@@ -96,6 +105,7 @@
     }
   })();
 </script>
+{% endif %}
 {% endif %}
 </head>
 <body class="share-page">
