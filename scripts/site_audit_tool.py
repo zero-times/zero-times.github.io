@@ -36,6 +36,7 @@ SCAN_TARGETS = [
 URL_RE = re.compile(r'https?://[^\s\)\]>\'"]+')
 DUP_PROTOCOL_RE = re.compile(r'https?://[^\s\)\]]*https?://')
 PLACEHOLDER_RE = re.compile(r'example\.com|localhost|127\.0\.0\.1|\bTODO\b|\bTBD\b')
+INVALID_PERCENT_ENCODING_RE = re.compile(r'%(?![0-9A-Fa-f]{2})')
 INTERNAL_LINK_RE = re.compile(r'\]\((/[^)\s?#][^)\s]*)')
 LIQUID_RELATIVE_URL_RE = re.compile(
     r'(?:href|src)\s*=\s*["\']\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}["\']'
@@ -254,6 +255,35 @@ def collect_missing_liquid_link_tag_targets() -> list[dict]:
                         }
                     )
     return missing
+
+
+def collect_malformed_external_urls(url_records: list[dict]) -> list[dict]:
+    malformed: list[dict] = []
+    for record in url_records:
+        url = (record.get('url') or '').strip()
+        if not url:
+            continue
+        parsed = urllib.parse.urlparse(url)
+        has_issue = False
+        issues: list[str] = []
+        if parsed.scheme not in {'http', 'https'} or not parsed.netloc:
+            has_issue = True
+            issues.append('invalid scheme or host')
+        if any(ch.isspace() for ch in url):
+            has_issue = True
+            issues.append('contains whitespace')
+        if INVALID_PERCENT_ENCODING_RE.search(url):
+            has_issue = True
+            issues.append('invalid percent-encoding')
+        if has_issue:
+            malformed.append(
+                {
+                    'location': record.get('source') or 'unknown',
+                    'issue': '; '.join(issues),
+                    'value': url,
+                }
+            )
+    return malformed
 
 
 def collect_posts_missing_image_dimensions() -> list[dict]:
@@ -905,6 +935,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     urls_count = 0
     external_url_records = collect_external_url_records()
     external_urls = sorted({record['url'] for record in external_url_records})
+    malformed_external_urls = collect_malformed_external_urls(external_url_records)
     http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
 
     for fp in iter_files():
@@ -1179,6 +1210,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'score': 9.0
             if not malformed_links
             and not placeholder_hits
+            and not malformed_external_urls
             and not missing_internal_links
             and not missing_liquid_internal_links
             and not missing_liquid_link_tag_targets
@@ -1189,9 +1221,11 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'URL Pattern Scan',
                     'result': 'Clean'
-                    if not malformed_links and not placeholder_hits
-                    else f"Issues found ({len(malformed_links) + len(placeholder_hits)})",
-                    'details': 'Regex scan for duplicated protocol and placeholder domains/markers.',
+                    if not malformed_links and not placeholder_hits and not malformed_external_urls
+                    else (
+                        f"Issues found ({len(malformed_links) + len(placeholder_hits) + len(malformed_external_urls)})"
+                    ),
+                    'details': 'Regex scan for duplicated protocol, placeholder domains/markers, and malformed external URL encodings.',
                 },
                 {
                     'aspect': 'Internal Link Targets',
@@ -1225,6 +1259,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             ],
             'broken_links': malformed_links
             + placeholder_hits
+            + malformed_external_urls
             + missing_internal_links
             + missing_liquid_internal_links
             + missing_liquid_link_tag_targets,

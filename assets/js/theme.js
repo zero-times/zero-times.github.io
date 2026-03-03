@@ -3,27 +3,29 @@
 document.addEventListener('DOMContentLoaded', function() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Add smooth scrolling for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      if (!href || href === '#' || href === '#!' || href.startsWith('#!') || this.hasAttribute('data-bs-toggle')) {
-        return;
-      }
-      let target = null;
-      try {
-        target = document.querySelector(href);
-      } catch (err) {
-        return;
-      }
-      if (!target) {
-        return;
-      }
-      e.preventDefault();
-      target.scrollIntoView({
-        behavior: prefersReducedMotion ? 'auto' : 'smooth',
-        block: 'start'
-      });
+  // Use delegated smooth scrolling to avoid binding listeners to every anchor node.
+  document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) {
+      return;
+    }
+    const href = anchor.getAttribute('href');
+    if (!href || href === '#' || href === '#!' || href.startsWith('#!') || anchor.hasAttribute('data-bs-toggle')) {
+      return;
+    }
+    let target = null;
+    try {
+      target = document.querySelector(href);
+    } catch (err) {
+      return;
+    }
+    if (!target) {
+      return;
+    }
+    e.preventDefault();
+    target.scrollIntoView({
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      block: 'start'
     });
   });
 
