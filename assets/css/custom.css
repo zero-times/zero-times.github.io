@@ -4400,3 +4400,21 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
     color: #f8fafc;
   }
 }
+
+
+/* Keep form controls readable on iOS and respect safe-area insets on small devices */
+@media (max-width: 575.98px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .site-mobile-drawer {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+
+  .site-mobile-drawer .offcanvas-body {
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  }
+}

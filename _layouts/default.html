@@ -117,7 +117,7 @@
       "@type": "WebSite",
       "name": "{{ site.title | escape }}",
       "url": "{{ site.url }}{{ site.baseurl }}",
-      "inLanguage": "{{ site.lang | default: site.default_lang }}",
+      "inLanguage": "{{ normalized_lang }}",
       "publisher": {
         "@type": "Person",
         "name": "{{ site.author.name | escape }}",
