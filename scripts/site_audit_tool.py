@@ -807,6 +807,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     disqus_include = read_text(ROOT / '_includes/disqus.html')
     homepage = read_text(ROOT / 'index.html')
     theme_scss = read_text(ROOT / 'assets/css/theme.scss')
+    theme_js = read_text(ROOT / 'assets/js/theme.js')
 
     seo_keys = ['title:', 'description:', 'keywords:', 'logo:']
     seo_missing = [k.rstrip(':') for k in seo_keys if k not in config_text]
@@ -975,6 +976,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_home_avatar_priority = 'fetchpriority="high"' in homepage and 'loading="eager"' in homepage
     has_home_avatar_responsive_sources = 'srcset=' in homepage and 'sizes=' in homepage
     has_theme_js_preload = "rel=\"preload\" href=\"{{ '/assets/js/theme.js' | relative_url }}\" as=\"script\"" in default_layout
+    has_back_to_top_scroll_throttle = (
+        "const backToTop = document.querySelector('.back-to-top');" in theme_js
+        and 'let backToTopTicking = false;' in theme_js
+        and 'const requestBackToTopTick = () => {' in theme_js
+        and 'window.requestAnimationFrame(() => {' in theme_js
+        and "window.addEventListener('scroll', requestBackToTopTick, { passive: true });" in theme_js
+    )
     has_bootstrap_css_preload = (
         'rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style"' in default_layout
     )
@@ -1368,6 +1376,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_home_avatar_priority
             and has_home_avatar_responsive_sources
             and not has_theme_js_preload
+            and has_back_to_top_scroll_throttle
             and not has_bootstrap_css_preload
             and not has_local_css_preload
             and not has_share_font_css_preload
@@ -1422,6 +1431,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'theme.js is deferred without preload to avoid competing with render-critical CSS/image downloads.'
                     if not has_theme_js_preload
                     else 'Remove theme.js preload because deferred script fetch is non-critical during initial render.',
+                },
+                {
+                    'aspect': 'Back-to-top scroll handler throttling',
+                    'result': 'Improved' if has_back_to_top_scroll_throttle else 'Needs tuning',
+                    'details': 'Back-to-top visibility updates are requestAnimationFrame-throttled, reducing per-scroll main-thread work on mobile.'
+                    if has_back_to_top_scroll_throttle
+                    else 'Throttle back-to-top scroll handlers in assets/js/theme.js via requestAnimationFrame to avoid per-event layout/style work during fast scrolling.',
                 },
                 {
                     'aspect': 'Bootstrap stylesheet preload policy',
@@ -1602,6 +1618,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'disqus_save_data_guard_policy': has_disqus_save_data_guard,
             'analytics_preconnect_policy': has_guarded_analytics_preconnect,
             'analytics_visibility_guard_policy': has_analytics_visibility_guard,
+            'back_to_top_scroll_throttle_policy': has_back_to_top_scroll_throttle,
             'default_font_preconnect_policy': has_guarded_default_font_preconnect,
             'share_font_preconnect_policy': not has_share_font_preconnect,
             'share_font_stylesheet_policy': not has_share_font_stylesheet,
@@ -1662,6 +1679,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     disqus_save_data_guard_policy = sections.get('content_quality', {}).get('disqus_save_data_guard_policy', False)
     analytics_preconnect_policy = sections.get('content_quality', {}).get('analytics_preconnect_policy', False)
     analytics_visibility_guard_policy = sections.get('content_quality', {}).get('analytics_visibility_guard_policy', False)
+    back_to_top_scroll_throttle_policy = sections.get('content_quality', {}).get('back_to_top_scroll_throttle_policy', False)
     default_font_preconnect_policy = sections.get('content_quality', {}).get('default_font_preconnect_policy', False)
     share_font_preconnect_policy = sections.get('content_quality', {}).get('share_font_preconnect_policy', False)
     share_font_stylesheet_policy = sections.get('content_quality', {}).get('share_font_stylesheet_policy', False)
@@ -1723,6 +1741,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('analytics_preconnect_policy=0')
     if not analytics_visibility_guard_policy:
         failures.append('analytics_visibility_guard_policy=0')
+    if not back_to_top_scroll_throttle_policy:
+        failures.append('back_to_top_scroll_throttle_policy=0')
     if not default_font_preconnect_policy:
         failures.append('default_font_preconnect_policy=0')
     if not share_font_preconnect_policy:

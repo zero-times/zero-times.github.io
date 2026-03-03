@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Back-to-top button for long pages
   const backToTop = document.querySelector('.back-to-top');
   if (backToTop) {
+    let backToTopTicking = false;
     const toggleBackToTop = () => {
       const shouldShow = window.scrollY > 480;
       if (shouldShow) {
@@ -77,10 +78,20 @@ document.addEventListener('DOMContentLoaded', function() {
         behavior: prefersReducedMotion ? 'auto' : 'smooth'
       });
     };
+    const requestBackToTopTick = () => {
+      if (backToTopTicking) {
+        return;
+      }
+      backToTopTicking = true;
+      window.requestAnimationFrame(() => {
+        toggleBackToTop();
+        backToTopTicking = false;
+      });
+    };
     backToTop.addEventListener('click', scrollToTop);
     toggleBackToTop();
-    window.addEventListener('scroll', toggleBackToTop, { passive: true });
-    window.addEventListener('resize', toggleBackToTop);
+    window.addEventListener('scroll', requestBackToTopTick, { passive: true });
+    window.addEventListener('resize', requestBackToTopTick);
   }
 
   // Enhance form validation
