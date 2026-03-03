@@ -23,6 +23,8 @@
 {% endif %}
 {% if page.googlebot %}
 <meta name="googlebot" content="{{ page.googlebot }}">
+{% elsif page.robots and page.robots contains 'noindex' %}
+<meta name="googlebot" content="{{ page.robots }}">
 {% else %}
 <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 {% endif %}
@@ -62,8 +64,15 @@
 {% seo %}
 <link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet">
 <link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet">
+{% assign analytics_enabled = page.load_analytics %}
+{% if analytics_enabled == nil %}
+  {% assign analytics_enabled = true %}
+  {% if page.robots and page.robots contains 'noindex' %}
+    {% assign analytics_enabled = false %}
+  {% endif %}
+{% endif %}
 {% if site.google_analytics %}
-{% if page.load_analytics != false %}
+{% if analytics_enabled %}
 {% if page.preconnect_analytics %}
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>

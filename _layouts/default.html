@@ -24,6 +24,8 @@
   {% endif %}
   {% if page.googlebot %}
   <meta name="googlebot" content="{{ page.googlebot }}">
+  {% elsif page.robots and page.robots contains 'noindex' %}
+  <meta name="googlebot" content="{{ page.robots }}">
   {% elsif is_paginated_archive_page %}
   <meta name="googlebot" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% else %}
@@ -184,8 +186,15 @@
   <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ '/sitemap.xml' | absolute_url }}">
 
   <!-- Google Analytics (GA4) -->
+  {% assign analytics_enabled = page.load_analytics %}
+  {% if analytics_enabled == nil %}
+    {% assign analytics_enabled = true %}
+    {% if page.robots and page.robots contains 'noindex' %}
+      {% assign analytics_enabled = false %}
+    {% endif %}
+  {% endif %}
   {% if site.google_analytics %}
-  {% if page.load_analytics != false %}
+  {% if analytics_enabled %}
   {% if page.preconnect_analytics %}
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
