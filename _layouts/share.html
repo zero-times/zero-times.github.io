@@ -62,8 +62,12 @@
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
 <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ '/sitemap.xml' | absolute_url }}">
 {% seo %}
-<link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet">
-<link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet">
+<link rel="preload" as="style" href="{{ '/assets/css/theme.css' | relative_url }}">
+<link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="{{ '/assets/css/custom.css' | relative_url }}">
+<link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet"></noscript>
 {% assign analytics_enabled = page.load_analytics %}
 {% if analytics_enabled == nil %}
   {% assign analytics_enabled = true %}

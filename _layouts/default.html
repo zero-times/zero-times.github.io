@@ -181,9 +181,13 @@
   <!-- Bootstrap 5 样式 -->
   <link rel="stylesheet" href="{{ "/assets/css/bootstrap.min.css" | relative_url }}">
   
-  <!-- 站点样式 -->
-  <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+  <!-- 站点样式：使用 preload 降低首屏阻塞 -->
+  <link rel="preload" as="style" href="{{ '/assets/css/theme.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}"></noscript>
+  <link rel="preload" as="style" href="{{ '/assets/css/custom.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}"></noscript>
   
   <!-- 网站图标 -->
   <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
