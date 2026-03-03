@@ -185,6 +185,7 @@
 
   <!-- Google Analytics (GA4) -->
   {% if site.google_analytics %}
+  {% if page.load_analytics != false %}
   {% if page.preconnect_analytics %}
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
@@ -226,6 +227,7 @@
       }
     })();
   </script>
+  {% endif %}
   {% endif %}
 </head>
 <body class="d-flex flex-column min-vh-100">
