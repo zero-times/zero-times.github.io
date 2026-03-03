@@ -250,9 +250,14 @@ document.addEventListener('DOMContentLoaded', function() {
     document.documentElement.setAttribute('lang', 'pt-BR');
   }
 
-  // Add image defaults for performance (avoid overriding eager images)
-  const images = document.querySelectorAll('img');
+  // Add media defaults on content area only to reduce unnecessary DOM work.
+  const mediaScope = document.querySelector('main') || document.body;
+  const images = mediaScope.querySelectorAll('img');
   images.forEach(img => {
+    const src = img.getAttribute('src') || '';
+    if (src.startsWith('data:')) {
+      return;
+    }
     const fetchPriority = img.getAttribute('fetchpriority');
     if (!img.hasAttribute('loading')) {
       img.setAttribute('loading', fetchPriority === 'high' ? 'eager' : 'lazy');
@@ -268,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  const iframes = document.querySelectorAll('iframe');
+  const iframes = mediaScope.querySelectorAll('iframe');
   iframes.forEach(frame => {
     if (!frame.hasAttribute('loading')) {
       frame.setAttribute('loading', 'lazy');
