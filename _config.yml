@@ -67,6 +67,7 @@ defaults:
       layout: "default"
       lang: "pt-BR"
       preconnect_fonts: false
+      load_webfonts: false
       load_analytics: false
   - scope:
       path: "_posts"
