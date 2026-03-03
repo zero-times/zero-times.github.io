@@ -493,6 +493,50 @@ def collect_external_urls() -> list[str]:
     return sorted(urls)
 
 
+def _parse_post_date_from_name(path: Path) -> dt.date | None:
+    parts = path.stem.split('-', 3)
+    if len(parts) < 4:
+        return None
+    date_str = '-'.join(parts[:3])
+    try:
+        return dt.date.fromisoformat(date_str)
+    except ValueError:
+        return None
+
+
+def _external_url_priority(path: Path) -> tuple[int, dt.date]:
+    rel = path.relative_to(ROOT).as_posix()
+    if rel.startswith('_posts/') or rel.startswith('_blogs/'):
+        post_date = _parse_post_date_from_name(path) or dt.date(1970, 1, 1)
+        return (3, post_date)
+    if rel.startswith('pages/') or rel in {'index.html', '404.html'}:
+        return (2, dt.date(1970, 1, 1))
+    if rel.startswith('_layouts/') or rel.startswith('_includes/'):
+        return (1, dt.date(1970, 1, 1))
+    return (0, dt.date(1970, 1, 1))
+
+
+def collect_external_url_records() -> list[dict]:
+    records: list[dict] = []
+    for fp in iter_files():
+        text = strip_code_context(read_text(fp), fp)
+        rel = fp.relative_to(ROOT).as_posix()
+        priority, post_date = _external_url_priority(fp)
+        for raw_url in URL_RE.findall(text):
+            parsed = urllib.parse.urlparse(raw_url)
+            if parsed.scheme not in ('http', 'https') or not parsed.netloc:
+                continue
+            records.append(
+                {
+                    'url': raw_url.rstrip('.,;:!?)'),
+                    'source': rel,
+                    'priority': priority,
+                    'post_date': post_date.isoformat(),
+                }
+            )
+    return records
+
+
 def collect_post_only_external_urls() -> set[str]:
     post_only_urls: set[str] = set()
     for fp in iter_files():
@@ -523,21 +567,34 @@ def _looks_like_timeout_error(exc: Exception) -> bool:
     return 'timeout' in message or 'timed out' in message
 
 
-def probe_url(url: str, timeout: float) -> dict:
+def probe_url(url: str, timeout: float, source: str | None = None) -> dict:
     # Use a browser-like UA to reduce anti-bot false negatives during URL sampling.
     headers = {'User-Agent': 'Mozilla/5.0 (compatible; JekyllSiteAudit/1.0; +https://youllbe.cn)'}
+    source_info = {'source': source} if source else {}
     req = urllib.request.Request(url, headers=headers, method='HEAD')
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return {'url': url, 'status': int(getattr(resp, 'status', 200)), 'ok': True, 'method': 'HEAD'}
+            return {'url': url, 'status': int(getattr(resp, 'status', 200)), 'ok': True, 'method': 'HEAD', **source_info}
     except Exception:
         # Some endpoints reject HEAD; fall back to GET so the sample can still be validated.
         get_req = urllib.request.Request(url, headers=headers, method='GET')
         try:
             with urllib.request.urlopen(get_req, timeout=timeout) as resp:
-                return {'url': url, 'status': int(getattr(resp, 'status', 200)), 'ok': True, 'method': 'GET'}
+                return {'url': url, 'status': int(getattr(resp, 'status', 200)), 'ok': True, 'method': 'GET', **source_info}
         except urllib.error.HTTPError as exc:
-            return {'url': url, 'status': int(exc.code), 'ok': False, 'method': 'GET', 'error': str(exc)}
+            status_code = int(exc.code)
+            # Treat common anti-bot/rate-limit statuses as soft-pass to reduce false positives.
+            if status_code in {403, 405, 429}:
+                return {
+                    'url': url,
+                    'status': status_code,
+                    'ok': True,
+                    'method': 'GET',
+                    'soft_blocked': True,
+                    'error': str(exc),
+                    **source_info,
+                }
+            return {'url': url, 'status': status_code, 'ok': False, 'method': 'GET', 'error': str(exc), **source_info}
         except Exception as exc:  # noqa: BLE001 - keep audit script resilient to network/runtime issues
             if _looks_like_timeout_error(exc):
                 retry_timeout = max(timeout * 2.5, 8.0)
@@ -550,6 +607,7 @@ def probe_url(url: str, timeout: float) -> dict:
                             'method': 'GET',
                             'retried_after_timeout': True,
                             'retry_timeout_seconds': retry_timeout,
+                            **source_info,
                         }
                 except Exception as retry_exc:  # noqa: BLE001
                     return {
@@ -560,19 +618,44 @@ def probe_url(url: str, timeout: float) -> dict:
                         'error': str(retry_exc),
                         'retried_after_timeout': True,
                         'retry_timeout_seconds': retry_timeout,
+                        **source_info,
                     }
-            return {'url': url, 'status': None, 'ok': False, 'method': 'GET', 'error': str(exc)}
+            return {'url': url, 'status': None, 'ok': False, 'method': 'GET', 'error': str(exc), **source_info}
 
 
-def sample_http_urls(urls: list[str], sample_size: int, timeout: float) -> dict:
+def sample_http_urls(url_records: list[dict], sample_size: int, timeout: float) -> dict:
     post_only_urls = collect_post_only_external_urls()
     preconnect_root_urls = collect_preconnect_root_urls()
-    filtered_urls = [
-        url for url in urls
-        if url.rstrip('/') not in post_only_urls and url.rstrip('/') not in preconnect_root_urls
-    ]
-    sampled = filtered_urls[: max(sample_size, 0)]
-    results = [probe_url(url, timeout=timeout) for url in sampled]
+    deduped: dict[str, dict] = {}
+    for record in url_records:
+        url = str(record.get('url', '')).strip()
+        if not url:
+            continue
+        normalized = url.rstrip('/')
+        if normalized in post_only_urls or normalized in preconnect_root_urls:
+            continue
+        candidate = {
+            'url': url,
+            'source': str(record.get('source', '')),
+            'priority': int(record.get('priority', 0)),
+            'post_date': str(record.get('post_date', '1970-01-01')),
+        }
+        existing = deduped.get(url)
+        if not existing:
+            deduped[url] = candidate
+            continue
+        candidate_key = (candidate['priority'], candidate['post_date'])
+        existing_key = (existing['priority'], existing['post_date'])
+        if candidate_key > existing_key:
+            deduped[url] = candidate
+
+    sorted_candidates = sorted(
+        deduped.values(),
+        key=lambda item: (item['priority'], item['post_date'], item['url']),
+        reverse=True,
+    )
+    sampled = sorted_candidates[: max(sample_size, 0)]
+    results = [probe_url(item['url'], timeout=timeout, source=item.get('source')) for item in sampled]
     failures = [r for r in results if not r.get('ok')]
     failure_domains = Counter(
         urllib.parse.urlparse((result.get('url') or '')).netloc.lower()
@@ -726,7 +809,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         ]
     )
     urls_count = 0
-    external_urls = collect_external_urls()
+    external_url_records = collect_external_url_records()
+    external_urls = sorted({record['url'] for record in external_url_records})
     http_check_result: dict = {'enabled': False, 'sample_size': 0, 'failures': [], 'results': []}
 
     for fp in iter_files():
@@ -754,7 +838,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             )
 
     if http_check:
-        http_check_result = sample_http_urls(external_urls, sample_size=http_sample, timeout=http_timeout)
+        http_check_result = sample_http_urls(external_url_records, sample_size=http_sample, timeout=http_timeout)
 
     http_failures = http_check_result.get('failures', [])
     http_sample_size = http_check_result.get('sample_size', 0)
