@@ -15,6 +15,12 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="author" content="{{ site.author.name }}">
   {% assign is_paginated_archive_page = paginator and paginator.page and paginator.page > 1 %}
+  {% assign noindex_effective = false %}
+  {% if page.robots and page.robots contains 'noindex' %}
+    {% assign noindex_effective = true %}
+  {% elsif is_paginated_archive_page %}
+    {% assign noindex_effective = true %}
+  {% endif %}
   {% if page.robots %}
   <meta name="robots" content="{{ page.robots }}">
   {% elsif is_paginated_archive_page %}
@@ -34,9 +40,11 @@
   {% assign og_locale = page.lang | default: site.lang | default: site.default_lang | replace: '-', '_' %}
   <meta property="og:locale" content="{{ og_locale }}">
   {% unless is_paginated_archive_page %}
-    {% assign page_lang = page.lang | default: site.lang | default: site.default_lang %}
-    <link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">
-    <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
+    {% unless page.robots contains 'noindex' %}
+      {% assign page_lang = page.lang | default: site.lang | default: site.default_lang %}
+      <link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">
+      <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
+    {% endunless %}
   {% endunless %}
   {% assign social_image_alt = page.image_alt | default: site.image_alt | default: page.title | default: site.title %}
   {% assign social_image_src = page.image | default: site.image %}
@@ -189,7 +197,7 @@
   {% assign analytics_enabled = page.load_analytics %}
   {% if analytics_enabled == nil %}
     {% assign analytics_enabled = true %}
-    {% if page.robots and page.robots contains 'noindex' %}
+    {% if noindex_effective %}
       {% assign analytics_enabled = false %}
     {% endif %}
   {% endif %}
