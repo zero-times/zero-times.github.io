@@ -12,6 +12,9 @@ on:
       - "_blogs/**"
       - "pages/**"
       - "index.html"
+      - "assets/css/**"
+      - "assets/js/**"
+      - "site.webmanifest"
       - "scripts/site_audit_tool.py"
   pull_request:
     paths:
@@ -22,6 +25,9 @@ on:
       - "_blogs/**"
       - "pages/**"
       - "index.html"
+      - "assets/css/**"
+      - "assets/js/**"
+      - "site.webmanifest"
       - "scripts/site_audit_tool.py"
   schedule:
     - cron: "20 2 * * 1"

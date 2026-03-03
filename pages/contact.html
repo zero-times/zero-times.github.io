@@ -51,7 +51,7 @@ hide_title: true
       <div class="contact-v2__form-grid">
         <div class="contact-v2__field">
           <label for="contact-name">Nome <span aria-hidden="true">*</span></label>
-          <input id="contact-name" class="form-control" type="text" name="name" autocomplete="name" required>
+          <input id="contact-name" class="form-control" type="text" name="name" autocomplete="name" autocapitalize="words" spellcheck="false" enterkeyhint="next" required>
         </div>
         <div class="contact-v2__field">
           <label for="contact-email">Email <span aria-hidden="true">*</span></label>
@@ -59,16 +59,16 @@ hide_title: true
         </div>
         <div class="contact-v2__field">
           <label for="contact-company">Empresa ou equipe</label>
-          <input id="contact-company" class="form-control" type="text" name="company" autocomplete="organization">
+          <input id="contact-company" class="form-control" type="text" name="company" autocomplete="organization" autocapitalize="words" spellcheck="false" enterkeyhint="next">
         </div>
         <div class="contact-v2__field">
           <label for="contact-topic">Projeto ou tema</label>
-          <input id="contact-topic" class="form-control" type="text" name="topic" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <input id="contact-topic" class="form-control" type="text" name="topic" autocomplete="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="next">
         </div>
       </div>
       <div class="contact-v2__field contact-v2__field--full">
         <label for="contact-message">Mensagem <span aria-hidden="true">*</span></label>
-        <textarea id="contact-message" rows="8" class="form-control" name="message" required></textarea>
+        <textarea id="contact-message" rows="8" class="form-control" name="message" autocapitalize="sentences" spellcheck="true" enterkeyhint="send" required></textarea>
       </div>
       <button class="home-v2__btn home-v2__btn--primary contact-v2__submit" type="submit">Enviar mensagem</button>
     </form>
