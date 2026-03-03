@@ -1,4 +1,4 @@
-<section class="disqus" data-disqus-shortname="{{site.disqus}}">
+<section class="disqus" data-disqus-shortname="{{site.disqus}}" data-disqus-save-data-guard="true">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         (function() {
@@ -23,6 +23,45 @@
                 dsq.async = true;
                 dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
                 (document.head || document.body).appendChild(dsq);
+            }
+
+            function shouldDeferForDataSaving() {
+                var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                if (connection && connection.saveData) {
+                    return true;
+                }
+                if (window.matchMedia) {
+                    try {
+                        return window.matchMedia('(prefers-reduced-data: reduce)').matches;
+                    } catch (err) {
+                        return false;
+                    }
+                }
+                return false;
+            }
+
+            function appendLoadButton() {
+                if (!target || target.querySelector('[data-disqus-load-button]')) {
+                    return;
+                }
+                var loadWrap = document.createElement('div');
+                loadWrap.className = 'disqus-load mt-3';
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'btn btn-sm btn-outline-secondary';
+                button.setAttribute('data-disqus-load-button', 'true');
+                button.textContent = 'Carregar comentarios';
+                button.addEventListener('click', function() {
+                    loadWrap.remove();
+                    loadDisqus();
+                }, { once: true });
+                loadWrap.appendChild(button);
+                target.appendChild(loadWrap);
+            }
+
+            if (shouldDeferForDataSaving()) {
+                appendLoadButton();
+                return;
             }
 
             if ('IntersectionObserver' in window) {

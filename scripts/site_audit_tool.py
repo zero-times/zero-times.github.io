@@ -804,6 +804,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     config_text = read_text(ROOT / '_config.yml')
     default_layout = read_text(ROOT / '_layouts/default.html')
     share_layout = read_text(ROOT / '_layouts/share.html')
+    disqus_include = read_text(ROOT / '_includes/disqus.html')
     homepage = read_text(ROOT / 'index.html')
     theme_scss = read_text(ROOT / 'assets/css/theme.scss')
 
@@ -997,6 +998,12 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     has_guarded_adjacent_post_prefetch = "{% if page.layout == 'post' and page.prefetch_adjacent_posts %}" in default_layout
     has_guarded_disqus_preconnect = "{% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}" in default_layout
+    has_disqus_save_data_guard = (
+        'data-disqus-save-data-guard="true"' in disqus_include
+        and 'connection.saveData' in disqus_include
+        and 'prefers-reduced-data: reduce' in disqus_include
+        and 'data-disqus-load-button' in disqus_include
+    )
     has_guarded_analytics_preconnect = (
         '{% if site.google_analytics %}' in default_layout
         and '{% if page.preconnect_analytics %}' in default_layout
@@ -1369,6 +1376,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_guarded_featured_image_preload
             and has_guarded_adjacent_post_prefetch
             and has_guarded_disqus_preconnect
+            and has_disqus_save_data_guard
             and has_guarded_analytics_preconnect
             and has_analytics_visibility_guard
             and has_guarded_default_font_preconnect
@@ -1463,6 +1471,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Disqus preconnect is opt-in via page.preconnect_disqus so post pages avoid default third-party handshakes on mobile.'
                     if has_guarded_disqus_preconnect
                     else 'Guard Disqus preconnect behind page.preconnect_disqus to reduce default third-party connection cost on post pages.',
+                },
+                {
+                    'aspect': 'Disqus save-data loading policy',
+                    'result': 'Improved' if has_disqus_save_data_guard else 'Needs tuning',
+                    'details': 'Disqus embed defers on save-data/reduced-data signals and shows a user-triggered load button to limit third-party bytes on mobile.'
+                    if has_disqus_save_data_guard
+                    else 'Add a save-data/reduced-data guard in _includes/disqus.html and provide an explicit load-comments button before requesting Disqus assets.',
                 },
                 {
                     'aspect': 'Analytics preconnect policy',
@@ -1584,6 +1599,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'missing_page_image_dimensions': pages_missing_image_dimensions,
             'duplicate_resource_hint_hosts': duplicate_resource_hint_hosts,
             'invalid_front_matter_perf_flags': invalid_perf_flags,
+            'disqus_save_data_guard_policy': has_disqus_save_data_guard,
             'analytics_preconnect_policy': has_guarded_analytics_preconnect,
             'analytics_visibility_guard_policy': has_analytics_visibility_guard,
             'default_font_preconnect_policy': has_guarded_default_font_preconnect,
@@ -1643,6 +1659,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
     missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
     invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
+    disqus_save_data_guard_policy = sections.get('content_quality', {}).get('disqus_save_data_guard_policy', False)
     analytics_preconnect_policy = sections.get('content_quality', {}).get('analytics_preconnect_policy', False)
     analytics_visibility_guard_policy = sections.get('content_quality', {}).get('analytics_visibility_guard_policy', False)
     default_font_preconnect_policy = sections.get('content_quality', {}).get('default_font_preconnect_policy', False)
@@ -1700,6 +1717,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append(f'missing_page_image_dimensions={len(missing_page_dimensions)}')
     if invalid_perf_flags:
         failures.append(f'invalid_front_matter_perf_flags={len(invalid_perf_flags)}')
+    if not disqus_save_data_guard_policy:
+        failures.append('disqus_save_data_guard_policy=0')
     if not analytics_preconnect_policy:
         failures.append('analytics_preconnect_policy=0')
     if not analytics_visibility_guard_policy:
