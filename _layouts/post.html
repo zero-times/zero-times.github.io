@@ -9,6 +9,7 @@ layout: default
 {% assign author_web = author_data.web | default: author_data.url %}
 {% assign word_count = content | number_of_words %}
 {% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
+{% assign normalized_post_lang = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
 {% assign featured_image_loading = page.image_loading | default: 'eager' %}
 {% assign featured_image_fetchpriority = page.image_fetchpriority %}
 {% if featured_image_fetchpriority == nil %}
@@ -38,7 +39,7 @@ layout: default
 </div>
 <article class="post{% if page.categories contains 'news' %} post--news{% endif %}" itemscope itemtype="https://schema.org/BlogPosting" aria-labelledby="page-title">
     <meta itemprop="mainEntityOfPage" content="{{ page.url | absolute_url }}">
-    <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
+    <meta itemprop="inLanguage" content="{{ normalized_post_lang }}">
     <meta itemprop="dateModified" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
     <meta itemprop="wordCount" content="{{ word_count }}">
     <meta itemprop="timeRequired" content="PT{{ reading_minutes }}M">

@@ -1,7 +1,8 @@
 <div class="card mb-4 postbox-card shadow-sm" itemscope itemtype="https://schema.org/BlogPosting">
+  {% assign postbox_lang = post.lang | default: page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
   <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
   <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
-  <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
+  <meta itemprop="inLanguage" content="{{ postbox_lang }}">
   {% assign words = post.content | number_of_words %}
   <meta itemprop="wordCount" content="{{ words }}">
   <meta itemprop="datePublished" content="{{ post.date | date_to_xmlschema }}">

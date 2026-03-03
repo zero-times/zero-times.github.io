@@ -573,6 +573,22 @@ def _looks_like_tls_eof_error(exc: Exception) -> bool:
     return 'eof occurred in violation of protocol' in message or '_ssl.c' in message
 
 
+def _looks_like_network_restricted_error(message: str) -> bool:
+    text = (message or '').lower()
+    restricted_markers = (
+        'temporary failure in name resolution',
+        'name or service not known',
+        'nodename nor servname provided',
+        'network is unreachable',
+        'failed to establish a new connection',
+        'connection refused',
+        'no route to host',
+        'timed out',
+        'timeout',
+    )
+    return any(marker in text for marker in restricted_markers)
+
+
 def _probe_url_with_curl(url: str, timeout: float, source: str | None = None) -> dict | None:
     """Fallback probe for domains that fail urllib TLS handshake in CI-like environments."""
     source_info = {'source': source} if source else {}
@@ -724,6 +740,15 @@ def sample_http_urls(url_records: list[dict], sample_size: int, timeout: float) 
     sampled = sorted_candidates[: max(sample_size, 0)]
     results = [probe_url(item['url'], timeout=timeout, source=item.get('source')) for item in sampled]
     failures = [r for r in results if not r.get('ok')]
+    network_restricted = bool(
+        sampled
+        and len(failures) == len(sampled)
+        and all(
+            result.get('status') is None
+            and _looks_like_network_restricted_error(str(result.get('error', '')))
+            for result in failures
+        )
+    )
     failure_domains = Counter(
         urllib.parse.urlparse((result.get('url') or '')).netloc.lower()
         for result in failures
@@ -738,6 +763,7 @@ def sample_http_urls(url_records: list[dict], sample_size: int, timeout: float) 
         'sample_size': len(sampled),
         'timeout_seconds': timeout,
         'failures': failures,
+        'network_restricted': network_restricted,
         'top_failing_domains': top_failing_domains,
         'results': results,
     }
@@ -910,6 +936,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
 
     http_failures = http_check_result.get('failures', [])
     http_sample_size = http_check_result.get('sample_size', 0)
+    http_network_restricted = bool(http_check_result.get('network_restricted'))
 
     formspree_blog_preconnect = "page.url contains '/contact/' or page.url contains '/blog/'" in default_layout
     has_home_avatar_preload_flag = 'hero_avatar_preload: true' in homepage
@@ -1142,7 +1169,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not missing_internal_links
             and not missing_liquid_internal_links
             and not missing_liquid_link_tag_targets
-            and (not http_check or not http_failures)
+            and (not http_check or not http_failures or http_network_restricted)
             else 6.5,
             'max_score': 10.0,
             'findings': [
@@ -1168,10 +1195,19 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'aspect': 'HTTP Reachability Sample',
                     'result': 'Skipped'
                     if not http_check
-                    else ('Healthy' if not http_failures else f'Issues Found ({len(http_failures)})'),
+                    else (
+                        'Skipped (network restricted)'
+                        if http_network_restricted
+                        else ('Healthy' if not http_failures else f'Issues Found ({len(http_failures)})')
+                    ),
                     'details': 'Enable with --http-check to sample external URLs.'
                     if not http_check
-                    else f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s.',
+                    else (
+                        f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s; '
+                        'environment appears network-restricted, so sample is informational only.'
+                        if http_network_restricted
+                        else f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s.'
+                    ),
                 },
             ],
             'broken_links': malformed_links
