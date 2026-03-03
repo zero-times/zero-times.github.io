@@ -12,6 +12,7 @@ import argparse
 import json
 import re
 import struct
+import subprocess
 from collections import Counter
 import urllib.error
 import urllib.parse
@@ -567,6 +568,60 @@ def _looks_like_timeout_error(exc: Exception) -> bool:
     return 'timeout' in message or 'timed out' in message
 
 
+def _looks_like_tls_eof_error(exc: Exception) -> bool:
+    message = str(exc).lower()
+    return 'eof occurred in violation of protocol' in message or '_ssl.c' in message
+
+
+def _probe_url_with_curl(url: str, timeout: float, source: str | None = None) -> dict | None:
+    """Fallback probe for domains that fail urllib TLS handshake in CI-like environments."""
+    source_info = {'source': source} if source else {}
+    curl_cmd = [
+        'curl',
+        '--silent',
+        '--show-error',
+        '--location',
+        '--output',
+        '/dev/null',
+        '--write-out',
+        '%{http_code}',
+        '--user-agent',
+        'Mozilla/5.0 (compatible; JekyllSiteAudit/1.0; +https://youllbe.cn)',
+        '--max-time',
+        str(max(timeout, 4.0)),
+        url,
+    ]
+    try:
+        proc = subprocess.run(curl_cmd, capture_output=True, text=True, check=False)
+    except FileNotFoundError:
+        return None
+
+    status_text = (proc.stdout or '').strip()
+    if not status_text.isdigit():
+        return None
+    status_code = int(status_text)
+    if status_code == 0:
+        return None
+    if status_code in {403, 405, 429}:
+        return {
+            'url': url,
+            'status': status_code,
+            'ok': True,
+            'method': 'CURL_GET',
+            'soft_blocked': True,
+            'error': (proc.stderr or '').strip() or None,
+            **source_info,
+        }
+    return {
+        'url': url,
+        'status': status_code,
+        'ok': 200 <= status_code < 400,
+        'method': 'CURL_GET',
+        'error': (proc.stderr or '').strip() or None,
+        **source_info,
+    }
+
+
 def probe_url(url: str, timeout: float, source: str | None = None) -> dict:
     # Use a browser-like UA to reduce anti-bot false negatives during URL sampling.
     headers = {'User-Agent': 'Mozilla/5.0 (compatible; JekyllSiteAudit/1.0; +https://youllbe.cn)'}
@@ -610,6 +665,14 @@ def probe_url(url: str, timeout: float, source: str | None = None) -> dict:
                             **source_info,
                         }
                 except Exception as retry_exc:  # noqa: BLE001
+                    if _looks_like_tls_eof_error(retry_exc):
+                        curl_result = _probe_url_with_curl(url, timeout=retry_timeout, source=source)
+                        if curl_result:
+                            return {
+                                **curl_result,
+                                'retried_after_timeout': True,
+                                'retry_timeout_seconds': retry_timeout,
+                            }
                     return {
                         'url': url,
                         'status': None,
@@ -620,6 +683,10 @@ def probe_url(url: str, timeout: float, source: str | None = None) -> dict:
                         'retry_timeout_seconds': retry_timeout,
                         **source_info,
                     }
+            if _looks_like_tls_eof_error(exc):
+                curl_result = _probe_url_with_curl(url, timeout=timeout, source=source)
+                if curl_result:
+                    return curl_result
             return {'url': url, 'status': None, 'ok': False, 'method': 'GET', 'error': str(exc), **source_info}
 
 
@@ -806,6 +873,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'preconnect_disqus',
             'preconnect_analytics',
             'preconnect_fonts',
+            'preconnect_news_sources',
         ]
     )
     urls_count = 0
@@ -888,6 +956,11 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         )
         and 'rel="preconnect" href="https://fonts.googleapis.com"' in default_layout
         and 'rel="preconnect" href="https://fonts.gstatic.com" crossorigin' in default_layout
+    )
+    has_guarded_news_source_preconnect = (
+        '{% if page.preconnect_news_sources %}' in default_layout
+        and 'rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin' in default_layout
+        and 'rel="preconnect" href="https://i.s3.glbimg.com" crossorigin' in default_layout
     )
     has_share_font_preconnect = (
         'rel="preconnect" href="https://fonts.googleapis.com"' in share_layout
@@ -1325,6 +1398,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     ),
                 },
                 {
+                    'aspect': 'News source preconnect policy',
+                    'result': 'Improved' if has_guarded_news_source_preconnect else 'Needs tuning',
+                    'details': 'News CDN preconnect is opt-in via page.preconnect_news_sources, reducing default third-party handshakes on mobile.'
+                    if has_guarded_news_source_preconnect
+                    else 'Guard news CDN preconnect hints behind page.preconnect_news_sources to avoid default third-party connection cost.',
+                },
+                {
                     'aspect': 'Share font preconnect policy',
                     'result': 'Improved' if not has_share_font_preconnect else 'Needs tuning',
                     'details': 'Share layout avoids Google Fonts preconnect hints so third-party handshakes only occur when async stylesheet fetching is actually needed.'
@@ -1348,7 +1428,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'Front matter performance toggles',
                     'result': 'Improved' if not invalid_perf_flags else 'Needs tuning',
-                    'details': 'hero_avatar_preload/preload_social_image/preload_featured_image/prefetch_adjacent_posts/preconnect_disqus/preconnect_analytics/preconnect_fonts use explicit true/false values.'
+                    'details': 'hero_avatar_preload/preload_social_image/preload_featured_image/prefetch_adjacent_posts/preconnect_disqus/preconnect_analytics/preconnect_fonts/preconnect_news_sources use explicit true/false values.'
                     if not invalid_perf_flags
                     else f'Found {len(invalid_perf_flags)} invalid toggle value(s); use true/false booleans in front matter.',
                 },

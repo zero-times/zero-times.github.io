@@ -72,7 +72,7 @@
   <link rel="prefetch" href="{{ '/blog/' | relative_url }}">
   <link rel="prefetch" href="{{ '/contact/' | relative_url }}">
   {% endif %}
-  {% if page.categories contains 'news' %}
+  {% if page.preconnect_news_sources %}
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
   <link rel="preconnect" href="https://i.s3.glbimg.com" crossorigin>
   {% endif %}
