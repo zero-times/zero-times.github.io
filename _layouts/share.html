@@ -105,11 +105,15 @@
       document.head.appendChild(script);
     }
 
+    ['pointerdown', 'keydown', 'scroll'].forEach(function (eventName) {
+      window.addEventListener(eventName, initGa, { once: true, passive: true });
+    });
+
     if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(initGa, { timeout: 2500 });
+      window.requestIdleCallback(initGa, { timeout: 5000 });
     } else {
       window.addEventListener('load', function () {
-        window.setTimeout(initGa, 1200);
+        window.setTimeout(initGa, 3000);
       }, { once: true });
     }
   })();

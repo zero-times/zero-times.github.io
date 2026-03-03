@@ -3456,6 +3456,18 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   box-shadow: 0 22px 38px rgba(15, 23, 42, 0.14);
 }
 
+.site-mobile-drawer__close {
+  min-height: 44px;
+  margin: 0 0 0.75rem auto;
+  padding: 0.625rem 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
 .site-mobile-drawer__nav {
   display: flex;
   flex-direction: column;
@@ -3851,6 +3863,7 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 .site-header-v2__cta:focus-visible,
 .site-nav-link:focus-visible,
 .site-mobile-drawer__link:focus-visible,
+.site-mobile-drawer__close:focus-visible,
 .site-mobile-drawer__cta:focus-visible,
 .home-v2__btn:focus-visible,
 .home-v2__post-title a:focus-visible,
