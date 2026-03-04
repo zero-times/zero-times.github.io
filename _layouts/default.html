@@ -3,7 +3,7 @@
 <html lang="{{ normalized_lang }}">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="theme-color" content="{{ site.theme_color_light | default: '#2c3e50' }}">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ site.theme_color_dark | default: '#0b1320' }}">
   <meta name="mobile-web-app-capable" content="yes">
@@ -77,9 +77,17 @@
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
   <link rel="preconnect" href="https://i.s3.glbimg.com" crossorigin>
   {% endif %}
+  {% if page.preconnect_news_sources == nil or page.preconnect_news_sources == false %}
+  <link rel="dns-prefetch" href="//s2-g1.glbimg.com">
+  <link rel="dns-prefetch" href="//i.s3.glbimg.com">
+  {% endif %}
   {% if page.preconnect_fonts and page.load_webfonts != false %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {% endif %}
+  {% if page.load_webfonts != false and page.preconnect_fonts != true %}
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
   {% endif %}
   {% unless page.load_webfonts == false %}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap" media="print" onload="this.media='all'">
@@ -87,10 +95,14 @@
   {% endunless %}
   {% if page.url contains '/contact/' %}
   <link rel="preconnect" href="https://formspree.io" crossorigin>
+  <link rel="dns-prefetch" href="//formspree.io">
   {% endif %}
   {% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}
   <link rel="preconnect" href="https://{{ site.disqus }}.disqus.com" crossorigin>
   <link rel="preconnect" href="https://c.disquscdn.com" crossorigin>
+  {% elsif site.disqus and page.layout == 'post' %}
+  <link rel="dns-prefetch" href="//{{ site.disqus }}.disqus.com">
+  <link rel="dns-prefetch" href="//c.disquscdn.com">
   {% endif %}
   {% if page.keywords %}
     <meta name="keywords" content="{{ page.keywords }}">
@@ -209,6 +221,9 @@
   {% if page.preconnect_analytics %}
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+  {% else %}
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//www.google-analytics.com">
   {% endif %}
   <script>
     (function () {
