@@ -29,6 +29,9 @@
   {% elsif site.image %}
   <meta itemprop="image" content="{{ site.image | absolute_url }}">
   {% endif %}
+  {% assign postbox_description = post.description | default: post.excerpt | default: post.content | strip_html | strip_newlines | replace: '  ', ' ' | strip %}
+  {% assign postbox_description = postbox_description | truncate: 140 %}
+  <meta itemprop="description" content="{{ postbox_description | escape }}">
   <div class="card-body">
     <h3 class="card-title">
       <a href="{{ post.url | relative_url }}" class="postbox-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a>
@@ -38,7 +41,7 @@
       <span aria-hidden="true">•</span>
       <span class="postbox-reading">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
     </p>
-    <p class="card-text" itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 100 }}</p>
+    <p class="card-text" itemprop="description">{{ postbox_description }}</p>
     <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary postbox-cta" rel="bookmark" aria-label="Leia mais: {{ post.title }}">Leia mais</a>
   </div>
 </div>
