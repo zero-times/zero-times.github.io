@@ -248,7 +248,10 @@
         script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(trackingId);
         script.onload = function () {
           window.gtag('js', new Date());
-          window.gtag('config', trackingId);
+          window.gtag('config', trackingId, {
+            anonymize_ip: true,
+            transport_type: 'beacon'
+          });
         };
         document.head.appendChild(script);
       }
