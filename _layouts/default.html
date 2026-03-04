@@ -100,7 +100,7 @@
   {% if site.disqus and page.layout == 'post' and page.preconnect_disqus %}
   <link rel="preconnect" href="https://{{ site.disqus }}.disqus.com" crossorigin>
   <link rel="preconnect" href="https://c.disquscdn.com" crossorigin>
-  {% elsif site.disqus and page.layout == 'post' %}
+  {% elsif site.disqus and page.layout == 'post' and page.dns_prefetch_disqus %}
   <link rel="dns-prefetch" href="//{{ site.disqus }}.disqus.com">
   <link rel="dns-prefetch" href="//c.disquscdn.com">
   {% endif %}

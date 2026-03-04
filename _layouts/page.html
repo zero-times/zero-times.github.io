@@ -19,7 +19,7 @@ layout: default
         {% assign page_image_fetchpriority = 'low' %}
       {% endif %}
     {% endif %}
-    <img class="featured-image text-center mx-auto rounded" src="{{ page_image_src }}" alt="{{ page.image_alt | default: page.title }}" loading="{{ page_image_loading }}" decoding="async" fetchpriority="{{ page_image_fetchpriority }}"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
+    <img class="featured-image img-fluid text-center mx-auto rounded" src="{{ page_image_src }}" alt="{{ page.image_alt | default: page.title }}" loading="{{ page_image_loading }}" decoding="async" fetchpriority="{{ page_image_fetchpriority }}"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
   </div>
   {% endif %}
 
