@@ -85,7 +85,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   {% endif %}
-  {% if page.load_webfonts != false and page.preconnect_fonts != true %}
+  {% if page.dns_prefetch_fonts %}
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   {% endif %}
