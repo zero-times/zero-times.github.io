@@ -28,6 +28,13 @@ html {
     display: inline-flex;
     align-items: center;
   }
+
+  .tags-archive .badge {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.8rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
