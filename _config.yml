@@ -78,3 +78,11 @@ defaults:
       preconnect_fonts: false
       load_webfonts: false
       load_analytics: false
+  - scope:
+      path: "_blogs"
+    values:
+      layout: "post"
+      lang: "pt-BR"
+      preconnect_fonts: false
+      load_webfonts: false
+      load_analytics: false
