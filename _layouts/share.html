@@ -55,6 +55,35 @@
 <link rel="me" href="{{ social_link }}">
 {% endfor %}
 {% endif %}
+{% assign share_description = page.description | default: site.description | strip %}
+{% assign share_publisher_image = site.logo | default: site.author.avatar %}
+{% if share_publisher_image %}
+  {% if share_publisher_image contains '://' %}
+    {% assign share_publisher_image_url = share_publisher_image %}
+  {% else %}
+    {% assign share_publisher_image_url = share_publisher_image | absolute_url %}
+  {% endif %}
+{% endif %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "{{ page.title | default: site.title | escape }}",
+  "url": "{{ page.url | absolute_url }}",
+  "description": "{{ share_description | escape }}",
+  "inLanguage": "{{ normalized_lang }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "{{ site.title | escape }}",
+    "url": "{{ site.url }}{{ site.baseurl }}"
+  }{% if share_publisher_image_url %},
+  "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "{{ share_publisher_image_url }}"
+  }
+  {% endif %}
+}
+</script>
 {% if page.preload_social_image and page.image %}
   {% if page.image contains '://' %}
     <link rel="preload" as="image" href="{{ page.image }}">
