@@ -15,6 +15,8 @@ author:
 logo: /assets/images/logo.png
 image: /assets/images/screenshot.png
 image_alt: "Captura de tela da página inicial do blog Hoa"
+social_image_width: 1280
+social_image_height: 719
 theme_color_light: "#2c3e50"
 theme_color_dark: "#0b1320"
 
