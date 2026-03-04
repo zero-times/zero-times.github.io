@@ -38,6 +38,7 @@ DUP_PROTOCOL_RE = re.compile(r'https?://[^\s\)\]]*https?://')
 PLACEHOLDER_RE = re.compile(r'example\.com|localhost|127\.0\.0\.1|\bTODO\b|\bTBD\b')
 INVALID_PERCENT_ENCODING_RE = re.compile(r'%(?![0-9A-Fa-f]{2})')
 INTERNAL_LINK_RE = re.compile(r'\]\((/[^)\s?#][^)\s]*)')
+HTML_INTERNAL_ATTR_RE = re.compile(r'(?:href|src)\s*=\s*["\'](/(?!/)[^"\']*)["\']', re.IGNORECASE)
 LIQUID_RELATIVE_URL_RE = re.compile(
     r'(?:href|src)\s*=\s*["\']\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}["\']'
 )
@@ -191,6 +192,16 @@ def collect_missing_internal_links() -> list[dict]:
                         {
                             'location': str(rel),
                             'issue': 'internal link target not found',
+                            'value': raw,
+                        }
+                    )
+            for match in HTML_INTERNAL_ATTR_RE.finditer(text):
+                raw = match.group(1)
+                if not internal_target_exists(raw, known_routes):
+                    missing.append(
+                        {
+                            'location': str(rel),
+                            'issue': 'internal html href/src target not found',
                             'value': raw,
                         }
                     )
@@ -1251,7 +1262,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else (
                         f'Issues found ({len(missing_internal_links) + len(missing_liquid_internal_links) + len(missing_liquid_link_tag_targets)})'
                     ),
-                    'details': 'Checks markdown links ](/path/), Liquid href/src {{ "/path/" | relative_url }}, and {% link ... %} targets.',
+                    'details': 'Checks markdown links ](/path/), HTML href/src="/path/", Liquid href/src {{ "/path/" | relative_url }}, and {% link ... %} targets.',
                 },
                 {
                     'aspect': 'HTTP Reachability Sample',
