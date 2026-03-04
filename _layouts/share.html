@@ -91,7 +91,9 @@
 <script>
   (function () {
     var dnt = window.doNotTrack === '1' || navigator.doNotTrack === '1' || navigator.msDoNotTrack === '1';
-    if (dnt) {
+    var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var reducedData = !!(connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g'));
+    if (dnt || reducedData) {
       return;
     }
 
