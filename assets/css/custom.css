@@ -20,7 +20,8 @@ html {
     scroll-padding-top: 5rem;
   }
 
-  .site-header-v2__nav-link,
+  .site-nav-link,
+  .site-mobile-drawer__link,
   .hero-actions .btn,
   .postbox-cta {
     min-height: 44px;
@@ -3348,10 +3349,14 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 .btn,
 .page-link,
 .nav-link,
+.site-nav-link,
+.site-mobile-drawer__link,
+.site-header-v2__menu-btn,
 .store-card,
 .postbox-cta,
 .previous-next-post .btn {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
 }
 
 /* Home v2 + Site Header/Footer v2 */
