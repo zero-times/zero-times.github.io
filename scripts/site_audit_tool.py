@@ -169,6 +169,70 @@ def internal_target_exists(raw_path: str, known_routes: set[str]) -> bool:
     return normalize_route(link_path) in known_routes
 
 
+def collect_manifest_reference_issues(
+    manifest: dict | None, manifest_path: Path | None, known_routes: set[str]
+) -> list[dict]:
+    if not manifest or not manifest_path:
+        return []
+
+    issues: list[dict] = []
+    manifest_location = str(manifest_path.relative_to(ROOT))
+
+    def _check_manifest_asset(raw_value: object, field_name: str) -> None:
+        if not isinstance(raw_value, str):
+            return
+        value = raw_value.strip()
+        if not value or '://' in value or value.startswith('data:'):
+            return
+        resolved = resolve_local_image_path(value)
+        if not resolved:
+            issues.append(
+                {
+                    'location': manifest_location,
+                    'issue': f'manifest {field_name} target not found',
+                    'value': value,
+                }
+            )
+
+    for icon in manifest.get('icons', []) if isinstance(manifest.get('icons'), list) else []:
+        if isinstance(icon, dict):
+            _check_manifest_asset(icon.get('src'), 'icons[].src')
+
+    for screenshot in (
+        manifest.get('screenshots', []) if isinstance(manifest.get('screenshots'), list) else []
+    ):
+        if isinstance(screenshot, dict):
+            _check_manifest_asset(screenshot.get('src'), 'screenshots[].src')
+
+    for field_name in ('start_url', 'scope', 'id'):
+        value = manifest.get(field_name)
+        if isinstance(value, str) and value.startswith('/') and not internal_target_exists(value, known_routes):
+            issues.append(
+                {
+                    'location': manifest_location,
+                    'issue': f'manifest {field_name} target not found',
+                    'value': value,
+                }
+            )
+
+    shortcuts = manifest.get('shortcuts')
+    if isinstance(shortcuts, list):
+        for shortcut in shortcuts:
+            if not isinstance(shortcut, dict):
+                continue
+            url = shortcut.get('url')
+            if isinstance(url, str) and url.startswith('/') and not internal_target_exists(url, known_routes):
+                issues.append(
+                    {
+                        'location': manifest_location,
+                        'issue': 'manifest shortcuts[].url target not found',
+                        'value': url,
+                    }
+                )
+
+    return issues
+
+
 def collect_missing_internal_links() -> list[dict]:
     known_routes = collect_known_routes()
     missing: list[dict] = []
@@ -1127,6 +1191,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_manifest_icon_192 = has_manifest_icon(web_manifest, min_size=192)
     has_manifest_icon_512 = has_manifest_icon(web_manifest, min_size=512)
     has_manifest_maskable_icon_192 = has_manifest_maskable_icon(web_manifest, min_size=192)
+    manifest_reference_issues = collect_manifest_reference_issues(
+        web_manifest, default_manifest_path if manifest_paths_match else None, collect_known_routes()
+    )
     has_mobile_ready_web_manifest = bool(
         has_default_manifest_link
         and has_share_manifest_link
@@ -1240,6 +1307,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and not missing_internal_links
             and not missing_liquid_internal_links
             and not missing_liquid_link_tag_targets
+            and not manifest_reference_issues
             and (not http_check or not http_failures or http_network_restricted)
             else 6.5,
             'max_score': 10.0,
@@ -1265,6 +1333,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     'details': 'Checks markdown links ](/path/), HTML href/src="/path/", Liquid href/src {{ "/path/" | relative_url }}, and {% link ... %} targets.',
                 },
                 {
+                    'aspect': 'Web Manifest Targets',
+                    'result': 'Clean'
+                    if not manifest_reference_issues
+                    else f'Issues Found ({len(manifest_reference_issues)})',
+                    'details': 'Checks site.webmanifest local icon/screenshot files and internal start_url/scope/id/shortcuts URLs.',
+                },
+                {
                     'aspect': 'HTTP Reachability Sample',
                     'result': 'Skipped'
                     if not http_check
@@ -1288,7 +1363,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             + malformed_external_urls
             + missing_internal_links
             + missing_liquid_internal_links
-            + missing_liquid_link_tag_targets,
+            + missing_liquid_link_tag_targets
+            + manifest_reference_issues,
             'http_check': http_check_result,
         },
         'seo_evaluation': {
