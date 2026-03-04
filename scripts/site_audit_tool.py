@@ -39,9 +39,7 @@ PLACEHOLDER_RE = re.compile(r'example\.com|localhost|127\.0\.0\.1|\bTODO\b|\bTBD
 INVALID_PERCENT_ENCODING_RE = re.compile(r'%(?![0-9A-Fa-f]{2})')
 INTERNAL_LINK_RE = re.compile(r'\]\((/[^)\s?#][^)\s]*)')
 HTML_INTERNAL_ATTR_RE = re.compile(r'(?:href|src)\s*=\s*["\'](/(?!/)[^"\']*)["\']', re.IGNORECASE)
-LIQUID_RELATIVE_URL_RE = re.compile(
-    r'(?:href|src)\s*=\s*["\']\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}["\']'
-)
+LIQUID_LITERAL_RELATIVE_URL_RE = re.compile(r'\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}')
 LIQUID_LINK_TAG_RE = re.compile(r'\{%\s*link\s+([^\s%]+)\s*%\}')
 PRECONNECT_HINT_RE = re.compile(r'<link\s+rel="preconnect"\s+href="([^"]+)"')
 DNS_PREFETCH_HINT_RE = re.compile(r'<link\s+rel="dns-prefetch"\s+href="([^"]+)"')
@@ -288,7 +286,7 @@ def collect_missing_liquid_internal_links() -> list[dict]:
         for fp in files:
             rel = fp.relative_to(ROOT)
             text = read_text(fp)
-            for match in LIQUID_RELATIVE_URL_RE.finditer(text):
+            for match in LIQUID_LITERAL_RELATIVE_URL_RE.finditer(text):
                 raw = match.group(1)
                 if not internal_target_exists(raw, known_routes):
                     missing.append(
@@ -489,7 +487,7 @@ def resolve_local_image_path(value: str | None) -> Path | None:
     if not value:
         return None
     candidate = value.strip()
-    liquid_relative = re.search(r'\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}', candidate)
+    liquid_relative = LIQUID_LITERAL_RELATIVE_URL_RE.search(candidate)
     if liquid_relative:
         candidate = liquid_relative.group(1)
     if '://' in candidate:
@@ -1330,7 +1328,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     else (
                         f'Issues found ({len(missing_internal_links) + len(missing_liquid_internal_links) + len(missing_liquid_link_tag_targets)})'
                     ),
-                    'details': 'Checks markdown links ](/path/), HTML href/src="/path/", Liquid href/src {{ "/path/" | relative_url }}, and {% link ... %} targets.',
+                    'details': 'Checks markdown links ](/path/), HTML href/src="/path/", Liquid literal {{ "/path/" | relative_url }} usages (including srcset/assets), and {% link ... %} targets.',
                 },
                 {
                     'aspect': 'Web Manifest Targets',
