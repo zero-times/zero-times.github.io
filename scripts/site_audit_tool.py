@@ -1689,6 +1689,9 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     web_app_manifest_maskable_icon_ready = sections.get('content_quality', {}).get('web_app_manifest_maskable_icon_ready', False)
     theme_color_token_consistency = sections.get('content_quality', {}).get('theme_color_token_consistency', False)
     http_failures = sections.get('broken_links_check', {}).get('http_check', {}).get('failures', [])
+    http_network_restricted = bool(
+        sections.get('broken_links_check', {}).get('http_check', {}).get('network_restricted')
+    )
 
     failures: list[str] = []
     if not default_mobile_web_app_meta:
@@ -1759,7 +1762,7 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('web_app_manifest_maskable_icon_ready=0')
     if not theme_color_token_consistency:
         failures.append('theme_color_token_consistency=0')
-    if http_check_enabled and http_failures:
+    if http_check_enabled and http_failures and not http_network_restricted:
         failures.append(f'http_failures={len(http_failures)}')
     return failures
 
