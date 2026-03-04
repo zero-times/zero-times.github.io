@@ -8,6 +8,19 @@ html {
   scroll-padding-top: 6rem;
 }
 
+@supports (padding: max(0px)) {
+  .site-header-v2__inner,
+  .site-footer-v2__inner,
+  .site-mobile-drawer .offcanvas-body {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .back-to-top {
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
 /* Speed up long feeds by skipping off-screen card rendering until needed */
 .postbox-card,
 .home-hero__latest .card {

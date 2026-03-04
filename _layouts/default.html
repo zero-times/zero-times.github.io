@@ -190,8 +190,9 @@
     {% endif %}
   {% endif %}
   
-  <!-- Bootstrap 5 样式 -->
-  <link rel="stylesheet" href="{{ "/assets/css/bootstrap.min.css" | relative_url }}">
+  <!-- Bootstrap 5 样式：preload 后切换为 stylesheet，减少首屏阻塞 -->
+  <link rel="preload" href="{{ '/assets/css/bootstrap.min.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ '/assets/css/bootstrap.min.css' | relative_url }}"></noscript>
   
   <!-- 站点样式：使用 preload 降低首屏阻塞 -->
   <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}" media="print" onload="this.media='all'">
