@@ -2409,6 +2409,7 @@ section[id] {
 @media (max-width: 767.98px) {
   .previous-next-post .btn {
     width: 100%;
+    justify-content: flex-start;
   }
 
   .previous-next-post .col-md-6 {
