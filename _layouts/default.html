@@ -182,6 +182,19 @@
       {% endif %}
     }
   </script>
+  {% if site.author.name %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{ site.author.name | escape }}"{% if site.author.url %},
+      "url": "{{ site.author.url }}"{% endif %}{% if publisher_image_url %},
+      "image": "{{ publisher_image_url }}"{% endif %}{% if site.social and site.social.links %},
+      "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+      {% endif %}
+    }
+  </script>
+  {% endif %}
   {% unless page.layout == 'post' %}
   <script type="application/ld+json">
     {
