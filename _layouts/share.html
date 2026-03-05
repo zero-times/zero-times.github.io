@@ -55,6 +55,9 @@
 <link rel="me" href="{{ social_link }}">
 {% endfor %}
 {% endif %}
+{% if site.author.url %}
+<link rel="author" href="{{ site.author.url }}">
+{% endif %}
 {% assign share_description = page.description | default: site.description | strip %}
 {% assign share_publisher_image = site.logo | default: site.author.avatar %}
 {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
