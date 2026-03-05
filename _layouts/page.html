@@ -13,6 +13,8 @@ layout: default
     {% assign page_image_loading = page.image_loading | default: 'lazy' %}
     {% assign page_image_fetchpriority = page.image_fetchpriority %}
     {% assign page_image_sizes = page.image_sizes | default: '(max-width: 575.98px) calc(100vw - 2rem), (max-width: 991.98px) calc(100vw - 3rem), 760px' %}
+    {% assign page_image_width = page.image_width | default: site.social_image_width %}
+    {% assign page_image_height = page.image_height | default: site.social_image_height %}
     {% if page_image_fetchpriority == nil %}
       {% if page_image_loading == 'eager' %}
         {% assign page_image_fetchpriority = 'high' %}
@@ -21,7 +23,7 @@ layout: default
       {% endif %}
     {% endif %}
     {% assign page_image_alt = page.image_alt | default: page.description | default: page.title %}
-    <img class="featured-image img-fluid text-center mx-auto rounded" src="{{ page_image_src }}" alt="{{ page_image_alt }}" loading="{{ page_image_loading }}" decoding="async" fetchpriority="{{ page_image_fetchpriority }}" sizes="{{ page_image_sizes }}"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
+    <img class="featured-image img-fluid text-center mx-auto rounded" src="{{ page_image_src }}" alt="{{ page_image_alt }}" loading="{{ page_image_loading }}" decoding="async" fetchpriority="{{ page_image_fetchpriority }}" sizes="{{ page_image_sizes }}"{% if page_image_width %} width="{{ page_image_width }}"{% endif %}{% if page_image_height %} height="{{ page_image_height }}"{% endif %}>
   </div>
   {% endif %}
 

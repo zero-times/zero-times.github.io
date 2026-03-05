@@ -13,6 +13,8 @@ layout: default
 {% assign featured_image_loading = page.image_loading | default: 'eager' %}
 {% assign featured_image_fetchpriority = page.image_fetchpriority %}
 {% assign featured_image_sizes = page.image_sizes | default: '(max-width: 575.98px) calc(100vw - 2rem), (max-width: 991.98px) calc(100vw - 3rem), 960px' %}
+{% assign featured_image_width = page.image_width | default: site.social_image_width %}
+{% assign featured_image_height = page.image_height | default: site.social_image_height %}
 {% if featured_image_fetchpriority == nil %}
   {% if featured_image_loading == 'eager' %}
     {% assign featured_image_fetchpriority = 'high' %}
@@ -65,7 +67,7 @@ layout: default
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 {% if page.image %}
-                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ post_image_alt }}" itemprop="image" loading="{{ featured_image_loading }}" decoding="async" fetchpriority="{{ featured_image_fetchpriority }}" sizes="{{ featured_image_sizes }}"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
+                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ post_image_alt }}" itemprop="image" loading="{{ featured_image_loading }}" decoding="async" fetchpriority="{{ featured_image_fetchpriority }}" sizes="{{ featured_image_sizes }}"{% if featured_image_width %} width="{{ featured_image_width }}"{% endif %}{% if featured_image_height %} height="{{ featured_image_height }}"{% endif %}>
                 {% endif %}
             
                 <div class="post-header">
