@@ -3711,6 +3711,17 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   gap: 1rem;
 }
 
+@supports (content-visibility: auto) {
+  .home-v2__content,
+  .home-v2__final-cta,
+  .about-v2__section,
+  .contact-v2__methods,
+  .contact-v2__form-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+  }
+}
+
 .home-v2__content-eyebrow {
   margin: 0;
   font-size: 0.75rem;
