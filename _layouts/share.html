@@ -98,10 +98,8 @@
 <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ '/sitemap.xml' | absolute_url }}">
 {% seo %}
 <link rel="stylesheet" href="{{ '/assets/css/bootstrap.min.css' | relative_url }}">
-<link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet"></noscript>
-<link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="{{ '/assets/css/custom.css' | relative_url }}" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 {% assign analytics_enabled = page.load_analytics %}
 {% if analytics_enabled == nil %}
   {% assign analytics_enabled = true %}

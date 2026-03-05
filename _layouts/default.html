@@ -219,11 +219,9 @@
   <!-- Bootstrap 5 样式：直接作为 stylesheet 加载，避免 preload 竞争与样式闪烁 -->
   <link rel="stylesheet" href="{{ '/assets/css/bootstrap.min.css' | relative_url }}">
   
-  <!-- 站点样式：使用 preload 降低首屏阻塞 -->
-  <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}"></noscript>
-  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}"></noscript>
+  <!-- 站点样式：直接阻塞加载，避免移动端样式闪烁 -->
+  <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
   
   <!-- 网站图标 -->
   <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
