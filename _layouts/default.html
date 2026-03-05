@@ -106,15 +106,30 @@
         return;
       }
 
-      var href = 'https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap';
-      var link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      link.media = 'print';
-      link.onload = function () {
-        this.media = 'all';
-      };
-      document.head.appendChild(link);
+      var loaded = false;
+      function loadFonts() {
+        if (loaded) {
+          return;
+        }
+        loaded = true;
+        var href = 'https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap';
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.media = 'print';
+        link.onload = function () {
+          this.media = 'all';
+        };
+        document.head.appendChild(link);
+      }
+
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadFonts, { timeout: 1600 });
+      } else {
+        window.addEventListener('load', function () {
+          window.setTimeout(loadFonts, 300);
+        }, { once: true });
+      }
     })();
   </script>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap"></noscript>

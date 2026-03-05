@@ -194,6 +194,14 @@ html {
   overflow-wrap: anywhere;
 }
 
+/* Keep long URLs from overflowing on narrow screens in post/share content */
+.article-post a,
+.post-content a,
+.share-article a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .contact-chips {
   display: flex;
   flex-wrap: wrap;
