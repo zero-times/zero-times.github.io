@@ -119,7 +119,7 @@
   </script>
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600;700&family=Alegreya+Sans:wght@400;600&family=Alegreya:wght@400;700&display=swap"></noscript>
   {% endunless %}
-  {% if page.url contains '/contact/' %}
+  {% if page.preconnect_formspree %}
   <link rel="preconnect" href="https://formspree.io" crossorigin>
   <link rel="dns-prefetch" href="//formspree.io">
   {% endif %}
