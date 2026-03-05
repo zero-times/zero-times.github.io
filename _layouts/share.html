@@ -57,6 +57,7 @@
 {% endif %}
 {% assign share_description = page.description | default: site.description | strip %}
 {% assign share_publisher_image = site.logo | default: site.author.avatar %}
+{% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
 {% assign author_entity_base = site.author.url | default: site.url %}
 {% assign author_entity_id = author_entity_base | append: '#person' %}
 {% if share_publisher_image %}
@@ -69,6 +70,21 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "{{ website_entity_id }}",
+  "name": "{{ site.title | escape }}",
+  "url": "{{ site.url }}{{ site.baseurl }}",
+  "inLanguage": "{{ normalized_lang }}",
+  "publisher": {
+    "@id": "{{ author_entity_id }}"
+  }{% if site.social and site.social.links %},
+  "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+  {% endif %}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "{{ page.title | default: site.title | escape }}",
   "url": "{{ page.url | absolute_url }}",
@@ -78,9 +94,7 @@
     "@id": "{{ author_entity_id }}"
   },
   "isPartOf": {
-    "@type": "WebSite",
-    "name": "{{ site.title | escape }}",
-    "url": "{{ site.url }}{{ site.baseurl }}"
+    "@id": "{{ website_entity_id }}"
   }{% if share_publisher_image_url %},
   "primaryImageOfPage": {
     "@type": "ImageObject",
@@ -191,6 +205,10 @@
     }
 
     function initGaWhenVisible() {
+      if (document.prerendering) {
+        document.addEventListener('prerenderingchange', initGaWhenVisible, { once: true });
+        return;
+      }
       if (document.visibilityState === 'hidden') {
         document.addEventListener('visibilitychange', function onVisibilityChange() {
           if (document.visibilityState === 'visible') {
@@ -203,7 +221,7 @@
     }
 
     ['pointerdown', 'keydown', 'scroll'].forEach(function (eventName) {
-      window.addEventListener(eventName, initGa, { once: true, passive: true });
+      window.addEventListener(eventName, initGaWhenVisible, { once: true, passive: true });
     });
 
     if ('requestIdleCallback' in window) {

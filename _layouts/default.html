@@ -124,6 +124,10 @@
       }
 
       function loadFontsWhenVisible() {
+        if (document.prerendering) {
+          document.addEventListener('prerenderingchange', loadFontsWhenVisible, { once: true });
+          return;
+        }
         if (document.visibilityState === 'hidden') {
           document.addEventListener('visibilitychange', function onVisibilityChange() {
             if (document.visibilityState === 'visible') {
@@ -169,6 +173,7 @@
   {% endif %}
   {% seo %}
   {% assign publisher_image = site.logo | default: site.author.avatar %}
+  {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
   {% assign author_entity_base = site.author.url | default: site.url %}
   {% assign author_entity_id = author_entity_base | append: '#person' %}
   {% if publisher_image %}
@@ -182,6 +187,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": "{{ website_entity_id }}",
       "name": "{{ site.title | escape }}",
       "url": "{{ site.url }}{{ site.baseurl }}",
       "inLanguage": "{{ normalized_lang }}",
@@ -224,9 +230,7 @@
         "@id": "{{ author_entity_id }}"
       },
       "isPartOf": {
-        "@type": "WebSite",
-        "name": "{{ site.title | escape }}",
-        "url": "{{ site.url }}{{ site.baseurl }}"
+        "@id": "{{ website_entity_id }}"
       }
     }
   </script>
@@ -368,6 +372,10 @@
       }
 
       function initGaWhenVisible() {
+        if (document.prerendering) {
+          document.addEventListener('prerenderingchange', initGaWhenVisible, { once: true });
+          return;
+        }
         if (document.visibilityState === 'hidden') {
           document.addEventListener('visibilitychange', function onVisibilityChange() {
             if (document.visibilityState === 'visible') {
@@ -380,7 +388,7 @@
       }
 
       ['pointerdown', 'keydown', 'scroll'].forEach(function (eventName) {
-        window.addEventListener(eventName, initGa, { once: true, passive: true });
+        window.addEventListener(eventName, initGaWhenVisible, { once: true, passive: true });
       });
 
       if ('requestIdleCallback' in window) {
