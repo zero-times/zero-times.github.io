@@ -3480,6 +3480,10 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 
 .site-mobile-drawer .offcanvas-body {
   max-width: min(420px, calc(100vw - 1rem));
+  max-height: calc(100dvh - env(safe-area-inset-top) - 0.75rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   margin: calc(0.35rem + env(safe-area-inset-top)) auto 0;
   padding: 0.25rem 1rem 1rem;
   border: 1px solid #dce3f0;
