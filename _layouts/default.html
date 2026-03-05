@@ -49,6 +49,13 @@
   {% endunless %}
   {% assign social_image_alt = page.image_alt | default: site.image_alt | default: page.title | default: site.title %}
   {% assign social_image_src = page.image | default: site.image %}
+  {% if social_image_src %}
+    {% if social_image_src contains '://' %}
+      {% assign social_image_url = social_image_src %}
+    {% else %}
+      {% assign social_image_url = social_image_src | absolute_url %}
+    {% endif %}
+  {% endif %}
   {% assign social_image_width = page.image_width | default: site.social_image_width %}
   {% assign social_image_height = page.image_height | default: site.social_image_height %}
   {% if social_image_src %}
@@ -231,7 +238,13 @@
       },
       "isPartOf": {
         "@id": "{{ website_entity_id }}"
+      }{% if social_image_url %},
+      "image": "{{ social_image_url }}",
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "{{ social_image_url }}"
       }
+      {% endif %}
     }
   </script>
   {% endunless %}

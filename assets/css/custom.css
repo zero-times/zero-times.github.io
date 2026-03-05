@@ -207,6 +207,19 @@ html {
   word-break: break-word;
 }
 
+/* Improve mobile readability for embeds and code blocks inside share content */
+.share-article iframe,
+.share-article video,
+.share-article img {
+  max-width: 100%;
+}
+
+.share-article pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .contact-chips {
   display: flex;
   flex-wrap: wrap;
