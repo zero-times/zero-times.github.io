@@ -4,6 +4,7 @@ title: Termos de Uso
 permalink: /terms/
 comments: false
 robots: noindex,follow
+sitemap: false
 description: Termos de uso, responsabilidades e condições de acesso do site
 keywords: "termos de uso, condições, responsabilidade, licenças"
 load_webfonts: false
