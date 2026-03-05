@@ -27,6 +27,28 @@ document.addEventListener('DOMContentLoaded', function() {
       behavior: prefersReducedMotion ? 'auto' : 'smooth',
       block: 'start'
     });
+
+    const targetId = target.getAttribute('id');
+    if (targetId) {
+      const encodedHash = `#${encodeURIComponent(targetId)}`;
+      if (window.location.hash !== encodedHash) {
+        history.pushState(null, '', encodedHash);
+      }
+    }
+
+    if (!target.hasAttribute('tabindex')) {
+      target.setAttribute('tabindex', '-1');
+      target.setAttribute('data-anchor-focus-temp', 'true');
+    }
+
+    const focusDelay = prefersReducedMotion ? 0 : 220;
+    window.setTimeout(() => {
+      target.focus({ preventScroll: true });
+      if (target.getAttribute('data-anchor-focus-temp') === 'true') {
+        target.removeAttribute('tabindex');
+        target.removeAttribute('data-anchor-focus-temp');
+      }
+    }, focusDelay);
   });
 
   // Reading progress indicator for post pages
