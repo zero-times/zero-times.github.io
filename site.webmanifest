@@ -55,6 +55,13 @@
       "type": "image/png",
       "form_factor": "wide",
       "label": "Página inicial do blog Hoa"
+    },
+    {
+      "src": "/assets/images/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Página inicial do blog Hoa no celular"
     }
   ],
   "icons": [
