@@ -250,89 +250,95 @@ document.addEventListener('DOMContentLoaded', function() {
     document.documentElement.setAttribute('lang', 'pt-BR');
   }
 
-  // Add media defaults on content area only to reduce unnecessary DOM work.
-  const mediaScope = document.querySelector('main') || document.body;
-  const images = mediaScope.querySelectorAll(
-    'img:not([loading]), img:not([decoding]), img:not([alt]), img[loading="lazy"]:not([fetchpriority])'
-  );
-  images.forEach(img => {
-    const src = img.getAttribute('src') || '';
-    if (src.startsWith('data:')) {
-      return;
-    }
-    const fetchPriority = img.getAttribute('fetchpriority');
-    if (!img.hasAttribute('loading')) {
-      img.setAttribute('loading', fetchPriority === 'high' ? 'eager' : 'lazy');
-    }
-    if (!img.hasAttribute('decoding')) {
-      img.setAttribute('decoding', 'async');
-    }
-    if (!img.hasAttribute('alt')) {
-      img.setAttribute('alt', '');
-    }
-    if (!img.hasAttribute('fetchpriority') && img.getAttribute('loading') === 'lazy') {
-      img.setAttribute('fetchpriority', 'low');
-    }
-  });
+  const enhanceMediaDefaults = () => {
+    // Add media defaults on content area only to reduce unnecessary DOM work.
+    const mediaScope = document.querySelector('main') || document.body;
+    const images = mediaScope.querySelectorAll('img');
+    images.forEach(img => {
+      const src = img.getAttribute('src') || '';
+      if (src.startsWith('data:')) {
+        return;
+      }
+      const fetchPriority = img.getAttribute('fetchpriority');
+      if (!img.hasAttribute('loading')) {
+        img.setAttribute('loading', fetchPriority === 'high' ? 'eager' : 'lazy');
+      }
+      if (!img.hasAttribute('decoding')) {
+        img.setAttribute('decoding', 'async');
+      }
+      if (!img.hasAttribute('alt')) {
+        img.setAttribute('alt', '');
+      }
+      if (!img.hasAttribute('fetchpriority') && img.getAttribute('loading') === 'lazy') {
+        img.setAttribute('fetchpriority', 'low');
+      }
+    });
 
-  const iframes = mediaScope.querySelectorAll('iframe:not([loading]), iframe:not([title])');
-  iframes.forEach(frame => {
-    if (!frame.hasAttribute('loading')) {
-      frame.setAttribute('loading', 'lazy');
-    }
-    if (!frame.hasAttribute('title')) {
-      const fallbackTitle = frame.getAttribute('data-title') || frame.getAttribute('aria-label') || 'Embedded content';
-      frame.setAttribute('title', fallbackTitle);
-    }
-  });
+    const iframes = mediaScope.querySelectorAll('iframe');
+    iframes.forEach(frame => {
+      if (!frame.hasAttribute('loading')) {
+        frame.setAttribute('loading', 'lazy');
+      }
+      if (!frame.hasAttribute('title')) {
+        const fallbackTitle = frame.getAttribute('data-title') || frame.getAttribute('aria-label') || 'Embedded content';
+        frame.setAttribute('title', fallbackTitle);
+      }
+    });
 
-  const mediaElements = document.querySelectorAll('video, audio');
-  mediaElements.forEach(media => {
-    if (!media.hasAttribute('preload')) {
-      media.setAttribute('preload', 'metadata');
-    }
-    if (media.tagName.toLowerCase() === 'video' && !media.hasAttribute('playsinline')) {
-      media.setAttribute('playsinline', '');
-    }
-  });
+    const mediaElements = mediaScope.querySelectorAll('video, audio');
+    mediaElements.forEach(media => {
+      if (!media.hasAttribute('preload')) {
+        media.setAttribute('preload', 'metadata');
+      }
+      if (media.tagName.toLowerCase() === 'video' && !media.hasAttribute('playsinline')) {
+        media.setAttribute('playsinline', '');
+      }
+    });
 
-  const lazyImages = document.querySelectorAll('img[data-src]');
-  if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-          imageObserver.unobserve(img);
-        }
+    const lazyImages = mediaScope.querySelectorAll('img[data-src]');
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            observer.unobserve(img);
+          }
+        });
       });
-    });
 
-    lazyImages.forEach(img => imageObserver.observe(img));
+      lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+      lazyImages.forEach(img => {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      });
+    }
+
+    const newsInlineThumbs = mediaScope.querySelectorAll('img.news-inline-thumb');
+    newsInlineThumbs.forEach(img => {
+      if (!img.hasAttribute('loading')) {
+        img.setAttribute('loading', 'lazy');
+      }
+      if (!img.hasAttribute('decoding')) {
+        img.setAttribute('decoding', 'async');
+      }
+      if (!img.hasAttribute('fetchpriority')) {
+        img.setAttribute('fetchpriority', 'low');
+      }
+      if (!img.hasAttribute('alt')) {
+        img.setAttribute('alt', 'Imagem relacionada à notícia');
+      }
+      img.classList.add('news-inline-thumb--lazy');
+    });
+  };
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(enhanceMediaDefaults, { timeout: 1200 });
   } else {
-    lazyImages.forEach(img => {
-      img.src = img.dataset.src;
-      img.removeAttribute('data-src');
-    });
+    window.setTimeout(enhanceMediaDefaults, 300);
   }
-
-  const newsInlineThumbs = document.querySelectorAll('img.news-inline-thumb');
-  newsInlineThumbs.forEach(img => {
-    if (!img.hasAttribute('loading')) {
-      img.setAttribute('loading', 'lazy');
-    }
-    if (!img.hasAttribute('decoding')) {
-      img.setAttribute('decoding', 'async');
-    }
-    if (!img.hasAttribute('fetchpriority')) {
-      img.setAttribute('fetchpriority', 'low');
-    }
-    if (!img.hasAttribute('alt')) {
-      img.setAttribute('alt', 'Imagem relacionada à notícia');
-    }
-    img.classList.add('news-inline-thumb--lazy');
-  });
 
   // Add focus management for dropdowns
   const dropdowns = document.querySelectorAll('.dropdown-toggle');
