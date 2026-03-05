@@ -252,7 +252,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Add media defaults on content area only to reduce unnecessary DOM work.
   const mediaScope = document.querySelector('main') || document.body;
-  const images = mediaScope.querySelectorAll('img');
+  const images = mediaScope.querySelectorAll(
+    'img:not([loading]), img:not([decoding]), img:not([alt]), img[loading="lazy"]:not([fetchpriority])'
+  );
   images.forEach(img => {
     const src = img.getAttribute('src') || '';
     if (src.startsWith('data:')) {
@@ -273,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  const iframes = mediaScope.querySelectorAll('iframe');
+  const iframes = mediaScope.querySelectorAll('iframe:not([loading]), iframe:not([title])');
   iframes.forEach(frame => {
     if (!frame.hasAttribute('loading')) {
       frame.setAttribute('loading', 'lazy');
@@ -308,6 +310,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     lazyImages.forEach(img => imageObserver.observe(img));
+  } else {
+    lazyImages.forEach(img => {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    });
   }
 
   const newsInlineThumbs = document.querySelectorAll('img.news-inline-thumb');
