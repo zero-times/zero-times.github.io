@@ -16,6 +16,11 @@ html {
     padding-right: max(1rem, env(safe-area-inset-right));
   }
 
+  .site-mobile-drawer .offcanvas-body {
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
   .back-to-top {
     bottom: max(1rem, env(safe-area-inset-bottom));
   }

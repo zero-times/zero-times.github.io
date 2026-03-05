@@ -182,6 +182,23 @@
       {% endif %}
     }
   </script>
+  {% unless page.layout == 'post' %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "{{ page.title | default: site.title | escape }}",
+      "url": "{{ page.url | absolute_url }}",
+      "inLanguage": "{{ normalized_lang }}",
+      "description": "{{ page.description | default: site.description | escape }}",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "{{ site.title | escape }}",
+        "url": "{{ site.url }}{{ site.baseurl }}"
+      }
+    }
+  </script>
+  {% endunless %}
   {% if page.layout == 'post' %}
   <script type="application/ld+json">
     {
