@@ -189,7 +189,18 @@ layout: default
                     <div class="row align-items-center">
                         <div class="col-md-2 text-center">
                             {% if author_avatar %}
-                            <img class="author-thumb rounded-circle" src="{{ author_avatar | relative_url }}" alt="{{ author_name }}" itemprop="image" loading="lazy" decoding="async" fetchpriority="low" width="72" height="72">
+                            {% assign author_avatar_src = author_avatar %}
+                            {% assign author_avatar_srcset = nil %}
+                            {% if author_avatar contains 'assets/images/sal.png' %}
+                                {% assign author_avatar_src = '/assets/images/sal-150.jpg' %}
+                                {% capture author_avatar_srcset %}{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w{% endcapture %}
+                            {% endif %}
+                            {% if author_avatar_src contains '://' %}
+                                {% assign author_avatar_url = author_avatar_src %}
+                            {% else %}
+                                {% assign author_avatar_url = author_avatar_src | relative_url %}
+                            {% endif %}
+                            <img class="author-thumb rounded-circle" src="{{ author_avatar_url }}" {% if author_avatar_srcset %}srcset="{{ author_avatar_srcset }}" sizes="72px" {% endif %}alt="{{ author_name }}" itemprop="image" loading="lazy" decoding="async" fetchpriority="low" width="72" height="72">
                             {% endif %}
                         </div>
                         <div class="col-md-10">
