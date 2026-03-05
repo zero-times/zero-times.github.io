@@ -123,11 +123,23 @@
         document.head.appendChild(link);
       }
 
+      function loadFontsWhenVisible() {
+        if (document.visibilityState === 'hidden') {
+          document.addEventListener('visibilitychange', function onVisibilityChange() {
+            if (document.visibilityState === 'visible') {
+              loadFonts();
+            }
+          }, { once: true });
+          return;
+        }
+        loadFonts();
+      }
+
       if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(loadFonts, { timeout: 1600 });
+        window.requestIdleCallback(loadFontsWhenVisible, { timeout: 1600 });
       } else {
         window.addEventListener('load', function () {
-          window.setTimeout(loadFonts, 300);
+          window.setTimeout(loadFontsWhenVisible, 300);
         }, { once: true });
       }
     })();
