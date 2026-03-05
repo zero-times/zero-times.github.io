@@ -13,7 +13,7 @@
   <meta name="application-name" content="{{ site.title | escape }}">
   <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="format-detection" content="telephone=no">
+  <meta name="format-detection" content="telephone=no,email=no,address=no">
   <meta name="author" content="{{ site.author.name }}">
   {% assign is_paginated_archive_page = paginator and paginator.page and paginator.page > 1 %}
   {% assign noindex_effective = false %}
@@ -157,6 +157,8 @@
   {% endif %}
   {% seo %}
   {% assign publisher_image = site.logo | default: site.author.avatar %}
+  {% assign author_entity_base = site.author.url | default: site.url %}
+  {% assign author_entity_id = author_entity_base | append: '#person' %}
   {% if publisher_image %}
     {% if publisher_image contains '://' %}
       {% assign publisher_image_url = publisher_image %}
@@ -173,6 +175,7 @@
       "inLanguage": "{{ normalized_lang }}",
       "publisher": {
         "@type": "Person",
+        "@id": "{{ author_entity_id }}",
         "name": "{{ site.author.name | escape }}",
         "url": "{{ site.author.url }}"{% if publisher_image_url %},
         "image": "{{ publisher_image_url }}"
@@ -187,6 +190,7 @@
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": "{{ author_entity_id }}",
       "name": "{{ site.author.name | escape }}"{% if site.author.url %},
       "url": "{{ site.author.url }}"{% endif %}{% if publisher_image_url %},
       "image": "{{ publisher_image_url }}"{% endif %}{% if site.social and site.social.links %},
@@ -204,6 +208,9 @@
       "url": "{{ page.url | absolute_url }}",
       "inLanguage": "{{ normalized_lang }}",
       "description": "{{ page.description | default: site.description | escape }}",
+      "about": {
+        "@id": "{{ author_entity_id }}"
+      },
       "isPartOf": {
         "@type": "WebSite",
         "name": "{{ site.title | escape }}",

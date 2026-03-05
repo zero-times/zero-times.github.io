@@ -13,7 +13,7 @@
 <meta name="application-name" content="{{ site.title | escape }}">
 <meta name="color-scheme" content="light dark">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
 <meta name="author" content="{{ site.author.name }}">
 {% assign effective_robots = page.robots | default: 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' %}
 <meta name="robots" content="{{ effective_robots }}">
@@ -57,6 +57,8 @@
 {% endif %}
 {% assign share_description = page.description | default: site.description | strip %}
 {% assign share_publisher_image = site.logo | default: site.author.avatar %}
+{% assign author_entity_base = site.author.url | default: site.url %}
+{% assign author_entity_id = author_entity_base | append: '#person' %}
 {% if share_publisher_image %}
   {% if share_publisher_image contains '://' %}
     {% assign share_publisher_image_url = share_publisher_image %}
@@ -72,6 +74,9 @@
   "url": "{{ page.url | absolute_url }}",
   "description": "{{ share_description | escape }}",
   "inLanguage": "{{ normalized_lang }}",
+  "about": {
+    "@id": "{{ author_entity_id }}"
+  },
   "isPartOf": {
     "@type": "WebSite",
     "name": "{{ site.title | escape }}",
@@ -89,6 +94,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": "{{ author_entity_id }}",
   "name": "{{ site.author.name | escape }}"{% if site.author.url %},
   "url": "{{ site.author.url }}"{% endif %}{% if share_publisher_image_url %},
   "image": "{{ share_publisher_image_url }}"{% endif %}{% if site.social and site.social.links %},
