@@ -85,8 +85,8 @@
   <link rel="preload" as="image" href="{{ '/assets/images/sal-300.jpg' | relative_url }}" imagesrcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" imagesizes="(max-width: 991.98px) 96px, 150px">
   {% endif %}
   {% if page.url == '/' and page.prefetch_home_links %}
-  <link rel="prefetch" href="{{ '/blog/' | relative_url }}">
-  <link rel="prefetch" href="{{ '/contact/' | relative_url }}">
+  <link rel="prefetch" href="{% link blog/index.html %}">
+  <link rel="prefetch" href="{% link pages/contact.html %}">
   {% endif %}
   {% if page.preconnect_news_sources %}
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
