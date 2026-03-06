@@ -62,6 +62,7 @@
 {% assign share_webpage_published = page.date %}
 {% assign share_webpage_modified = page.last_modified_at | default: page.date %}
 {% assign share_publisher_image = site.logo | default: site.author.avatar %}
+{% assign share_schema_image_src = page.image | default: site.image | default: share_publisher_image %}
 {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
 {% assign author_entity_base = site.author.url | default: site.url %}
 {% assign author_entity_id = author_entity_base | append: '#person' %}
@@ -70,6 +71,13 @@
     {% assign share_publisher_image_url = share_publisher_image %}
   {% else %}
     {% assign share_publisher_image_url = share_publisher_image | absolute_url %}
+  {% endif %}
+{% endif %}
+{% if share_schema_image_src %}
+  {% if share_schema_image_src contains '://' %}
+    {% assign share_schema_image_url = share_schema_image_src %}
+  {% else %}
+    {% assign share_schema_image_url = share_schema_image_src | absolute_url %}
   {% endif %}
 {% endif %}
 <script type="application/ld+json">
@@ -102,10 +110,11 @@
   },
   "isPartOf": {
     "@id": "{{ website_entity_id }}"
-  }{% if share_publisher_image_url %},
+  }{% if share_schema_image_url %},
+  "image": "{{ share_schema_image_url }}",
   "primaryImageOfPage": {
     "@type": "ImageObject",
-    "url": "{{ share_publisher_image_url }}"
+    "url": "{{ share_schema_image_url }}"
   }
   {% endif %}
 }
