@@ -7,6 +7,33 @@ layout: default
 {% assign author_bio = author_data.description | default: author_data.bio %}
 {% assign author_avatar = author_data.avatar | default: site.author.avatar %}
 {% assign author_web = author_data.web | default: author_data.url %}
+{% assign author_web_link = author_web %}
+{% assign author_web_external = false %}
+{% if author_web %}
+  {% if author_web contains '://' %}
+    {% assign site_host = site.url | replace: 'https://', '' | replace: 'http://', '' | split: '/' | first %}
+    {% assign author_web_host = author_web | replace: 'https://', '' | replace: 'http://', '' | split: '/' | first %}
+    {% assign normalized_site_host = site_host | downcase | remove_first: 'www.' %}
+    {% assign normalized_author_web_host = author_web_host | downcase | remove_first: 'www.' %}
+    {% if normalized_site_host and normalized_author_web_host == normalized_site_host %}
+      {% assign internal_author_path = author_web | replace_first: 'https://', '' | replace_first: 'http://', '' %}
+      {% assign internal_author_path = internal_author_path | remove_first: author_web_host %}
+      {% if site.baseurl and site.baseurl != '' and internal_author_path contains site.baseurl %}
+        {% assign internal_author_path = internal_author_path | remove_first: site.baseurl %}
+      {% endif %}
+      {% if internal_author_path == '' %}
+        {% assign internal_author_path = '/' %}
+      {% elsif internal_author_path | slice: 0, 1 != '/' %}
+        {% assign internal_author_path = '/' | append: internal_author_path %}
+      {% endif %}
+      {% assign author_web_link = internal_author_path | relative_url %}
+    {% else %}
+      {% assign author_web_external = true %}
+    {% endif %}
+  {% else %}
+    {% assign author_web_link = author_web | relative_url %}
+  {% endif %}
+{% endif %}
 {% assign word_count = content | number_of_words %}
 {% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
 {% assign normalized_post_lang = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
@@ -105,8 +132,8 @@ layout: default
                         {% if author_name %}
                             <span class="post-meta-sep" aria-hidden="true">•</span>
                             <span class="post-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                                {% if author_web %}
-                                    <a href="{{ author_web }}" itemprop="url" rel="author noopener noreferrer" target="_blank">
+                                {% if author_web_link %}
+                                    <a href="{{ author_web_link }}" itemprop="url"{% if author_web_external %} rel="author nofollow noopener noreferrer external" target="_blank"{% else %} rel="author"{% endif %}>
                                         <span itemprop="name">{{ author_name }}</span>
                                     </a>
                                 {% else %}
@@ -210,8 +237,8 @@ layout: default
                             {% if author_bio %}
                             <p class="author-description" itemprop="description">{{ author_bio }}</p>
                             {% endif %}
-                            {% if author_web %}
-                            <a target="_blank" class="btn btn-sm btn-outline-primary" href="{{ author_web }}" itemprop="url" rel="author noopener noreferrer" aria-label="Visitar site do autor {{ author_name }}">Visitar site</a>
+                            {% if author_web_link %}
+                            <a class="btn btn-sm btn-outline-primary" href="{{ author_web_link }}" itemprop="url"{% if author_web_external %} rel="author nofollow noopener noreferrer external" target="_blank"{% else %} rel="author"{% endif %} aria-label="Visitar site do autor {{ author_name }}">Visitar site</a>
                             {% endif %}
                         </div>
                     </div>
