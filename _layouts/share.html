@@ -59,6 +59,8 @@
 <link rel="author" href="{{ site.author.url }}">
 {% endif %}
 {% assign share_description = page.description | default: site.description | strip %}
+{% assign share_webpage_published = page.date %}
+{% assign share_webpage_modified = page.last_modified_at | default: page.date %}
 {% assign share_publisher_image = site.logo | default: site.author.avatar %}
 {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
 {% assign author_entity_base = site.author.url | default: site.url %}
@@ -91,7 +93,9 @@
   "@type": "WebPage",
   "name": "{{ page.title | default: site.title | escape }}",
   "url": "{{ page.url | absolute_url }}",
-  "description": "{{ share_description | escape }}",
+  "description": "{{ share_description | escape }}"{% if share_webpage_published %},
+  "datePublished": "{{ share_webpage_published | date_to_xmlschema }}"{% endif %}{% if share_webpage_modified %},
+  "dateModified": "{{ share_webpage_modified | date_to_xmlschema }}"{% endif %},
   "inLanguage": "{{ normalized_lang }}",
   "about": {
     "@id": "{{ author_entity_id }}"

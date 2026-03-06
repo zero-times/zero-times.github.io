@@ -119,9 +119,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Enhance form validation
   const forms = document.querySelectorAll('form');
   forms.forEach(form => {
+    const requiredFields = form.querySelectorAll('[required]');
+    if (!requiredFields.length) {
+      return;
+    }
+
     form.addEventListener('submit', function(e) {
-      // Add basic validation if not already present
-      const requiredFields = form.querySelectorAll('[required]');
       let isValid = true;
 
       requiredFields.forEach(field => {
@@ -163,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Real-time validation feedback
-    const inputs = form.querySelectorAll('input[required], textarea[required]');
+    const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
     inputs.forEach(input => {
       const updateValidity = function() {
         const trimmedValue = this.value.trim();

@@ -228,6 +228,8 @@
   </script>
   {% endif %}
   {% unless page.layout == 'post' %}
+  {% assign webpage_published = page.date %}
+  {% assign webpage_modified = page.last_modified_at | default: page.date %}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -235,7 +237,9 @@
       "name": "{{ page.title | default: site.title | escape }}",
       "url": "{{ page.url | absolute_url }}",
       "inLanguage": "{{ normalized_lang }}",
-      "description": "{{ page.description | default: site.description | escape }}",
+      "description": "{{ page.description | default: site.description | escape }}"{% if webpage_published %},
+      "datePublished": "{{ webpage_published | date_to_xmlschema }}"{% endif %}{% if webpage_modified %},
+      "dateModified": "{{ webpage_modified | date_to_xmlschema }}"{% endif %},
       "about": {
         "@id": "{{ author_entity_id }}"
       },
