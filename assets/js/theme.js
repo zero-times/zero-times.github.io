@@ -256,6 +256,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Ensure security rel attributes for external links that open in new tabs
   const newTabLinks = document.querySelectorAll('a[target="_blank"]');
   newTabLinks.forEach(link => {
+    const href = link.getAttribute('href') || '';
+    let isExternalHttp = false;
+    try {
+      const resolvedUrl = new URL(href, window.location.origin);
+      isExternalHttp = /^https?:$/i.test(resolvedUrl.protocol) && resolvedUrl.origin !== window.location.origin;
+    } catch (err) {
+      isExternalHttp = false;
+    }
+
     const relValue = link.getAttribute('rel') || '';
     const relTokens = relValue.split(/\s+/).filter(Boolean);
     let changed = false;
@@ -265,6 +274,14 @@ document.addEventListener('DOMContentLoaded', function() {
         changed = true;
       }
     });
+    if (isExternalHttp) {
+      ['nofollow', 'external'].forEach(token => {
+        if (!relTokens.includes(token)) {
+          relTokens.push(token);
+          changed = true;
+        }
+      });
+    }
     if (changed) {
       link.setAttribute('rel', relTokens.join(' '));
     }
@@ -304,9 +321,15 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!frame.hasAttribute('loading')) {
         frame.setAttribute('loading', 'lazy');
       }
+      if (!frame.hasAttribute('fetchpriority')) {
+        frame.setAttribute('fetchpriority', 'low');
+      }
       if (!frame.hasAttribute('title')) {
         const fallbackTitle = frame.getAttribute('data-title') || frame.getAttribute('aria-label') || 'Embedded content';
         frame.setAttribute('title', fallbackTitle);
+      }
+      if (!frame.hasAttribute('referrerpolicy')) {
+        frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
       }
     });
 
