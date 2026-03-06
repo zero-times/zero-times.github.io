@@ -276,8 +276,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Ensure security rel attributes for external links that open in new tabs
-  const newTabLinks = document.querySelectorAll('a[target="_blank"]');
-  newTabLinks.forEach(link => {
+  const ensureSecureRel = (link) => {
+    if (!link || link.getAttribute('target') !== '_blank') {
+      return;
+    }
     const href = link.getAttribute('href') || '';
     let isExternalHttp = false;
     try {
@@ -307,7 +309,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (changed) {
       link.setAttribute('rel', relTokens.join(' '));
     }
-  });
+  };
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[target="_blank"]');
+    if (!link) {
+      return;
+    }
+    ensureSecureRel(link);
+  }, { capture: true });
 
   // Add language attribute to html tag if not present
   if (!document.documentElement.getAttribute('lang')) {
