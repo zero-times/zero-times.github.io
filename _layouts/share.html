@@ -198,12 +198,21 @@
 
     var trackingId = '{{ site.google_analytics }}';
     var loaded = false;
+    var activationEvents = ['pointerdown', 'keydown', 'scroll'];
+    var activationListenerOptions = { once: true, passive: true };
+
+    function detachActivationListeners() {
+      activationEvents.forEach(function (eventName) {
+        window.removeEventListener(eventName, initGaWhenVisible, activationListenerOptions);
+      });
+    }
 
     function initGa() {
       if (loaded) {
         return;
       }
       loaded = true;
+      detachActivationListeners();
       window.dataLayer = window.dataLayer || [];
       window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
 
@@ -236,8 +245,8 @@
       initGa();
     }
 
-    ['pointerdown', 'keydown', 'scroll'].forEach(function (eventName) {
-      window.addEventListener(eventName, initGaWhenVisible, { once: true, passive: true });
+    activationEvents.forEach(function (eventName) {
+      window.addEventListener(eventName, initGaWhenVisible, activationListenerOptions);
     });
 
     if ('requestIdleCallback' in window) {
