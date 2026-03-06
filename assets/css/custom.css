@@ -2711,6 +2711,16 @@ section[id] {
   }
 }
 
+@media (max-width: 575.98px) {
+  .store-card,
+  .about-v2__store-card {
+    border-radius: 18px;
+    padding: 0.9rem;
+    min-height: 52px;
+    overflow-wrap: anywhere;
+  }
+}
+
 .store-icon {
   width: 64px;
   height: 64px;
