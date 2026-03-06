@@ -368,8 +368,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    const mediaElements = mediaScope.querySelectorAll('video, audio');
-    mediaElements.forEach(media => {
+    const mediaElementsMissingDefaults = mediaScope.querySelectorAll(
+      'video:not([preload]), video:not([playsinline]), audio:not([preload])'
+    );
+    mediaElementsMissingDefaults.forEach(media => {
       if (!media.hasAttribute('preload')) {
         media.setAttribute('preload', 'metadata');
       }
