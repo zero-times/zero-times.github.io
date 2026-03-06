@@ -21,8 +21,8 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
       <h1 class="home-v2__title" id="page-title">Especialista em Arquitetura Móvel e Soluções Multiplataforma</h1>
       <p class="home-v2__lead">9 anos de experiência em desenvolvimento e arquitetura móvel para transformar requisitos vagos em produtos robustos, escaláveis e com entrega previsível.</p>
       <div class="home-v2__hero-actions">
-        <a class="home-v2__btn home-v2__btn--primary" href="{{ '/blog/' | relative_url }}" aria-label="Ver todos os artigos">Ver todos os artigos</a>
-        <a class="home-v2__btn home-v2__btn--secondary" href="{{ '/about/' | relative_url }}" aria-label="Saber mais sobre Hoa">Saiba mais</a>
+        <a class="home-v2__btn home-v2__btn--primary" href="{% link blog/index.html %}" aria-label="Ver todos os artigos">Ver todos os artigos</a>
+        <a class="home-v2__btn home-v2__btn--secondary" href="{% link pages/about.html %}" aria-label="Saber mais sobre Hoa">Saiba mais</a>
       </div>
     </div>
     <figure class="home-v2__hero-visual">
@@ -108,7 +108,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
       </article>
       {% endif %}
 
-      <a class="home-v2__btn home-v2__btn--primary home-v2__posts-cta" href="{{ '/blog/' | relative_url }}" aria-label="Ver todos os artigos do blog">Ver todos os artigos</a>
+      <a class="home-v2__btn home-v2__btn--primary home-v2__posts-cta" href="{% link blog/index.html %}" aria-label="Ver todos os artigos do blog">Ver todos os artigos</a>
     </div>
 
     <aside class="home-v2__sidebar" aria-label="Informações complementares">
@@ -116,7 +116,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         <h3>Sobre mim</h3>
         <p>{{ site.author.bio }}</p>
         <img src="{{ '/assets/images/sal-150.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="112px" alt="{{ site.author.name }}" loading="lazy" decoding="async" fetchpriority="low" width="112" height="112">
-        <a class="home-v2__btn home-v2__btn--secondary" href="{{ '/about/' | relative_url }}" aria-label="Saiba mais sobre Hoa">Saiba mais</a>
+        <a class="home-v2__btn home-v2__btn--secondary" href="{% link pages/about.html %}" aria-label="Saiba mais sobre Hoa">Saiba mais</a>
       </section>
 
       <section class="home-v2__side-card">
@@ -132,7 +132,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
       <section class="home-v2__side-card">
         <h3>Vamos conversar?</h3>
         <p>Consultoria em arquitetura mobile para times distribuídos e produtos digitais.</p>
-        <a class="home-v2__btn home-v2__btn--success" href="{{ '/contact/' | relative_url }}" aria-label="Entre em contato para consultoria">Entre em contato</a>
+        <a class="home-v2__btn home-v2__btn--success" href="{% link pages/contact.html %}" aria-label="Entre em contato para consultoria">Entre em contato</a>
       </section>
     </aside>
   </section>
@@ -140,6 +140,6 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
   <section class="home-v2__final-cta" aria-labelledby="home-final-cta-title">
     <h2 id="home-final-cta-title">Pronto para acelerar seu próximo produto mobile?</h2>
     <p>Da estratégia técnica à entrega: ajudo seu time a construir com segurança e velocidade.</p>
-    <a class="home-v2__btn home-v2__btn--primary home-v2__final-cta-btn" href="{{ '/contact/' | relative_url }}" aria-label="Agendar uma conversa">Agendar conversa</a>
+    <a class="home-v2__btn home-v2__btn--primary home-v2__final-cta-btn" href="{% link pages/contact.html %}" aria-label="Agendar uma conversa">Agendar conversa</a>
   </section>
 </div>
