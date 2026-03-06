@@ -7,12 +7,16 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
 ---
 {% assign blog_posts = paginator.posts | default: site.posts %}
 {% assign blog_total_items = paginator.total_posts | default: blog_posts.size %}
+{% assign blog_item_position_offset = 0 %}
+{% if paginator and paginator.page and paginator.per_page %}
+  {% assign blog_item_position_offset = paginator.page | minus: 1 | times: paginator.per_page %}
+{% endif %}
 {% capture blog_item_list_json %}
 [
 {% for post in blog_posts %}
   {
     "@type": "ListItem",
-    "position": {{ forloop.index }},
+    "position": {{ forloop.index | plus: blog_item_position_offset }},
     "url": "{{ post.url | absolute_url }}",
     "name": "{{ post.title | strip_html | escape }}"
   }{% unless forloop.last %},{% endunless %}
