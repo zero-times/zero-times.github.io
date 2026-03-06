@@ -2453,20 +2453,6 @@ section[id] {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * {
-    scroll-behavior: auto !important;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
 /* Post site CTA styling */
 .post-site .btn {
   border-radius: 999px;
@@ -2487,17 +2473,6 @@ section[id] {
 .post-site .btn:focus-visible {
   outline: 3px solid var(--br-yellow);
   outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
 }
 
 .post-categories,
