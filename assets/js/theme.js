@@ -262,10 +262,12 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileDrawer.addEventListener('shown.bs.offcanvas', () => syncMenuState(true));
     mobileDrawer.addEventListener('hidden.bs.offcanvas', () => syncMenuState(false));
 
-    mobileDrawer.querySelectorAll('a[href]').forEach(link => {
-      link.addEventListener('click', () => {
-        drawerInstance.hide();
-      });
+    mobileDrawer.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href]');
+      if (!link || !mobileDrawer.contains(link) || link.hasAttribute('data-bs-toggle')) {
+        return;
+      }
+      drawerInstance.hide();
     });
 
     syncMenuState(false);
