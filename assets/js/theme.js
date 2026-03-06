@@ -136,6 +136,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Enhance form validation
   const forms = document.querySelectorAll('form');
+  const requiredInputSelector = 'input[required], textarea[required], select[required]';
+  const validateRequiredField = (field) => {
+    if (!field || !field.matches(requiredInputSelector)) {
+      return true;
+    }
+
+    const trimmedValue = typeof field.value === 'string' ? field.value.trim() : field.value;
+    const fieldValid = trimmedValue.length > 0 && field.validity.valid;
+
+    if (!fieldValid) {
+      field.classList.add('is-invalid');
+      field.setAttribute('aria-invalid', 'true');
+      return false;
+    }
+
+    field.classList.remove('is-invalid');
+    field.removeAttribute('aria-invalid');
+    return true;
+  };
+
   forms.forEach(form => {
     const requiredFields = form.querySelectorAll('[required]');
     if (!requiredFields.length) {
@@ -146,16 +166,8 @@ document.addEventListener('DOMContentLoaded', function() {
       let isValid = true;
 
       requiredFields.forEach(field => {
-        const trimmedValue = field.value.trim();
-        const fieldValid = trimmedValue.length > 0 && field.validity.valid;
-
-        if (!fieldValid) {
-          field.classList.add('is-invalid');
-          field.setAttribute('aria-invalid', 'true');
+        if (!validateRequiredField(field)) {
           isValid = false;
-        } else {
-          field.classList.remove('is-invalid');
-          field.removeAttribute('aria-invalid');
         }
       });
 
@@ -183,23 +195,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // Real-time validation feedback
-    const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
-    inputs.forEach(input => {
-      const updateValidity = function() {
-        const trimmedValue = this.value.trim();
-        const fieldValid = trimmedValue.length > 0 && this.validity.valid;
+    // Real-time validation feedback with event delegation to reduce listeners on mobile forms.
+    form.addEventListener('input', function(e) {
+      validateRequiredField(e.target);
+    });
 
-        if (!fieldValid) {
-          this.classList.add('is-invalid');
-          this.setAttribute('aria-invalid', 'true');
-        } else {
-          this.classList.remove('is-invalid');
-          this.removeAttribute('aria-invalid');
-        }
-      };
-      input.addEventListener('blur', updateValidity);
-      input.addEventListener('input', updateValidity);
+    form.addEventListener('focusout', function(e) {
+      validateRequiredField(e.target);
     });
   });
 
