@@ -35,7 +35,7 @@ hide_title: true
       </ul>
       <div class="about-v2__actions">
         <a class="home-v2__btn home-v2__btn--primary" href="#expertise">Ver especialidades</a>
-        <a class="home-v2__btn home-v2__btn--secondary" href="{{ '/contact/' | relative_url }}">Vamos colaborar</a>
+        <a class="home-v2__btn home-v2__btn--secondary" href="{% link pages/contact.html %}">Vamos colaborar</a>
       </div>
     </div>
     <div class="about-v2__status-grid" aria-label="Resultados principais">
@@ -122,7 +122,7 @@ hide_title: true
     <p class="about-v2__section-eyebrow">Vamos conversar</p>
     <h2 id="about-cta-title">Parceria, consultoria ou novas ideias: estou por perto</h2>
     <p>Conte seu objetivo e preparo um caminho técnico claro, com execução e entrega.</p>
-    <a class="home-v2__btn home-v2__btn--primary" href="{{ '/contact/' | relative_url }}">Fale comigo</a>
+    <a class="home-v2__btn home-v2__btn--primary" href="{% link pages/contact.html %}">Fale comigo</a>
     <p class="about-v2__mail">Ou envie um email para <a href="mailto:{{site.email}}" aria-label="Enviar email para {{ site.email }}">{{site.email}}</a></p>
   </section>
 </div>
