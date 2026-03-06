@@ -452,12 +452,12 @@
 
       <nav class="site-nav-desktop" aria-label="Seções principais">
         <a class="site-nav-link{% if is_home %} is-active{% endif %}" href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
-        <a class="site-nav-link{% if is_blog %} is-active{% endif %}" href="{{ '/blog/' | relative_url }}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
-        <a class="site-nav-link{% if is_about %} is-active{% endif %}" href="{{ '/about/' | relative_url }}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
-        <a class="site-nav-link{% if is_contact %} is-active{% endif %}" href="{{ '/contact/' | relative_url }}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
+        <a class="site-nav-link{% if is_blog %} is-active{% endif %}" href="{% link blog/index.html %}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
+        <a class="site-nav-link{% if is_about %} is-active{% endif %}" href="{% link pages/about.html %}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
+        <a class="site-nav-link{% if is_contact %} is-active{% endif %}" href="{% link pages/contact.html %}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
       </nav>
 
-      <a class="site-header-v2__cta d-none d-lg-inline-flex" href="{{ '/contact/' | relative_url }}" aria-label="Falar com Hoa">Fale comigo</a>
+      <a class="site-header-v2__cta d-none d-lg-inline-flex" href="{% link pages/contact.html %}" aria-label="Falar com Hoa">Fale comigo</a>
 
       <button
         id="mobileMenuButton"
@@ -479,11 +479,11 @@
       <button class="site-mobile-drawer__close" type="button" data-bs-dismiss="offcanvas" aria-label="Fechar menu principal">Fechar</button>
       <nav class="site-mobile-drawer__nav" aria-label="Navegação móvel">
         <a class="site-mobile-drawer__link{% if is_home %} is-active{% endif %}" href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
-        <a class="site-mobile-drawer__link{% if is_blog %} is-active{% endif %}" href="{{ '/blog/' | relative_url }}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
-        <a class="site-mobile-drawer__link{% if is_about %} is-active{% endif %}" href="{{ '/about/' | relative_url }}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
-        <a class="site-mobile-drawer__link{% if is_contact %} is-active{% endif %}" href="{{ '/contact/' | relative_url }}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
+        <a class="site-mobile-drawer__link{% if is_blog %} is-active{% endif %}" href="{% link blog/index.html %}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
+        <a class="site-mobile-drawer__link{% if is_about %} is-active{% endif %}" href="{% link pages/about.html %}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
+        <a class="site-mobile-drawer__link{% if is_contact %} is-active{% endif %}" href="{% link pages/contact.html %}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
       </nav>
-      <a class="site-mobile-drawer__cta" href="{{ '/contact/' | relative_url }}" aria-label="Falar com Hoa">Fale comigo</a>
+      <a class="site-mobile-drawer__cta" href="{% link pages/contact.html %}" aria-label="Falar com Hoa">Fale comigo</a>
       <p class="site-mobile-drawer__hint">Toque em Fechar para recolher o menu</p>
     </div>
   </div>
@@ -501,11 +501,11 @@
       </div>
       <div class="site-footer-v2__meta">
         <nav class="site-footer-v2__links" aria-label="Links do rodapé">
-          <a href="{{ '/blog/' | relative_url }}" aria-label="Abrir Blog"{% if is_blog %} aria-current="page"{% endif %}>Blog</a>
-          <a href="{{ '/about/' | relative_url }}" aria-label="Abrir Sobre"{% if is_about %} aria-current="page"{% endif %}>Sobre</a>
-          <a href="{{ '/contact/' | relative_url }}" aria-label="Abrir Contato"{% if is_contact %} aria-current="page"{% endif %}>Contato</a>
-          <a href="{{ '/privacy-policy/' | relative_url }}" aria-label="Abrir Política de Privacidade"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>Privacidade</a>
-          <a href="{{ '/terms/' | relative_url }}" aria-label="Abrir Termos de Uso"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos</a>
+          <a href="{% link blog/index.html %}" aria-label="Abrir Blog"{% if is_blog %} aria-current="page"{% endif %}>Blog</a>
+          <a href="{% link pages/about.html %}" aria-label="Abrir Sobre"{% if is_about %} aria-current="page"{% endif %}>Sobre</a>
+          <a href="{% link pages/contact.html %}" aria-label="Abrir Contato"{% if is_contact %} aria-current="page"{% endif %}>Contato</a>
+          <a href="{% link pages/privacy-policy.md %}" aria-label="Abrir Política de Privacidade"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>Privacidade</a>
+          <a href="{% link pages/terms.md %}" aria-label="Abrir Termos de Uso"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos</a>
         </nav>
         <p class="site-footer-v2__copyright">&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}</p>
       </div>

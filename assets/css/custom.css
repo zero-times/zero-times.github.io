@@ -4364,6 +4364,14 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   border-radius: 0.5rem;
 }
 
+:root {
+  --anchor-offset: clamp(4.8rem, 9vw, 6.8rem);
+}
+
+main :target {
+  scroll-margin-top: var(--anchor-offset);
+}
+
 @media (min-width: 992px) {
   .about-v2__hero {
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
@@ -4456,6 +4464,10 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 
 /* Keep form controls readable on iOS and respect safe-area insets on small devices */
 @media (max-width: 575.98px) {
+  main :target {
+    scroll-margin-top: calc(var(--anchor-offset) + env(safe-area-inset-top));
+  }
+
   input,
   textarea,
   select {
