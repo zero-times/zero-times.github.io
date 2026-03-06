@@ -306,7 +306,11 @@
   {% endif %}
   {% if paginator %}
     {% if paginator.previous_page %}
+      {% if paginator.previous_page == 1 %}
+      <link rel="prev" href="{{ '/blog/' | absolute_url }}">
+      {% else %}
       <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">
+      {% endif %}
     {% endif %}
     {% if paginator.next_page %}
       <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
