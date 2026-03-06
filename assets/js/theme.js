@@ -327,12 +327,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const enhanceMediaDefaults = () => {
     // Add media defaults on content area only to reduce unnecessary DOM work.
     const mediaScope = document.querySelector('main') || document.body;
-    const images = mediaScope.querySelectorAll('img');
-    images.forEach(img => {
-      const src = img.getAttribute('src') || '';
-      if (src.startsWith('data:')) {
-        return;
-      }
+    const imagesMissingDefaults = mediaScope.querySelectorAll(
+      'img:not([src^="data:"]):not([loading]), ' +
+      'img:not([src^="data:"]):not([decoding]), ' +
+      'img:not([src^="data:"]):not([alt]), ' +
+      'img:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
+    );
+    imagesMissingDefaults.forEach(img => {
       const fetchPriority = img.getAttribute('fetchpriority');
       if (!img.hasAttribute('loading')) {
         img.setAttribute('loading', fetchPriority === 'high' ? 'eager' : 'lazy');
@@ -348,8 +349,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    const iframes = mediaScope.querySelectorAll('iframe');
-    iframes.forEach(frame => {
+    const iframesMissingDefaults = mediaScope.querySelectorAll(
+      'iframe:not([loading]), iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy])'
+    );
+    iframesMissingDefaults.forEach(frame => {
       if (!frame.hasAttribute('loading')) {
         frame.setAttribute('loading', 'lazy');
       }
