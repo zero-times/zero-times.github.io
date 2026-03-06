@@ -83,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Back-to-top button for long pages
   const backToTop = document.querySelector('.back-to-top');
   if (backToTop) {
+    const backToTopThreshold = 480;
     let backToTopTicking = false;
-    const toggleBackToTop = () => {
-      const shouldShow = window.scrollY > 480;
+    const setBackToTopVisibility = (shouldShow) => {
       if (shouldShow) {
         backToTop.hidden = false;
         backToTop.classList.add('is-visible');
@@ -106,14 +106,32 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       backToTopTicking = true;
       window.requestAnimationFrame(() => {
-        toggleBackToTop();
+        setBackToTopVisibility(window.scrollY > backToTopThreshold);
         backToTopTicking = false;
       });
     };
     backToTop.addEventListener('click', scrollToTop);
-    toggleBackToTop();
-    window.addEventListener('scroll', requestBackToTopTick, { passive: true });
-    window.addEventListener('resize', requestBackToTopTick);
+    if ('IntersectionObserver' in window) {
+      const sentinel = document.createElement('span');
+      sentinel.setAttribute('aria-hidden', 'true');
+      sentinel.style.cssText = `position:absolute;top:${backToTopThreshold}px;left:0;width:1px;height:1px;pointer-events:none;opacity:0;`;
+      document.body.prepend(sentinel);
+
+      const observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        setBackToTopVisibility(!entry.isIntersecting);
+      });
+      observer.observe(sentinel);
+
+      window.addEventListener('pagehide', () => {
+        observer.disconnect();
+        sentinel.remove();
+      }, { once: true });
+    } else {
+      setBackToTopVisibility(window.scrollY > backToTopThreshold);
+      window.addEventListener('scroll', requestBackToTopTick, { passive: true });
+      window.addEventListener('resize', requestBackToTopTick);
+    }
   }
 
   // Enhance form validation
