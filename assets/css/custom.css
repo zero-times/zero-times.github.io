@@ -2754,6 +2754,16 @@ section[id] {
     #050914;
 }
 
+@supports (min-height: 100dvh) {
+  .min-vh-100 {
+    min-height: 100dvh !important;
+  }
+
+  .share-page {
+    min-height: 100dvh;
+  }
+}
+
 .share-page main {
   padding: calc(clamp(1.5rem, 3vw, 3rem) + env(safe-area-inset-top)) env(safe-area-inset-right)
     calc(2.5rem + env(safe-area-inset-bottom)) env(safe-area-inset-left);
