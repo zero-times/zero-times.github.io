@@ -28,7 +28,11 @@
 <meta property="og:locale" content="{{ og_locale }}">
 {% unless effective_robots contains 'noindex' %}
 {% assign page_lang = normalized_lang %}
+{% assign page_lang_base = page_lang | split: '-' | first %}
 <link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">
+{% if page_lang_base and page_lang_base != page_lang %}
+<link rel="alternate" hreflang="{{ page_lang_base }}" href="{{ page.url | absolute_url }}">
+{% endif %}
 <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
 {% endunless %}
 {% assign social_image_alt = page.image_alt | default: site.image_alt | default: page.title | default: site.title %}

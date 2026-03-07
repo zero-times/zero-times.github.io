@@ -56,6 +56,15 @@ html {
   }
 }
 
+/* Reserve space for Disqus to reduce layout shift on mobile post pages */
+.disqus #disqus_thread {
+  min-height: 220px;
+}
+
+.disqus[data-disqus-state="deferred"] #disqus_thread {
+  min-height: 96px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .postbox-card,
   .contact-card,

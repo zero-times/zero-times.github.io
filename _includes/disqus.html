@@ -11,6 +11,7 @@
             if (!target) {
                 return;
             }
+            target.setAttribute('data-disqus-state', 'idle');
 
             var loaded = false;
             function loadDisqus() {
@@ -18,10 +19,14 @@
                     return;
                 }
                 loaded = true;
+                target.setAttribute('data-disqus-state', 'loading');
                 var dsq = document.createElement('script');
                 dsq.type = 'text/javascript';
                 dsq.async = true;
                 dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+                dsq.onload = function() {
+                    target.setAttribute('data-disqus-state', 'loaded');
+                };
                 (document.head || document.body).appendChild(dsq);
             }
 
@@ -53,6 +58,8 @@
                 button.type = 'button';
                 button.className = 'btn btn-sm btn-outline-secondary';
                 button.setAttribute('data-disqus-load-button', 'true');
+                button.setAttribute('aria-controls', 'disqus_thread');
+                button.setAttribute('aria-label', 'Carregar comentarios com Disqus');
                 button.textContent = 'Carregar comentarios';
                 button.addEventListener('click', function() {
                     loadWrap.remove();
@@ -63,6 +70,7 @@
             }
 
             if (shouldDeferForDataSaving()) {
+                target.setAttribute('data-disqus-state', 'deferred');
                 appendLoadButton();
                 return;
             }
