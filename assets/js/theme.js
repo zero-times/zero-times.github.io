@@ -10,34 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
   );
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
   const contentRoot = document.querySelector('main') || document.body;
+  const scheduleNonCriticalTask = (task, timeout) => {
+    const delay = typeof timeout === 'number' ? timeout : 1000;
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(task, { timeout: delay });
+    } else {
+      window.setTimeout(task, 120);
+    }
+  };
 
-  // Auto-optimize markdown/content images that do not declare loading hints.
-  // Prefer deterministic loading hints to avoid expensive layout reads on long pages.
-  let eagerImageBudget = 1;
-  contentRoot.querySelectorAll('img[src]:not([src^="data:"])').forEach((image) => {
-    const hasHighPriority = image.getAttribute('fetchpriority') === 'high';
-    if (!image.hasAttribute('loading')) {
-      if (hasHighPriority) {
-        image.setAttribute('loading', 'eager');
-      } else if (prefersReducedData) {
-        image.setAttribute('loading', 'lazy');
-      } else if (eagerImageBudget > 0) {
-        image.setAttribute('loading', 'eager');
-        eagerImageBudget -= 1;
-      } else {
-        image.setAttribute('loading', 'lazy');
-      }
-    }
-    if (!image.hasAttribute('decoding')) {
-      image.setAttribute('decoding', 'async');
-    }
-    if (!image.hasAttribute('fetchpriority') && image.getAttribute('loading') === 'lazy') {
-      image.setAttribute('fetchpriority', 'low');
-    }
-  });
-
-  // Avoid eager loading non-critical embeds on mobile pages.
-  let eagerIframeBudget = 1;
   const getEmbedHostLabel = (src) => {
     if (!src) {
       return 'site externo';
@@ -59,40 +40,86 @@ document.addEventListener('DOMContentLoaded', function() {
       return 'site externo';
     }
   };
-  contentRoot.querySelectorAll('iframe[src]').forEach((frame) => {
-    if (!frame.hasAttribute('loading')) {
-      if (prefersReducedData) {
-        frame.setAttribute('loading', 'lazy');
-      } else if (eagerIframeBudget > 0) {
-        frame.setAttribute('loading', 'eager');
-        eagerIframeBudget -= 1;
-      } else {
-        frame.setAttribute('loading', 'lazy');
+  const runDeferredContentOptimizations = () => {
+    // Auto-optimize markdown/content images that do not declare loading hints.
+    // Prefer deterministic loading hints to avoid expensive layout reads on long pages.
+    let eagerImageBudget = 1;
+    contentRoot.querySelectorAll('img[src]:not([src^="data:"])').forEach((image) => {
+      const hasHighPriority = image.getAttribute('fetchpriority') === 'high';
+      if (!image.hasAttribute('loading')) {
+        if (hasHighPriority) {
+          image.setAttribute('loading', 'eager');
+        } else if (prefersReducedData) {
+          image.setAttribute('loading', 'lazy');
+        } else if (eagerImageBudget > 0) {
+          image.setAttribute('loading', 'eager');
+          eagerImageBudget -= 1;
+        } else {
+          image.setAttribute('loading', 'lazy');
+        }
       }
-    }
-    if (!frame.hasAttribute('referrerpolicy')) {
-      frame.setAttribute('referrerpolicy', defaultIframeReferrerPolicy);
-    }
-    if (!frame.hasAttribute('title')) {
-      const provider = getEmbedHostLabel(frame.getAttribute('src'));
-      frame.setAttribute('title', `Conteudo incorporado de ${provider}`);
-    }
-  });
+      if (!image.hasAttribute('decoding')) {
+        image.setAttribute('decoding', 'async');
+      }
+      if (!image.hasAttribute('fetchpriority') && image.getAttribute('loading') === 'lazy') {
+        image.setAttribute('fetchpriority', 'low');
+      }
+    });
 
-  // Harden external new-tab links against opener leaks.
-  document.querySelectorAll('a[target="_blank"]').forEach((link) => {
-    const relTokens = (link.getAttribute('rel') || '')
-      .split(/\s+/)
-      .map((token) => token.trim().toLowerCase())
-      .filter(Boolean);
-    if (!relTokens.includes('noopener')) {
-      relTokens.push('noopener');
+    // Avoid eager loading non-critical embeds on mobile pages.
+    let eagerIframeBudget = 1;
+    contentRoot.querySelectorAll('iframe[src]').forEach((frame) => {
+      if (!frame.hasAttribute('loading')) {
+        if (prefersReducedData) {
+          frame.setAttribute('loading', 'lazy');
+        } else if (eagerIframeBudget > 0) {
+          frame.setAttribute('loading', 'eager');
+          eagerIframeBudget -= 1;
+        } else {
+          frame.setAttribute('loading', 'lazy');
+        }
+      }
+      if (!frame.hasAttribute('referrerpolicy')) {
+        frame.setAttribute('referrerpolicy', defaultIframeReferrerPolicy);
+      }
+      if (!frame.hasAttribute('title')) {
+        const provider = getEmbedHostLabel(frame.getAttribute('src'));
+        frame.setAttribute('title', `Conteudo incorporado de ${provider}`);
+      }
+    });
+
+    // Harden external new-tab links against opener leaks.
+    document.querySelectorAll('a[target="_blank"]').forEach((link) => {
+      const relTokens = (link.getAttribute('rel') || '')
+        .split(/\s+/)
+        .map((token) => token.trim().toLowerCase())
+        .filter(Boolean);
+      if (!relTokens.includes('noopener')) {
+        relTokens.push('noopener');
+      }
+      if (!relTokens.includes('noreferrer')) {
+        relTokens.push('noreferrer');
+      }
+      link.setAttribute('rel', relTokens.join(' '));
+    });
+  };
+
+  const scheduleDeferredContentOptimizations = () => {
+    if (document.prerendering) {
+      document.addEventListener('prerenderingchange', scheduleDeferredContentOptimizations, { once: true });
+      return;
     }
-    if (!relTokens.includes('noreferrer')) {
-      relTokens.push('noreferrer');
+    if (document.visibilityState === 'hidden') {
+      document.addEventListener('visibilitychange', function onVisibilityChange() {
+        if (document.visibilityState === 'visible') {
+          scheduleNonCriticalTask(runDeferredContentOptimizations, 1600);
+        }
+      }, { once: true });
+      return;
     }
-    link.setAttribute('rel', relTokens.join(' '));
-  });
+    scheduleNonCriticalTask(runDeferredContentOptimizations, 1600);
+  };
+  scheduleDeferredContentOptimizations();
 
   // Use delegated smooth scrolling to avoid binding listeners to every anchor node.
   document.addEventListener('click', function(e) {
