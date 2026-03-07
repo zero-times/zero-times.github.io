@@ -13,9 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // Auto-optimize markdown/content images that do not declare loading hints.
   const lazyImageThreshold = Math.max(window.innerHeight * 1.15, 520);
   document.querySelectorAll('img[src]').forEach((image) => {
+    const hasHighPriority = image.getAttribute('fetchpriority') === 'high';
     if (!image.hasAttribute('loading')) {
-      const rect = image.getBoundingClientRect();
-      image.setAttribute('loading', rect.top > lazyImageThreshold ? 'lazy' : 'eager');
+      if (prefersReducedData && !hasHighPriority) {
+        image.setAttribute('loading', 'lazy');
+      } else {
+        const rect = image.getBoundingClientRect();
+        image.setAttribute('loading', rect.top > lazyImageThreshold ? 'lazy' : 'eager');
+      }
     }
     if (!image.hasAttribute('decoding')) {
       image.setAttribute('decoding', 'async');
@@ -29,9 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const lazyIframeThreshold = Math.max(window.innerHeight * 1.25, 640);
   document.querySelectorAll('iframe[src]').forEach((frame) => {
     if (!frame.hasAttribute('loading')) {
-      const rect = frame.getBoundingClientRect();
-      if (rect.top > lazyIframeThreshold) {
+      if (prefersReducedData) {
         frame.setAttribute('loading', 'lazy');
+      } else {
+        const rect = frame.getBoundingClientRect();
+        if (rect.top > lazyIframeThreshold) {
+          frame.setAttribute('loading', 'lazy');
+        }
       }
     }
     if (!frame.hasAttribute('referrerpolicy')) {
