@@ -30,6 +30,9 @@
                 if (connection && connection.saveData) {
                     return true;
                 }
+                if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')) {
+                    return true;
+                }
                 if (window.matchMedia) {
                     try {
                         return window.matchMedia('(prefers-reduced-data: reduce)').matches;
