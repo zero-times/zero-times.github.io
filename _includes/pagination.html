@@ -1,6 +1,5 @@
 <!-- Pagination -->
 {% if paginator.total_pages > 1 %}
-{% assign first_page_url = '/blog/' | relative_url %}
 <nav aria-label="Navegação de página">
   <ul class="pagination justify-content-center">
     {% if paginator.previous_page %}
@@ -20,7 +19,7 @@
     </li>
     {% elsif page == 1 %}
     <li class="page-item">
-      <a class="page-link" href="{{ first_page_url }}" aria-label="Página {{ page }}" rel="first">{{ page }}</a>
+      <a class="page-link" href="{% link blog/index.html %}" aria-label="Página {{ page }}" rel="first">{{ page }}</a>
     </li>
     {% elsif page == paginator.total_pages %}
     {% assign page_url = site.paginate_path | replace: ':num', page | relative_url %}
