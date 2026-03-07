@@ -1,8 +1,9 @@
 // Main JavaScript file for the Portuguese Personal Blog
 
 document.addEventListener('DOMContentLoaded', function() {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const prefersReducedDataMedia = window.matchMedia('(prefers-reduced-data: reduce)').matches;
+  const supportsMatchMedia = typeof window.matchMedia === 'function';
+  const prefersReducedMotion = supportsMatchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+  const prefersReducedDataMedia = supportsMatchMedia ? window.matchMedia('(prefers-reduced-data: reduce)').matches : false;
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const prefersReducedData = prefersReducedDataMedia || !!(
     connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')
