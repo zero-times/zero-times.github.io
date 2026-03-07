@@ -113,7 +113,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
           </li>
           {% elsif page == 1 %}
           <li class="page-item">
-            <a class="page-link" href="{{ '/blog/' | prepend: site.baseurl | replace: '//', '/' }}" aria-label="Página {{ page }}" rel="first">{{ page }}</a>
+            <a class="page-link" href="{% link blog/index.html %}" aria-label="Página {{ page }}" rel="first">{{ page }}</a>
           </li>
           {% else %}
           <li class="page-item">
