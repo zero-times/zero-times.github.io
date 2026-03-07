@@ -10,6 +10,21 @@ document.addEventListener('DOMContentLoaded', function() {
   );
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
 
+  // Auto-optimize markdown/content images that do not declare loading hints.
+  const lazyImageThreshold = Math.max(window.innerHeight * 1.15, 520);
+  document.querySelectorAll('img[src]').forEach((image) => {
+    if (!image.hasAttribute('loading')) {
+      const rect = image.getBoundingClientRect();
+      image.setAttribute('loading', rect.top > lazyImageThreshold ? 'lazy' : 'eager');
+    }
+    if (!image.hasAttribute('decoding')) {
+      image.setAttribute('decoding', 'async');
+    }
+    if (!image.hasAttribute('fetchpriority') && image.getAttribute('loading') === 'lazy') {
+      image.setAttribute('fetchpriority', 'low');
+    }
+  });
+
   // Avoid eager loading below-the-fold embeds on mobile pages.
   const lazyIframeThreshold = Math.max(window.innerHeight * 1.25, 640);
   document.querySelectorAll('iframe[src]').forEach((frame) => {
