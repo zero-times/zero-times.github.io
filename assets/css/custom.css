@@ -2150,6 +2150,14 @@ html:lang(pt) .case-card p,
   .project-card {
     box-shadow: none !important;
   }
+
+  .post-content blockquote,
+  .article-post blockquote,
+  .post-content pre,
+  .article-post pre {
+    box-shadow: none !important;
+    background: rgba(15, 23, 42, 0.03);
+  }
 }
 
 .post-content blockquote,

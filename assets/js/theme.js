@@ -9,11 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
     connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')
   );
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
+  const contentRoot = document.querySelector('main') || document.body;
 
   // Auto-optimize markdown/content images that do not declare loading hints.
   // Prefer deterministic loading hints to avoid expensive layout reads on long pages.
   let eagerImageBudget = 1;
-  document.querySelectorAll('img[src]').forEach((image) => {
+  contentRoot.querySelectorAll('img[src]:not([src^="data:"])').forEach((image) => {
     const hasHighPriority = image.getAttribute('fetchpriority') === 'high';
     if (!image.hasAttribute('loading')) {
       if (hasHighPriority) {
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return 'site externo';
     }
   };
-  document.querySelectorAll('iframe[src]').forEach((frame) => {
+  contentRoot.querySelectorAll('iframe[src]').forEach((frame) => {
     if (!frame.hasAttribute('loading')) {
       if (prefersReducedData) {
         frame.setAttribute('loading', 'lazy');
@@ -416,7 +417,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const enhanceMediaDefaults = () => {
     // Add media defaults on content area only to reduce unnecessary DOM work.
-    const mediaScope = document.querySelector('main') || document.body;
+    const mediaScope = contentRoot;
     const imagesMissingDefaults = mediaScope.querySelectorAll(
       'img:not([src^="data:"]):not([loading]), ' +
       'img:not([src^="data:"]):not([decoding]), ' +
