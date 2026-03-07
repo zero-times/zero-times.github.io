@@ -2141,6 +2141,17 @@ html:lang(pt) .case-card p,
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
 }
 
+@media (prefers-reduced-data: reduce) {
+  .post-content img:not(.news-inline-thumb),
+  .article-post img,
+  .postbox-card,
+  .blog-card,
+  .case-card,
+  .project-card {
+    box-shadow: none !important;
+  }
+}
+
 .post-content blockquote,
 .article-post blockquote {
   margin: 1.5rem 0;

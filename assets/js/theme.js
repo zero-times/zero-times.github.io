@@ -2,6 +2,11 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedDataMedia = window.matchMedia('(prefers-reduced-data: reduce)').matches;
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const prefersReducedData = prefersReducedDataMedia || !!(
+    connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')
+  );
 
   // Use delegated smooth scrolling to avoid binding listeners to every anchor node.
   document.addEventListener('click', function(e) {
@@ -54,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Reading progress indicator for post pages
   const progressBar = document.querySelector('.reading-progress__bar');
   const progressRoot = progressBar ? progressBar.closest('.reading-progress') : null;
-  if (progressBar) {
+  if (progressBar && !prefersReducedData) {
     let ticking = false;
     const updateProgress = () => {
       const docHeight = document.documentElement.scrollHeight;
@@ -82,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Back-to-top button for long pages
   const backToTop = document.querySelector('.back-to-top');
-  if (backToTop) {
+  if (backToTop && !prefersReducedData) {
     const backToTopThreshold = 480;
     let backToTopTicking = false;
     const setBackToTopVisibility = (shouldShow) => {
@@ -422,9 +427,9 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(enhanceMediaDefaults, { timeout: 1200 });
+    window.requestIdleCallback(enhanceMediaDefaults, { timeout: prefersReducedData ? 2200 : 1200 });
   } else {
-    window.setTimeout(enhanceMediaDefaults, 300);
+    window.setTimeout(enhanceMediaDefaults, prefersReducedData ? 700 : 300);
   }
 
   // Add focus management for dropdowns with delegated listener to reduce bindings
