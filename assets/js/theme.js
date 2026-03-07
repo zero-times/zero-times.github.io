@@ -8,6 +8,21 @@ document.addEventListener('DOMContentLoaded', function() {
   const prefersReducedData = prefersReducedDataMedia || !!(
     connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')
   );
+  const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
+
+  // Avoid eager loading below-the-fold embeds on mobile pages.
+  const lazyIframeThreshold = Math.max(window.innerHeight * 1.25, 640);
+  document.querySelectorAll('iframe[src]').forEach((frame) => {
+    if (!frame.hasAttribute('loading')) {
+      const rect = frame.getBoundingClientRect();
+      if (rect.top > lazyIframeThreshold) {
+        frame.setAttribute('loading', 'lazy');
+      }
+    }
+    if (!frame.hasAttribute('referrerpolicy')) {
+      frame.setAttribute('referrerpolicy', defaultIframeReferrerPolicy);
+    }
+  });
 
   // Use delegated smooth scrolling to avoid binding listeners to every anchor node.
   document.addEventListener('click', function(e) {
