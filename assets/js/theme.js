@@ -32,6 +32,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Avoid eager loading below-the-fold embeds on mobile pages.
   const lazyIframeThreshold = Math.max(window.innerHeight * 1.25, 640);
+  const getEmbedHostLabel = (src) => {
+    if (!src) {
+      return 'site externo';
+    }
+    try {
+      const parsed = new URL(src, window.location.href);
+      const host = parsed.hostname.replace(/^www\./, '').toLowerCase();
+      if (host.includes('youtube.com') || host.includes('youtu.be')) {
+        return 'YouTube';
+      }
+      if (host.includes('vimeo.com')) {
+        return 'Vimeo';
+      }
+      if (host.includes('google.com')) {
+        return 'Google';
+      }
+      return host;
+    } catch (err) {
+      return 'site externo';
+    }
+  };
   document.querySelectorAll('iframe[src]').forEach((frame) => {
     if (!frame.hasAttribute('loading')) {
       if (prefersReducedData) {
@@ -46,6 +67,25 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!frame.hasAttribute('referrerpolicy')) {
       frame.setAttribute('referrerpolicy', defaultIframeReferrerPolicy);
     }
+    if (!frame.hasAttribute('title')) {
+      const provider = getEmbedHostLabel(frame.getAttribute('src'));
+      frame.setAttribute('title', `Conteudo incorporado de ${provider}`);
+    }
+  });
+
+  // Harden external new-tab links against opener leaks.
+  document.querySelectorAll('a[target="_blank"]').forEach((link) => {
+    const relTokens = (link.getAttribute('rel') || '')
+      .split(/\s+/)
+      .map((token) => token.trim().toLowerCase())
+      .filter(Boolean);
+    if (!relTokens.includes('noopener')) {
+      relTokens.push('noopener');
+    }
+    if (!relTokens.includes('noreferrer')) {
+      relTokens.push('noreferrer');
+    }
+    link.setAttribute('rel', relTokens.join(' '));
   });
 
   // Use delegated smooth scrolling to avoid binding listeners to every anchor node.
