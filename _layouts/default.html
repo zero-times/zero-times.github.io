@@ -446,12 +446,12 @@
 
   <header class="site-header-v2 sticky-top" role="navigation" aria-label="Navegação principal">
     <div class="container site-header-v2__inner">
-      <a class="site-header-v2__brand" href="{{ '/' | relative_url }}" rel="home" aria-label="Página inicial - {{ site.title }}">
+      <a class="site-header-v2__brand" href="{% link index.html %}" rel="home" aria-label="Página inicial - {{ site.title }}">
         {{ brand_label }}
       </a>
 
       <nav class="site-nav-desktop" aria-label="Seções principais">
-        <a class="site-nav-link{% if is_home %} is-active{% endif %}" href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
+        <a class="site-nav-link{% if is_home %} is-active{% endif %}" href="{% link index.html %}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
         <a class="site-nav-link{% if is_blog %} is-active{% endif %}" href="{% link blog/index.html %}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
         <a class="site-nav-link{% if is_about %} is-active{% endif %}" href="{% link pages/about.html %}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
         <a class="site-nav-link{% if is_contact %} is-active{% endif %}" href="{% link pages/contact.html %}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
@@ -478,7 +478,7 @@
       <h2 id="siteMobileDrawerTitle" class="visually-hidden">Menu principal</h2>
       <button class="site-mobile-drawer__close" type="button" data-bs-dismiss="offcanvas" aria-label="Fechar menu principal">Fechar</button>
       <nav class="site-mobile-drawer__nav" aria-label="Navegação móvel">
-        <a class="site-mobile-drawer__link{% if is_home %} is-active{% endif %}" href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
+        <a class="site-mobile-drawer__link{% if is_home %} is-active{% endif %}" href="{% link index.html %}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
         <a class="site-mobile-drawer__link{% if is_blog %} is-active{% endif %}" href="{% link blog/index.html %}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
         <a class="site-mobile-drawer__link{% if is_about %} is-active{% endif %}" href="{% link pages/about.html %}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
         <a class="site-mobile-drawer__link{% if is_contact %} is-active{% endif %}" href="{% link pages/contact.html %}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>

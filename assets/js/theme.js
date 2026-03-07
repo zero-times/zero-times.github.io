@@ -425,15 +425,17 @@ document.addEventListener('DOMContentLoaded', function() {
     window.setTimeout(enhanceMediaDefaults, 300);
   }
 
-  // Add focus management for dropdowns
-  const dropdowns = document.querySelectorAll('.dropdown-toggle');
-  dropdowns.forEach(dropdown => {
-    dropdown.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        this.click();
-      }
-    });
+  // Add focus management for dropdowns with delegated listener to reduce bindings
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return;
+    }
+    const dropdown = e.target.closest('.dropdown-toggle');
+    if (!dropdown) {
+      return;
+    }
+    e.preventDefault();
+    dropdown.click();
   });
 
   // Enhance modal dialogs (if any) without forcing eager Bootstrap instances.
