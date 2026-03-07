@@ -2795,10 +2795,18 @@ section[id] {
   }
 
   .share-card {
+    background: #0b1220;
+    border-color: rgba(255, 255, 255, 0.06);
     box-shadow: 0 18px 36px rgba(2, 6, 23, 0.45);
   }
 
+  .share-card::before,
+  .share-card::after {
+    content: none;
+  }
+
   .stats-card {
+    background: rgba(255, 255, 255, 0.02);
     backdrop-filter: none;
   }
 }
