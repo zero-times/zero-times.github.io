@@ -29,7 +29,10 @@ html {
 /* Speed up long feeds by skipping off-screen card rendering until needed */
 .postbox-card,
 .category-post-card,
-.home-hero__latest .card {
+.home-hero__latest .card,
+.home-v2__post-card,
+.home-v2__side-card,
+.home-v2__metric-card {
   content-visibility: auto;
   contain-intrinsic-size: 320px;
 }
