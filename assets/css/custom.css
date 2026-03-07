@@ -9,6 +9,10 @@ html {
 }
 
 @supports (padding: max(0px)) {
+  html {
+    scroll-padding-top: max(6rem, calc(6rem + env(safe-area-inset-top)));
+  }
+
   .site-header-v2__inner,
   .site-footer-v2__inner,
   .site-mobile-drawer .offcanvas-body {
@@ -23,6 +27,7 @@ html {
 
   .back-to-top {
     bottom: max(1rem, env(safe-area-inset-bottom));
+    right: max(1rem, env(safe-area-inset-right));
   }
 }
 
@@ -56,6 +61,14 @@ html {
     display: inline-flex;
     align-items: center;
     padding: 0.5rem 0.8rem;
+  }
+}
+
+@supports (padding: max(0px)) {
+  @media (max-width: 575.98px) {
+    html {
+      scroll-padding-top: max(5rem, calc(5rem + env(safe-area-inset-top)));
+    }
   }
 }
 
