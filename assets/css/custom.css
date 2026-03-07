@@ -1077,6 +1077,8 @@ img.news-inline-thumb--lazy[loading="lazy"] {
 
 .category-section {
   scroll-margin-top: 6rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 680px;
 }
 
 .category-link {
@@ -1907,6 +1909,8 @@ select:focus-visible,
 
 .tags-archive section {
   scroll-margin-top: 6rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 520px;
 }
 
 @media (prefers-color-scheme: dark) {
