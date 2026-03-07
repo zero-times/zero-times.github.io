@@ -11,15 +11,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
 
   // Auto-optimize markdown/content images that do not declare loading hints.
-  const lazyImageThreshold = Math.max(window.innerHeight * 1.15, 520);
+  // Prefer deterministic loading hints to avoid expensive layout reads on long pages.
+  let eagerImageBudget = 1;
   document.querySelectorAll('img[src]').forEach((image) => {
     const hasHighPriority = image.getAttribute('fetchpriority') === 'high';
     if (!image.hasAttribute('loading')) {
-      if (prefersReducedData && !hasHighPriority) {
+      if (hasHighPriority) {
+        image.setAttribute('loading', 'eager');
+      } else if (prefersReducedData) {
         image.setAttribute('loading', 'lazy');
+      } else if (eagerImageBudget > 0) {
+        image.setAttribute('loading', 'eager');
+        eagerImageBudget -= 1;
       } else {
-        const rect = image.getBoundingClientRect();
-        image.setAttribute('loading', rect.top > lazyImageThreshold ? 'lazy' : 'eager');
+        image.setAttribute('loading', 'lazy');
       }
     }
     if (!image.hasAttribute('decoding')) {
@@ -30,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Avoid eager loading below-the-fold embeds on mobile pages.
-  const lazyIframeThreshold = Math.max(window.innerHeight * 1.25, 640);
+  // Avoid eager loading non-critical embeds on mobile pages.
+  let eagerIframeBudget = 1;
   const getEmbedHostLabel = (src) => {
     if (!src) {
       return 'site externo';
@@ -57,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!frame.hasAttribute('loading')) {
       if (prefersReducedData) {
         frame.setAttribute('loading', 'lazy');
+      } else if (eagerIframeBudget > 0) {
+        frame.setAttribute('loading', 'eager');
+        eagerIframeBudget -= 1;
       } else {
-        const rect = frame.getBoundingClientRect();
-        if (rect.top > lazyIframeThreshold) {
-          frame.setAttribute('loading', 'lazy');
-        }
+        frame.setAttribute('loading', 'lazy');
       }
     }
     if (!frame.hasAttribute('referrerpolicy')) {
