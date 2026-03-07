@@ -21,7 +21,7 @@ load_analytics: false
         <h1 class="error-hero__title" id="page-title">Página não encontrada</h1>
         <p class="error-hero__text">Desculpe, mas a página que você está procurando não existe ou foi movida.</p>
         <div class="error-hero__actions">
-          <a href="{{ '/' | relative_url }}" class="btn btn-primary btn-lg">Voltar para a página inicial</a>
+          <a href="{% link index.html %}" class="btn btn-primary btn-lg">Voltar para a página inicial</a>
           <a href="{% link blog/index.html %}" class="btn btn-outline-light btn-lg">Ir para o blog</a>
         </div>
         <div class="error-hero__links">
