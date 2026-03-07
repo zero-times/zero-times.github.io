@@ -8,12 +8,13 @@ schema_type: AboutPage
 hide_title: true
 ---
 
+{% capture about_page_path %}{% link pages/about.html %}{% endcapture %}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "{{ site.author.name | escape }}",
-    "url": "{{ '/about/' | absolute_url }}",
+    "url": "{{ about_page_path | absolute_url }}",
     "image": "{{ site.author.avatar | absolute_url }}",
     "jobTitle": "Arquitetura móvel e soluções multiplataforma",
     "description": "{{ site.author.bio | escape }}",

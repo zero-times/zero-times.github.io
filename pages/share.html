@@ -12,6 +12,8 @@ image_width: 1280
 image_height: 719
 ---
 
+{% capture home_page_path %}{% link index.html %}{% endcapture %}
+
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-10">
@@ -51,7 +53,7 @@ image_height: 719
         
         <div class="contact-section mt-5">
           <h3>Entre em Contato</h3>
-          <p class="share-card__label">Website: <a href="{{ '/' | absolute_url }}" aria-label="Abrir site {{ site.url }}">{{ site.url }}</a></p>
+          <p class="share-card__label">Website: <a href="{{ home_page_path | absolute_url }}" aria-label="Abrir site {{ site.url }}">{{ site.url }}</a></p>
           <p class="share-card__label">Email: <a href="mailto:{{site.email}}" aria-label="Enviar email para {{ site.email }}">{{site.email}}</a></p>
           <p class="share-card__label">Redes Sociais: Siga-nos nas redes sociais</p>
         </div>
