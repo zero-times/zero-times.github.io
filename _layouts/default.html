@@ -88,11 +88,19 @@
   <link rel="prefetch" href="{% link blog/index.html %}">
   <link rel="prefetch" href="{% link pages/contact.html %}">
   {% endif %}
-  {% if page.preconnect_news_sources %}
+  {% assign has_news_source_media = false %}
+  {% if page.content %}
+    {% if page.content contains 's2-g1.glbimg.com' %}
+      {% assign has_news_source_media = true %}
+    {% elsif page.content contains 'i.s3.glbimg.com' %}
+      {% assign has_news_source_media = true %}
+    {% endif %}
+  {% endif %}
+  {% if page.preconnect_news_sources or has_news_source_media %}
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
   <link rel="preconnect" href="https://i.s3.glbimg.com" crossorigin>
   {% endif %}
-  {% if page.dns_prefetch_news_sources %}
+  {% if page.dns_prefetch_news_sources or has_news_source_media %}
   <link rel="dns-prefetch" href="//s2-g1.glbimg.com">
   <link rel="dns-prefetch" href="//i.s3.glbimg.com">
   {% endif %}
