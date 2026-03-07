@@ -4,6 +4,7 @@ lang: pt-BR
 title: Blog
 description: Artigos do meu blog pessoal em português
 keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
+schema_type: CollectionPage
 ---
 {% assign blog_posts = paginator.posts | default: site.posts %}
 {% assign blog_total_items = paginator.total_posts | default: blog_posts.size %}
