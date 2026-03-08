@@ -56,8 +56,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
   const runDeferredContentOptimizations = () => {
-    const candidateImages = contentRoot.querySelectorAll('img[src]:not([src^="data:"])');
-    const candidateIframes = contentRoot.querySelectorAll('iframe[src]');
+    const imageOptimizationSelector = [
+      'img[src]:not([src^="data:"]):not([loading])',
+      'img[src]:not([src^="data:"]):not([decoding])',
+      'img[src]:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
+    ].join(', ');
+    const iframeOptimizationSelector = [
+      'iframe[src]:not([loading])',
+      'iframe[src]:not([title])',
+      'iframe[src]:not([referrerpolicy])'
+    ].join(', ');
+    const candidateImages = contentRoot.querySelectorAll(imageOptimizationSelector);
+    const candidateIframes = contentRoot.querySelectorAll(iframeOptimizationSelector);
     const candidateBlankLinks = contentRoot.querySelectorAll('a[target="_blank"]');
 
     if (!candidateImages.length && !candidateIframes.length && !candidateBlankLinks.length) {
