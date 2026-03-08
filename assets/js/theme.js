@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   );
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
   const contentRoot = document.querySelector('main') || document.body;
+  let deferredContentOptimizationsDone = false;
   const scheduleNonCriticalTask = (task, timeout) => {
     const delay = typeof timeout === 'number' ? timeout : 1000;
     if ('requestIdleCallback' in window) {
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       link.setAttribute('rel', relTokens.join(' '));
     });
+    deferredContentOptimizationsDone = true;
   };
 
   const scheduleDeferredContentOptimizations = () => {
@@ -445,12 +447,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const enhanceMediaDefaults = () => {
     // Add media defaults on content area only to reduce unnecessary DOM work.
     const mediaScope = contentRoot;
-    const imagesMissingDefaults = mediaScope.querySelectorAll(
-      'img:not([src^="data:"]):not([loading]), ' +
-      'img:not([src^="data:"]):not([decoding]), ' +
-      'img:not([src^="data:"]):not([alt]), ' +
-      'img:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
-    );
+    const imagesMissingDefaults = deferredContentOptimizationsDone
+      ? mediaScope.querySelectorAll('img:not([src^="data:"]):not([alt])')
+      : mediaScope.querySelectorAll(
+        'img:not([src^="data:"]):not([loading]), ' +
+        'img:not([src^="data:"]):not([decoding]), ' +
+        'img:not([src^="data:"]):not([alt]), ' +
+        'img:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
+      );
     imagesMissingDefaults.forEach(img => {
       const fetchPriority = img.getAttribute('fetchpriority');
       if (!img.hasAttribute('loading')) {
@@ -467,9 +471,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    const iframesMissingDefaults = mediaScope.querySelectorAll(
-      'iframe:not([loading]), iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy])'
-    );
+    const iframesMissingDefaults = deferredContentOptimizationsDone
+      ? mediaScope.querySelectorAll('iframe:not([fetchpriority])')
+      : mediaScope.querySelectorAll(
+        'iframe:not([loading]), iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy])'
+      );
     iframesMissingDefaults.forEach(frame => {
       if (!frame.hasAttribute('loading')) {
         frame.setAttribute('loading', 'lazy');
