@@ -112,8 +112,15 @@
   <script>
     (function () {
       var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      var lowBandwidth = !!(connection && typeof connection.downlink === 'number' && connection.downlink > 0 && connection.downlink <= 1.25);
       var reducedDataByConnection = !!(
-        connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')
+        connection && (
+          connection.saveData ||
+          connection.effectiveType === 'slow-2g' ||
+          connection.effectiveType === '2g' ||
+          connection.effectiveType === '3g' ||
+          lowBandwidth
+        )
       );
       var reducedDataByPreference = false;
       if (window.matchMedia) {
@@ -382,8 +389,15 @@
     (function () {
       var dnt = window.doNotTrack === '1' || navigator.doNotTrack === '1' || navigator.msDoNotTrack === '1';
       var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      var lowBandwidth = !!(connection && typeof connection.downlink === 'number' && connection.downlink > 0 && connection.downlink <= 1.25);
       var reducedDataByConnection = !!(
-        connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')
+        connection && (
+          connection.saveData ||
+          connection.effectiveType === 'slow-2g' ||
+          connection.effectiveType === '2g' ||
+          connection.effectiveType === '3g' ||
+          lowBandwidth
+        )
       );
       var reducedDataByPreference = false;
       if (window.matchMedia) {
