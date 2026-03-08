@@ -5,8 +5,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const prefersReducedMotion = supportsMatchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
   const prefersReducedDataMedia = supportsMatchMedia ? window.matchMedia('(prefers-reduced-data: reduce)').matches : false;
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const lowBandwidth = !!(
+    connection &&
+    typeof connection.downlink === 'number' &&
+    connection.downlink > 0 &&
+    connection.downlink <= 1.25
+  );
   const prefersReducedData = prefersReducedDataMedia || !!(
-    connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')
+    connection && (
+      connection.saveData ||
+      connection.effectiveType === 'slow-2g' ||
+      connection.effectiveType === '2g' ||
+      connection.effectiveType === '3g' ||
+      lowBandwidth
+    )
   );
   const prefersAutoScroll = prefersReducedMotion || prefersReducedData;
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
