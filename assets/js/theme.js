@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if ('requestIdleCallback' in window) {
       window.requestIdleCallback(task, { timeout: delay });
     } else {
-      window.setTimeout(task, 120);
+      const fallbackDelay = Math.max(120, Math.min(delay, 2200));
+      window.setTimeout(task, fallbackDelay);
     }
   };
 
