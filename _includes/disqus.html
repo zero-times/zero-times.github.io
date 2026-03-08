@@ -12,20 +12,34 @@
                 return;
             }
             target.setAttribute('data-disqus-state', 'idle');
+            target.setAttribute('aria-live', 'polite');
 
             var loaded = false;
+            var loading = false;
+            function setDisqusState(state) {
+                target.setAttribute('data-disqus-state', state);
+            }
             function loadDisqus() {
-                if (loaded) {
+                if (loaded || loading) {
                     return;
                 }
-                loaded = true;
-                target.setAttribute('data-disqus-state', 'loading');
+                loading = true;
+                setDisqusState('loading');
                 var dsq = document.createElement('script');
                 dsq.type = 'text/javascript';
                 dsq.async = true;
+                dsq.defer = true;
                 dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
                 dsq.onload = function() {
-                    target.setAttribute('data-disqus-state', 'loaded');
+                    loaded = true;
+                    loading = false;
+                    setDisqusState('loaded');
+                };
+                dsq.onerror = function() {
+                    loaded = false;
+                    loading = false;
+                    setDisqusState('error');
+                    appendLoadButton('Recarregar comentarios');
                 };
                 (document.head || document.body).appendChild(dsq);
             }
@@ -48,7 +62,7 @@
                 return false;
             }
 
-            function appendLoadButton() {
+            function appendLoadButton(label) {
                 if (!target || target.querySelector('[data-disqus-load-button]')) {
                     return;
                 }
@@ -60,7 +74,7 @@
                 button.setAttribute('data-disqus-load-button', 'true');
                 button.setAttribute('aria-controls', 'disqus_thread');
                 button.setAttribute('aria-label', 'Carregar comentarios com Disqus');
-                button.textContent = 'Carregar comentarios';
+                button.textContent = label || 'Carregar comentarios';
                 button.addEventListener('click', function() {
                     loadWrap.remove();
                     loadDisqus();
@@ -70,7 +84,7 @@
             }
 
             if (shouldDeferForDataSaving()) {
-                target.setAttribute('data-disqus-state', 'deferred');
+                setDisqusState('deferred');
                 appendLoadButton();
                 return;
             }

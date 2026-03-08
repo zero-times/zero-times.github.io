@@ -81,6 +81,14 @@ html {
   min-height: 96px;
 }
 
+.disqus[data-disqus-state="loading"] #disqus_thread {
+  min-height: 180px;
+}
+
+.disqus[data-disqus-state="error"] #disqus_thread {
+  min-height: 96px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .postbox-card,
   .contact-card,
