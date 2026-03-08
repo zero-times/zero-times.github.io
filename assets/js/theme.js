@@ -612,6 +612,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const enhanceMediaDefaults = () => {
     // Add media defaults on content area only to reduce unnecessary DOM work.
     const mediaScope = contentRoot;
+    const hasMediaDefaultsWork = deferredContentOptimizationsDone
+      ? mediaScope.querySelector('img:not([src^="data:"]):not([alt]), iframe:not([fetchpriority]), video:not([preload]), video:not([playsinline]), audio:not([preload]), img[data-src], img.news-inline-thumb')
+      : mediaScope.querySelector(
+        'img:not([src^="data:"]):not([loading]), ' +
+        'img:not([src^="data:"]):not([decoding]), ' +
+        'img:not([src^="data:"]):not([alt]), ' +
+        'img:not([src^="data:"])[loading="lazy"]:not([fetchpriority]), ' +
+        'iframe:not([loading]), iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy]), ' +
+        'video:not([preload]), video:not([playsinline]), audio:not([preload]), img[data-src], img.news-inline-thumb'
+      );
+    if (!hasMediaDefaultsWork) {
+      return;
+    }
+
     const imagesMissingDefaults = deferredContentOptimizationsDone
       ? mediaScope.querySelectorAll('img:not([src^="data:"]):not([alt])')
       : mediaScope.querySelectorAll(
