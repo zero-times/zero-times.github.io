@@ -324,6 +324,46 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   const currentPath = normalizePath(window.location.pathname);
+  const bootstrapScriptSrc = document.body ? document.body.getAttribute('data-bootstrap-src') : '';
+  let bootstrapLoadPromise = null;
+  const loadBootstrapBundle = () => {
+    if (window.bootstrap && window.bootstrap.Offcanvas) {
+      return Promise.resolve(window.bootstrap);
+    }
+    if (bootstrapLoadPromise) {
+      return bootstrapLoadPromise;
+    }
+    if (!bootstrapScriptSrc) {
+      return Promise.reject(new Error('Bootstrap source not found'));
+    }
+
+    bootstrapLoadPromise = new Promise((resolve, reject) => {
+      const existingScript = document.querySelector(`script[src="${bootstrapScriptSrc}"]`);
+      if (existingScript) {
+        existingScript.addEventListener('load', () => resolve(window.bootstrap), { once: true });
+        existingScript.addEventListener('error', () => reject(new Error('Bootstrap failed to load')), { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = bootstrapScriptSrc;
+      script.defer = true;
+      script.onload = () => {
+        if (window.bootstrap && window.bootstrap.Offcanvas) {
+          resolve(window.bootstrap);
+        } else {
+          reject(new Error('Bootstrap loaded without Offcanvas support'));
+        }
+      };
+      script.onerror = () => reject(new Error('Bootstrap failed to load'));
+      document.body.appendChild(script);
+    }).catch((error) => {
+      bootstrapLoadPromise = null;
+      throw error;
+    });
+
+    return bootstrapLoadPromise;
+  };
   const navLinks = document.querySelectorAll('[data-site-nav]');
   navLinks.forEach(link => {
     if (link.getAttribute('aria-disabled') === 'true') {
@@ -362,8 +402,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const mobileDrawer = document.getElementById('siteMobileDrawer');
   const mobileMenuButton = document.getElementById('mobileMenuButton');
   const mobileMenuButtonLabel = document.getElementById('mobileMenuButtonLabel');
-  if (mobileDrawer && mobileMenuButton && window.bootstrap && bootstrap.Offcanvas) {
-    const drawerInstance = bootstrap.Offcanvas.getOrCreateInstance(mobileDrawer);
+  const initMobileDrawer = () => {
+    if (!mobileDrawer || !mobileMenuButton || !window.bootstrap || !window.bootstrap.Offcanvas) {
+      return false;
+    }
+    if (mobileDrawer.getAttribute('data-drawer-enhanced') === 'true') {
+      return true;
+    }
+
+    const drawerInstance = window.bootstrap.Offcanvas.getOrCreateInstance(mobileDrawer);
     const syncMenuState = (isExpanded) => {
       mobileMenuButton.setAttribute('aria-expanded', String(isExpanded));
       mobileMenuButton.setAttribute('aria-label', isExpanded ? 'Fechar menu principal' : 'Abrir menu principal');
@@ -384,6 +431,49 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     syncMenuState(false);
+    mobileDrawer.setAttribute('data-drawer-enhanced', 'true');
+    return true;
+  };
+
+  if (mobileDrawer && mobileMenuButton) {
+    initMobileDrawer();
+
+    const warmBootstrapLoad = () => {
+      loadBootstrapBundle()
+        .then(() => {
+          initMobileDrawer();
+        })
+        .catch(() => {
+          // Keep menu button accessible even if the bundle fails to load.
+        });
+    };
+
+    ['pointerdown', 'touchstart', 'focus'].forEach((eventName) => {
+      mobileMenuButton.addEventListener(eventName, warmBootstrapLoad, {
+        once: true,
+        passive: eventName !== 'focus'
+      });
+    });
+
+    mobileMenuButton.addEventListener('click', (event) => {
+      if (window.bootstrap && window.bootstrap.Offcanvas) {
+        initMobileDrawer();
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      loadBootstrapBundle()
+        .then(() => {
+          if (!initMobileDrawer()) {
+            return;
+          }
+          const offcanvas = window.bootstrap.Offcanvas.getOrCreateInstance(mobileDrawer);
+          offcanvas.show();
+        })
+        .catch(() => {
+          // Leave native navigation state untouched if bootstrap cannot be loaded.
+        });
+    }, { capture: true });
   }
 
   // Ensure security rel attributes for external links that open in new tabs

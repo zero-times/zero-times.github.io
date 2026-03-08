@@ -481,7 +481,7 @@
   {% endif %}
   {% endif %}
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100" data-bootstrap-src="{{ '/assets/js/bootstrap.min.js' | relative_url }}">
   <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
   {% assign brand_label = site.url | replace: 'https://', '' | replace: 'http://', '' | default: site.title %}
   {% assign is_home = page.url == '/' %}
@@ -563,9 +563,6 @@
 
   <div id="aria-live-region" class="visually-hidden" aria-live="polite" aria-atomic="true" role="status"></div>
 
-  <!-- Bootstrap 脚本（本地托管以减少第三方依赖） -->
-  <script src="{{ '/assets/js/bootstrap.min.js' | relative_url }}" defer></script>
-  
   <!-- 站点脚本 -->
   <script src="{{ '/assets/js/theme.js' | relative_url }}" defer></script>
 </body>
