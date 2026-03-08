@@ -425,6 +425,8 @@
 
         var script = document.createElement('script');
         script.async = true;
+        script.fetchPriority = 'low';
+        script.referrerPolicy = 'strict-origin-when-cross-origin';
         script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(trackingId);
         script.onload = function () {
           window.gtag('js', new Date());
