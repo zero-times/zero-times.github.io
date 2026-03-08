@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const prefersReducedData = prefersReducedDataMedia || !!(
     connection && (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')
   );
+  const prefersAutoScroll = prefersReducedMotion || prefersReducedData;
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
   const contentRoot = document.querySelector('main') || document.body;
   let deferredContentOptimizationsDone = false;
@@ -134,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     e.preventDefault();
     target.scrollIntoView({
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      behavior: prefersAutoScroll ? 'auto' : 'smooth',
       block: 'start'
     });
 
@@ -151,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
       target.setAttribute('data-anchor-focus-temp', 'true');
     }
 
-    const focusDelay = prefersReducedMotion ? 0 : 220;
+    const focusDelay = prefersAutoScroll ? 0 : 220;
     window.setTimeout(() => {
       target.focus({ preventScroll: true });
       if (target.getAttribute('data-anchor-focus-temp') === 'true') {
@@ -207,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const scrollToTop = () => {
       window.scrollTo({
         top: 0,
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        behavior: prefersAutoScroll ? 'auto' : 'smooth'
       });
     };
     const requestBackToTopTick = () => {
@@ -288,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (firstInvalid) {
           firstInvalid.focus({ preventScroll: true });
           firstInvalid.scrollIntoView({
-            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+            behavior: prefersAutoScroll ? 'auto' : 'smooth',
             block: 'center'
           });
         }
