@@ -481,14 +481,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (mobileDrawer && mobileMenuButton) {
     initMobileDrawer();
+    let bootstrapWarmRequested = false;
+    const setMenuLoadingState = (isLoading) => {
+      mobileMenuButton.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+      mobileMenuButton.classList.toggle('is-loading', isLoading);
+      if (mobileMenuButtonLabel) {
+        mobileMenuButtonLabel.textContent = isLoading ? 'Carregando' : 'Menu';
+      }
+    };
 
     const warmBootstrapLoad = () => {
+      if (window.bootstrap && window.bootstrap.Offcanvas) {
+        initMobileDrawer();
+        return;
+      }
+      if (bootstrapWarmRequested) {
+        return;
+      }
+      bootstrapWarmRequested = true;
+      setMenuLoadingState(true);
       loadBootstrapBundle()
         .then(() => {
           initMobileDrawer();
         })
         .catch(() => {
           // Keep menu button accessible even if the bundle fails to load.
+        })
+        .finally(() => {
+          bootstrapWarmRequested = false;
+          setMenuLoadingState(false);
         });
     };
 
@@ -506,6 +527,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       event.preventDefault();
       event.stopPropagation();
+      setMenuLoadingState(true);
       loadBootstrapBundle()
         .then(() => {
           if (!initMobileDrawer()) {
@@ -516,6 +538,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(() => {
           // Leave native navigation state untouched if bootstrap cannot be loaded.
+        })
+        .finally(() => {
+          setMenuLoadingState(false);
         });
     }, { capture: true });
   }
