@@ -685,11 +685,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(enhanceMediaDefaults, { timeout: prefersReducedData ? 2200 : 1200 });
-  } else {
-    window.setTimeout(enhanceMediaDefaults, prefersReducedData ? 700 : 300);
-  }
+  const scheduleEnhanceMediaDefaults = () => {
+    if (document.prerendering) {
+      document.addEventListener('prerenderingchange', scheduleEnhanceMediaDefaults, { once: true });
+      return;
+    }
+    if (document.visibilityState === 'hidden') {
+      document.addEventListener('visibilitychange', function onVisibilityChange() {
+        if (document.visibilityState === 'visible') {
+          scheduleNonCriticalTask(enhanceMediaDefaults, prefersReducedData ? 2200 : 1200);
+        }
+      }, { once: true });
+      return;
+    }
+    scheduleNonCriticalTask(enhanceMediaDefaults, prefersReducedData ? 2200 : 1200);
+  };
+  scheduleEnhanceMediaDefaults();
 
   // Add focus management for dropdowns with delegated listener to reduce bindings
   document.addEventListener('keydown', function(e) {
