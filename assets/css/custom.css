@@ -156,6 +156,15 @@ html {
   border-radius: 999px;
 }
 
+.navbar-toggler,
+.site-nav-link,
+.site-mobile-drawer__link,
+.home-v2__btn,
+.postbox-cta,
+.back-to-top {
+  touch-action: manipulation;
+}
+
 .site-footer a:focus-visible {
   outline: 3px solid var(--br-yellow);
   outline-offset: 3px;
