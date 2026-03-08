@@ -89,19 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // Harden external new-tab links against opener leaks.
-    document.querySelectorAll('a[target="_blank"]').forEach((link) => {
-      const relTokens = (link.getAttribute('rel') || '')
-        .split(/\s+/)
-        .map((token) => token.trim().toLowerCase())
-        .filter(Boolean);
-      if (!relTokens.includes('noopener')) {
-        relTokens.push('noopener');
-      }
-      if (!relTokens.includes('noreferrer')) {
-        relTokens.push('noreferrer');
-      }
-      link.setAttribute('rel', relTokens.join(' '));
+    // Harden new-tab links inside content area against opener leaks.
+    contentRoot.querySelectorAll('a[target="_blank"]').forEach((link) => {
+      ensureSecureRel(link);
     });
     deferredContentOptimizationsDone = true;
   };
@@ -401,31 +391,46 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     const href = link.getAttribute('href') || '';
-    let isExternalHttp = false;
-    try {
-      const resolvedUrl = new URL(href, window.location.origin);
-      isExternalHttp = /^https?:$/i.test(resolvedUrl.protocol) && resolvedUrl.origin !== window.location.origin;
-    } catch (err) {
-      isExternalHttp = false;
+    const relValue = link.getAttribute('rel') || '';
+    const relTokens = relValue
+      .split(/\s+/)
+      .map((token) => token.trim().toLowerCase())
+      .filter(Boolean);
+    const hasNoOpener = relTokens.includes('noopener');
+    const hasNoReferrer = relTokens.includes('noreferrer');
+    let changed = false;
+
+    if (!hasNoOpener) {
+      relTokens.push('noopener');
+      changed = true;
+    }
+    if (!hasNoReferrer) {
+      relTokens.push('noreferrer');
+      changed = true;
     }
 
-    const relValue = link.getAttribute('rel') || '';
-    const relTokens = relValue.split(/\s+/).filter(Boolean);
-    let changed = false;
-    ['noopener', 'noreferrer'].forEach(token => {
-      if (!relTokens.includes(token)) {
-        relTokens.push(token);
-        changed = true;
+    const shouldCheckExternal = !relTokens.includes('nofollow') || !relTokens.includes('external');
+    if (shouldCheckExternal) {
+      let isExternalHttp = false;
+      try {
+        const resolvedUrl = new URL(href, window.location.origin);
+        isExternalHttp = /^https?:$/i.test(resolvedUrl.protocol) && resolvedUrl.origin !== window.location.origin;
+      } catch (err) {
+        isExternalHttp = false;
       }
-    });
-    if (isExternalHttp) {
-      ['nofollow', 'external'].forEach(token => {
-        if (!relTokens.includes(token)) {
-          relTokens.push(token);
+
+      if (isExternalHttp) {
+        if (!relTokens.includes('nofollow')) {
+          relTokens.push('nofollow');
           changed = true;
         }
-      });
+        if (!relTokens.includes('external')) {
+          relTokens.push('external');
+          changed = true;
+        }
+      }
     }
+
     if (changed) {
       link.setAttribute('rel', relTokens.join(' '));
     }
