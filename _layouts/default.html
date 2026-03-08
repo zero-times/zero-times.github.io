@@ -38,24 +38,6 @@
   {% else %}
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% endif %}
-  {% if paginator %}
-    {% if paginator.previous_page_path %}
-  <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">
-    {% elsif paginator.previous_page %}
-      {% if paginator.previous_page == 1 %}
-        {% assign paginated_prev_path = '/blog/' %}
-      {% else %}
-        {% assign paginated_prev_path = '/blog/page' | append: paginator.previous_page | append: '/' %}
-      {% endif %}
-  <link rel="prev" href="{{ paginated_prev_path | absolute_url }}">
-    {% endif %}
-    {% if paginator.next_page_path %}
-  <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
-    {% elsif paginator.next_page %}
-      {% assign paginated_next_path = '/blog/page' | append: paginator.next_page | append: '/' %}
-  <link rel="next" href="{{ paginated_next_path | absolute_url }}">
-    {% endif %}
-  {% endif %}
   {% assign og_locale = normalized_lang | replace: '-', '_' %}
   <meta property="og:locale" content="{{ og_locale }}">
   {% unless is_paginated_archive_page %}
