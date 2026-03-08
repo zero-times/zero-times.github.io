@@ -43,10 +43,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
   const runDeferredContentOptimizations = () => {
+    const candidateImages = contentRoot.querySelectorAll('img[src]:not([src^="data:"])');
+    const candidateIframes = contentRoot.querySelectorAll('iframe[src]');
+    const candidateBlankLinks = contentRoot.querySelectorAll('a[target="_blank"]');
+
+    if (!candidateImages.length && !candidateIframes.length && !candidateBlankLinks.length) {
+      deferredContentOptimizationsDone = true;
+      return;
+    }
+
     // Auto-optimize markdown/content images that do not declare loading hints.
     // Prefer deterministic loading hints to avoid expensive layout reads on long pages.
     let eagerImageBudget = 1;
-    contentRoot.querySelectorAll('img[src]:not([src^="data:"])').forEach((image) => {
+    candidateImages.forEach((image) => {
       const hasHighPriority = image.getAttribute('fetchpriority') === 'high';
       if (!image.hasAttribute('loading')) {
         if (hasHighPriority) {
@@ -70,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Avoid eager loading non-critical embeds on mobile pages.
     let eagerIframeBudget = 1;
-    contentRoot.querySelectorAll('iframe[src]').forEach((frame) => {
+    candidateIframes.forEach((frame) => {
       if (!frame.hasAttribute('loading')) {
         if (prefersReducedData) {
           frame.setAttribute('loading', 'lazy');
@@ -91,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Harden new-tab links inside content area against opener leaks.
-    contentRoot.querySelectorAll('a[target="_blank"]').forEach((link) => {
+    candidateBlankLinks.forEach((link) => {
       ensureSecureRel(link);
     });
     deferredContentOptimizationsDone = true;
