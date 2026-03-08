@@ -400,12 +400,15 @@
 
       var trackingId = '{{ site.google_analytics }}';
       var loaded = false;
-      var activationEvents = ['pointerdown', 'keydown', 'scroll'];
-      var activationListenerOptions = { once: true, passive: true };
+      var activationEventConfigs = [
+        { name: 'pointerdown', options: { once: true, passive: true } },
+        { name: 'keydown', options: { once: true } },
+        { name: 'scroll', options: { once: true, passive: true } }
+      ];
 
       function detachActivationListeners() {
-        activationEvents.forEach(function (eventName) {
-          window.removeEventListener(eventName, initGaWhenVisible, activationListenerOptions);
+        activationEventConfigs.forEach(function (config) {
+          window.removeEventListener(config.name, initGaWhenVisible, config.options);
         });
       }
 
@@ -447,8 +450,8 @@
         initGa();
       }
 
-      activationEvents.forEach(function (eventName) {
-        window.addEventListener(eventName, initGaWhenVisible, activationListenerOptions);
+      activationEventConfigs.forEach(function (config) {
+        window.addEventListener(config.name, initGaWhenVisible, config.options);
       });
 
       if ('requestIdleCallback' in window) {
