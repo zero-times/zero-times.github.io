@@ -4439,6 +4439,10 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   margin-top: 0.4rem;
 }
 
+.contact-v2__field input.form-control {
+  min-height: 48px;
+}
+
 .contact-v2__field--full {
   margin-top: 0.75rem;
 }
@@ -4494,6 +4498,12 @@ main :target {
   .about-v2__actions .home-v2__btn,
   .contact-v2__submit {
     width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .contact-v2__submit {
+    min-height: 48px;
   }
 }
 
