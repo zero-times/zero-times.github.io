@@ -400,6 +400,8 @@
 
       var trackingId = '{{ site.google_analytics }}';
       var loaded = false;
+      var waitingForVisibility = false;
+      var waitingForPrerender = false;
       var activationEventConfigs = [
         { name: 'pointerdown', options: { once: true, passive: true } },
         { name: 'keydown', options: { once: true } },
@@ -435,16 +437,29 @@
       }
 
       function initGaWhenVisible() {
+        if (loaded) {
+          return;
+        }
         if (document.prerendering) {
-          document.addEventListener('prerenderingchange', initGaWhenVisible, { once: true });
+          if (!waitingForPrerender) {
+            waitingForPrerender = true;
+            document.addEventListener('prerenderingchange', function onPrerenderingChange() {
+              waitingForPrerender = false;
+              initGaWhenVisible();
+            }, { once: true });
+          }
           return;
         }
         if (document.visibilityState === 'hidden') {
-          document.addEventListener('visibilitychange', function onVisibilityChange() {
-            if (document.visibilityState === 'visible') {
-              initGa();
-            }
-          }, { once: true });
+          if (!waitingForVisibility) {
+            waitingForVisibility = true;
+            document.addEventListener('visibilitychange', function onVisibilityChange() {
+              if (document.visibilityState === 'visible') {
+                waitingForVisibility = false;
+                initGa();
+              }
+            }, { once: true });
+          }
           return;
         }
         initGa();
