@@ -859,6 +859,19 @@ body {
   }
 }
 
+@media (prefers-reduced-data: reduce) {
+  .site-footer {
+    background: rgba(248, 250, 252, 0.98);
+  }
+
+  .back-to-top,
+  .back-to-top:hover,
+  .back-to-top:focus-visible {
+    box-shadow: none;
+    transform: none;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .site-footer {
     background: rgba(8, 15, 28, 0.95);
