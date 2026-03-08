@@ -485,8 +485,24 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
 
+    let shouldRestoreMenuFocus = false;
+
+    mobileDrawer.addEventListener('show.bs.offcanvas', () => {
+      shouldRestoreMenuFocus = document.activeElement === mobileMenuButton;
+    });
+
     mobileDrawer.addEventListener('shown.bs.offcanvas', () => syncMenuState(true));
-    mobileDrawer.addEventListener('hidden.bs.offcanvas', () => syncMenuState(false));
+    mobileDrawer.addEventListener('hidden.bs.offcanvas', () => {
+      syncMenuState(false);
+      if (shouldRestoreMenuFocus || mobileDrawer.contains(document.activeElement)) {
+        try {
+          mobileMenuButton.focus({ preventScroll: true });
+        } catch (err) {
+          mobileMenuButton.focus();
+        }
+      }
+      shouldRestoreMenuFocus = false;
+    });
 
     mobileDrawer.addEventListener('click', (event) => {
       const link = event.target.closest('a[href]');
