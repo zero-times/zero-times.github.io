@@ -2414,6 +2414,14 @@ section[id] {
     font-size: 1.02rem;
     line-height: 1.72;
   }
+
+  .post-content pre,
+  .article-post pre {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    padding: 0.85rem 0.95rem;
+    overscroll-behavior-x: contain;
+  }
 }
 
 @media (max-width: 768px) {
