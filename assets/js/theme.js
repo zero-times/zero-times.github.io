@@ -347,17 +347,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     bootstrapLoadPromise = new Promise((resolve, reject) => {
+      const resolveIfReady = () => {
+        if (window.bootstrap && window.bootstrap.Offcanvas) {
+          resolve(window.bootstrap);
+          return true;
+        }
+        return false;
+      };
       const existingScript = document.querySelector(`script[src="${bootstrapScriptSrc}"]`);
       if (existingScript) {
-        existingScript.addEventListener('load', () => resolve(window.bootstrap), { once: true });
+        if (resolveIfReady()) {
+          return;
+        }
+
+        const handleLoaded = () => {
+          existingScript.setAttribute('data-loaded', 'true');
+          if (resolveIfReady()) {
+            return;
+          }
+          window.setTimeout(() => {
+            if (!resolveIfReady()) {
+              reject(new Error('Bootstrap loaded without Offcanvas support'));
+            }
+          }, 0);
+        };
+
+        if (
+          existingScript.getAttribute('data-loaded') === 'true' ||
+          existingScript.readyState === 'loaded' ||
+          existingScript.readyState === 'complete'
+        ) {
+          handleLoaded();
+          return;
+        }
+
+        existingScript.addEventListener('load', handleLoaded, { once: true });
         existingScript.addEventListener('error', () => reject(new Error('Bootstrap failed to load')), { once: true });
         return;
       }
 
       const script = document.createElement('script');
       script.src = bootstrapScriptSrc;
-      script.defer = true;
+      script.async = true;
+      script.fetchPriority = 'low';
       script.onload = () => {
+        script.setAttribute('data-loaded', 'true');
         if (window.bootstrap && window.bootstrap.Offcanvas) {
           resolve(window.bootstrap);
         } else {
