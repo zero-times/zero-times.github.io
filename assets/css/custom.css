@@ -3901,7 +3901,8 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 }
 
 @supports (content-visibility: auto) {
-  .home-v2__post-card {
+  .home-v2__post-card,
+  .home-v2__side-card {
     content-visibility: auto;
     contain-intrinsic-size: 280px;
   }
