@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 {% assign normalized_lang = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
-<html lang="{{ normalized_lang }}">
+{% assign lang_parts = normalized_lang | split: '-' %}
+{% assign lang_primary = lang_parts[0] | downcase %}
+{% assign lang_region = '' %}
+{% if lang_parts.size > 1 %}
+{% assign lang_region = lang_parts[1] | upcase %}
+{% endif %}
+{% if lang_region != '' %}
+{% assign html_lang = lang_primary | append: '-' | append: lang_region %}
+{% assign og_locale = lang_primary | append: '_' | append: lang_region %}
+{% else %}
+{% assign html_lang = lang_primary %}
+{% assign og_locale = lang_primary %}
+{% endif %}
+<html lang="{{ html_lang }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
@@ -24,10 +37,9 @@
 {% else %}
 <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 {% endif %}
-{% assign og_locale = normalized_lang | replace: '-', '_' %}
 <meta property="og:locale" content="{{ og_locale }}">
 {% unless effective_robots contains 'noindex' %}
-{% assign page_lang = normalized_lang %}
+{% assign page_lang = html_lang %}
 {% assign page_lang_base = page_lang | split: '-' | first %}
 <link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">
 {% if page_lang_base and page_lang_base != page_lang %}
@@ -91,7 +103,7 @@
   "@id": "{{ website_entity_id }}",
   "name": "{{ site.title | escape }}",
   "url": "{{ site.url }}{{ site.baseurl }}",
-  "inLanguage": "{{ normalized_lang }}",
+  "inLanguage": "{{ html_lang }}",
   "publisher": {
     "@id": "{{ author_entity_id }}"
   }{% if site.social and site.social.links %},
@@ -108,7 +120,7 @@
   "description": "{{ share_description | escape }}"{% if share_webpage_published %},
   "datePublished": "{{ share_webpage_published | date_to_xmlschema }}"{% endif %}{% if share_webpage_modified %},
   "dateModified": "{{ share_webpage_modified | date_to_xmlschema }}"{% endif %},
-  "inLanguage": "{{ normalized_lang }}",
+  "inLanguage": "{{ html_lang }}",
   "about": {
     "@id": "{{ author_entity_id }}"
   },

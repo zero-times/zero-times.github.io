@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 {% assign normalized_lang = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
-<html lang="{{ normalized_lang }}">
+{% assign lang_parts = normalized_lang | split: '-' %}
+{% assign lang_primary = lang_parts[0] | downcase %}
+{% assign lang_region = '' %}
+{% if lang_parts.size > 1 %}
+  {% assign lang_region = lang_parts[1] | upcase %}
+{% endif %}
+{% if lang_region != '' %}
+  {% assign html_lang = lang_primary | append: '-' | append: lang_region %}
+  {% assign og_locale = lang_primary | append: '_' | append: lang_region %}
+{% else %}
+  {% assign html_lang = lang_primary %}
+  {% assign og_locale = lang_primary %}
+{% endif %}
+<html lang="{{ html_lang }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
@@ -38,11 +51,10 @@
   {% else %}
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% endif %}
-  {% assign og_locale = normalized_lang | replace: '-', '_' %}
   <meta property="og:locale" content="{{ og_locale }}">
   {% unless is_paginated_archive_page %}
     {% unless page.robots contains 'noindex' %}
-      {% assign page_lang = normalized_lang %}
+      {% assign page_lang = html_lang %}
       {% assign page_lang_base = page_lang | split: '-' | first %}
       <link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">
       {% if page_lang_base and page_lang_base != page_lang %}
@@ -222,7 +234,7 @@
       "@id": "{{ website_entity_id }}",
       "name": "{{ site.title | escape }}",
       "url": "{{ site.url }}{{ site.baseurl }}",
-      "inLanguage": "{{ normalized_lang }}",
+      "inLanguage": "{{ html_lang }}",
       "publisher": {
         "@type": "Person",
         "@id": "{{ author_entity_id }}",
@@ -259,7 +271,7 @@
       "@type": "{{ webpage_schema_type }}",
       "name": "{{ page.title | default: site.title | escape }}",
       "url": "{{ page.url | absolute_url }}",
-      "inLanguage": "{{ normalized_lang }}",
+      "inLanguage": "{{ html_lang }}",
       "description": "{{ page.description | default: site.description | escape }}"{% if webpage_published %},
       "datePublished": "{{ webpage_published | date_to_xmlschema }}"{% endif %}{% if webpage_modified %},
       "dateModified": "{{ webpage_modified | date_to_xmlschema }}"{% endif %},
