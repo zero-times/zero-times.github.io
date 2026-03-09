@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const prefersAutoScroll = prefersReducedMotion || prefersReducedData;
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
   const contentRoot = document.querySelector('main') || document.body;
+  const contentOptimizationRoot = (
+    document.querySelector('.post-content') ||
+    document.querySelector('.article-post') ||
+    document.querySelector('.share-article') ||
+    contentRoot
+  );
   let deferredContentOptimizationsDone = false;
   const scheduleNonCriticalTask = (task, timeout) => {
     const delay = typeof timeout === 'number' ? timeout : 1000;
@@ -68,14 +74,14 @@ document.addEventListener('DOMContentLoaded', function() {
       'iframe[src]:not([title])',
       'iframe[src]:not([referrerpolicy])'
     ].join(', ');
-    const candidateImages = contentRoot.querySelectorAll(imageOptimizationSelector);
-    const candidateIframes = contentRoot.querySelectorAll(iframeOptimizationSelector);
+    const candidateImages = contentOptimizationRoot.querySelectorAll(imageOptimizationSelector);
+    const candidateIframes = contentOptimizationRoot.querySelectorAll(iframeOptimizationSelector);
     const blankLinkHardeningSelector = [
       'a[target="_blank"]:not([rel])',
       'a[target="_blank"][rel]:not([rel~="noopener"])',
       'a[target="_blank"][rel]:not([rel~="noreferrer"])'
     ].join(', ');
-    const candidateBlankLinks = contentRoot.querySelectorAll(blankLinkHardeningSelector);
+    const candidateBlankLinks = contentOptimizationRoot.querySelectorAll(blankLinkHardeningSelector);
 
     if (!candidateImages.length && !candidateIframes.length && !candidateBlankLinks.length) {
       deferredContentOptimizationsDone = true;
@@ -689,8 +695,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   const enhanceMediaDefaults = () => {
-    // Add media defaults on content area only to reduce unnecessary DOM work.
-    const mediaScope = contentRoot;
+    // Add media defaults on article containers first to reduce unnecessary DOM work.
+    const mediaScope = contentOptimizationRoot;
     const hasMediaDefaultsWork = deferredContentOptimizationsDone
       ? mediaScope.querySelector('img:not([src^="data:"]):not([alt]), iframe:not([fetchpriority]), video:not([preload]), video:not([playsinline]), audio:not([preload]), img[data-src], img.news-inline-thumb')
       : mediaScope.querySelector(
