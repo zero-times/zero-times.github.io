@@ -51,7 +51,7 @@ schema_type: CollectionPage
     <div class="col-lg-8">
       <h1 class="display-5 fw-bold mb-4" id="page-title">Blog</h1>
       
-      {% for post in paginator.posts %}
+      {% for post in blog_posts %}
       <article class="blog-entry mb-5" itemscope itemtype="https://schema.org/BlogPosting">
         <span itemprop="author" itemscope itemtype="https://schema.org/Person">
           <meta itemprop="name" content="{{ site.author.name }}">
@@ -94,8 +94,8 @@ schema_type: CollectionPage
       {% endfor %}
       
       <!-- Pagination -->
-      {% if paginator.total_pages > 1 %}
-      <nav aria-label="Navegação de paginação">
+      {% if paginator and paginator.total_pages > 1 %}
+      <nav aria-label="Navegação de paginação do blog">
         <ul class="pagination justify-content-center">
           {% if paginator.previous_page %}
           <li class="page-item">
@@ -110,7 +110,7 @@ schema_type: CollectionPage
           {% for page in (1..paginator.total_pages) %}
           {% if page == paginator.page %}
           <li class="page-item active">
-            <span class="page-link" aria-current="page">{{ page }}</span>
+            <span class="page-link" aria-current="page" aria-label="Página {{ page }} de {{ paginator.total_pages }} (atual)">{{ page }}</span>
           </li>
           {% elsif page == 1 %}
           <li class="page-item">
