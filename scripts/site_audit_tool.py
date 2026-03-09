@@ -908,14 +908,20 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     taxonomy_noindex_targets = [ROOT / 'pages/categories.html', ROOT / 'pages/tags.html']
     taxonomy_noindex_missing: list[str] = []
+    taxonomy_sitemap_inclusion: list[str] = []
     for taxonomy_path in taxonomy_noindex_targets:
         if not taxonomy_path.exists():
             continue
-        taxonomy_robots = extract_front_matter_value(read_text(taxonomy_path), 'robots')
+        taxonomy_text = read_text(taxonomy_path)
+        taxonomy_robots = extract_front_matter_value(taxonomy_text, 'robots')
         taxonomy_robots_normalized = (taxonomy_robots or '').strip().lower()
         if 'noindex' not in taxonomy_robots_normalized or 'follow' not in taxonomy_robots_normalized:
             taxonomy_noindex_missing.append(str(taxonomy_path.relative_to(ROOT)))
+        taxonomy_sitemap_flag = extract_front_matter_value(taxonomy_text, 'sitemap')
+        if (taxonomy_sitemap_flag or '').strip().lower() != 'false':
+            taxonomy_sitemap_inclusion.append(str(taxonomy_path.relative_to(ROOT)))
     has_taxonomy_noindex_policy = not taxonomy_noindex_missing
+    has_taxonomy_sitemap_exclusion = not taxonomy_sitemap_inclusion
 
     has_seo_tag = '{% seo %}' in default_layout
     has_share_seo_tag = '{% seo %}' in share_layout
@@ -1388,6 +1394,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             and has_paginated_hreflang_guard
             and has_canonical_signal_consistency
             and has_taxonomy_noindex_policy
+            and has_taxonomy_sitemap_exclusion
             else 7.0,
             'max_score': 10.0,
             'findings': [
@@ -1464,6 +1471,13 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if has_taxonomy_noindex_policy
                     else f"Add front matter robots noindex,follow on: {', '.join(taxonomy_noindex_missing)}",
                 },
+                {
+                    'aspect': 'Taxonomy sitemap inclusion policy',
+                    'result': 'Good' if has_taxonomy_sitemap_exclusion else 'Needs improvement',
+                    'details': 'Tags/categories archive pages are excluded from sitemap (sitemap: false) so noindex taxonomies are not re-advertised to crawlers.'
+                    if has_taxonomy_sitemap_exclusion
+                    else f"Set front matter sitemap: false on: {', '.join(taxonomy_sitemap_inclusion)}",
+                },
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
             'share_page_social_image_ready': has_share_page_large_social_image,
@@ -1473,6 +1487,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'canonical_signal_consistency': has_canonical_signal_consistency,
             'taxonomy_noindex_policy': has_taxonomy_noindex_policy,
             'taxonomy_noindex_missing': taxonomy_noindex_missing,
+            'taxonomy_sitemap_exclusion_policy': has_taxonomy_sitemap_exclusion,
+            'taxonomy_sitemap_inclusion': taxonomy_sitemap_inclusion,
         },
         'content_quality': {
             'score': 9.0
@@ -1780,6 +1796,10 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     canonical_signal_consistency = sections.get('seo_evaluation', {}).get('canonical_signal_consistency', False)
     taxonomy_noindex_policy = sections.get('seo_evaluation', {}).get('taxonomy_noindex_policy', False)
     taxonomy_noindex_missing = sections.get('seo_evaluation', {}).get('taxonomy_noindex_missing', [])
+    taxonomy_sitemap_exclusion_policy = sections.get('seo_evaluation', {}).get(
+        'taxonomy_sitemap_exclusion_policy', False
+    )
+    taxonomy_sitemap_inclusion = sections.get('seo_evaluation', {}).get('taxonomy_sitemap_inclusion', [])
     missing_dimensions = sections.get('content_quality', {}).get('missing_post_image_dimensions', [])
     missing_page_dimensions = sections.get('content_quality', {}).get('missing_page_image_dimensions', [])
     invalid_perf_flags = sections.get('content_quality', {}).get('invalid_front_matter_perf_flags', [])
@@ -1841,6 +1861,8 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
         failures.append('canonical_signal_consistency=0')
     if not taxonomy_noindex_policy:
         failures.append(f'taxonomy_noindex_policy=0:{",".join(taxonomy_noindex_missing)}')
+    if not taxonomy_sitemap_exclusion_policy:
+        failures.append(f'taxonomy_sitemap_exclusion_policy=0:{",".join(taxonomy_sitemap_inclusion)}')
     if missing_dimensions:
         failures.append(f'missing_post_image_dimensions={len(missing_dimensions)}')
     if missing_page_dimensions:
