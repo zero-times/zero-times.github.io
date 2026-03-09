@@ -2,6 +2,7 @@
 layout: page
 title: Política de Privacidade
 permalink: /privacy-policy/
+lang: pt-BR
 comments: false
 robots: noindex,follow
 sitemap: false

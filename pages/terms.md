@@ -2,6 +2,7 @@
 layout: page
 title: Termos de Uso
 permalink: /terms/
+lang: pt-BR
 comments: false
 robots: noindex,follow
 sitemap: false
