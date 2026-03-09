@@ -29,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.share-article') ||
     contentRoot
   );
+  const hasDeferredOptimizationCandidates = !!(
+    contentOptimizationRoot &&
+    contentOptimizationRoot.querySelector('img[src], iframe[src], a[target="_blank"]')
+  );
   let deferredContentOptimizationsDone = false;
   const scheduleNonCriticalTask = (task, timeout) => {
     const delay = typeof timeout === 'number' ? timeout : 1000;
@@ -149,6 +153,10 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   const scheduleDeferredContentOptimizations = () => {
+    if (!hasDeferredOptimizationCandidates) {
+      deferredContentOptimizationsDone = true;
+      return;
+    }
     if (document.prerendering) {
       document.addEventListener('prerenderingchange', scheduleDeferredContentOptimizations, { once: true });
       return;
