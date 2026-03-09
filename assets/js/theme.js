@@ -70,7 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
     ].join(', ');
     const candidateImages = contentRoot.querySelectorAll(imageOptimizationSelector);
     const candidateIframes = contentRoot.querySelectorAll(iframeOptimizationSelector);
-    const candidateBlankLinks = contentRoot.querySelectorAll('a[target="_blank"]');
+    const blankLinkHardeningSelector = [
+      'a[target="_blank"]:not([rel])',
+      'a[target="_blank"][rel]:not([rel~="noopener"])',
+      'a[target="_blank"][rel]:not([rel~="noreferrer"])'
+    ].join(', ');
+    const candidateBlankLinks = contentRoot.querySelectorAll(blankLinkHardeningSelector);
 
     if (!candidateImages.length && !candidateIframes.length && !candidateBlankLinks.length) {
       deferredContentOptimizationsDone = true;
