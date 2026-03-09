@@ -3015,6 +3015,9 @@ section[id] {
 @media (max-width: 575.98px) {
   .stats-card {
     padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .stats-card__value {
@@ -3023,6 +3026,15 @@ section[id] {
 
   .stats-card__label {
     font-size: 0.7rem;
+  }
+
+  .store-card {
+    min-height: 44px;
+    padding-block: 20px;
+  }
+
+  .store-link {
+    line-height: 1.4;
   }
 }
 
