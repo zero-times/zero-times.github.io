@@ -2089,11 +2089,6 @@ select:focus-visible,
     padding-left: 1rem;
   }
 
-  .post-content table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
 }
 
 h1, h2, h3, h4, h5, h6,
