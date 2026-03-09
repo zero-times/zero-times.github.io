@@ -224,6 +224,7 @@
   {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
   {% assign author_entity_base = site.author.url | default: site.url %}
   {% assign author_entity_id = author_entity_base | append: '#person' %}
+  {% assign website_lang_base = html_lang | split: '-' | first %}
   {% if publisher_image %}
     {% if publisher_image contains '://' %}
       {% assign publisher_image_url = publisher_image %}
@@ -239,6 +240,7 @@
       "name": "{{ site.title | escape }}",
       "url": "{{ site.url }}{{ site.baseurl }}",
       "inLanguage": "{{ html_lang }}",
+      "availableLanguage": [{% if website_lang_base and website_lang_base != html_lang %}"{{ html_lang }}", "{{ website_lang_base }}"{% else %}"{{ html_lang }}"{% endif %}],
       "publisher": {
         "@type": "Person",
         "@id": "{{ author_entity_id }}",

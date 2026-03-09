@@ -42,6 +42,14 @@ html {
   contain-intrinsic-size: 320px;
 }
 
+/* Defer deep section rendering on long profile/contact pages for faster mobile first paint */
+.about-v2__section,
+.contact-v2__methods,
+.contact-v2__form-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 640px;
+}
+
 @media (max-width: 575.98px) {
   html {
     scroll-padding-top: 5rem;
