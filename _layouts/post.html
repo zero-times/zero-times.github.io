@@ -83,7 +83,11 @@ layout: default
     </span>
     {% endif %}
     {% if post_image_src %}
+      {% if post_image_src contains '://' %}
+    <meta itemprop="image" content="{{ post_image_src }}">
+      {% else %}
     <meta itemprop="image" content="{{ post_image_src | absolute_url }}">
+      {% endif %}
     {% endif %}
     {% if page.description %}
     <meta itemprop="description" content="{{ page.description }}">
