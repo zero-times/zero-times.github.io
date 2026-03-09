@@ -145,7 +145,8 @@
           reducedDataByPreference = false;
         }
       }
-      var reducedData = reducedDataByConnection || reducedDataByPreference;
+      var lowMemoryDevice = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 2;
+      var reducedData = reducedDataByConnection || reducedDataByPreference || lowMemoryDevice;
       if (reducedData) {
         return;
       }
@@ -422,7 +423,8 @@
           reducedDataByPreference = false;
         }
       }
-      var reducedData = reducedDataByConnection || reducedDataByPreference;
+      var lowMemoryDevice = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 2;
+      var reducedData = reducedDataByConnection || reducedDataByPreference || lowMemoryDevice;
       if (dnt || reducedData) {
         return;
       }
