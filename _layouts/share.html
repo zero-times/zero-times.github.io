@@ -137,7 +137,7 @@
   }{% if page.url and page.url != '/' %},
   "breadcrumb": {
     "@id": "{{ breadcrumb_entity_id }}"
-  }{% if share_schema_image_url %},
+  }{% endif %}{% if share_schema_image_url %},
   "image": "{{ share_schema_image_url }}",
   "primaryImageOfPage": {
     "@type": "ImageObject",

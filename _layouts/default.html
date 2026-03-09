@@ -292,7 +292,7 @@
       }{% if page.url and page.url != '/' %},
       "breadcrumb": {
         "@id": "{{ breadcrumb_entity_id }}"
-      }{% if social_image_url %},
+      }{% endif %}{% if social_image_url %},
       "image": "{{ social_image_url }}",
       "primaryImageOfPage": {
         "@type": "ImageObject",
