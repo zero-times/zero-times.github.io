@@ -42,6 +42,12 @@ html {
   contain-intrinsic-size: 320px;
 }
 
+/* Blog archive entries can be long; defer off-screen rendering on mobile feeds */
+.blog-entry {
+  content-visibility: auto;
+  contain-intrinsic-size: 420px;
+}
+
 /* Defer deep section rendering on long profile/contact pages for faster mobile first paint */
 .about-v2__section,
 .contact-v2__methods,
