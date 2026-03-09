@@ -106,19 +106,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Avoid eager loading non-critical embeds on mobile pages.
-    let eagerIframeBudget = 1;
+    // Default to lazy and allow explicit opt-in for above-the-fold embeds.
     candidateIframes.forEach((frame) => {
       const loadingValue = (frame.getAttribute('loading') || '').toLowerCase();
+      const hasHighPriority = frame.getAttribute('fetchpriority') === 'high' ||
+        frame.getAttribute('data-loading-priority') === 'high' ||
+        frame.getAttribute('data-loading') === 'eager';
       if (!frame.hasAttribute('loading')) {
-        if (prefersReducedData) {
-          frame.setAttribute('loading', 'lazy');
-        } else if (eagerIframeBudget > 0) {
+        if (hasHighPriority && !prefersReducedData) {
           frame.setAttribute('loading', 'eager');
-          eagerIframeBudget -= 1;
         } else {
           frame.setAttribute('loading', 'lazy');
         }
-      } else if (prefersReducedData && loadingValue === 'auto') {
+      } else if ((prefersReducedData && loadingValue !== 'lazy' && !hasHighPriority) || (loadingValue === 'auto' && !hasHighPriority)) {
         frame.setAttribute('loading', 'lazy');
       }
       if (!frame.hasAttribute('referrerpolicy')) {

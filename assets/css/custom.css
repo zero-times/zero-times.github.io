@@ -2425,7 +2425,9 @@ section[id] {
   }
 }
 
-.post-content table {
+.post-content table,
+.article-post table,
+.share-article table {
   width: 100%;
   border-collapse: collapse;
 }
@@ -2446,7 +2448,9 @@ section[id] {
 }
 
 @media (max-width: 768px) {
-  .post-content table {
+  .post-content table,
+  .article-post table,
+  .share-article table {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -2455,7 +2459,11 @@ section[id] {
 }
 
 .post-content th,
-.post-content td {
+.post-content td,
+.article-post th,
+.article-post td,
+.share-article th,
+.share-article td {
   padding: 0.65rem 0.75rem;
   border: 1px solid rgba(0, 0, 0, 0.08);
   vertical-align: top;
