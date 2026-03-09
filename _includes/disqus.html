@@ -29,6 +29,8 @@
                 dsq.type = 'text/javascript';
                 dsq.async = true;
                 dsq.defer = true;
+                dsq.fetchPriority = 'low';
+                dsq.referrerPolicy = 'strict-origin-when-cross-origin';
                 dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
                 dsq.onload = function() {
                     loaded = true;
