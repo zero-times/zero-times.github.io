@@ -3644,6 +3644,26 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   font-size: 0.75rem;
 }
 
+@media (max-width: 991.98px) {
+  .site-header-v2__menu-btn,
+  .site-mobile-drawer__close,
+  .site-mobile-drawer__link,
+  .site-mobile-drawer__cta {
+    min-height: 48px;
+  }
+}
+
+@media (prefers-reduced-data: reduce) {
+  .site-header-v2,
+  .site-mobile-drawer .offcanvas-body {
+    box-shadow: none;
+  }
+
+  .site-mobile-drawer .offcanvas-body {
+    background: #ffffff;
+  }
+}
+
 .home-v2 {
   display: flex;
   flex-direction: column;
