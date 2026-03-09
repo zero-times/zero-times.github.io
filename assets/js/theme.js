@@ -528,7 +528,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
 
-    const warmBootstrapLoad = () => {
+    const warmBootstrapLoad = (options = {}) => {
+      const silent = !!options.silent;
       if (window.bootstrap && window.bootstrap.Offcanvas) {
         initMobileDrawer();
         return;
@@ -537,7 +538,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       bootstrapWarmRequested = true;
-      setMenuLoadingState(true);
+      if (!silent) {
+        setMenuLoadingState(true);
+      }
       loadBootstrapBundle()
         .then(() => {
           initMobileDrawer();
@@ -547,7 +550,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .finally(() => {
           bootstrapWarmRequested = false;
-          setMenuLoadingState(false);
+          if (!silent) {
+            setMenuLoadingState(false);
+          }
         });
     };
 
@@ -557,6 +562,29 @@ document.addEventListener('DOMContentLoaded', function() {
         passive: eventName !== 'focus'
       });
     });
+
+    if (!prefersReducedData) {
+      const warmMenuInBackground = () => {
+        if (window.bootstrap && window.bootstrap.Offcanvas) {
+          return;
+        }
+        scheduleNonCriticalTask(() => warmBootstrapLoad({ silent: true }), 2400);
+      };
+
+      if ('IntersectionObserver' in window) {
+        const menuButtonObserver = new IntersectionObserver((entries) => {
+          const visible = entries.some((entry) => entry.isIntersecting);
+          if (!visible) {
+            return;
+          }
+          menuButtonObserver.disconnect();
+          warmMenuInBackground();
+        }, { rootMargin: '96px 0px' });
+        menuButtonObserver.observe(mobileMenuButton);
+      } else {
+        window.addEventListener('load', warmMenuInBackground, { once: true });
+      }
+    }
 
     mobileMenuButton.addEventListener('click', (event) => {
       if (window.bootstrap && window.bootstrap.Offcanvas) {
