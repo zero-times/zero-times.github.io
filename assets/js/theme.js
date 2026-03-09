@@ -58,11 +58,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const runDeferredContentOptimizations = () => {
     const imageOptimizationSelector = [
       'img[src]:not([src^="data:"]):not([loading])',
+      'img[src]:not([src^="data:"])[loading="auto"]',
       'img[src]:not([src^="data:"]):not([decoding])',
       'img[src]:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
     ].join(', ');
     const iframeOptimizationSelector = [
       'iframe[src]:not([loading])',
+      'iframe[src][loading="auto"]',
       'iframe[src]:not([title])',
       'iframe[src]:not([referrerpolicy])'
     ].join(', ');
@@ -80,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let eagerImageBudget = 1;
     candidateImages.forEach((image) => {
       const hasHighPriority = image.getAttribute('fetchpriority') === 'high';
+      const loadingValue = (image.getAttribute('loading') || '').toLowerCase();
       if (!image.hasAttribute('loading')) {
         if (hasHighPriority) {
           image.setAttribute('loading', 'eager');
@@ -91,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
           image.setAttribute('loading', 'lazy');
         }
+      } else if (prefersReducedData && loadingValue === 'auto' && !hasHighPriority) {
+        image.setAttribute('loading', 'lazy');
       }
       if (!image.hasAttribute('decoding')) {
         image.setAttribute('decoding', 'async');
@@ -103,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Avoid eager loading non-critical embeds on mobile pages.
     let eagerIframeBudget = 1;
     candidateIframes.forEach((frame) => {
+      const loadingValue = (frame.getAttribute('loading') || '').toLowerCase();
       if (!frame.hasAttribute('loading')) {
         if (prefersReducedData) {
           frame.setAttribute('loading', 'lazy');
@@ -112,6 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
           frame.setAttribute('loading', 'lazy');
         }
+      } else if (prefersReducedData && loadingValue === 'auto') {
+        frame.setAttribute('loading', 'lazy');
       }
       if (!frame.hasAttribute('referrerpolicy')) {
         frame.setAttribute('referrerpolicy', defaultIframeReferrerPolicy);
@@ -682,10 +690,11 @@ document.addEventListener('DOMContentLoaded', function() {
       ? mediaScope.querySelector('img:not([src^="data:"]):not([alt]), iframe:not([fetchpriority]), video:not([preload]), video:not([playsinline]), audio:not([preload]), img[data-src], img.news-inline-thumb')
       : mediaScope.querySelector(
         'img:not([src^="data:"]):not([loading]), ' +
+        'img:not([src^="data:"])[loading="auto"], ' +
         'img:not([src^="data:"]):not([decoding]), ' +
         'img:not([src^="data:"]):not([alt]), ' +
         'img:not([src^="data:"])[loading="lazy"]:not([fetchpriority]), ' +
-        'iframe:not([loading]), iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy]), ' +
+        'iframe:not([loading]), iframe[loading="auto"], iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy]), ' +
         'video:not([preload]), video:not([playsinline]), audio:not([preload]), img[data-src], img.news-inline-thumb'
       );
     if (!hasMediaDefaultsWork) {
@@ -696,14 +705,18 @@ document.addEventListener('DOMContentLoaded', function() {
       ? mediaScope.querySelectorAll('img:not([src^="data:"]):not([alt])')
       : mediaScope.querySelectorAll(
         'img:not([src^="data:"]):not([loading]), ' +
+        'img:not([src^="data:"])[loading="auto"], ' +
         'img:not([src^="data:"]):not([decoding]), ' +
         'img:not([src^="data:"]):not([alt]), ' +
         'img:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
       );
     imagesMissingDefaults.forEach(img => {
       const fetchPriority = img.getAttribute('fetchpriority');
+      const loadingValue = (img.getAttribute('loading') || '').toLowerCase();
       if (!img.hasAttribute('loading')) {
         img.setAttribute('loading', fetchPriority === 'high' ? 'eager' : 'lazy');
+      } else if (prefersReducedData && loadingValue === 'auto' && fetchPriority !== 'high') {
+        img.setAttribute('loading', 'lazy');
       }
       if (!img.hasAttribute('decoding')) {
         img.setAttribute('decoding', 'async');
@@ -719,10 +732,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const iframesMissingDefaults = deferredContentOptimizationsDone
       ? mediaScope.querySelectorAll('iframe:not([fetchpriority])')
       : mediaScope.querySelectorAll(
-        'iframe:not([loading]), iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy])'
+        'iframe:not([loading]), iframe[loading="auto"], iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy])'
       );
     iframesMissingDefaults.forEach(frame => {
+      const loadingValue = (frame.getAttribute('loading') || '').toLowerCase();
       if (!frame.hasAttribute('loading')) {
+        frame.setAttribute('loading', 'lazy');
+      } else if (prefersReducedData && loadingValue === 'auto') {
         frame.setAttribute('loading', 'lazy');
       }
       if (!frame.hasAttribute('fetchpriority')) {
