@@ -38,6 +38,9 @@
 <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 {% endif %}
 <meta property="og:locale" content="{{ og_locale }}">
+{% if lang_region != '' %}
+<meta property="og:locale:alternate" content="{{ lang_primary }}">
+{% endif %}
 {% unless effective_robots contains 'noindex' %}
 {% assign page_lang = html_lang %}
 {% assign page_lang_base = page_lang | split: '-' | first %}
