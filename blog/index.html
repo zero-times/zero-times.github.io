@@ -7,7 +7,7 @@ keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
 schema_type: CollectionPage
 ---
 {% assign blog_posts = paginator.posts | default: site.posts %}
-{% assign blog_total_items = paginator.total_posts | default: blog_posts.size %}
+{% assign blog_visible_items = blog_posts | size %}
 {% assign blog_item_position_offset = 0 %}
 {% if paginator and paginator.page and paginator.per_page %}
   {% assign blog_item_position_offset = paginator.page | minus: 1 | times: paginator.per_page %}
@@ -40,7 +40,7 @@ schema_type: CollectionPage
   "mainEntity": {
     "@type": "ItemList",
     "itemListOrder": "https://schema.org/ItemListOrderDescending",
-    "numberOfItems": {{ blog_total_items }},
+    "numberOfItems": {{ blog_visible_items }},
     "itemListElement": {{ blog_item_list_json | strip_newlines | strip }}
   }
 }
@@ -99,7 +99,7 @@ schema_type: CollectionPage
         <ul class="pagination justify-content-center">
           {% if paginator.previous_page %}
           <li class="page-item">
-            <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="prev" aria-label="Página anterior">Anterior</a>
+            <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}" rel="prev" aria-label="Página anterior">Anterior</a>
           </li>
           {% else %}
           <li class="page-item disabled">
@@ -118,14 +118,15 @@ schema_type: CollectionPage
           </li>
           {% else %}
           <li class="page-item">
-            <a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}" aria-label="Página {{ page }}"{% if page == paginator.total_pages %} rel="last"{% endif %}>{{ page }}</a>
+            {% assign page_url = site.paginate_path | replace: ':num', page | relative_url %}
+            <a class="page-link" href="{{ page_url }}" aria-label="Página {{ page }}"{% if page == paginator.total_pages %} rel="last"{% endif %}>{{ page }}</a>
           </li>
           {% endif %}
           {% endfor %}
 
           {% if paginator.next_page %}
           <li class="page-item">
-            <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" rel="next" aria-label="Próxima página">Próxima</a>
+            <a class="page-link" href="{{ paginator.next_page_path | relative_url }}" rel="next" aria-label="Próxima página">Próxima</a>
           </li>
           {% else %}
           <li class="page-item disabled">
