@@ -13,6 +13,29 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
 ---
 
 {% assign recent_posts = site.posts | slice: 0, 3 %}
+{% assign recent_posts_count = recent_posts | size %}
+{% if recent_posts_count and recent_posts_count > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "{{ page.title | default: site.title | escape }} - Últimas postagens",
+  "itemListOrder": "https://schema.org/ItemListOrderDescending",
+  "numberOfItems": {{ recent_posts_count }},
+  "itemListElement": [
+    {% for post in recent_posts %}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.index }},
+      "url": "{{ post.url | absolute_url }}",
+      "name": "{{ post.title | escape }}",
+      "datePublished": "{{ post.date | date_to_xmlschema }}"
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
 
 <div class="container my-5 home-v2">
   <section class="home-v2__hero" aria-labelledby="page-title">
