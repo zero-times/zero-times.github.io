@@ -258,6 +258,29 @@ html {
 }
 
 /* Improve long heading wrapping */
+
+/* Keep long article URLs/words from causing horizontal scroll on mobile */
+.post-content {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Increase tap target and stack previous/next controls on small screens */
+@media (max-width: 767.98px) {
+  .previous-next-post .btn {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .previous-next-post .col-md-6 + .col-md-6 {
+    margin-top: 0.75rem;
+  }
+
+  .previous-next-post .text-md-end {
+    text-align: left !important;
+  }
+}
 .hero-minimal .display-4,
 .hero-tech .display-4,
 .section-heading h2,
