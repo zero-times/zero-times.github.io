@@ -70,7 +70,6 @@ defaults:
       lang: "pt-BR"
       preconnect_fonts: false
       load_webfonts: false
-      load_analytics: false
   - scope:
       path: "_posts"
       type: "posts"
@@ -79,7 +78,6 @@ defaults:
       lang: "pt-BR"
       preconnect_fonts: false
       load_webfonts: false
-      load_analytics: false
   - scope:
       path: "_blogs"
     values:
@@ -87,4 +85,3 @@ defaults:
       lang: "pt-BR"
       preconnect_fonts: false
       load_webfonts: false
-      load_analytics: false
