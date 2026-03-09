@@ -575,7 +575,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    ['pointerdown', 'touchstart', 'focus'].forEach((eventName) => {
+    const warmTriggerEvents = window.PointerEvent ? ['pointerdown', 'focus'] : ['touchstart', 'focus'];
+    warmTriggerEvents.forEach((eventName) => {
       mobileMenuButton.addEventListener(eventName, warmBootstrapLoad, {
         once: true,
         passive: eventName !== 'focus'
