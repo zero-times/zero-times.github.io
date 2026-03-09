@@ -224,6 +224,8 @@
   {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
   {% assign author_entity_base = site.author.url | default: site.url %}
   {% assign author_entity_id = author_entity_base | append: '#person' %}
+  {% assign webpage_entity_id = page.url | absolute_url | append: '#webpage' %}
+  {% assign breadcrumb_entity_id = page.url | absolute_url | append: '#breadcrumb' %}
   {% assign website_lang_base = html_lang | split: '-' | first %}
   {% if publisher_image %}
     {% if publisher_image contains '://' %}
@@ -275,6 +277,7 @@
     {
       "@context": "https://schema.org",
       "@type": "{{ webpage_schema_type }}",
+      "@id": "{{ webpage_entity_id }}",
       "name": "{{ page.title | default: site.title | escape }}",
       "url": "{{ page.url | absolute_url }}",
       "inLanguage": "{{ html_lang }}",
@@ -286,6 +289,9 @@
       },
       "isPartOf": {
         "@id": "{{ website_entity_id }}"
+      }{% if page.url and page.url != '/' %},
+      "breadcrumb": {
+        "@id": "{{ breadcrumb_entity_id }}"
       }{% if social_image_url %},
       "image": "{{ social_image_url }}",
       "primaryImageOfPage": {
@@ -301,6 +307,7 @@
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      "@id": "{{ breadcrumb_entity_id }}",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -328,6 +335,7 @@
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      "@id": "{{ breadcrumb_entity_id }}",
       "itemListElement": [
         {
           "@type": "ListItem",
