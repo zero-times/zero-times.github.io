@@ -32,7 +32,6 @@ html {
 }
 
 /* Speed up long feeds by skipping off-screen card rendering until needed */
-.postbox-card,
 .category-post-card,
 .home-hero__latest .card,
 .home-v2__post-card,
@@ -678,8 +677,7 @@ body {
   box-shadow: 0 10px 24px rgba(15, 31, 72, 0.15);
 }
 
-.blog-entry,
-.postbox-card {
+.blog-entry {
   content-visibility: auto;
   contain-intrinsic-size: 540px;
 }
