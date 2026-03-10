@@ -254,7 +254,7 @@
         "image": "{{ publisher_image_url }}"
         {% endif %}
       }{% if site.social and site.social.links %},
-      "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+      "sameAs": [{% for link in site.social.links %}"{{ link | escape }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
       {% endif %}
     }
   </script>
@@ -268,7 +268,7 @@
       "url": "{{ site.author.url }}"{% endif %}{% if site.email %},
       "email": "mailto:{{ site.email | escape }}"{% endif %}{% if publisher_image_url %},
       "image": "{{ publisher_image_url }}"{% endif %}{% if site.social and site.social.links %},
-      "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+      "sameAs": [{% for link in site.social.links %}"{{ link | escape }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
       {% endif %}
     }
   </script>
