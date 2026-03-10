@@ -4,7 +4,7 @@ title: "Exemplo de Post em Português"
 date: 2025-01-31 10:00:00 -0300
 categories: exemplo
 tags: [português, blog, exemplo]
-lang: pt
+lang: pt-BR
 description: "Este é um exemplo de postagem de blog em português"
 keywords: "blog, português, Jekyll, Bootstrap, design responsivo"
 ---
