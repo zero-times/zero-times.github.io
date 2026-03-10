@@ -213,14 +213,14 @@
   {% elsif site.keywords %}
     <meta name="keywords" content="{{ site.keywords | escape }}">
   {% endif %}
-  {% if site.social and site.social.links %}
-    {% for social_link in site.social.links %}
-    <link rel="me" href="{{ social_link }}">
-    {% endfor %}
-  {% endif %}
-  {% if site.author.url %}
-  <link rel="author" href="{{ site.author.url }}">
-  {% endif %}
+{% if site.social and site.social.links %}
+  {% for social_link in site.social.links %}
+  <link rel="me" href="{{ social_link | escape }}">
+  {% endfor %}
+{% endif %}
+{% if site.author.url %}
+  <link rel="author" href="{{ site.author.url | escape }}">
+{% endif %}
   {% seo %}
   {% assign publisher_image = site.logo | default: site.author.avatar %}
   {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}

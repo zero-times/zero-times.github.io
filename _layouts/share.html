@@ -73,11 +73,11 @@
 {% endif %}
 {% if site.social and site.social.links %}
 {% for social_link in site.social.links %}
-<link rel="me" href="{{ social_link }}">
+<link rel="me" href="{{ social_link | escape }}">
 {% endfor %}
 {% endif %}
 {% if site.author.url %}
-<link rel="author" href="{{ site.author.url }}">
+<link rel="author" href="{{ site.author.url | escape }}">
 {% endif %}
 {% assign share_description = page.description | default: site.description | strip %}
 {% assign share_webpage_published = page.date %}

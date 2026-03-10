@@ -3014,6 +3014,52 @@ section[id] {
   color: rgba(245, 245, 247, 0.7);
 }
 
+.share-card__contact-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  list-style: none;
+}
+
+.share-card__contact-item {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.share-card__contact-item .share-card__label {
+  margin-bottom: 0.55rem;
+}
+
+.share-card__contact-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: rgba(245, 245, 247, 0.96);
+  text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.share-card__contact-link:hover,
+.share-card__contact-link:focus-visible {
+  color: #ffffff;
+  background: rgba(10, 132, 255, 0.24);
+  text-decoration: none;
+}
+
+.share-card__contact-link:focus-visible {
+  outline: 2px solid rgba(10, 132, 255, 0.7);
+  outline-offset: 2px;
+}
+
 .stats-card {
   padding: 20px;
   border-radius: 28px;
@@ -3060,6 +3106,15 @@ section[id] {
 
   .share-card__tagline {
     font-size: 1rem;
+  }
+
+  .share-card__contact-item {
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .share-card__contact-link {
+    padding-inline: 10px;
   }
 }
 
