@@ -8,6 +8,7 @@ robots: noindex,follow
 sitemap: false
 description: Política de privacidade e tratamento de dados do site
 keywords: "privacidade, dados pessoais, cookies, analytics, conformidade"
+last_modified_at: 2026-02-20
 load_webfonts: false
 ---
 

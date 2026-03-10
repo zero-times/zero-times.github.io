@@ -8,6 +8,7 @@ robots: noindex,follow
 sitemap: false
 description: Termos de uso, responsabilidades e condições de acesso do site
 keywords: "termos de uso, condições, responsabilidade, licenças"
+last_modified_at: 2026-02-21
 load_webfonts: false
 ---
 
