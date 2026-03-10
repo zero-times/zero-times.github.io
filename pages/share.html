@@ -57,11 +57,11 @@ image_height: 719
           <ul class="share-card__contact-list" aria-label="Canais de contato">
             <li class="share-card__contact-item">
               <p class="share-card__label">Website</p>
-              <a class="share-card__contact-link" href="{{ home_page_path | absolute_url }}" aria-label="Abrir site {{ site.url }}">{{ site.url }}</a>
+              <a class="share-card__contact-link" href="{{ home_page_path | absolute_url | escape }}" aria-label="Abrir site {{ site.url | escape }}">{{ site.url | escape }}</a>
             </li>
             <li class="share-card__contact-item">
               <p class="share-card__label">Email</p>
-              <a class="share-card__contact-link" href="mailto:{{site.email}}" aria-label="Enviar email para {{ site.email }}">{{site.email}}</a>
+              <a class="share-card__contact-link" href="mailto:{{ site.email | uri_escape }}" aria-label="Enviar email para {{ site.email | escape }}">{{ site.email | escape }}</a>
             </li>
           </ul>
           <p class="share-card__label">Redes Sociais: Siga-nos nas redes sociais</p>

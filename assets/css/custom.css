@@ -3060,6 +3060,16 @@ section[id] {
   outline-offset: 2px;
 }
 
+@supports (content-visibility: auto) {
+  .share-card .help-list,
+  .share-card .achievements-list,
+  .share-card .store-section,
+  .share-card .footer-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 520px;
+  }
+}
+
 .stats-card {
   padding: 20px;
   border-radius: 28px;
