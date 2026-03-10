@@ -4539,7 +4539,8 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 
 .contact-v2__chip a {
   min-height: 44px;
-  display: inline-flex;
+  width: 100%;
+  display: flex;
   align-items: center;
   touch-action: manipulation;
 }

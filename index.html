@@ -27,7 +27,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
     {
       "@type": "ListItem",
       "position": {{ forloop.index }},
-      "url": "{{ post.url | absolute_url }}",
+      "url": "{{ post.url | absolute_url | escape }}",
       "name": "{{ post.title | escape }}",
       "datePublished": "{{ post.date | date_to_xmlschema }}"
     }{% unless forloop.last %},{% endunless %}
@@ -78,16 +78,16 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
         {% for post in recent_posts %}
         <article class="home-v2__post-card" itemscope itemtype="https://schema.org/BlogPosting">
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-            <meta itemprop="name" content="{{ site.author.name }}">
+            <meta itemprop="name" content="{{ site.author.name | escape }}">
             {% if site.author.url %}
-            <meta itemprop="url" content="{{ site.author.url }}">
+            <meta itemprop="url" content="{{ site.author.url | escape }}">
             {% endif %}
           </span>
           {% if site.author.name %}
           <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
-            <meta itemprop="name" content="{{ site.author.name }}">
+            <meta itemprop="name" content="{{ site.author.name | escape }}">
             {% if site.author.url %}
-            <meta itemprop="url" content="{{ site.author.url }}">
+            <meta itemprop="url" content="{{ site.author.url | escape }}">
             {% endif %}
           </span>
           {% endif %}
@@ -98,16 +98,16 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
           <meta itemprop="wordCount" content="{{ words }}">
           {% if post.image %}
             {% if post.image contains '://' %}
-          <meta itemprop="image" content="{{ post.image }}">
+          <meta itemprop="image" content="{{ post.image | escape }}">
             {% else %}
-          <meta itemprop="image" content="{{ post.image | absolute_url }}">
+          <meta itemprop="image" content="{{ post.image | absolute_url | escape }}">
             {% endif %}
           {% elsif site.image %}
-          <meta itemprop="image" content="{{ site.image | absolute_url }}">
+          <meta itemprop="image" content="{{ site.image | absolute_url | escape }}">
           {% endif %}
 
           <h3 class="home-v2__post-title" itemprop="headline">
-            <a href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}" itemprop="url">{{ post.title }}</a>
+            <a href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title | escape }}" itemprop="url">{{ post.title }}</a>
           </h3>
           <p class="home-v2__post-excerpt" itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 150 }}</p>
           <p class="home-v2__post-meta">
@@ -138,7 +138,7 @@ keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, 
       <section class="home-v2__side-card">
         <h3>Sobre mim</h3>
         <p>{{ site.author.bio }}</p>
-        <img src="{{ '/assets/images/sal-150.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="112px" alt="{{ site.author.name }}" loading="lazy" decoding="async" fetchpriority="low" width="112" height="112">
+        <img src="{{ '/assets/images/sal-150.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="112px" alt="{{ site.author.name | escape }}" loading="lazy" decoding="async" fetchpriority="low" width="112" height="112">
         <a class="home-v2__btn home-v2__btn--secondary" href="{% link pages/about.html %}" aria-label="Saiba mais sobre Hoa">Saiba mais</a>
       </section>
 
