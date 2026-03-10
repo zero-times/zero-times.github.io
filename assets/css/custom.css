@@ -4537,6 +4537,13 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   overflow-wrap: anywhere;
 }
 
+.contact-v2__chip a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  touch-action: manipulation;
+}
+
 .contact-v2__form {
   margin-top: 0.9rem;
 }
