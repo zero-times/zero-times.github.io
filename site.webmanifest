@@ -50,16 +50,16 @@
   ],
   "screenshots": [
     {
-      "src": "/assets/images/screenshot.png",
+      "src": "/assets/images/screenshot.jpg",
       "sizes": "1280x719",
-      "type": "image/png",
+      "type": "image/jpeg",
       "form_factor": "wide",
       "label": "Página inicial do blog Hoa"
     },
     {
-      "src": "/assets/images/screenshot-mobile.png",
+      "src": "/assets/images/screenshot-mobile.jpg",
       "sizes": "750x1334",
-      "type": "image/png",
+      "type": "image/jpeg",
       "form_factor": "narrow",
       "label": "Página inicial do blog Hoa no celular"
     }
