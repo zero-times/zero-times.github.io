@@ -1496,6 +1496,14 @@ select:focus-visible,
   .post-breadcrumbs li {
     white-space: nowrap;
   }
+
+  .post-breadcrumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.2rem 0.1rem;
+    touch-action: manipulation;
+  }
 }
 
 .post-meta {
