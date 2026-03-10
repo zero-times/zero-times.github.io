@@ -10,6 +10,12 @@ schema_type: ContactPage
 preconnect_formspree: true
 hide_title: true
 ---
+{% assign whatsapp_digits = site.whatsapp | default: '' | replace: '+', '' | strip %}
+{% assign has_social_links = site.social and site.social.links and site.social.links.size > 0 %}
+{% assign has_same_as_links = false %}
+{% if has_social_links or whatsapp_digits != '' %}
+  {% assign has_same_as_links = true %}
+{% endif %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -21,14 +27,17 @@ hide_title: true
     "@type": "Person",
     "name": "{{ site.author.name | escape }}",
     "url": "{{ site.author.url | default: site.url }}",
-    "email": "mailto:{{ site.email | escape }}"
+    "email": "mailto:{{ site.email | escape }}"{% if has_same_as_links %},
+    "sameAs": [{% assign same_as_joined = false %}{% if has_social_links %}{% for social_link in site.social.links %}{% if same_as_joined %}, {% endif %}"{{ social_link | escape }}"{% assign same_as_joined = true %}{% endfor %}{% endif %}{% if whatsapp_digits != '' %}{% if same_as_joined %}, {% endif %}"https://wa.me/{{ whatsapp_digits }}"{% endif %}]
+    {% endif %}
   },
   "contactPoint": [
     {
       "@type": "ContactPoint",
       "contactType": "consulting",
       "email": "{{ site.email | escape }}",
-      "availableLanguage": ["pt-BR", "en", "zh-CN"]
+      "availableLanguage": ["pt-BR", "en", "zh-CN"],
+      "url": "{{ page.url | absolute_url }}"
     }
   ]
 }

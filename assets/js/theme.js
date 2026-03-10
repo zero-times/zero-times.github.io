@@ -325,6 +325,22 @@ document.addEventListener('DOMContentLoaded', function() {
     field.removeAttribute('aria-invalid');
     return true;
   };
+  const lockSubmittingForm = (form) => {
+    if (!form || form.getAttribute('data-form-submitting') === 'true') {
+      return false;
+    }
+    form.setAttribute('data-form-submitting', 'true');
+    form.setAttribute('aria-busy', 'true');
+    const submitButtons = form.querySelectorAll('button[type="submit"], input[type="submit"]');
+    submitButtons.forEach((button) => {
+      if (button.hasAttribute('disabled')) {
+        return;
+      }
+      button.setAttribute('data-was-enabled', 'true');
+      button.disabled = true;
+    });
+    return true;
+  };
 
   forms.forEach(form => {
     const requiredFields = form.querySelectorAll('[required]');
@@ -362,6 +378,20 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
         announceToScreenReader(announceMessage);
+        form.removeAttribute('data-form-submitting');
+        form.removeAttribute('aria-busy');
+      } else if (lockSubmittingForm(form)) {
+        window.setTimeout(() => {
+          if (!document.contains(form)) {
+            return;
+          }
+          form.removeAttribute('data-form-submitting');
+          form.removeAttribute('aria-busy');
+          form.querySelectorAll('[data-was-enabled="true"]').forEach((button) => {
+            button.disabled = false;
+            button.removeAttribute('data-was-enabled');
+          });
+        }, 15000);
       }
     });
 
