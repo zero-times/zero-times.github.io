@@ -27,7 +27,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="application-name" content="{{ site.title | escape }}">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="author" content="{{ site.author.name }}">
+  <meta name="author" content="{{ site.author.name | escape }}">
   {% assign is_paginated_archive_page = paginator and paginator.page and paginator.page > 1 %}
   {% assign noindex_effective = false %}
   {% if page.robots and page.robots contains 'noindex' %}
@@ -249,7 +249,8 @@
         "@type": "Person",
         "@id": "{{ author_entity_id }}",
         "name": "{{ site.author.name | escape }}",
-        "url": "{{ site.author.url }}"{% if publisher_image_url %},
+        "url": "{{ site.author.url }}"{% if site.email %},
+        "email": "mailto:{{ site.email | escape }}"{% endif %}{% if publisher_image_url %},
         "image": "{{ publisher_image_url }}"
         {% endif %}
       }{% if site.social and site.social.links %},
@@ -264,7 +265,8 @@
       "@type": "Person",
       "@id": "{{ author_entity_id }}",
       "name": "{{ site.author.name | escape }}"{% if site.author.url %},
-      "url": "{{ site.author.url }}"{% endif %}{% if publisher_image_url %},
+      "url": "{{ site.author.url }}"{% endif %}{% if site.email %},
+      "email": "mailto:{{ site.email | escape }}"{% endif %}{% if publisher_image_url %},
       "image": "{{ publisher_image_url }}"{% endif %}{% if site.social and site.social.links %},
       "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
       {% endif %}

@@ -19,7 +19,7 @@ hide_title: true
     "image": "{{ site.author.avatar | absolute_url }}",
     "jobTitle": "Arquitetura móvel e soluções multiplataforma",
     "description": "{{ site.author.bio | escape }}",
-    "email": "{{ site.email }}"{% if site.social and site.social.links %},
+    "email": "mailto:{{ site.email | escape }}"{% if site.social and site.social.links %},
     "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
     {% endif %}
   }

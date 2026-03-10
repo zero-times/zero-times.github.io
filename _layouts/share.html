@@ -27,7 +27,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="application-name" content="{{ site.title | escape }}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="author" content="{{ site.author.name }}">
+<meta name="author" content="{{ site.author.name | escape }}">
 {% assign effective_robots = page.robots | default: 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' %}
 <meta name="robots" content="{{ effective_robots }}">
 {% if page.googlebot %}
@@ -178,7 +178,8 @@
   "@type": "Person",
   "@id": "{{ author_entity_id }}",
   "name": "{{ site.author.name | escape }}"{% if site.author.url %},
-  "url": "{{ site.author.url }}"{% endif %}{% if share_publisher_image_url %},
+  "url": "{{ site.author.url }}"{% endif %}{% if site.email %},
+  "email": "mailto:{{ site.email | escape }}"{% endif %}{% if share_publisher_image_url %},
   "image": "{{ share_publisher_image_url }}"{% endif %}{% if site.social and site.social.links %},
   "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
   {% endif %}
