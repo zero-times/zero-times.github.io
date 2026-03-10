@@ -99,6 +99,15 @@ html {
     align-items: center;
     padding: 0.45rem 0.75rem;
   }
+
+  .contact-v2__form .form-control {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .contact-v2__form textarea.form-control {
+    min-height: 160px;
+  }
 }
 
 @supports (padding: max(0px)) {
