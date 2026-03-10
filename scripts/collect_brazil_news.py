@@ -190,7 +190,7 @@ layout: post
 title: "Notícias Diárias do Brasil - {now.strftime('%d/%m/%Y')}"
 date: {post_date}
 categories: news
-lang: pt-br
+lang: pt-BR
 description: "{description}"
 keywords: "{keywords}"
 ---
