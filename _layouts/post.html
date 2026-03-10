@@ -76,21 +76,21 @@ layout: default
     <meta itemprop="timeRequired" content="PT{{ reading_minutes }}M">
     {% if site.author.name %}
     <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
-        <meta itemprop="name" content="{{ site.author.name }}">
+        <meta itemprop="name" content="{{ site.author.name | escape }}">
         {% if site.author.url %}
-        <meta itemprop="url" content="{{ site.author.url }}">
+        <meta itemprop="url" content="{{ site.author.url | escape }}">
         {% endif %}
     </span>
     {% endif %}
     {% if post_image_src %}
       {% if post_image_src contains '://' %}
-    <meta itemprop="image" content="{{ post_image_src }}">
+    <meta itemprop="image" content="{{ post_image_src | escape }}">
       {% else %}
-    <meta itemprop="image" content="{{ post_image_src | absolute_url }}">
+    <meta itemprop="image" content="{{ post_image_src | absolute_url | escape }}">
       {% endif %}
     {% endif %}
     {% if page.description %}
-    <meta itemprop="description" content="{{ page.description }}">
+    <meta itemprop="description" content="{{ page.description | escape }}">
     {% elsif page.excerpt %}
     <meta itemprop="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}">
     {% endif %}
@@ -98,7 +98,7 @@ layout: default
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 {% if page.image %}
-                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ post_image_alt }}" itemprop="image" loading="{{ featured_image_loading }}" decoding="async" fetchpriority="{{ featured_image_fetchpriority }}" sizes="{{ featured_image_sizes }}"{% if featured_image_width %} width="{{ featured_image_width }}"{% endif %}{% if featured_image_height %} height="{{ featured_image_height }}"{% endif %}>
+                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ post_image_alt | escape }}" itemprop="image" loading="{{ featured_image_loading }}" decoding="async" fetchpriority="{{ featured_image_fetchpriority }}" sizes="{{ featured_image_sizes }}"{% if featured_image_width %} width="{{ featured_image_width }}"{% endif %}{% if featured_image_height %} height="{{ featured_image_height }}"{% endif %}>
                 {% endif %}
             
                 <div class="post-header">
@@ -184,7 +184,7 @@ layout: default
                             {% assign post_site_link = page.site | relative_url %}
                         {% endif %}
                         <div class="post-site mt-3">
-                            <a class="btn btn-sm btn-outline-secondary" href="{{ post_site_link }}"{% if post_site_external %} target="_blank" rel="nofollow noopener noreferrer external"{% endif %} aria-label="Visitar site relacionado: {{ page.title }}">Visitar site</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ post_site_link }}"{% if post_site_external %} target="_blank" rel="nofollow noopener noreferrer external"{% endif %} aria-label="Visitar site relacionado: {{ page.title | escape }}">Visitar site</a>
                         </div>
                     {% endif %}
                 </div>
@@ -235,7 +235,7 @@ layout: default
                             {% else %}
                                 {% assign author_avatar_url = author_avatar_src | relative_url %}
                             {% endif %}
-                            <img class="author-thumb rounded-circle" src="{{ author_avatar_url }}" {% if author_avatar_srcset %}srcset="{{ author_avatar_srcset }}" sizes="72px" {% endif %}alt="{{ author_name }}" itemprop="image" loading="lazy" decoding="async" fetchpriority="low" width="72" height="72">
+                            <img class="author-thumb rounded-circle" src="{{ author_avatar_url }}" {% if author_avatar_srcset %}srcset="{{ author_avatar_srcset }}" sizes="72px" {% endif %}alt="{{ author_name | escape }}" itemprop="image" loading="lazy" decoding="async" fetchpriority="low" width="72" height="72">
                             {% endif %}
                         </div>
                         <div class="col-md-10">
@@ -244,7 +244,7 @@ layout: default
                             <p class="author-description" itemprop="description">{{ author_bio }}</p>
                             {% endif %}
                             {% if author_web_link %}
-                            <a class="btn btn-sm btn-outline-primary" href="{{ author_web_link }}" itemprop="url"{% if author_web_external %} rel="author nofollow noopener noreferrer external" target="_blank"{% else %} rel="author"{% endif %} aria-label="Visitar site do autor {{ author_name }}">Visitar site</a>
+                            <a class="btn btn-sm btn-outline-primary" href="{{ author_web_link }}" itemprop="url"{% if author_web_external %} rel="author nofollow noopener noreferrer external" target="_blank"{% else %} rel="author"{% endif %} aria-label="Visitar site do autor {{ author_name | escape }}">Visitar site</a>
                             {% endif %}
                         </div>
                     </div>

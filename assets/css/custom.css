@@ -91,6 +91,14 @@ html {
     align-items: center;
     justify-content: center;
   }
+
+  .post-categories a,
+  .post-tags .badge {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.75rem;
+  }
 }
 
 @supports (padding: max(0px)) {
