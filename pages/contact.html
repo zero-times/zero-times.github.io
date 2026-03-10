@@ -10,6 +10,29 @@ schema_type: ContactPage
 preconnect_formspree: true
 hide_title: true
 ---
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "{{ page.title | default: site.title | escape }}",
+  "url": "{{ page.url | absolute_url }}",
+  "description": "{{ page.description | default: site.description | escape }}",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "{{ site.author.name | escape }}",
+    "url": "{{ site.author.url | default: site.url }}",
+    "email": "mailto:{{ site.email | escape }}"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "consulting",
+      "email": "{{ site.email | escape }}",
+      "availableLanguage": ["pt-BR", "en", "zh-CN"]
+    }
+  ]
+}
+</script>
 
 <div class="container my-5 contact-v2">
   <section class="contact-v2__hero" aria-labelledby="page-title">

@@ -4542,7 +4542,14 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   width: 100%;
   display: flex;
   align-items: center;
+  padding: 0.25rem 0;
+  border-radius: 0.55rem;
+  -webkit-tap-highlight-color: rgba(37, 99, 235, 0.22);
   touch-action: manipulation;
+}
+
+.contact-v2__chip a:active {
+  background: rgba(37, 99, 235, 0.12);
 }
 
 .contact-v2__form {
@@ -4635,6 +4642,10 @@ main :target {
 @media (max-width: 575.98px) {
   .contact-v2__submit {
     min-height: 48px;
+  }
+
+  .contact-v2__chip a {
+    padding: 0.55rem 0.4rem;
   }
 }
 
