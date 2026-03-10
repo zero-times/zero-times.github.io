@@ -37,17 +37,22 @@ layout: default
 {% assign word_count = content | number_of_words %}
 {% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
 {% assign normalized_post_lang = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
-{% assign featured_image_loading = page.image_loading | default: 'eager' %}
-{% assign featured_image_fetchpriority = page.image_fetchpriority %}
+{% assign featured_image_loading_raw = page.image_loading | default: 'eager' | downcase %}
+{% if featured_image_loading_raw == 'lazy' %}
+  {% assign featured_image_loading = 'lazy' %}
+{% else %}
+  {% assign featured_image_loading = 'eager' %}
+{% endif %}
+{% assign featured_image_fetchpriority_raw = page.image_fetchpriority | default: '' | downcase %}
 {% assign featured_image_sizes = page.image_sizes | default: '(max-width: 575.98px) calc(100vw - 2rem), (max-width: 991.98px) calc(100vw - 3rem), 960px' %}
 {% assign featured_image_width = page.image_width | default: site.social_image_width %}
 {% assign featured_image_height = page.image_height | default: site.social_image_height %}
-{% if featured_image_fetchpriority == nil %}
-  {% if featured_image_loading == 'eager' %}
-    {% assign featured_image_fetchpriority = 'high' %}
-  {% else %}
-    {% assign featured_image_fetchpriority = 'low' %}
-  {% endif %}
+{% if featured_image_fetchpriority_raw == 'high' or featured_image_fetchpriority_raw == 'low' or featured_image_fetchpriority_raw == 'auto' %}
+  {% assign featured_image_fetchpriority = featured_image_fetchpriority_raw %}
+{% elsif featured_image_loading == 'eager' %}
+  {% assign featured_image_fetchpriority = 'high' %}
+{% else %}
+  {% assign featured_image_fetchpriority = 'low' %}
 {% endif %}
 {% assign post_image_src = nil %}
 {% assign post_image_alt = page.image_alt | default: page.description | default: page.title %}
@@ -98,7 +103,7 @@ layout: default
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 {% if page.image %}
-                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ post_image_alt | escape }}" itemprop="image" loading="{{ featured_image_loading }}" decoding="async" fetchpriority="{{ featured_image_fetchpriority }}" sizes="{{ featured_image_sizes }}"{% if featured_image_width %} width="{{ featured_image_width }}"{% endif %}{% if featured_image_height %} height="{{ featured_image_height }}"{% endif %}>
+                <img class="featured-image img-fluid rounded" src="{{ post_image_src }}" alt="{{ post_image_alt | escape }}" itemprop="image" loading="{{ featured_image_loading }}" decoding="async" fetchpriority="{{ featured_image_fetchpriority }}" referrerpolicy="strict-origin-when-cross-origin" sizes="{{ featured_image_sizes | escape }}"{% if featured_image_width %} width="{{ featured_image_width }}"{% endif %}{% if featured_image_height %} height="{{ featured_image_height }}"{% endif %}>
                 {% endif %}
             
                 <div class="post-header">
