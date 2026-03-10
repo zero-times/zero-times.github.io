@@ -33,6 +33,7 @@ html {
 
 /* Speed up long feeds by skipping off-screen card rendering until needed */
 .category-post-card,
+.postbox-card,
 .home-hero__latest .card,
 .home-v2__post-card,
 .home-v2__side-card,
