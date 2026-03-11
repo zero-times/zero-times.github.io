@@ -186,7 +186,8 @@ preconnect_formspree: true
             <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="source" value="blog-sidebar">
             <div class="mb-3">
-              <input type="email" name="email" class="form-control" placeholder="Seu melhor email" aria-label="Seu melhor email" aria-describedby="blog-newsletter-hint" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
+              <label class="visually-hidden" for="blog-newsletter-email">Seu melhor email</label>
+              <input id="blog-newsletter-email" type="email" name="email" class="form-control" placeholder="Seu melhor email" aria-label="Seu melhor email" aria-describedby="blog-newsletter-hint" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" required>
               <small id="blog-newsletter-hint" class="newsletter-hint">Sem spam. Cancelamento a qualquer momento.</small>
             </div>
             <button type="submit" class="btn btn-primary w-100">Inscrever-se</button>
