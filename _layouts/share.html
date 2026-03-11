@@ -132,6 +132,9 @@
   "datePublished": "{{ share_webpage_published | date_to_xmlschema }}"{% endif %}{% if share_webpage_modified %},
   "dateModified": "{{ share_webpage_modified | date_to_xmlschema }}"{% endif %},
   "inLanguage": "{{ html_lang }}",
+  "publisher": {
+    "@id": "{{ author_entity_id }}"
+  },
   "about": {
     "@id": "{{ author_entity_id }}"
   },
