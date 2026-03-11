@@ -56,6 +56,16 @@ layout: default
 {% endif %}
 {% assign post_image_src = nil %}
 {% assign post_image_alt = page.image_alt | default: page.description | default: page.title %}
+{% assign publisher_name = site.title | default: site.author.name %}
+{% assign publisher_url = site.url | append: site.baseurl %}
+{% assign publisher_logo_src = site.logo | default: site.author.avatar %}
+{% if publisher_logo_src %}
+  {% if publisher_logo_src contains '://' %}
+    {% assign publisher_logo_url = publisher_logo_src %}
+  {% else %}
+    {% assign publisher_logo_url = publisher_logo_src | absolute_url %}
+  {% endif %}
+{% endif %}
 {% if page.image %}
   {% if page.image contains '://' %}
     {% assign post_image_src = page.image %}
@@ -79,11 +89,14 @@ layout: default
     <meta itemprop="dateModified" content="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">
     <meta itemprop="wordCount" content="{{ word_count }}">
     <meta itemprop="timeRequired" content="PT{{ reading_minutes }}M">
-    {% if site.author.name %}
-    <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
-        <meta itemprop="name" content="{{ site.author.name | escape }}">
-        {% if site.author.url %}
-        <meta itemprop="url" content="{{ site.author.url | escape }}">
+    {% if publisher_name %}
+    <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+        <meta itemprop="name" content="{{ publisher_name | escape }}">
+        {% if publisher_url %}
+        <meta itemprop="url" content="{{ publisher_url | escape }}">
+        {% endif %}
+        {% if publisher_logo_url %}
+        <meta itemprop="logo" content="{{ publisher_logo_url | escape }}">
         {% endif %}
     </span>
     {% endif %}
