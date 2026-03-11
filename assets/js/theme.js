@@ -736,6 +736,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const enhanceMediaDefaults = () => {
     // Add media defaults on article containers first to reduce unnecessary DOM work.
     const mediaScope = contentOptimizationRoot;
+    if (!mediaScope) {
+      return;
+    }
     const hasMediaDefaultsWork = deferredContentOptimizationsDone
       ? mediaScope.querySelector('img:not([src^="data:"]):not([alt]), iframe:not([fetchpriority]), video:not([preload]), video:not([playsinline]), audio:not([preload]), img[data-src], img.news-inline-thumb')
       : mediaScope.querySelector(
