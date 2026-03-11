@@ -23,6 +23,7 @@ hide_title: true
   "@type": "ContactPage",
   "name": "{{ page.title | default: site.title | escape }}",
   "url": "{{ page.url | absolute_url }}",
+  "inLanguage": "{{ page.lang | default: site.lang | default: 'pt-BR' }}",
   "description": "{{ page.description | default: site.description | escape }}",
   "mainEntity": {
     "@type": "Person",
@@ -91,7 +92,7 @@ hide_title: true
         </div>
         <div class="contact-v2__field">
           <label for="contact-email">Email <span aria-hidden="true">*</span></label>
-          <input id="contact-email" class="form-control" type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
+          <input id="contact-email" class="form-control" type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next" required>
         </div>
         <div class="contact-v2__field">
           <label for="contact-company">Empresa ou equipe</label>
