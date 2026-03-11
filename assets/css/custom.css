@@ -135,6 +135,22 @@ html {
   min-height: 96px;
 }
 
+/* Keep article code/table blocks readable on mobile instead of forcing page overflow */
+.post-content pre,
+.post-content table,
+.blog-entry pre,
+.blog-entry table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.post-content code,
+.blog-entry code {
+  overflow-wrap: anywhere;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .postbox-card,
   .contact-card,
