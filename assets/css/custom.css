@@ -3921,8 +3921,10 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
 
 .home-v2__hero-visual {
   position: relative;
-  margin: 0;
-  min-height: 220px;
+  margin: 0 auto;
+  width: min(100%, 320px);
+  aspect-ratio: 1 / 1;
+  min-height: 0;
   border-radius: 1rem;
   border: 1px solid #dce3f0;
   overflow: hidden;
@@ -4205,8 +4207,13 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   }
 
   .home-v2__hero {
-    grid-template-columns: minmax(0, 1fr) 560px;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
     align-items: center;
+  }
+
+  .home-v2__hero-visual {
+    width: min(100%, 360px);
+    justify-self: end;
   }
 
   .home-v2__metrics {
