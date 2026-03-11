@@ -129,6 +129,24 @@ jobs:
           print(summary_path.read_text(encoding='utf-8'))
           PY
 
+      - name: Upload site audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-audit-reports-${{ github.run_id }}
+          path: reports/site_audit_*.json
+          if-no-files-found: ignore
+          retention-days: 21
+
+      - name: Upload monthly HTTP failure summary
+        if: github.event_name == 'schedule' && github.event.schedule == '35 2 1 * *' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-audit-http-summary-${{ github.run_id }}
+          path: reports/http_failures_summary.md
+          if-no-files-found: ignore
+          retention-days: 60
+
       - name: Build site for rendered SEO smoke check
         run: bundle exec jekyll build
 
