@@ -309,7 +309,10 @@
       "image": "{{ social_image_url }}",
       "primaryImageOfPage": {
         "@type": "ImageObject",
-        "url": "{{ social_image_url }}"
+        "url": "{{ social_image_url }}"{% if social_image_width %},
+        "width": {{ social_image_width }}{% endif %}{% if social_image_height %},
+        "height": {{ social_image_height }}{% endif %}{% if social_image_alt %},
+        "caption": "{{ social_image_alt | escape }}"{% endif %}
       }
       {% endif %}
     }
