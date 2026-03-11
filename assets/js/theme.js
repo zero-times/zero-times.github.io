@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
   );
   const prefersAutoScroll = prefersReducedMotion || prefersReducedData;
   const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
-  const contentRoot = document.querySelector('main') || document.body;
+  // Limit deferred DOM scans to content-heavy article roots.
+  // This avoids walking entire list/home pages where markup is already optimized.
   const contentOptimizationRoot = (
     document.querySelector('.post-content') ||
     document.querySelector('.article-post') ||
-    document.querySelector('.share-article') ||
-    contentRoot
+    document.querySelector('.share-article')
   );
   const hasDeferredOptimizationCandidates = !!(
     contentOptimizationRoot &&
