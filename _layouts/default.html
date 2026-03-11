@@ -98,6 +98,17 @@
     <meta property="article:modified_time" content="{{ social_modified_time | date_to_xmlschema }}">
     <meta property="og:updated_time" content="{{ social_modified_time | date_to_xmlschema }}">
   {% endif %}
+  {% if page.layout == 'post' %}
+    {% assign primary_category = page.categories | first %}
+    {% if primary_category %}
+    <meta property="article:section" content="{{ primary_category | escape }}">
+    {% endif %}
+    {% if page.tags %}
+      {% for tag in page.tags limit: 5 %}
+    <meta property="article:tag" content="{{ tag | escape }}">
+      {% endfor %}
+    {% endif %}
+  {% endif %}
   {% assign should_preload_page_image = false %}
   {% if page.image %}
     {% if page.preload_featured_image or page.image_loading == 'eager' or page.image_fetchpriority == 'high' %}
@@ -551,7 +562,7 @@
   {% assign is_about = page.url contains '/about/' %}
   {% assign is_contact = page.url contains '/contact/' %}
 
-  <header class="site-header-v2 sticky-top" role="navigation" aria-label="Navegação principal">
+  <header class="site-header-v2 sticky-top" role="banner">
     <div class="container site-header-v2__inner">
       <a class="site-header-v2__brand" href="{% link index.html %}" rel="home" aria-label="Página inicial - {{ site.title }}">
         {{ brand_label }}
