@@ -82,6 +82,7 @@
 {% assign share_description = page.description | default: site.description | strip %}
 {% assign share_webpage_published = page.date %}
 {% assign share_webpage_modified = page.last_modified_at | default: page.date %}
+{% assign share_webpage_schema_type = page.schema_type | default: 'WebPage' %}
 {% assign share_publisher_image = site.logo | default: site.author.avatar %}
 {% assign share_schema_image_src = page.image | default: site.image | default: share_publisher_image %}
 {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
@@ -123,7 +124,7 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": "{{ share_webpage_schema_type }}",
   "@id": "{{ webpage_entity_id }}",
   "name": "{{ page.title | default: site.title | escape }}",
   "url": "{{ page.url | absolute_url }}",
