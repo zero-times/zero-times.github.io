@@ -118,27 +118,11 @@
   <link rel="prefetch" href="{% link blog/index.html %}">
   <link rel="prefetch" href="{% link pages/contact.html %}">
   {% endif %}
-  {% assign should_preconnect_news_sources = false %}
-  {% if page.preconnect_news_sources == true %}
-    {% assign should_preconnect_news_sources = true %}
-  {% elsif page.preconnect_news_sources != false %}
-    {% assign page_image_src_for_preconnect = page.image | default: '' %}
-    {% assign page_content_for_preconnect = page.content | default: '' %}
-    {% if page_image_src_for_preconnect contains 's2-g1.glbimg.com' or page_image_src_for_preconnect contains 'i.s3.glbimg.com' or page_content_for_preconnect contains 'https://s2-g1.glbimg.com' or page_content_for_preconnect contains 'https://i.s3.glbimg.com' %}
-      {% assign should_preconnect_news_sources = true %}
-    {% endif %}
-  {% endif %}
-  {% if should_preconnect_news_sources %}
+  {% if page.preconnect_news_sources %}
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
   <link rel="preconnect" href="https://i.s3.glbimg.com" crossorigin>
   {% endif %}
-  {% assign should_dns_prefetch_news_sources = false %}
-  {% if page.dns_prefetch_news_sources == true %}
-    {% assign should_dns_prefetch_news_sources = true %}
-  {% elsif page.dns_prefetch_news_sources != false and should_preconnect_news_sources %}
-    {% assign should_dns_prefetch_news_sources = true %}
-  {% endif %}
-  {% if should_dns_prefetch_news_sources %}
+  {% if page.dns_prefetch_news_sources %}
   <link rel="dns-prefetch" href="//s2-g1.glbimg.com">
   <link rel="dns-prefetch" href="//i.s3.glbimg.com">
   {% endif %}
