@@ -18,8 +18,8 @@ layout: default
     {% endif %}
     {% assign page_image_fetchpriority_raw = page.image_fetchpriority | default: '' | downcase %}
     {% assign page_image_sizes = page.image_sizes | default: '(max-width: 575.98px) calc(100vw - 2rem), (max-width: 991.98px) calc(100vw - 3rem), 760px' %}
-    {% assign page_image_width = page.image_width | default: site.social_image_width %}
-    {% assign page_image_height = page.image_height | default: site.social_image_height %}
+    {% assign page_image_width = page.image_width %}
+    {% assign page_image_height = page.image_height %}
     {% if page_image_fetchpriority_raw == 'high' or page_image_fetchpriority_raw == 'low' or page_image_fetchpriority_raw == 'auto' %}
       {% assign page_image_fetchpriority = page_image_fetchpriority_raw %}
     {% elsif page_image_loading == 'eager' %}

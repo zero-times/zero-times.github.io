@@ -45,8 +45,8 @@ layout: default
 {% endif %}
 {% assign featured_image_fetchpriority_raw = page.image_fetchpriority | default: '' | downcase %}
 {% assign featured_image_sizes = page.image_sizes | default: '(max-width: 575.98px) calc(100vw - 2rem), (max-width: 991.98px) calc(100vw - 3rem), 960px' %}
-{% assign featured_image_width = page.image_width | default: site.social_image_width %}
-{% assign featured_image_height = page.image_height | default: site.social_image_height %}
+{% assign featured_image_width = page.image_width %}
+{% assign featured_image_height = page.image_height %}
 {% if featured_image_fetchpriority_raw == 'high' or featured_image_fetchpriority_raw == 'low' or featured_image_fetchpriority_raw == 'auto' %}
   {% assign featured_image_fetchpriority = featured_image_fetchpriority_raw %}
 {% elsif featured_image_loading == 'eager' %}
