@@ -88,6 +88,7 @@
 {% assign website_entity_id = site.url | append: site.baseurl | append: '#website' %}
 {% assign author_entity_base = site.author.url | default: site.url %}
 {% assign author_entity_id = author_entity_base | append: '#person' %}
+{% assign organization_entity_id = site.url | append: site.baseurl | append: '#organization' %}
 {% assign webpage_entity_id = page.url | absolute_url | append: '#webpage' %}
 {% assign breadcrumb_entity_id = page.url | absolute_url | append: '#breadcrumb' %}
 {% assign website_lang_base = html_lang | split: '-' | first %}
@@ -115,8 +116,23 @@
   "inLanguage": "{{ html_lang }}",
   "availableLanguage": [{% if website_lang_base and website_lang_base != html_lang %}"{{ html_lang }}", "{{ website_lang_base }}"{% else %}"{{ html_lang }}"{% endif %}],
   "publisher": {
-    "@id": "{{ author_entity_id }}"
+    "@id": "{{ organization_entity_id }}"
   }{% if site.social and site.social.links %},
+  "sameAs": [{% for link in site.social.links %}"{{ link | escape }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+  {% endif %}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "{{ organization_entity_id }}",
+  "name": "{{ site.title | escape }}",
+  "url": "{{ site.url }}{{ site.baseurl }}"{% if share_publisher_image_url %},
+  "logo": {
+    "@type": "ImageObject",
+    "url": "{{ share_publisher_image_url }}"
+  }{% endif %}{% if site.social and site.social.links %},
   "sameAs": [{% for link in site.social.links %}"{{ link | escape }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
   {% endif %}
 }
@@ -133,7 +149,7 @@
   "dateModified": "{{ share_webpage_modified | date_to_xmlschema }}"{% endif %},
   "inLanguage": "{{ html_lang }}",
   "publisher": {
-    "@id": "{{ author_entity_id }}"
+    "@id": "{{ organization_entity_id }}"
   },
   "about": {
     "@id": "{{ author_entity_id }}"
