@@ -4,5 +4,6 @@ permalink: /robots.txt
 ---
 User-agent: *
 Allow: /
+Disallow: /share/
 
 Sitemap: {{ '/sitemap.xml' | absolute_url }}

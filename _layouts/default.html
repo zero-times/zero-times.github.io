@@ -68,14 +68,6 @@
       <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
     {% endunless %}
   {% endunless %}
-  {% if paginator %}
-    {% if paginator.previous_page %}
-  <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">
-    {% endif %}
-    {% if paginator.next_page %}
-  <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
-    {% endif %}
-  {% endif %}
   {% assign social_image_alt = page.image_alt | default: site.image_alt | default: page.title | default: site.title %}
   {% assign social_image_src = page.image | default: site.image %}
   {% if social_image_src %}
