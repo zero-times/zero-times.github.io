@@ -11,6 +11,7 @@ keywords: "privacidade, dados pessoais, cookies, analytics, conformidade"
 schema_type: PrivacyPolicy
 last_modified_at: 2026-02-20
 load_webfonts: false
+load_analytics: false
 ---
 
 <section class="privacy-policy">
