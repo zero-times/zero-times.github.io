@@ -16,6 +16,16 @@ last_modified_at: 2026-03-11
 
 {% assign recent_posts = site.posts | slice: 0, 3 %}
 {% assign recent_posts_count = recent_posts | size %}
+{% assign home_publisher_name = site.title | default: site.author.name %}
+{% assign home_publisher_url = site.url | append: site.baseurl %}
+{% assign home_publisher_logo_src = site.logo | default: site.author.avatar %}
+{% if home_publisher_logo_src %}
+  {% if home_publisher_logo_src contains '://' %}
+    {% assign home_publisher_logo_url = home_publisher_logo_src %}
+  {% else %}
+    {% assign home_publisher_logo_url = home_publisher_logo_src | absolute_url %}
+  {% endif %}
+{% endif %}
 {% if recent_posts_count and recent_posts_count > 0 %}
 <script type="application/ld+json">
 {
@@ -85,11 +95,14 @@ last_modified_at: 2026-03-11
             <meta itemprop="url" content="{{ site.author.url | escape }}">
             {% endif %}
           </span>
-          {% if site.author.name %}
-          <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
-            <meta itemprop="name" content="{{ site.author.name | escape }}">
-            {% if site.author.url %}
-            <meta itemprop="url" content="{{ site.author.url | escape }}">
+          {% if home_publisher_name %}
+          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="{{ home_publisher_name | escape }}">
+            {% if home_publisher_url %}
+            <meta itemprop="url" content="{{ home_publisher_url | escape }}">
+            {% endif %}
+            {% if home_publisher_logo_url %}
+            <meta itemprop="logo" content="{{ home_publisher_logo_url | escape }}">
             {% endif %}
           </span>
           {% endif %}
