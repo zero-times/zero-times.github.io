@@ -8,6 +8,11 @@ html {
   scroll-padding-top: 6rem;
 }
 
+/* Keep in-page anchor targets visible below the sticky header */
+:target {
+  scroll-margin-top: 6.5rem;
+}
+
 @supports (padding: max(0px)) {
   html {
     scroll-padding-top: max(6rem, calc(6rem + env(safe-area-inset-top)));
@@ -59,6 +64,10 @@ html {
 @media (max-width: 575.98px) {
   html {
     scroll-padding-top: 5rem;
+  }
+
+  :target {
+    scroll-margin-top: 5.5rem;
   }
 
   .site-nav-link,
