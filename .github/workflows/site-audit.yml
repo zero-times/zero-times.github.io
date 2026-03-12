@@ -228,6 +228,7 @@ jobs:
             "_site/tags/index.html"
             "_site/share/index.html"
             "_site/privacy-policy/index.html"
+            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then

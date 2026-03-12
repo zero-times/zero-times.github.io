@@ -907,8 +907,16 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
         and share_page_social_image_dimensions[1] >= 630
     )
     taxonomy_noindex_targets = [ROOT / 'pages/categories.html', ROOT / 'pages/tags.html']
+    utility_noindex_targets = [
+        ROOT / '404.html',
+        ROOT / 'pages/share.html',
+        ROOT / 'pages/privacy-policy.md',
+        ROOT / 'pages/terms.md',
+    ]
     taxonomy_noindex_missing: list[str] = []
     taxonomy_sitemap_inclusion: list[str] = []
+    utility_noindex_missing: list[str] = []
+    utility_sitemap_inclusion: list[str] = []
     for taxonomy_path in taxonomy_noindex_targets:
         if not taxonomy_path.exists():
             continue
@@ -922,6 +930,19 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             taxonomy_sitemap_inclusion.append(str(taxonomy_path.relative_to(ROOT)))
     has_taxonomy_noindex_policy = not taxonomy_noindex_missing
     has_taxonomy_sitemap_exclusion = not taxonomy_sitemap_inclusion
+    for utility_path in utility_noindex_targets:
+        if not utility_path.exists():
+            continue
+        utility_text = read_text(utility_path)
+        utility_robots = extract_front_matter_value(utility_text, 'robots')
+        utility_robots_normalized = (utility_robots or '').strip().lower()
+        if 'noindex' not in utility_robots_normalized or 'follow' not in utility_robots_normalized:
+            utility_noindex_missing.append(str(utility_path.relative_to(ROOT)))
+        utility_sitemap_flag = extract_front_matter_value(utility_text, 'sitemap')
+        if (utility_sitemap_flag or '').strip().lower() != 'false':
+            utility_sitemap_inclusion.append(str(utility_path.relative_to(ROOT)))
+    has_utility_noindex_policy = not utility_noindex_missing
+    has_utility_sitemap_exclusion = not utility_sitemap_inclusion
 
     has_seo_tag = '{% seo %}' in default_layout
     has_share_seo_tag = '{% seo %}' in share_layout
@@ -1478,6 +1499,20 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if has_taxonomy_sitemap_exclusion
                     else f"Set front matter sitemap: false on: {', '.join(taxonomy_sitemap_inclusion)}",
                 },
+                {
+                    'aspect': 'Utility page indexing policy',
+                    'result': 'Good' if has_utility_noindex_policy else 'Needs improvement',
+                    'details': 'Noindex utility pages (404/share/privacy-policy/terms) expose robots noindex,follow to avoid low-intent indexing.'
+                    if has_utility_noindex_policy
+                    else f"Add front matter robots noindex,follow on: {', '.join(utility_noindex_missing)}",
+                },
+                {
+                    'aspect': 'Utility page sitemap inclusion policy',
+                    'result': 'Good' if has_utility_sitemap_exclusion else 'Needs improvement',
+                    'details': 'Noindex utility pages (404/share/privacy-policy/terms) are excluded from sitemap (sitemap: false).'
+                    if has_utility_sitemap_exclusion
+                    else f"Set front matter sitemap: false on: {', '.join(utility_sitemap_inclusion)}",
+                },
             ],
             'missing_entry_image_alt': entries_missing_image_alt,
             'share_page_social_image_ready': has_share_page_large_social_image,
@@ -1489,6 +1524,10 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'taxonomy_noindex_missing': taxonomy_noindex_missing,
             'taxonomy_sitemap_exclusion_policy': has_taxonomy_sitemap_exclusion,
             'taxonomy_sitemap_inclusion': taxonomy_sitemap_inclusion,
+            'utility_noindex_policy': has_utility_noindex_policy,
+            'utility_noindex_missing': utility_noindex_missing,
+            'utility_sitemap_exclusion_policy': has_utility_sitemap_exclusion,
+            'utility_sitemap_inclusion': utility_sitemap_inclusion,
         },
         'content_quality': {
             'score': 9.0
