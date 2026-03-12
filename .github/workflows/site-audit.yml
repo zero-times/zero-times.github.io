@@ -354,6 +354,28 @@ jobs:
             fi
           done
 
+      - name: Assert noindex utility pages keep single og:type tag
+        run: |
+          PAGES=(
+            "_site/404.html"
+            "_site/categories/index.html"
+            "_site/tags/index.html"
+            "_site/share/index.html"
+            "_site/privacy-policy/index.html"
+            "_site/terms/index.html"
+          )
+          for page in "${PAGES[@]}"; do
+            if [ ! -f "$page" ]; then
+              echo "Missing rendered page: $page"
+              exit 1
+            fi
+            OG_TYPE_COUNT=$(grep -o '<meta property="og:type"' "$page" | wc -l | tr -d ' ')
+            if [ "$OG_TYPE_COUNT" -ne 1 ]; then
+              echo "Expected exactly 1 og:type tag on utility page, found $OG_TYPE_COUNT: $page"
+              exit 1
+            fi
+          done
+
       - name: Assert noindex utility pages keep single twitter:description tag
         run: |
           PAGES=(
