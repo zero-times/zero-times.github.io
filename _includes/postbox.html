@@ -13,11 +13,13 @@
     <meta itemprop="url" content="{{ site.author.url | escape }}">
     {% endif %}
   </span>
+  {% assign postbox_publisher_name = site.title | default: site.author.name %}
+  {% assign postbox_publisher_url = site.url | append: site.baseurl %}
   {% assign postbox_publisher_logo = site.logo | default: site.author.avatar %}
   <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-    <meta itemprop="name" content="{{ site.author.name | escape }}">
-    {% if site.url %}
-    <meta itemprop="url" content="{{ site.url | escape }}">
+    <meta itemprop="name" content="{{ postbox_publisher_name | escape }}">
+    {% if postbox_publisher_url %}
+    <meta itemprop="url" content="{{ postbox_publisher_url | escape }}">
     {% endif %}
     {% if postbox_publisher_logo %}
       {% if postbox_publisher_logo contains '://' %}
