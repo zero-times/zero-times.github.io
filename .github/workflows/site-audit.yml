@@ -220,6 +220,30 @@ jobs:
           grep -q '<meta property="og:image:alt" content=' "$SHARE"
           grep -q '<meta name="twitter:image:alt" content=' "$SHARE"
 
+      - name: Assert noindex utility pages omit analytics payload
+        run: |
+          PAGES=(
+            "_site/404.html"
+            "_site/categories/index.html"
+            "_site/tags/index.html"
+            "_site/share/index.html"
+            "_site/privacy-policy/index.html"
+          )
+          for page in "${PAGES[@]}"; do
+            if [ ! -f "$page" ]; then
+              echo "Missing rendered page: $page"
+              exit 1
+            fi
+            if grep -q 'googletagmanager.com/gtag/js' "$page"; then
+              echo "Unexpected GA loader on noindex utility page: $page"
+              exit 1
+            fi
+            if grep -q "gtag('config'" "$page"; then
+              echo "Unexpected GA config snippet on noindex utility page: $page"
+              exit 1
+            fi
+          done
+
       - name: Assert rendered mobile landmarks, touch icon, and web app meta policy
         run: |
           HOME="_site/index.html"
