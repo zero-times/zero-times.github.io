@@ -266,6 +266,28 @@ jobs:
             }
           done
 
+      - name: Assert noindex utility pages keep single canonical tag
+        run: |
+          PAGES=(
+            "_site/404.html"
+            "_site/categories/index.html"
+            "_site/tags/index.html"
+            "_site/share/index.html"
+            "_site/privacy-policy/index.html"
+            "_site/terms/index.html"
+          )
+          for page in "${PAGES[@]}"; do
+            if [ ! -f "$page" ]; then
+              echo "Missing rendered page: $page"
+              exit 1
+            fi
+            CANONICAL_COUNT=$(grep -o 'rel="canonical"' "$page" | wc -l | tr -d ' ')
+            if [ "$CANONICAL_COUNT" -ne 1 ]; then
+              echo "Expected exactly 1 canonical tag on utility page, found $CANONICAL_COUNT: $page"
+              exit 1
+            fi
+          done
+
       - name: Assert rendered mobile landmarks, touch icon, and web app meta policy
         run: |
           HOME="_site/index.html"
