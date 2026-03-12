@@ -1590,10 +1590,30 @@ select:focus-visible,
   contain-intrinsic-size: 260px;
 }
 
+.postbox-media {
+  display: block;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 39, 118, 0.12);
+}
+
+.postbox-thumb {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+  transition: transform 0.35s ease;
+}
+
 .postbox-card:hover,
 .postbox-card:focus-within {
   transform: translateY(-2px);
   box-shadow: 0 16px 28px rgba(2, 8, 23, 0.12);
+}
+
+.postbox-card:hover .postbox-thumb,
+.postbox-card:focus-within .postbox-thumb {
+  transform: scale(1.02);
 }
 
 .postbox-meta {
@@ -2097,6 +2117,10 @@ select:focus-visible,
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.7), rgba(2, 6, 23, 0.85));
     border-color: rgba(148, 163, 184, 0.35);
     box-shadow: 0 16px 28px rgba(0, 0, 0, 0.4);
+  }
+
+  .postbox-media {
+    border-bottom-color: rgba(148, 163, 184, 0.35);
   }
 
   .postbox-meta {
@@ -2795,6 +2819,10 @@ section[id] {
 
   .postbox-card .card-body {
     padding: 1.1rem;
+  }
+
+  .postbox-thumb {
+    max-height: 200px;
   }
 
   .postbox-cta {

@@ -41,7 +41,24 @@
   {% endif %}
   {% assign postbox_description = post.description | default: post.excerpt | default: post.content | strip_html | strip_newlines | replace: '  ', ' ' | strip %}
   {% assign postbox_description = postbox_description | truncate: 140 %}
+  {% assign postbox_image_alt = post.image_alt | default: post.title | default: site.title %}
+  {% assign postbox_image_width = post.image_width %}
+  {% assign postbox_image_height = post.image_height %}
+  {% assign postbox_image_sizes = post.image_sizes | default: '(max-width: 575.98px) 100vw, (max-width: 991.98px) 720px, 960px' %}
+  {% assign postbox_image_src = nil %}
+  {% if post.image %}
+    {% if post.image contains '://' %}
+      {% assign postbox_image_src = post.image %}
+    {% else %}
+      {% assign postbox_image_src = post.image | relative_url %}
+    {% endif %}
+  {% endif %}
   <meta itemprop="description" content="{{ postbox_description | escape }}">
+  {% if postbox_image_src %}
+  <a class="postbox-media" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title | escape }}">
+    <img class="postbox-thumb" src="{{ postbox_image_src }}" alt="{{ postbox_image_alt | escape }}" loading="lazy" decoding="async" fetchpriority="low" sizes="{{ postbox_image_sizes | escape }}"{% if postbox_image_width %} width="{{ postbox_image_width }}"{% endif %}{% if postbox_image_height %} height="{{ postbox_image_height }}"{% endif %}>
+  </a>
+  {% endif %}
   <div class="card-body">
     <h3 class="card-title">
       <a href="{{ post.url | relative_url }}" class="postbox-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title | escape }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a>
