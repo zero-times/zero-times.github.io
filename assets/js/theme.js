@@ -29,9 +29,31 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.article-post') ||
     document.querySelector('.share-article')
   );
+  const imageOptimizationSelector = [
+    'img[src]:not([src^="data:"]):not([loading])',
+    'img[src]:not([src^="data:"])[loading="auto"]',
+    'img[src]:not([src^="data:"]):not([decoding])',
+    'img[src]:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
+  ].join(', ');
+  const iframeOptimizationSelector = [
+    'iframe[src]:not([loading])',
+    'iframe[src][loading="auto"]',
+    'iframe[src]:not([title])',
+    'iframe[src]:not([referrerpolicy])'
+  ].join(', ');
+  const blankLinkHardeningSelector = [
+    'a[target="_blank"]:not([rel])',
+    'a[target="_blank"][rel]:not([rel~="noopener"])',
+    'a[target="_blank"][rel]:not([rel~="noreferrer"])'
+  ].join(', ');
+  const deferredOptimizationSeedSelector = [
+    imageOptimizationSelector,
+    iframeOptimizationSelector,
+    blankLinkHardeningSelector
+  ].join(', ');
   const hasDeferredOptimizationCandidates = !!(
     contentOptimizationRoot &&
-    contentOptimizationRoot.querySelector('img[src], iframe[src], a[target="_blank"]')
+    contentOptimizationRoot.querySelector(deferredOptimizationSeedSelector)
   );
   let deferredContentOptimizationsDone = false;
   const scheduleNonCriticalTask = (task, timeout) => {
@@ -66,25 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
   const runDeferredContentOptimizations = () => {
-    const imageOptimizationSelector = [
-      'img[src]:not([src^="data:"]):not([loading])',
-      'img[src]:not([src^="data:"])[loading="auto"]',
-      'img[src]:not([src^="data:"]):not([decoding])',
-      'img[src]:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
-    ].join(', ');
-    const iframeOptimizationSelector = [
-      'iframe[src]:not([loading])',
-      'iframe[src][loading="auto"]',
-      'iframe[src]:not([title])',
-      'iframe[src]:not([referrerpolicy])'
-    ].join(', ');
     const candidateImages = contentOptimizationRoot.querySelectorAll(imageOptimizationSelector);
     const candidateIframes = contentOptimizationRoot.querySelectorAll(iframeOptimizationSelector);
-    const blankLinkHardeningSelector = [
-      'a[target="_blank"]:not([rel])',
-      'a[target="_blank"][rel]:not([rel~="noopener"])',
-      'a[target="_blank"][rel]:not([rel~="noreferrer"])'
-    ].join(', ');
     const candidateBlankLinks = contentOptimizationRoot.querySelectorAll(blankLinkHardeningSelector);
 
     if (!candidateImages.length && !candidateIframes.length && !candidateBlankLinks.length) {
