@@ -532,6 +532,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const mobileDrawer = document.getElementById('siteMobileDrawer');
   const mobileMenuButton = document.getElementById('mobileMenuButton');
   const mobileMenuButtonLabel = document.getElementById('mobileMenuButtonLabel');
+  const drawerIsolationTargets = [
+    document.getElementById('main-content'),
+    document.querySelector('.site-footer-v2')
+  ].filter(Boolean);
   const initMobileDrawer = () => {
     if (!mobileDrawer || !mobileMenuButton || !window.bootstrap || !window.bootstrap.Offcanvas) {
       return false;
@@ -548,16 +552,29 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenuButtonLabel.textContent = isExpanded ? 'Fechar' : 'Menu';
       }
     };
+    const setDrawerIsolation = (isOpen) => {
+      drawerIsolationTargets.forEach((target) => {
+        if (isOpen) {
+          target.setAttribute('aria-hidden', 'true');
+          target.setAttribute('inert', '');
+          return;
+        }
+        target.removeAttribute('inert');
+        target.removeAttribute('aria-hidden');
+      });
+    };
 
     let shouldRestoreMenuFocus = false;
 
     mobileDrawer.addEventListener('show.bs.offcanvas', () => {
       shouldRestoreMenuFocus = document.activeElement === mobileMenuButton;
+      setDrawerIsolation(true);
     });
 
     mobileDrawer.addEventListener('shown.bs.offcanvas', () => syncMenuState(true));
     mobileDrawer.addEventListener('hidden.bs.offcanvas', () => {
       syncMenuState(false);
+      setDrawerIsolation(false);
       if (shouldRestoreMenuFocus || mobileDrawer.contains(document.activeElement)) {
         try {
           mobileMenuButton.focus({ preventScroll: true });
