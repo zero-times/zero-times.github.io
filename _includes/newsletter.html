@@ -11,32 +11,3 @@
     <button type="submit" class="btn btn-primary w-100">Inscrever-se</button>
   </form>
 </div>
-<script>
-  (function () {
-    var form = document.querySelector('.newsletter-form');
-    if (!form || !document.head || form.dataset.formspreeWarmupBound === 'true') {
-      return;
-    }
-    form.dataset.formspreeWarmupBound = 'true';
-
-    var warmed = false;
-    var warmup = function () {
-      if (warmed) {
-        return;
-      }
-      warmed = true;
-      var link = document.createElement('link');
-      link.rel = 'preconnect';
-      link.href = 'https://formspree.io';
-      link.crossOrigin = 'anonymous';
-      document.head.appendChild(link);
-      form.removeEventListener('focusin', warmup);
-      form.removeEventListener('pointerdown', warmup);
-      form.removeEventListener('touchstart', warmup);
-    };
-
-    form.addEventListener('focusin', warmup, { passive: true });
-    form.addEventListener('pointerdown', warmup, { passive: true });
-    form.addEventListener('touchstart', warmup, { passive: true });
-  })();
-</script>

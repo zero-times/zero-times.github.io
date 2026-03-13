@@ -754,6 +754,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { capture: true });
   }
 
+  const bindFormspreeWarmup = () => {
+    if (!document.head) {
+      return;
+    }
+    const forms = document.querySelectorAll('form[action*="formspree.io"]');
+    if (!forms.length) {
+      return;
+    }
+
+    let warmed = false;
+    const warmup = () => {
+      if (warmed) {
+        return;
+      }
+      warmed = true;
+
+      if (!document.head.querySelector('link[rel="preconnect"][href="https://formspree.io"]')) {
+        const preconnect = document.createElement('link');
+        preconnect.rel = 'preconnect';
+        preconnect.href = 'https://formspree.io';
+        preconnect.crossOrigin = 'anonymous';
+        document.head.appendChild(preconnect);
+      }
+
+      if (!document.head.querySelector('link[rel="dns-prefetch"][href="//formspree.io"]')) {
+        const dnsPrefetch = document.createElement('link');
+        dnsPrefetch.rel = 'dns-prefetch';
+        dnsPrefetch.href = '//formspree.io';
+        document.head.appendChild(dnsPrefetch);
+      }
+    };
+
+    forms.forEach((form) => {
+      if (form.dataset.formspreeWarmupBound === 'true') {
+        return;
+      }
+      form.dataset.formspreeWarmupBound = 'true';
+      form.addEventListener('focusin', warmup, { passive: true });
+      form.addEventListener('pointerdown', warmup, { passive: true });
+      form.addEventListener('touchstart', warmup, { passive: true });
+    });
+  };
+  bindFormspreeWarmup();
+
   // Normalize outbound links inside article-like content for SEO and security.
   // This keeps curated source links consistently marked as external/nofollow.
   const normalizeContentOutboundLinks = () => {
