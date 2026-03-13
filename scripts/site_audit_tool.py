@@ -1815,6 +1815,18 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     scores = [sections[k]['score'] for k in sections]
     overall = round(sum(scores) / len(scores), 1)
 
+    recommendations = [
+        'Run this audit after each content batch and fix any placeholder/malformed links.',
+    ]
+    if http_check and http_network_restricted:
+        recommendations.append(
+            'HTTP sample was network-restricted in this environment; validate external URL reachability in GitHub Actions or another network-enabled runner.'
+        )
+    else:
+        recommendations.append(
+            'Run with --http-check periodically (or in CI) to validate sampled external URL reachability.'
+        )
+
     return {
         'audit_timestamp': timestamp,
         'website_url': 'https://youllbe.cn',
@@ -1827,10 +1839,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
             'seo': f"SEO: {sections['seo_evaluation']['score']}/10",
             'content': f"Content/Perf: {sections['content_quality']['score']}/10",
         },
-        'recommendations': [
-            'Run this audit after each content batch and fix any placeholder/malformed links.',
-            'Run with --http-check periodically (or in CI) to validate sampled external URL reachability.',
-        ],
+        'recommendations': recommendations,
     }
 
 
@@ -1959,6 +1968,54 @@ def collect_strict_failures(report: dict, http_check_enabled: bool) -> list[str]
     return failures
 
 
+def write_fixes_markdown(report: dict, report_path: Path) -> Path:
+    """Write a companion markdown checklist for the generated audit report."""
+    fixes_path = report_path.with_name(f'{report_path.stem}_fixes.md')
+    summary = report.get('summary', {})
+    sections = report.get('sections', {})
+    recommendations = list(report.get('recommendations', []))
+
+    pending_items: list[str] = []
+    for section_name, section_data in sections.items():
+        for finding in section_data.get('findings', []):
+            result = str(finding.get('result', '')).strip().lower()
+            if (
+                result.startswith('needs')
+                or 'issue' in result
+                or result.startswith('warning')
+            ):
+                aspect = str(finding.get('aspect', 'Sem título')).strip()
+                details = str(finding.get('details', '')).strip()
+                pending_items.append(f'- [ ] `{section_name}` · **{aspect}**: {details}')
+
+    lines = [
+        f'# Site Audit Fixes - {report.get("audit_timestamp", "unknown")}',
+        '',
+        '## Audit Report',
+        f'- File: `{report_path.relative_to(ROOT).as_posix()}`',
+        f'- Overall: {report.get("overall_score", 0)}/{report.get("max_possible_score", 10)}',
+        f'- {summary.get("layout", "Layout: n/a")}',
+        f'- {summary.get("links", "Links: n/a")}',
+        f'- {summary.get("seo", "SEO: n/a")}',
+        f'- {summary.get("content", "Content/Perf: n/a")}',
+        '',
+        '## Fix Checklist',
+    ]
+
+    if pending_items:
+        lines.extend(pending_items)
+    else:
+        lines.append('- [x] No blocking issues detected in this run.')
+
+    if recommendations:
+        lines.extend(['', '## Follow-ups'])
+        for rec in recommendations:
+            lines.append(f'- [ ] {rec}')
+
+    fixes_path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    return fixes_path
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description='Generate a lightweight Jekyll site audit report.')
     parser.add_argument(
@@ -1994,7 +2051,9 @@ def main() -> None:
     stamp = dt.datetime.now().strftime('%Y%m%d_%H%M%S_%f')
     out = REPORTS_DIR / f'site_audit_{stamp}.json'
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    fixes_out = write_fixes_markdown(report, out)
     print(out)
+    print(fixes_out)
 
     if args.strict:
         failures = collect_strict_failures(report, http_check_enabled=args.http_check)
