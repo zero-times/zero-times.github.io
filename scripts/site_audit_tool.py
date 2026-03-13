@@ -271,7 +271,14 @@ def collect_missing_internal_links() -> list[dict]:
             for srcset_match in HTML_SRCSET_ATTR_RE.finditer(text):
                 srcset_value = srcset_match.group(1)
                 for candidate in srcset_value.split(','):
-                    src_candidate = candidate.strip().split()[0] if candidate.strip() else ''
+                    candidate_raw = candidate.strip()
+                    if not candidate_raw:
+                        continue
+                    liquid_match = LIQUID_LITERAL_RELATIVE_URL_RE.search(candidate_raw)
+                    if liquid_match:
+                        src_candidate = liquid_match.group(1)
+                    else:
+                        src_candidate = candidate_raw.split()[0]
                     if not src_candidate.startswith('/') or src_candidate.startswith('//'):
                         continue
                     if not internal_target_exists(src_candidate, known_routes):
