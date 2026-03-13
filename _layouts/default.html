@@ -129,16 +129,11 @@
   <link rel="prefetch" href="{% link blog/index.html %}">
   <link rel="prefetch" href="{% link pages/contact.html %}">
   {% endif %}
-  {% assign should_preconnect_news_sources = page.preconnect_news_sources %}
-  {% assign should_dns_prefetch_news_sources = page.dns_prefetch_news_sources %}
-  {% if should_dns_prefetch_news_sources == nil and page.layout == 'post' and page.categories contains 'news' %}
-    {% assign should_dns_prefetch_news_sources = true %}
-  {% endif %}
-  {% if should_preconnect_news_sources %}
+  {% if page.preconnect_news_sources %}
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
   <link rel="preconnect" href="https://i.s3.glbimg.com" crossorigin>
   {% endif %}
-  {% if should_dns_prefetch_news_sources %}
+  {% if page.dns_prefetch_news_sources %}
   <link rel="dns-prefetch" href="//s2-g1.glbimg.com">
   <link rel="dns-prefetch" href="//i.s3.glbimg.com">
   {% endif %}
