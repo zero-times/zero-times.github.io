@@ -53,6 +53,12 @@ html {
   contain-intrinsic-size: 420px;
 }
 
+/* Sidebar blocks are often below-the-fold on mobile; defer them until near viewport */
+.sidebar-column .card {
+  content-visibility: auto;
+  contain-intrinsic-size: 280px;
+}
+
 /* Large taxonomy archives can render dozens of sections; defer off-screen groups */
 .tags-archive section,
 .category-section {
