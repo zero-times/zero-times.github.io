@@ -53,6 +53,13 @@ html {
   contain-intrinsic-size: 420px;
 }
 
+/* Large taxonomy archives can render dozens of sections; defer off-screen groups */
+.tags-archive section,
+.category-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 520px;
+}
+
 /* Defer deep section rendering on long profile/contact pages for faster mobile first paint */
 .about-v2__section,
 .contact-v2__methods,
