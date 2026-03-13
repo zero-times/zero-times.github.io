@@ -167,6 +167,32 @@ html {
   overflow-wrap: anywhere;
 }
 
+/* Improve readability/tap clarity for long outbound source links in articles */
+.post-content a,
+.article-post a,
+.blog-entry a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 0.08em;
+  overflow-wrap: anywhere;
+}
+
+.post-content a.is-external-link::after,
+.article-post a.is-external-link::after,
+.blog-entry a.is-external-link::after {
+  content: " [ext]";
+  font-size: 0.78em;
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+}
+
+@media (max-width: 575.98px) {
+  .post-content a,
+  .article-post a,
+  .blog-entry a {
+    line-height: 1.7;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .postbox-card,
   .contact-card,

@@ -737,6 +737,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { capture: true });
   }
 
+  // Normalize outbound links inside article-like content for SEO and security.
+  // This keeps curated source links consistently marked as external/nofollow.
+  const normalizeContentOutboundLinks = () => {
+    if (!contentOptimizationRoot) {
+      return;
+    }
+
+    const candidates = contentOptimizationRoot.querySelectorAll(
+      'a[href]:not([href^="#"]):not([href^="mailto:"]):not([href^="tel:"]):not([data-no-external-enhance])'
+    );
+    if (!candidates.length) {
+      return;
+    }
+
+    candidates.forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      let resolvedUrl;
+      try {
+        resolvedUrl = new URL(href, window.location.origin);
+      } catch (err) {
+        return;
+      }
+
+      const isExternalHttp = /^https?:$/i.test(resolvedUrl.protocol) && resolvedUrl.origin !== window.location.origin;
+      if (!isExternalHttp) {
+        return;
+      }
+
+      if (!link.hasAttribute('target')) {
+        link.setAttribute('target', '_blank');
+      }
+      ensureSecureRel(link);
+      link.classList.add('is-external-link');
+    });
+  };
+
+  if (contentOptimizationRoot) {
+    scheduleNonCriticalTask(normalizeContentOutboundLinks, prefersReducedData ? 2400 : 1400);
+  }
+
   // Add language attribute to html tag if not present
   if (!document.documentElement.getAttribute('lang')) {
     document.documentElement.setAttribute('lang', 'pt-BR');
