@@ -35,7 +35,7 @@ plugins:
 lang: "pt-BR"
 
 # Pagination
-paginate: 20
+paginate: 30
 paginate_path: "/blog/page:num/"
 
 # SEO
