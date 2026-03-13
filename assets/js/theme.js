@@ -173,53 +173,55 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   scheduleDeferredContentOptimizations();
 
-  // Use delegated smooth scrolling to avoid binding listeners to every anchor node.
-  document.addEventListener('click', function(e) {
-    const anchor = e.target.closest('a[href^="#"]');
-    if (!anchor) {
-      return;
-    }
-    const href = anchor.getAttribute('href');
-    if (!href || href === '#' || href === '#!' || href.startsWith('#!') || anchor.hasAttribute('data-bs-toggle')) {
-      return;
-    }
-    let target = null;
-    try {
-      target = document.querySelector(href);
-    } catch (err) {
-      return;
-    }
-    if (!target) {
-      return;
-    }
-    e.preventDefault();
-    target.scrollIntoView({
-      behavior: prefersAutoScroll ? 'auto' : 'smooth',
-      block: 'start'
+  // Use delegated smooth scrolling only when in-page anchors exist.
+  if (document.querySelector('a[href^="#"]:not([href="#"]):not([href^="#!"])')) {
+    document.addEventListener('click', function(e) {
+      const anchor = e.target.closest('a[href^="#"]');
+      if (!anchor) {
+        return;
+      }
+      const href = anchor.getAttribute('href');
+      if (!href || href === '#' || href === '#!' || href.startsWith('#!') || anchor.hasAttribute('data-bs-toggle')) {
+        return;
+      }
+      let target = null;
+      try {
+        target = document.querySelector(href);
+      } catch (err) {
+        return;
+      }
+      if (!target) {
+        return;
+      }
+      e.preventDefault();
+      target.scrollIntoView({
+        behavior: prefersAutoScroll ? 'auto' : 'smooth',
+        block: 'start'
+      });
+
+      const targetId = target.getAttribute('id');
+      if (targetId) {
+        const encodedHash = `#${encodeURIComponent(targetId)}`;
+        if (window.location.hash !== encodedHash) {
+          history.pushState(null, '', encodedHash);
+        }
+      }
+
+      if (!target.hasAttribute('tabindex')) {
+        target.setAttribute('tabindex', '-1');
+        target.setAttribute('data-anchor-focus-temp', 'true');
+      }
+
+      const focusDelay = prefersAutoScroll ? 0 : 220;
+      window.setTimeout(() => {
+        target.focus({ preventScroll: true });
+        if (target.getAttribute('data-anchor-focus-temp') === 'true') {
+          target.removeAttribute('tabindex');
+          target.removeAttribute('data-anchor-focus-temp');
+        }
+      }, focusDelay);
     });
-
-    const targetId = target.getAttribute('id');
-    if (targetId) {
-      const encodedHash = `#${encodeURIComponent(targetId)}`;
-      if (window.location.hash !== encodedHash) {
-        history.pushState(null, '', encodedHash);
-      }
-    }
-
-    if (!target.hasAttribute('tabindex')) {
-      target.setAttribute('tabindex', '-1');
-      target.setAttribute('data-anchor-focus-temp', 'true');
-    }
-
-    const focusDelay = prefersAutoScroll ? 0 : 220;
-    window.setTimeout(() => {
-      target.focus({ preventScroll: true });
-      if (target.getAttribute('data-anchor-focus-temp') === 'true') {
-        target.removeAttribute('tabindex');
-        target.removeAttribute('data-anchor-focus-temp');
-      }
-    }, focusDelay);
-  });
+  }
 
   // Reading progress indicator for post pages
   const progressBar = document.querySelector('.reading-progress__bar');
@@ -720,13 +722,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  document.addEventListener('click', (event) => {
-    const link = event.target.closest('a[target="_blank"]');
-    if (!link) {
-      return;
-    }
-    ensureSecureRel(link);
-  }, { capture: true });
+  if (document.querySelector('a[target="_blank"]')) {
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('a[target="_blank"]');
+      if (!link) {
+        return;
+      }
+      ensureSecureRel(link);
+    }, { capture: true });
+  }
 
   // Add language attribute to html tag if not present
   if (!document.documentElement.getAttribute('lang')) {
