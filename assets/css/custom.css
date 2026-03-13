@@ -3157,6 +3157,7 @@ section[id] {
 @supports (content-visibility: auto) {
   .share-card .help-list,
   .share-card .achievements-list,
+  .share-card .contact-section,
   .share-card .store-section,
   .share-card .footer-section {
     content-visibility: auto;
