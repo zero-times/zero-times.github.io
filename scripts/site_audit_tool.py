@@ -39,6 +39,7 @@ PLACEHOLDER_RE = re.compile(r'example\.com|localhost|127\.0\.0\.1|\bTODO\b|\bTBD
 INVALID_PERCENT_ENCODING_RE = re.compile(r'%(?![0-9A-Fa-f]{2})')
 INTERNAL_LINK_RE = re.compile(r'\]\((/[^)\s?#][^)\s]*)')
 HTML_INTERNAL_ATTR_RE = re.compile(r'(?:href|src)\s*=\s*["\'](/(?!/)[^"\']*)["\']', re.IGNORECASE)
+HTML_SRCSET_ATTR_RE = re.compile(r'\bsrcset\s*=\s*["\']([^"\']+)["\']', re.IGNORECASE)
 LIQUID_LITERAL_RELATIVE_URL_RE = re.compile(r'\{\{\s*[\'"](/[^\'"]+)[\'"]\s*\|\s*relative_url\s*\}\}')
 LIQUID_LINK_TAG_RE = re.compile(r'\{%\s*link\s+([^\s%]+)\s*%\}')
 PRECONNECT_HINT_RE = re.compile(r'<link\s+rel="preconnect"\s+href="([^"]+)"')
@@ -267,6 +268,20 @@ def collect_missing_internal_links() -> list[dict]:
                             'value': raw,
                         }
                     )
+            for srcset_match in HTML_SRCSET_ATTR_RE.finditer(text):
+                srcset_value = srcset_match.group(1)
+                for candidate in srcset_value.split(','):
+                    src_candidate = candidate.strip().split()[0] if candidate.strip() else ''
+                    if not src_candidate.startswith('/') or src_candidate.startswith('//'):
+                        continue
+                    if not internal_target_exists(src_candidate, known_routes):
+                        missing.append(
+                            {
+                                'location': str(rel),
+                                'issue': 'internal html srcset target not found',
+                                'value': src_candidate,
+                            }
+                        )
     return missing
 
 
