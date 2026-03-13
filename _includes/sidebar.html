@@ -13,12 +13,14 @@
       <h5>Arquivos</h5>
     </div>
     <div class="card-body">
+      <ol class="list-unstyled blog-archive-list mb-0">
       {% for post in site.posts limit: 5 %}
-      <div class="mb-2">
-        <a href="{{ post.url | relative_url }}" class="blog-archive-link" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
-        <time class="text-muted d-block blog-archive-date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
-      </div>
+        <li class="blog-archive-item">
+          <a href="{{ post.url | relative_url }}" class="blog-archive-link" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
+          <time class="text-muted d-block blog-archive-date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
+        </li>
       {% endfor %}
+      </ol>
       <a href="{% link blog/index.html %}" class="btn btn-sm btn-outline-secondary mt-2" aria-label="Ver todos os posts do blog">Ver todos</a>
     </div>
   </div>
