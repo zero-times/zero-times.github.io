@@ -602,7 +602,7 @@
     </div>
   </header>
 
-  <div class="offcanvas offcanvas-top site-mobile-drawer" tabindex="-1" id="siteMobileDrawer" aria-labelledby="siteMobileDrawerTitle">
+  <div class="offcanvas offcanvas-top site-mobile-drawer" tabindex="-1" id="siteMobileDrawer" role="dialog" aria-modal="true" aria-labelledby="siteMobileDrawerTitle" aria-describedby="siteMobileDrawerHint">
     <div class="offcanvas-body">
       <h2 id="siteMobileDrawerTitle" class="visually-hidden">Menu principal</h2>
       <button class="site-mobile-drawer__close" type="button" data-bs-dismiss="offcanvas" aria-label="Fechar menu principal">Fechar</button>
@@ -613,7 +613,7 @@
         <a class="site-mobile-drawer__link{% if is_contact %} is-active{% endif %}" href="{% link pages/contact.html %}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
       </nav>
       <a class="site-mobile-drawer__cta" href="{% link pages/contact.html %}" aria-label="Falar com Hoa">Fale comigo</a>
-      <p class="site-mobile-drawer__hint">Toque em Fechar para recolher o menu</p>
+      <p id="siteMobileDrawerHint" class="site-mobile-drawer__hint">Toque em Fechar para recolher o menu</p>
     </div>
   </div>
 

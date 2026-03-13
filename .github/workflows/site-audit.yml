@@ -494,6 +494,21 @@ jobs:
           grep -q '<meta name="theme-color" content="#2c3e50">' "$SHARE"
           grep -q '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320">' "$SHARE"
 
+      - name: Assert rendered mobile drawer accessibility invariants
+        run: |
+          HOME="_site/index.html"
+          if [ ! -f "$HOME" ]; then
+            echo "Missing rendered homepage: $HOME"
+            exit 1
+          fi
+          grep -Eq 'id="mobileMenuButton"[^>]*aria-controls="siteMobileDrawer"' "$HOME"
+          grep -Eq 'id="mobileMenuButton"[^>]*aria-haspopup="dialog"' "$HOME"
+          grep -Eq 'id="mobileMenuButton"[^>]*aria-expanded="false"' "$HOME"
+          grep -Eq 'id="siteMobileDrawer"[^>]*role="dialog"' "$HOME"
+          grep -Eq 'id="siteMobileDrawer"[^>]*aria-modal="true"' "$HOME"
+          grep -Eq 'id="siteMobileDrawer"[^>]*aria-describedby="siteMobileDrawerHint"' "$HOME"
+          grep -Eq 'id="siteMobileDrawerHint"' "$HOME"
+
       - name: Assert rendered manifest link policy
         run: |
           HOME="_site/index.html"
