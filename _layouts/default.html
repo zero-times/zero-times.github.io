@@ -140,7 +140,7 @@
   {% assign webfonts_enabled = page.load_webfonts %}
   {% if webfonts_enabled == nil %}
     {% assign webfonts_enabled = true %}
-    {% if noindex_effective %}
+    {% if noindex_effective or (page.layout == 'post' and page.categories contains 'news') %}
       {% assign webfonts_enabled = false %}
     {% endif %}
   {% endif %}
