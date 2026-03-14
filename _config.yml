@@ -79,6 +79,7 @@ defaults:
       lang: "pt-BR"
       preconnect_fonts: false
       load_webfonts: false
+      dns_prefetch_disqus: true
   - scope:
       path: "_blogs"
     values:
@@ -86,3 +87,4 @@ defaults:
       lang: "pt-BR"
       preconnect_fonts: false
       load_webfonts: false
+      dns_prefetch_disqus: true

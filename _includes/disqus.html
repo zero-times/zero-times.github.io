@@ -48,10 +48,25 @@
 
             function shouldDeferForDataSaving() {
                 var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                var lowBandwidth = !!(
+                    connection &&
+                    typeof connection.downlink === 'number' &&
+                    connection.downlink > 0 &&
+                    connection.downlink <= 1.25
+                );
+                var lowMemoryDevice = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 2;
                 if (connection && connection.saveData) {
                     return true;
                 }
-                if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g' || connection.effectiveType === '3g')) {
+                if (connection && (
+                    connection.effectiveType === 'slow-2g' ||
+                    connection.effectiveType === '2g' ||
+                    connection.effectiveType === '3g' ||
+                    lowBandwidth
+                )) {
+                    return true;
+                }
+                if (lowMemoryDevice) {
                     return true;
                 }
                 if (window.matchMedia) {
