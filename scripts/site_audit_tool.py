@@ -862,18 +862,43 @@ def sample_http_urls(url_records: list[dict], sample_size: int, timeout: float) 
         key=lambda item: (item['priority'], item['post_date'], item['url']),
         reverse=True,
     )
-    sampled = sorted_candidates[: max(sample_size, 0)]
+    target_size = max(sample_size, 0)
+    # Use round-robin selection across source files so one fresh post cannot monopolize the whole sample.
+    candidates_by_source: dict[str, list[dict]] = {}
+    ordered_sources: list[str] = []
+    for candidate in sorted_candidates:
+        source = candidate.get('source') or '<unknown>'
+        if source not in candidates_by_source:
+            candidates_by_source[source] = []
+            ordered_sources.append(source)
+        candidates_by_source[source].append(candidate)
+
+    sampled: list[dict] = []
+    while len(sampled) < target_size:
+        progress = False
+        for source in ordered_sources:
+            bucket = candidates_by_source.get(source)
+            if not bucket:
+                continue
+            sampled.append(bucket.pop(0))
+            progress = True
+            if len(sampled) >= target_size:
+                break
+        if not progress:
+            break
+
     results = [probe_url(item['url'], timeout=timeout, source=item.get('source')) for item in sampled]
-    failures = [r for r in results if not r.get('ok')]
+    raw_failures = [r for r in results if not r.get('ok')]
     network_restricted = bool(
         sampled
-        and len(failures) == len(sampled)
+        and len(raw_failures) == len(sampled)
         and all(
             result.get('status') is None
             and _looks_like_network_restricted_error(str(result.get('error', '')))
-            for result in failures
+            for result in raw_failures
         )
     )
+    failures = [] if network_restricted else raw_failures
     failure_domains = Counter(
         urllib.parse.urlparse((result.get('url') or '')).netloc.lower()
         for result in failures
@@ -889,6 +914,7 @@ def sample_http_urls(url_records: list[dict], sample_size: int, timeout: float) 
         'timeout_seconds': timeout,
         'failures': failures,
         'network_restricted': network_restricted,
+        'network_restricted_failure_count': len(raw_failures) if network_restricted else 0,
         'top_failing_domains': top_failing_domains,
         'results': results,
     }
@@ -1102,6 +1128,7 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     http_failures = http_check_result.get('failures', [])
     http_sample_size = http_check_result.get('sample_size', 0)
     http_network_restricted = bool(http_check_result.get('network_restricted'))
+    http_network_restricted_failure_count = int(http_check_result.get('network_restricted_failure_count', 0) or 0)
 
     formspree_blog_preconnect = "page.url contains '/contact/' or page.url contains '/blog/'" in default_layout
     has_home_avatar_preload_flag = 'hero_avatar_preload: true' in homepage
@@ -1409,7 +1436,8 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                     if not http_check
                     else (
                         f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s; '
-                        'environment appears network-restricted, so sample is informational only.'
+                        f'environment appears network-restricted ({http_network_restricted_failure_count} probe error(s)), '
+                        'so sample is informational only.'
                         if http_network_restricted
                         else f'Checked {http_sample_size} external URL(s) with timeout={http_timeout}s.'
                     ),
