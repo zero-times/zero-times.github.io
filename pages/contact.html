@@ -112,32 +112,3 @@ hide_title: true
     </form>
   </section>
 </div>
-
-<script>
-  (function () {
-    var form = document.querySelector('.contact-v2__form');
-    if (!form || !document.head) {
-      return;
-    }
-
-    var warmed = false;
-    var warmup = function () {
-      if (warmed) {
-        return;
-      }
-      warmed = true;
-      var link = document.createElement('link');
-      link.rel = 'preconnect';
-      link.href = 'https://formspree.io';
-      link.crossOrigin = 'anonymous';
-      document.head.appendChild(link);
-      form.removeEventListener('focusin', warmup);
-      form.removeEventListener('pointerdown', warmup);
-      form.removeEventListener('touchstart', warmup);
-    };
-
-    form.addEventListener('focusin', warmup, { passive: true });
-    form.addEventListener('pointerdown', warmup, { passive: true });
-    form.addEventListener('touchstart', warmup, { passive: true });
-  })();
-</script>
