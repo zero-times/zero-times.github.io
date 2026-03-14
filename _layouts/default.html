@@ -137,15 +137,24 @@
   <link rel="dns-prefetch" href="//s2-g1.glbimg.com">
   <link rel="dns-prefetch" href="//i.s3.glbimg.com">
   {% endif %}
-  {% if page.preconnect_fonts and page.load_webfonts != false %}
+  {% assign webfonts_enabled = page.load_webfonts %}
+  {% if webfonts_enabled == nil %}
+    {% assign webfonts_enabled = true %}
+    {% if noindex_effective %}
+      {% assign webfonts_enabled = false %}
+    {% endif %}
+  {% endif %}
+  {% if page.preconnect_fonts %}
+  {% if webfonts_enabled %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {% endif %}
   {% endif %}
   {% if page.dns_prefetch_fonts %}
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   {% endif %}
-  {% unless page.load_webfonts == false %}
+  {% unless webfonts_enabled == false %}
   <script>
     (function () {
       var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
