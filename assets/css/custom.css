@@ -3849,10 +3849,11 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   max-width: min(420px, calc(100vw - 1rem));
   max-height: calc(100dvh - env(safe-area-inset-top) - 0.75rem);
   overflow-y: auto;
+  scroll-padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   margin: calc(0.35rem + env(safe-area-inset-top)) auto 0;
-  padding: 0.25rem 1rem 1rem;
+  padding: 0.25rem 1rem calc(1rem + env(safe-area-inset-bottom));
   border: 1px solid #dce3f0;
   border-radius: 0 0 1rem 1rem;
   background: #f7f9fc;
