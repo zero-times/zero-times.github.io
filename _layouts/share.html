@@ -226,11 +226,12 @@
 <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 {% assign analytics_enabled = page.load_analytics %}
+{% assign allow_analytics_on_noindex = page.allow_analytics_on_noindex %}
 {% if analytics_enabled == nil %}
   {% assign analytics_enabled = true %}
-  {% if effective_robots contains 'noindex' %}
-    {% assign analytics_enabled = false %}
-  {% endif %}
+{% endif %}
+{% if effective_robots contains 'noindex' and allow_analytics_on_noindex != true and allow_analytics_on_noindex != 'true' %}
+  {% assign analytics_enabled = false %}
 {% endif %}
 {% if site.google_analytics %}
 {% if analytics_enabled %}

@@ -447,11 +447,12 @@
 
   <!-- Google Analytics (GA4) -->
   {% assign analytics_enabled = page.load_analytics %}
+  {% assign allow_analytics_on_noindex = page.allow_analytics_on_noindex %}
   {% if analytics_enabled == nil %}
     {% assign analytics_enabled = true %}
-    {% if noindex_effective %}
-      {% assign analytics_enabled = false %}
-    {% endif %}
+  {% endif %}
+  {% if noindex_effective and allow_analytics_on_noindex != true and allow_analytics_on_noindex != 'true' %}
+    {% assign analytics_enabled = false %}
   {% endif %}
   {% if site.google_analytics %}
   {% if analytics_enabled %}
