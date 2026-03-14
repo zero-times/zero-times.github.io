@@ -4309,6 +4309,14 @@ html:lang(pt-br) .bottompagination span.navigation a:hover,
   outline-offset: 3px;
 }
 
+/* Progressive rendering for long blog lists on mobile/low-power devices. */
+@supports (content-visibility: auto) {
+  .blog-index-v2 .blog-entry {
+    content-visibility: auto;
+    contain-intrinsic-size: 540px;
+  }
+}
+
 @media (min-width: 992px) {
   .site-nav-desktop {
     display: inline-flex;
