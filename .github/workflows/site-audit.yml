@@ -14,6 +14,8 @@ on:
       - "index.html"
       - "assets/css/**"
       - "assets/js/**"
+      - "_data/**"
+      - "robots.txt"
       - "site.webmanifest"
       - "scripts/site_audit_tool.py"
   pull_request:
@@ -27,6 +29,8 @@ on:
       - "index.html"
       - "assets/css/**"
       - "assets/js/**"
+      - "_data/**"
+      - "robots.txt"
       - "site.webmanifest"
       - "scripts/site_audit_tool.py"
   schedule:
