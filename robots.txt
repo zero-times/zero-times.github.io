@@ -10,5 +10,6 @@ Disallow: /tags/
 Disallow: /privacy-policy/
 Disallow: /terms/
 Disallow: /404.html
+Disallow: /blog/page
 
 Sitemap: {{ '/sitemap.xml' | absolute_url }}
