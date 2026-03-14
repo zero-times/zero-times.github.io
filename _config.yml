@@ -7,6 +7,7 @@ baseurl: ""
 url: "https://youllbe.cn"
 default_lang: "pt-BR"
 locale: "pt_BR"
+og_locale_alternate: "en_US"
 author:
   name: "Hoa"
   bio: "Especialista em arquitetura móvel e soluções multiplataforma"

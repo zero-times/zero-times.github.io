@@ -52,7 +52,7 @@
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% endif %}
   <meta property="og:locale" content="{{ og_locale }}">
-  {% assign alternate_og_locale_raw = page.og_locale_alternate | default: site.locale | default: '' %}
+  {% assign alternate_og_locale_raw = page.og_locale_alternate | default: site.og_locale_alternate | default: site.locale | default: '' %}
   {% assign alternate_og_locale = alternate_og_locale_raw | replace: '-', '_' %}
   {% if alternate_og_locale != '' and alternate_og_locale != og_locale and alternate_og_locale contains '_' %}
   <meta property="og:locale:alternate" content="{{ alternate_og_locale }}">
