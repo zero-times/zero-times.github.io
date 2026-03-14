@@ -378,6 +378,13 @@ html {
   overflow-wrap: anywhere;
 }
 
+/* Reduce awkward line breaks on narrow screens for long localized titles */
+.home-v2__post-title,
+.posttitle,
+.article-headline {
+  text-wrap: balance;
+}
+
 /* Keep long URLs from overflowing on narrow screens in post/share content */
 .article-post a,
 .post-content a,
@@ -903,8 +910,8 @@ body {
 
 /* Accessible skip link (rendered in layout) */
 .skip-link {
-  position: absolute;
-  top: 0.75rem;
+  position: fixed;
+  top: max(0.75rem, calc(0.5rem + env(safe-area-inset-top)));
   left: -999px;
   z-index: 1000;
   padding: 0.5rem 1rem;
@@ -917,7 +924,7 @@ body {
 
 .skip-link:focus,
 .skip-link:focus-visible {
-  left: 0.75rem;
+  left: max(0.75rem, calc(0.5rem + env(safe-area-inset-left)));
 }
 
 /* Footer styling for better hierarchy */
