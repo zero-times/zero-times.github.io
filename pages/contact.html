@@ -25,7 +25,7 @@ hide_title: true
   "@type": "ContactPage",
   "name": "{{ page.title | default: site.title | escape }}",
   "url": "{{ page.url | absolute_url }}",
-  "inLanguage": "{{ page.lang | default: site.lang | default: 'pt-BR' }}",
+  "inLanguage": "{{ page.lang | default: site.lang | default: 'pt-BR' | replace: '_', '-' }}",
   "description": "{{ page.description | default: site.description | escape }}",
   "mainEntity": {
     "@type": "Person",

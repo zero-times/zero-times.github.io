@@ -110,7 +110,7 @@ last_modified_at: 2026-03-14
             {% endif %}
           </span>
           {% endif %}
-          <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
+          <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' }}">
           <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
           <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
           {% assign words = post.content | number_of_words %}
