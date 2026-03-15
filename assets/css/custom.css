@@ -74,6 +74,16 @@ html {
   contain-intrinsic-size: 640px;
 }
 
+/* Improve tap responsiveness on mobile by hinting direct manipulation behavior */
+a,
+button,
+[role="button"],
+.btn,
+.site-mobile-drawer__link,
+.site-header-v2__menu-btn {
+  touch-action: manipulation;
+}
+
 @media (max-width: 575.98px) {
   html {
     scroll-padding-top: 5rem;
