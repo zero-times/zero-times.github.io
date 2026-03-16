@@ -110,7 +110,18 @@ last_modified_at: 2026-03-14
             {% endif %}
           </span>
           {% endif %}
-          <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' }}">
+          {% assign index_lang_raw = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
+          {% assign index_lang_parts = index_lang_raw | split: '-' %}
+          {% assign index_lang_primary = index_lang_parts[0] | downcase %}
+          {% assign index_lang_region = '' %}
+          {% if index_lang_parts.size > 1 %}
+            {% assign index_lang_region = index_lang_parts[1] | upcase %}
+          {% endif %}
+          {% if index_lang_region != '' %}
+          <meta itemprop="inLanguage" content="{{ index_lang_primary | append: '-' | append: index_lang_region }}">
+          {% else %}
+          <meta itemprop="inLanguage" content="{{ index_lang_primary }}">
+          {% endif %}
           <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
           <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
           {% assign words = post.content | number_of_words %}

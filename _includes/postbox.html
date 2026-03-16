@@ -1,5 +1,16 @@
 <div class="card mb-4 postbox-card shadow-sm" itemscope itemtype="https://schema.org/BlogPosting">
-  {% assign postbox_lang = post.lang | default: page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
+  {% assign postbox_lang_raw = post.lang | default: page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
+  {% assign postbox_lang_parts = postbox_lang_raw | split: '-' %}
+  {% assign postbox_lang_primary = postbox_lang_parts[0] | downcase %}
+  {% assign postbox_lang_region = '' %}
+  {% if postbox_lang_parts.size > 1 %}
+    {% assign postbox_lang_region = postbox_lang_parts[1] | upcase %}
+  {% endif %}
+  {% if postbox_lang_region != '' %}
+    {% assign postbox_lang = postbox_lang_primary | append: '-' | append: postbox_lang_region %}
+  {% else %}
+    {% assign postbox_lang = postbox_lang_primary %}
+  {% endif %}
   <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
   <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
   <meta itemprop="inLanguage" content="{{ postbox_lang }}">
