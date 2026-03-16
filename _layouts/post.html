@@ -36,7 +36,18 @@ layout: default
 {% endif %}
 {% assign word_count = content | number_of_words %}
 {% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
-{% assign normalized_post_lang = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
+{% assign normalized_post_lang_raw = page.lang | default: site.lang | default: site.default_lang | default: 'pt-BR' | replace: '_', '-' %}
+{% assign normalized_post_lang_parts = normalized_post_lang_raw | split: '-' %}
+{% assign normalized_post_lang_primary = normalized_post_lang_parts[0] | downcase %}
+{% assign normalized_post_lang_region = '' %}
+{% if normalized_post_lang_parts.size > 1 %}
+  {% assign normalized_post_lang_region = normalized_post_lang_parts[1] | upcase %}
+{% endif %}
+{% if normalized_post_lang_region != '' %}
+  {% assign normalized_post_lang = normalized_post_lang_primary | append: '-' | append: normalized_post_lang_region %}
+{% else %}
+  {% assign normalized_post_lang = normalized_post_lang_primary %}
+{% endif %}
 {% assign featured_image_loading_raw = page.image_loading | default: 'eager' | downcase %}
 {% if featured_image_loading_raw == 'lazy' %}
   {% assign featured_image_loading = 'lazy' %}
