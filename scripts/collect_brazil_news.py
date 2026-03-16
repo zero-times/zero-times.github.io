@@ -15,6 +15,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 from bs4 import BeautifulSoup
+from requests.exceptions import SSLError
 
 SITE_TZ = ZoneInfo("Asia/Shanghai")
 
@@ -43,6 +44,14 @@ def normalize_news_link(raw_link):
             break
 
     return link
+
+
+def fetch_url(url, timeout=10, headers=None):
+    """Fetch URL with SSL fallback for environments using LibreSSL."""
+    try:
+        return requests.get(url, timeout=timeout, headers=headers)
+    except SSLError:
+        return requests.get(url, timeout=timeout, headers=headers, verify=False)
 
 def get_brazilian_news():
     """从主流巴西新闻源收集新闻"""
@@ -75,7 +84,7 @@ def get_brazilian_news():
         try:
             # 优先尝试 RSS
             if 'api' in source:
-                response = requests.get(source['api'], timeout=10)
+                response = fetch_url(source['api'], timeout=10)
                 if response.status_code == 200:
                     from xml.etree import ElementTree as ET
                     rss_content = response.text
@@ -111,7 +120,7 @@ def get_brazilian_news():
                 headers = {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
                 }
-                response = requests.get(source['url'], headers=headers, timeout=10)
+                response = fetch_url(source['url'], headers=headers, timeout=10)
                 
                 if response.status_code == 200:
                     soup = BeautifulSoup(response.content, 'html.parser')
@@ -178,6 +187,12 @@ def create_news_post(news_items):
         if summary:
             news_content += f"   - Resumo: {summary}\n"
         news_content += "\n"
+
+    if not news_items:
+        news_content = (
+            "\nNenhuma notícia pôde ser coletada automaticamente hoje. "
+            "Verifique conectividade de rede e fontes RSS para nova tentativa.\n"
+        )
     
     # 生成文章内容
     description = (
@@ -215,13 +230,13 @@ Segue um resumo das principais notícias coletadas automaticamente dos principai
 def main():
     print("Collecting Brazilian news...")
     news_items = get_brazilian_news()
-    
+
     if news_items:
         print(f"Collected {len(news_items)} news items")
-        post_file = create_news_post(news_items)
-        print(f"News post created successfully: {post_file}")
     else:
-        print("No news items collected")
+        print("No news items collected; creating fallback post")
+    post_file = create_news_post(news_items)
+    print(f"News post created successfully: {post_file}")
 
     # 自动提交到 git（仅提交新增文章）
     try:
