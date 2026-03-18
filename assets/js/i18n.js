@@ -2,7 +2,7 @@
 // Simplified version without complex internationalization
 
 (function () {
-  const DEFAULT_LANG = 'pt-BR';
+  const DEFAULT_LANG = 'zh-CN';
   
   function updateBodyClasses(lang, dir) {
     if (!document.body) return;

@@ -840,7 +840,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Add language attribute to html tag if not present
   if (!document.documentElement.getAttribute('lang')) {
-    document.documentElement.setAttribute('lang', 'pt-BR');
+    document.documentElement.setAttribute('lang', 'zh-CN');
   }
 
   const enhanceMediaDefaults = () => {
