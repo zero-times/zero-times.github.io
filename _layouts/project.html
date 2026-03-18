@@ -1,0 +1,143 @@
+---
+layout: default
+---
+{% assign project_lang_raw = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
+{% assign project_lang_base = project_lang_raw | split: '-' | first | downcase %}
+{% case project_lang_base %}
+  {% when 'en' %}
+    {% assign role_label = 'Role' %}
+    {% assign status_note_label = 'Current status' %}
+    {% assign stack_label = 'Stack' %}
+    {% assign alternate_label = '中文版本' %}
+    {% assign related_title = 'More projects' %}
+    {% assign details_label = 'Project note' %}
+  {% when 'zh' %}
+    {% assign role_label = '我的职责' %}
+    {% assign status_note_label = '当前状态' %}
+    {% assign stack_label = '技术栈' %}
+    {% assign alternate_label = 'English version' %}
+    {% assign related_title = '更多项目' %}
+    {% assign details_label = '项目说明' %}
+  {% else %}
+    {% assign role_label = 'Papel' %}
+    {% assign status_note_label = 'Status' %}
+    {% assign stack_label = 'Stack' %}
+    {% assign alternate_label = 'English version' %}
+    {% assign related_title = 'Mais projetos' %}
+    {% assign details_label = 'Projeto' %}
+{% endcase %}
+{% assign related_projects = site.projects | where: "lang", page.lang | sort: "order" %}
+
+<div class="container my-5 project-detail">
+  <article class="project-detail__shell" aria-labelledby="page-title">
+    <header class="project-detail__hero">
+      <div class="project-detail__intro">
+        {% if page.status_label %}
+        <p class="portfolio-eyebrow">{{ page.status_label }}</p>
+        {% endif %}
+        <h1 id="page-title" class="project-detail__title">{{ page.title }}</h1>
+        {% if page.summary %}
+        <p class="project-detail__summary">{{ page.summary }}</p>
+        {% endif %}
+
+        <div class="project-detail__meta">
+          {% if page.role %}
+          <div class="project-detail__meta-item">
+            <span>{{ role_label }}</span>
+            <strong>{{ page.role }}</strong>
+          </div>
+          {% endif %}
+          {% if page.status_note %}
+          <div class="project-detail__meta-item">
+            <span>{{ status_note_label }}</span>
+            <strong>{{ page.status_note }}</strong>
+          </div>
+          {% endif %}
+          {% if page.stack %}
+          <div class="project-detail__meta-item">
+            <span>{{ stack_label }}</span>
+            <strong>{{ page.stack | join: " · " }}</strong>
+          </div>
+          {% endif %}
+        </div>
+
+        {% if page.stack %}
+        <ul class="portfolio-stack" role="list" aria-label="{{ stack_label }}">
+          {% for item in page.stack %}
+          <li role="listitem">{{ item }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="portfolio-project-actions">
+          {% if page.primary_link_url and page.primary_link_label %}
+            {% if page.primary_link_url contains '://' %}
+              {% assign detail_primary_href = page.primary_link_url %}
+              {% assign detail_primary_external = true %}
+            {% else %}
+              {% assign detail_primary_href = page.primary_link_url | relative_url %}
+              {% assign detail_primary_external = false %}
+            {% endif %}
+          <a class="portfolio-action portfolio-action--primary" href="{{ detail_primary_href }}"{% if detail_primary_external %} target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin"{% endif %}>{{ page.primary_link_label }}</a>
+          {% endif %}
+          {% if page.secondary_link_url and page.secondary_link_label %}
+            {% if page.secondary_link_url contains '://' %}
+              {% assign detail_secondary_href = page.secondary_link_url %}
+              {% assign detail_secondary_external = true %}
+            {% else %}
+              {% assign detail_secondary_href = page.secondary_link_url | relative_url %}
+              {% assign detail_secondary_external = false %}
+            {% endif %}
+          <a class="portfolio-action portfolio-action--secondary" href="{{ detail_secondary_href }}"{% if detail_secondary_external %} target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin"{% endif %}>{{ page.secondary_link_label }}</a>
+          {% endif %}
+          {% if page.alternate_url %}
+          <a class="portfolio-action portfolio-action--secondary" href="{{ page.alternate_url | relative_url }}">{{ alternate_label }}</a>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if page.image %}
+      <div class="project-detail__media">
+        <img src="{{ page.image | relative_url }}" alt="{{ page.image_alt | default: page.title | escape }}" loading="eager" decoding="async" fetchpriority="high"{% if page.image_width %} width="{{ page.image_width }}"{% endif %}{% if page.image_height %} height="{{ page.image_height }}"{% endif %}>
+      </div>
+      {% endif %}
+    </header>
+
+    <div class="project-detail__content article-post serif-font">
+      <p class="portfolio-inline-label">{{ details_label }}</p>
+      {{ content }}
+    </div>
+  </article>
+
+  <section class="portfolio-section" aria-labelledby="related-projects-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">{{ related_title }}</p>
+      <h2 id="related-projects-title">{{ related_title }}</h2>
+    </div>
+    <div class="portfolio-project-grid">
+      {% for project in related_projects %}
+        {% if project.url != page.url %}
+        <article class="portfolio-project-card">
+          {% if project.image %}
+          <a class="portfolio-project-media" href="{{ project.url | relative_url }}" aria-label="{{ project.title | escape }}">
+            <img src="{{ project.image | relative_url }}" alt="{{ project.image_alt | default: project.title | escape }}" loading="lazy" decoding="async" fetchpriority="low"{% if project.image_width %} width="{{ project.image_width }}"{% endif %}{% if project.image_height %} height="{{ project.image_height }}"{% endif %}>
+          </a>
+          {% endif %}
+          <div class="portfolio-project-body">
+            {% if project.status_label %}
+            <p class="portfolio-project-status">{{ project.status_label }}</p>
+            {% endif %}
+            <h3><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
+            {% if project.summary %}
+            <p class="portfolio-project-summary">{{ project.summary }}</p>
+            {% endif %}
+            <div class="portfolio-project-actions">
+              <a class="portfolio-action portfolio-action--primary" href="{{ project.url | relative_url }}">{{ project.card_cta_label | default: '查看详情' }}</a>
+            </div>
+          </div>
+        </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</div>

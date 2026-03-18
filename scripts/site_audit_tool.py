@@ -26,11 +26,15 @@ REPORTS_DIR = ROOT / 'reports'
 SCAN_TARGETS = [
     '_posts',
     '_blogs',
+    '_projects',
     'pages',
+    'en',
     '_layouts',
     '_includes',
     'index.html',
+    '404.html',
     '_config.yml',
+    'site.webmanifest',
 ]
 
 URL_RE = re.compile(r'https?://[^\s\)\]>\'"]+')
@@ -131,17 +135,24 @@ def normalize_route(path: str) -> str:
 def collect_known_routes() -> set[str]:
     routes = {'/'}
 
-    for pages_file in (ROOT / 'pages').glob('*'):
-        if pages_file.suffix not in ('.md', '.markdown', '.html'):
+    for page_dir_name in ('pages', 'en'):
+        page_dir = ROOT / page_dir_name
+        if not page_dir.exists():
             continue
-        text = read_text(pages_file)
-        permalink = extract_front_matter_value(text, 'permalink')
-        if permalink:
-            routes.add(normalize_route(permalink))
-        else:
-            routes.add(normalize_route('/' + pages_file.stem + '/'))
+        for pages_file in page_dir.rglob('*'):
+            if not pages_file.is_file() or pages_file.suffix not in ('.md', '.markdown', '.html'):
+                continue
+            text = read_text(pages_file)
+            permalink = extract_front_matter_value(text, 'permalink')
+            if permalink:
+                routes.add(normalize_route(permalink))
+            else:
+                rel = pages_file.relative_to(ROOT).with_suffix('')
+                if rel.name == 'index':
+                    rel = rel.parent
+                routes.add(normalize_route('/' + rel.as_posix() + '/'))
 
-    for collection in ('_posts', '_blogs'):
+    for collection in ('_posts', '_blogs', '_projects'):
         for post_file in (ROOT / collection).glob('*'):
             if post_file.suffix not in ('.md', '.markdown', '.html'):
                 continue

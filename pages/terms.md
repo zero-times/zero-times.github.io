@@ -10,6 +10,7 @@ description: Termos de uso, responsabilidades e condições de acesso do site
 keywords: "termos de uso, condições, responsabilidade, licenças"
 schema_type: TermsOfService
 last_modified_at: 2026-02-21
+load_analytics: false
 load_webfonts: false
 ---
 

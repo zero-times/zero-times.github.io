@@ -1,30 +1,35 @@
 # Site settings
 title: "Hoa"
+tagline: "Flutter、Node.js 与中小型产品开发落地"
 email: x5brain@gmail.com
-description: Bem-vindo ao meu blog pessoal em português!
-keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, Brasil"
+description: "Hoa 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。"
+keywords: "Flutter, Node.js, 个人作品集, 产品开发, 移动开发"
 baseurl: ""
 url: "https://youllbe.cn"
-default_lang: "pt-BR"
-locale: "pt_BR"
+default_lang: "zh-CN"
+locale: "zh_CN"
 og_locale_alternate: "en_US"
 author:
-  name: "Hoa"
-  bio: "Especialista em arquitetura móvel e soluções multiplataforma"
+  name: "Wang Xionghao (Hoa)"
+  display_name: "Hoa"
+  bio: "Flutter、Node.js 与中小型产品开发实践者"
   avatar: /assets/images/sal-300.jpg
   url: "https://youllbe.cn"
 logo: /assets/images/logo.png
 image: /assets/images/screenshot.jpg
-image_alt: "Captura de tela da página inicial do blog Hoa"
+image_alt: "Hoa 个人作品站首页预览图"
 social_image_width: 1280
 social_image_height: 719
-theme_color_light: "#2c3e50"
+theme_color_light: "#14324a"
 theme_color_dark: "#0b1320"
 
 # Build settings
 markdown: kramdown
 theme: minima
 timezone: Asia/Shanghai
+collections:
+  projects:
+    output: true
 plugins:
   - jekyll-feed
   - jekyll-sitemap
@@ -33,13 +38,13 @@ plugins:
   - jekyll-archives
 
 # Language settings
-lang: "pt-BR"
+lang: "zh-CN"
 
 # Pagination
 paginate: 30
 paginate_path: "/blog/page:num/"
 
-# SEO
+# SEO / social
 github_username: zero-times
 whatsapp: "+8619152250086"
 disqus: "youllbe-cn"
@@ -50,11 +55,9 @@ social:
     - https://www.linkedin.com/in/hoa-wang/
     - https://wa.me/8619152250086
 
-# Bootstrap version
+# Frontend
 bootstrap_version: 5
-
-# Analytics (optional)
-google_analytics: 'G-D37T5M8PL8'
+google_analytics: "G-D37T5M8PL8"
 
 # Build exclusions
 exclude:
@@ -68,7 +71,15 @@ defaults:
       type: "pages"
     values:
       layout: "default"
-      lang: "pt-BR"
+      lang: "zh-CN"
+      preconnect_fonts: false
+      load_webfonts: false
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+      lang: "zh-CN"
       preconnect_fonts: false
       load_webfonts: false
   - scope:
@@ -76,15 +87,23 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      lang: "pt-BR"
+      lang: "zh-CN"
       preconnect_fonts: false
       load_webfonts: false
       dns_prefetch_disqus: true
+      robots: "noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+      sitemap: false
+      load_analytics: false
+      archive_content: true
   - scope:
       path: "_blogs"
     values:
       layout: "post"
-      lang: "pt-BR"
+      lang: "zh-CN"
       preconnect_fonts: false
       load_webfonts: false
       dns_prefetch_disqus: true
+      robots: "noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+      sitemap: false
+      load_analytics: false
+      archive_content: true

@@ -1,115 +1,93 @@
 ---
 layout: default
-title: Contato
-permalink: "/contact/"
-lang: pt-BR
+title: 联系
+permalink: /contact/
+lang: zh-CN
+alternate_url: /en/contact/
 comments: false
-description: Fale com Hoa para consultoria em Flutter, HarmonyOS e arquitetura móvel.
-keywords: "contato, consultoria Flutter, HarmonyOS, arquitetura móvel, multiplataforma"
+description: "联系 Hoa，交流 Flutter、Node.js 与中小型产品开发相关合作。"
+keywords: "联系 Hoa, Flutter 合作, Node.js, 产品开发"
 schema_type: ContactPage
 preconnect_formspree: false
 dns_prefetch_formspree: false
 load_webfonts: false
-last_modified_at: 2026-03-14
+last_modified_at: 2026-03-18
 hide_title: true
 ---
 {% assign whatsapp_digits = site.whatsapp | default: '' | replace: '+', '' | strip %}
-{% assign has_social_links = site.social and site.social.links and site.social.links.size > 0 %}
-{% assign has_same_as_links = false %}
-{% if has_social_links or whatsapp_digits != '' %}
-  {% assign has_same_as_links = true %}
-{% endif %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "name": "{{ page.title | default: site.title | escape }}",
-  "url": "{{ page.url | absolute_url }}",
-  "inLanguage": "{{ page.lang | default: site.lang | default: 'pt-BR' | replace: '_', '-' }}",
-  "description": "{{ page.description | default: site.description | escape }}",
-  "mainEntity": {
-    "@type": "Person",
-    "name": "{{ site.author.name | escape }}",
-    "url": "{{ site.author.url | default: site.url }}",
-    "email": "mailto:{{ site.email | escape }}"{% if has_same_as_links %},
-    "sameAs": [{% assign same_as_joined = false %}{% if has_social_links %}{% for social_link in site.social.links %}{% if same_as_joined %}, {% endif %}"{{ social_link | escape }}"{% assign same_as_joined = true %}{% endfor %}{% endif %}{% if whatsapp_digits != '' %}{% if same_as_joined %}, {% endif %}"https://wa.me/{{ whatsapp_digits }}"{% endif %}]
-    {% endif %}
-  },
-  "contactPoint": [
-    {
-      "@type": "ContactPoint",
-      "contactType": "consulting",
-      "email": "{{ site.email | escape }}",
-      "availableLanguage": ["pt-BR", "en", "zh-CN"],
-      "url": "{{ page.url | absolute_url }}"
-    }
-  ]
-}
-</script>
 
-<div class="container my-5 contact-v2">
-  <section class="contact-v2__hero" aria-labelledby="page-title">
-    <p class="contact-v2__eyebrow">Conversa direta</p>
-    <h1 id="page-title">Vamos falar sobre seu produto, arquitetura ou desafios multiplataforma</h1>
-    <p class="contact-v2__lead">Se você precisa de consultoria HarmonyOS/Flutter ou quer construir capacidade móvel do zero, descreva seu objetivo e eu preparo um plano técnico claro.</p>
-    <div class="contact-v2__chips" aria-label="Canais de contato">
-      <article class="contact-v2__chip">
-        <p class="contact-v2__chip-label">Email</p>
-        <a href="mailto:{{ site.email }}" aria-label="Enviar email para {{ site.email }}">{{ site.email }}</a>
+<div class="container my-5 portfolio-shell">
+  <section class="portfolio-hero" aria-labelledby="page-title">
+    <div class="portfolio-hero__main">
+      <p class="portfolio-eyebrow">联系</p>
+      <h1 class="portfolio-title" id="page-title">如果你想聊一个产品、一个重构，或只是判断一件事值不值得做</h1>
+      <p class="portfolio-lead">网站不一定高频更新，但邮件通常会看。如果你已经有一个明确想法，直接告诉我目标、阶段和你最担心的地方就可以。</p>
+    </div>
+    <aside class="portfolio-panel">
+      <h2>常用入口</h2>
+      <ul class="portfolio-contact-list">
+        <li><span>Email</span><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        <li><span>GitHub</span><a href="https://github.com/zero-times" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin">zero-times</a></li>
+        <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/hoa-wang/" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin">hoa-wang</a></li>
+        {% if whatsapp_digits != '' %}
+        <li><span>WhatsApp</span><a href="https://wa.me/{{ whatsapp_digits }}" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin">+{{ whatsapp_digits }}</a></li>
+        {% endif %}
+      </ul>
+    </aside>
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="contact-fit-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">你可以这样联系我</p>
+      <h2 id="contact-fit-title">这些信息会帮助我更快理解你的项目</h2>
+    </div>
+    <div class="portfolio-card-grid">
+      <article class="portfolio-card">
+        <h3>你现在处于哪个阶段</h3>
+        <p>是刚有想法、已经有设计稿、还是已有一个需要收敛和补能力的版本。</p>
       </article>
-      <article class="contact-v2__chip">
-        <p class="contact-v2__chip-label">WeChat</p>
-        <p class="contact-v2__chip-value">hoaever</p>
+      <article class="portfolio-card">
+        <h3>最想先解决什么问题</h3>
+        <p>例如首版上线、跨端实现、管理后台、接口能力、性能或现有结构混乱。</p>
+      </article>
+      <article class="portfolio-card">
+        <h3>大致时间与协作方式</h3>
+        <p>哪怕只是粗略说明，也能帮助我判断更适合给你建议、协作还是暂缓推进。</p>
       </article>
     </div>
   </section>
 
-  <section class="contact-v2__methods" aria-labelledby="contact-methods-title">
-    <h2 id="contact-methods-title">Como posso ajudar</h2>
-    <div class="contact-v2__methods-grid">
-      <article class="contact-v2__method-card">
-        <h3>Parcerias de projeto</h3>
-        <p>Alinhamos metas, escopo e ritmo de entrega para projetos críticos com prazo real de produção.</p>
-      </article>
-      <article class="contact-v2__method-card">
-        <h3>Consultoria técnica</h3>
-        <p>Diagnóstico e direcionamento para HarmonyOS, Flutter, performance, SDKs e arquitetura de produto.</p>
-      </article>
-      <article class="contact-v2__method-card">
-        <h3>Colaboração de conteúdo</h3>
-        <p>Entrevistas, palestras e trocas com comunidades sobre experiências reais de desenvolvimento multiplataforma.</p>
-      </article>
+  <section class="portfolio-section" aria-labelledby="contact-form-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">表单</p>
+      <h2 id="contact-form-title">直接发一封说明也可以</h2>
+      <p>如果你更习惯先写一段背景说明，可以直接用下面的表单发过来。</p>
     </div>
-  </section>
-
-  <section class="contact-v2__form-section" aria-labelledby="contact-form-title">
-    <h2 id="contact-form-title">Escreva para mim</h2>
-    <p id="contact-form-hint">Use o formulário para descrever necessidades e prazos. Responderei em até 48 horas.</p>
-    <form class="contact-v2__form" action="https://formspree.io/f/xvoewlbz" method="POST" aria-label="Formulário de contato" aria-describedby="contact-form-hint">
+    <form class="portfolio-form" action="https://formspree.io/f/xvoewlbz" method="POST" aria-label="联系表单">
       <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <div class="contact-v2__form-grid">
-        <div class="contact-v2__field">
-          <label for="contact-name">Nome <span aria-hidden="true">*</span></label>
-          <input id="contact-name" class="form-control" type="text" name="name" autocomplete="name" autocapitalize="words" spellcheck="false" enterkeyhint="next" required>
+      <div class="portfolio-form__grid">
+        <div class="portfolio-form__field">
+          <label for="contact-name">姓名</label>
+          <input id="contact-name" class="form-control" type="text" name="name" autocomplete="name" autocapitalize="words" spellcheck="false">
         </div>
-        <div class="contact-v2__field">
-          <label for="contact-email">Email <span aria-hidden="true">*</span></label>
-          <input id="contact-email" class="form-control" type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next" required>
+        <div class="portfolio-form__field">
+          <label for="contact-email">邮箱</label>
+          <input id="contact-email" class="form-control" type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" required>
         </div>
-        <div class="contact-v2__field">
-          <label for="contact-company">Empresa ou equipe</label>
-          <input id="contact-company" class="form-control" type="text" name="company" autocomplete="organization" autocapitalize="words" spellcheck="false" enterkeyhint="next">
+        <div class="portfolio-form__field">
+          <label for="contact-topic">项目主题</label>
+          <input id="contact-topic" class="form-control" type="text" name="topic" autocomplete="off" autocapitalize="sentences" spellcheck="false">
         </div>
-        <div class="contact-v2__field">
-          <label for="contact-topic">Projeto ou tema</label>
-          <input id="contact-topic" class="form-control" type="text" name="topic" autocomplete="off" autocapitalize="sentences" spellcheck="false" enterkeyhint="next">
+        <div class="portfolio-form__field">
+          <label for="contact-stage">当前阶段</label>
+          <input id="contact-stage" class="form-control" type="text" name="stage" autocomplete="off" autocapitalize="sentences" spellcheck="false">
         </div>
       </div>
-      <div class="contact-v2__field contact-v2__field--full">
-        <label for="contact-message">Mensagem <span aria-hidden="true">*</span></label>
-        <textarea id="contact-message" rows="8" class="form-control" name="message" autocapitalize="sentences" spellcheck="true" enterkeyhint="send" required></textarea>
+      <div class="portfolio-form__field">
+        <label for="contact-message">你现在最需要解决什么</label>
+        <textarea id="contact-message" rows="8" class="form-control" name="message" autocapitalize="sentences" spellcheck="true" required></textarea>
       </div>
-      <button class="home-v2__btn home-v2__btn--primary contact-v2__submit" type="submit">Enviar mensagem</button>
+      <button class="portfolio-action portfolio-action--primary portfolio-form__submit" type="submit">发送消息</button>
     </form>
   </section>
 </div>

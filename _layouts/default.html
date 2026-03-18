@@ -126,9 +126,14 @@
   {% if page.hero_avatar_preload %}
   <link rel="preload" as="image" href="{{ '/assets/images/sal-300.jpg' | relative_url }}" imagesrcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" imagesizes="(max-width: 991.98px) calc(100vw - 2rem), 320px">
   {% endif %}
-  {% if page.url == '/' and page.prefetch_home_links %}
-  <link rel="prefetch" href="{% link blog/index.html %}">
-  <link rel="prefetch" href="{% link pages/contact.html %}">
+  {% if page.prefetch_home_links and (page.url == '/' or page.url == '/en/') %}
+    {% if lang_primary == 'en' %}
+  <link rel="prefetch" href="{{ '/en/projects/' | relative_url }}">
+  <link rel="prefetch" href="{{ '/en/contact/' | relative_url }}">
+    {% else %}
+  <link rel="prefetch" href="{{ '/projects/' | relative_url }}">
+  <link rel="prefetch" href="{{ '/contact/' | relative_url }}">
+    {% endif %}
   {% endif %}
   {% if page.preconnect_news_sources %}
   <link rel="preconnect" href="https://s2-g1.glbimg.com" crossorigin>
@@ -370,7 +375,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Blog",
+          "name": "{% if lang_primary == 'en' %}Archive{% elsif lang_primary == 'zh' %}内容归档{% else %}Blog{% endif %}",
           "item": "{{ '/blog/' | absolute_url }}"
         },
         {
@@ -578,27 +583,102 @@
   {% endif %}
 </head>
 <body class="d-flex flex-column min-vh-100" data-bootstrap-src="{{ '/assets/js/bootstrap.min.js' | relative_url }}">
-  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
-  {% assign brand_label = site.url | replace: 'https://', '' | replace: 'http://', '' | default: site.title %}
-  {% assign is_home = page.url == '/' %}
+  {% assign lang_base = lang_primary %}
+  {% case lang_base %}
+    {% when 'en' %}
+      {% assign skip_link_label = 'Skip to content' %}
+      {% assign nav_home_label = 'Home' %}
+      {% assign nav_projects_label = 'Projects' %}
+      {% assign nav_about_label = 'About' %}
+      {% assign nav_contact_label = 'Contact' %}
+      {% assign nav_archive_label = 'Archive' %}
+      {% assign nav_contact_cta = 'Get in touch' %}
+      {% assign nav_switch_label = '中文' %}
+      {% assign nav_switch_aria = 'Switch to Chinese' %}
+      {% assign menu_label = 'Menu' %}
+      {% assign menu_open_label = 'Open main menu' %}
+      {% assign menu_close_label = 'Close main menu' %}
+      {% assign menu_hint = 'Tap Close to collapse the menu' %}
+      {% assign main_label = 'Main content' %}
+      {% assign footer_copy = site.tagline | default: 'Flutter, Node.js and end-to-end product delivery' %}
+      {% assign privacy_label = 'Privacy' %}
+      {% assign terms_label = 'Terms' %}
+      {% assign default_switch_url = '/' %}
+      {% assign nav_home_url = '/en/' %}
+      {% assign nav_projects_url = '/en/projects/' %}
+      {% assign nav_about_url = '/en/about/' %}
+      {% assign nav_contact_url = '/en/contact/' %}
+    {% when 'zh' %}
+      {% assign skip_link_label = '跳转到主要内容' %}
+      {% assign nav_home_label = '首页' %}
+      {% assign nav_projects_label = '项目' %}
+      {% assign nav_about_label = '关于' %}
+      {% assign nav_contact_label = '联系' %}
+      {% assign nav_archive_label = '内容归档' %}
+      {% assign nav_contact_cta = '联系我' %}
+      {% assign nav_switch_label = 'EN' %}
+      {% assign nav_switch_aria = '切换到英文页面' %}
+      {% assign menu_label = '菜单' %}
+      {% assign menu_open_label = '打开主菜单' %}
+      {% assign menu_close_label = '关闭主菜单' %}
+      {% assign menu_hint = '点击关闭即可收起菜单' %}
+      {% assign main_label = '主要内容' %}
+      {% assign footer_copy = site.tagline | default: 'Flutter、Node.js 与中小型产品开发落地' %}
+      {% assign privacy_label = '隐私' %}
+      {% assign terms_label = '条款' %}
+      {% assign default_switch_url = '/en/' %}
+      {% assign nav_home_url = '/' %}
+      {% assign nav_projects_url = '/projects/' %}
+      {% assign nav_about_url = '/about/' %}
+      {% assign nav_contact_url = '/contact/' %}
+    {% else %}
+      {% assign skip_link_label = 'Pular para o conteúdo' %}
+      {% assign nav_home_label = 'Início' %}
+      {% assign nav_projects_label = 'Projetos' %}
+      {% assign nav_about_label = 'Sobre' %}
+      {% assign nav_contact_label = 'Contato' %}
+      {% assign nav_archive_label = 'Blog' %}
+      {% assign nav_contact_cta = 'Fale comigo' %}
+      {% assign nav_switch_label = 'EN' %}
+      {% assign nav_switch_aria = 'Mudar para inglês' %}
+      {% assign menu_label = 'Menu' %}
+      {% assign menu_open_label = 'Abrir menu principal' %}
+      {% assign menu_close_label = 'Fechar menu principal' %}
+      {% assign menu_hint = 'Toque em Fechar para recolher o menu' %}
+      {% assign main_label = 'Conteúdo principal' %}
+      {% assign footer_copy = site.tagline | default: 'Arquitetura mobile e blog técnico' %}
+      {% assign privacy_label = 'Privacidade' %}
+      {% assign terms_label = 'Termos' %}
+      {% assign default_switch_url = '/en/' %}
+      {% assign nav_home_url = '/' %}
+      {% assign nav_projects_url = '/projects/' %}
+      {% assign nav_about_url = '/about/' %}
+      {% assign nav_contact_url = '/contact/' %}
+  {% endcase %}
+  {% assign switch_url = page.alternate_url | default: default_switch_url %}
+  <a class="skip-link" href="#main-content">{{ skip_link_label }}</a>
+  {% assign brand_label = site.author.display_name | default: site.title %}
+  {% assign is_home = page.url == '/' or page.url == '/en/' %}
   {% assign is_blog = page.url contains '/blog/' %}
+  {% assign is_projects = page.url contains '/projects/' %}
   {% assign is_about = page.url contains '/about/' %}
   {% assign is_contact = page.url contains '/contact/' %}
 
   <header class="site-header-v2 sticky-top" role="banner">
     <div class="container site-header-v2__inner">
-      <a class="site-header-v2__brand" href="{% link index.html %}" rel="home" aria-label="Página inicial - {{ site.title }}">
+      <a class="site-header-v2__brand" href="{{ nav_home_url | relative_url }}" rel="home" aria-label="{{ nav_home_label }} - {{ site.title }}">
         {{ brand_label }}
       </a>
 
-      <nav class="site-nav-desktop" aria-label="Seções principais">
-        <a class="site-nav-link{% if is_home %} is-active{% endif %}" href="{% link index.html %}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
-        <a class="site-nav-link{% if is_blog %} is-active{% endif %}" href="{% link blog/index.html %}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
-        <a class="site-nav-link{% if is_about %} is-active{% endif %}" href="{% link pages/about.html %}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
-        <a class="site-nav-link{% if is_contact %} is-active{% endif %}" href="{% link pages/contact.html %}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
+      <nav class="site-nav-desktop" aria-label="{% if lang_base == 'en' %}Primary sections{% elsif lang_base == 'zh' %}主要导航{% else %}Seções principais{% endif %}">
+        <a class="site-nav-link{% if is_home %} is-active{% endif %}" href="{{ nav_home_url | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>{{ nav_home_label }}</a>
+        <a class="site-nav-link{% if is_projects %} is-active{% endif %}" href="{{ nav_projects_url | relative_url }}"{% if is_projects %} aria-current="page"{% endif %} data-site-nav>{{ nav_projects_label }}</a>
+        <a class="site-nav-link{% if is_about %} is-active{% endif %}" href="{{ nav_about_url | relative_url }}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>{{ nav_about_label }}</a>
+        <a class="site-nav-link{% if is_contact %} is-active{% endif %}" href="{{ nav_contact_url | relative_url }}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>{{ nav_contact_label }}</a>
+        <a class="site-nav-link" href="{{ switch_url | relative_url }}" aria-label="{{ nav_switch_aria }}" data-site-nav>{{ nav_switch_label }}</a>
       </nav>
 
-      <a class="site-header-v2__cta d-none d-lg-inline-flex" href="{% link pages/contact.html %}" aria-label="Falar com Hoa">Fale comigo</a>
+      <a class="site-header-v2__cta d-none d-lg-inline-flex" href="{{ nav_contact_url | relative_url }}" aria-label="{{ nav_contact_cta }}">{{ nav_contact_cta }}</a>
 
       <button
         id="mobileMenuButton"
@@ -609,29 +689,30 @@
         aria-controls="siteMobileDrawer"
         aria-haspopup="dialog"
         aria-expanded="false"
-        aria-label="Abrir menu principal">
-        <span id="mobileMenuButtonLabel">Menu</span>
+        aria-label="{{ menu_open_label }}">
+        <span id="mobileMenuButtonLabel">{{ menu_label }}</span>
       </button>
     </div>
   </header>
 
   <div class="offcanvas offcanvas-top site-mobile-drawer" tabindex="-1" id="siteMobileDrawer" role="dialog" aria-modal="true" aria-labelledby="siteMobileDrawerTitle" aria-describedby="siteMobileDrawerHint">
     <div class="offcanvas-body">
-      <h2 id="siteMobileDrawerTitle" class="visually-hidden">Menu principal</h2>
-      <button class="site-mobile-drawer__close" type="button" data-bs-dismiss="offcanvas" aria-label="Fechar menu principal">Fechar</button>
-      <nav class="site-mobile-drawer__nav" aria-label="Navegação móvel">
-        <a class="site-mobile-drawer__link{% if is_home %} is-active{% endif %}" href="{% link index.html %}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>Início</a>
-        <a class="site-mobile-drawer__link{% if is_blog %} is-active{% endif %}" href="{% link blog/index.html %}"{% if is_blog %} aria-current="page"{% endif %} data-site-nav>Blog</a>
-        <a class="site-mobile-drawer__link{% if is_about %} is-active{% endif %}" href="{% link pages/about.html %}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>Sobre</a>
-        <a class="site-mobile-drawer__link{% if is_contact %} is-active{% endif %}" href="{% link pages/contact.html %}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>Contato</a>
+      <h2 id="siteMobileDrawerTitle" class="visually-hidden">{{ menu_label }}</h2>
+      <button class="site-mobile-drawer__close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ menu_close_label }}">{{ menu_close_label }}</button>
+      <nav class="site-mobile-drawer__nav" aria-label="{% if lang_base == 'en' %}Mobile navigation{% elsif lang_base == 'zh' %}移动导航{% else %}Navegação móvel{% endif %}">
+        <a class="site-mobile-drawer__link{% if is_home %} is-active{% endif %}" href="{{ nav_home_url | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>{{ nav_home_label }}</a>
+        <a class="site-mobile-drawer__link{% if is_projects %} is-active{% endif %}" href="{{ nav_projects_url | relative_url }}"{% if is_projects %} aria-current="page"{% endif %} data-site-nav>{{ nav_projects_label }}</a>
+        <a class="site-mobile-drawer__link{% if is_about %} is-active{% endif %}" href="{{ nav_about_url | relative_url }}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>{{ nav_about_label }}</a>
+        <a class="site-mobile-drawer__link{% if is_contact %} is-active{% endif %}" href="{{ nav_contact_url | relative_url }}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>{{ nav_contact_label }}</a>
+        <a class="site-mobile-drawer__link" href="{{ switch_url | relative_url }}" aria-label="{{ nav_switch_aria }}" data-site-nav>{{ nav_switch_label }}</a>
       </nav>
-      <a class="site-mobile-drawer__cta" href="{% link pages/contact.html %}" aria-label="Falar com Hoa">Fale comigo</a>
-      <p id="siteMobileDrawerHint" class="site-mobile-drawer__hint">Toque em Fechar para recolher o menu</p>
+      <a class="site-mobile-drawer__cta" href="{{ nav_contact_url | relative_url }}" aria-label="{{ nav_contact_cta }}">{{ nav_contact_cta }}</a>
+      <p id="siteMobileDrawerHint" class="site-mobile-drawer__hint">{{ menu_hint }}</p>
     </div>
   </div>
 
   <!-- 主内容 -->
-  <main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label="Conteúdo principal">
+  <main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label="{{ main_label }}">
     {{ content }}
   </main>
 
@@ -639,15 +720,16 @@
     <div class="container site-footer-v2__inner">
       <div class="site-footer-v2__brand">
         <strong class="site-footer-v2__brand-name">{{ brand_label }}</strong>
-        <p class="site-footer-v2__brand-copy">Arquitetura mobile e blog técnico</p>
+        <p class="site-footer-v2__brand-copy">{{ footer_copy }}</p>
       </div>
       <div class="site-footer-v2__meta">
-        <nav class="site-footer-v2__links" aria-label="Links do rodapé">
-          <a href="{% link blog/index.html %}" aria-label="Abrir Blog"{% if is_blog %} aria-current="page"{% endif %}>Blog</a>
-          <a href="{% link pages/about.html %}" aria-label="Abrir Sobre"{% if is_about %} aria-current="page"{% endif %}>Sobre</a>
-          <a href="{% link pages/contact.html %}" aria-label="Abrir Contato"{% if is_contact %} aria-current="page"{% endif %}>Contato</a>
-          <a href="{% link pages/privacy-policy.md %}" aria-label="Abrir Política de Privacidade"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>Privacidade</a>
-          <a href="{% link pages/terms.md %}" aria-label="Abrir Termos de Uso"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>Termos</a>
+        <nav class="site-footer-v2__links" aria-label="{% if lang_base == 'en' %}Footer links{% elsif lang_base == 'zh' %}页脚链接{% else %}Links do rodapé{% endif %}">
+          <a href="{{ nav_projects_url | relative_url }}" aria-label="{{ nav_projects_label }}"{% if is_projects %} aria-current="page"{% endif %}>{{ nav_projects_label }}</a>
+          <a href="{{ nav_about_url | relative_url }}" aria-label="{{ nav_about_label }}"{% if is_about %} aria-current="page"{% endif %}>{{ nav_about_label }}</a>
+          <a href="{{ nav_contact_url | relative_url }}" aria-label="{{ nav_contact_label }}"{% if is_contact %} aria-current="page"{% endif %}>{{ nav_contact_label }}</a>
+          <a href="{% link blog/index.html %}" aria-label="{{ nav_archive_label }}"{% if is_blog %} aria-current="page"{% endif %}>{{ nav_archive_label }}</a>
+          <a href="{% link pages/privacy-policy.md %}" aria-label="{{ privacy_label }}"{% if page.url contains '/privacy-policy/' %} aria-current="page"{% endif %}>{{ privacy_label }}</a>
+          <a href="{% link pages/terms.md %}" aria-label="{{ terms_label }}"{% if page.url contains '/terms/' %} aria-current="page"{% endif %}>{{ terms_label }}</a>
         </nav>
         <p class="site-footer-v2__copyright">&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}</p>
       </div>

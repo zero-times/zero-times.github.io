@@ -1,8 +1,8 @@
 {
-  "name": "Hoa Blog",
+  "name": "Hoa | Flutter & Node.js",
   "short_name": "Hoa",
-  "description": "Blog pessoal do Hoa com projetos, produtos e anotações técnicas.",
-  "lang": "pt-BR",
+  "description": "Hoa 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。",
+  "lang": "zh-CN",
   "id": "/",
   "start_url": "/",
   "scope": "/",
@@ -22,10 +22,10 @@
   "theme_color": "#2c3e50",
   "shortcuts": [
     {
-      "name": "Blog",
-      "short_name": "Blog",
-      "description": "Leia os artigos mais recentes",
-      "url": "/blog/",
+      "name": "项目",
+      "short_name": "项目",
+      "description": "查看代表项目与项目说明",
+      "url": "/projects/",
       "icons": [
         {
           "src": "/assets/images/icon-192.png",
@@ -35,9 +35,9 @@
       ]
     },
     {
-      "name": "Contato",
-      "short_name": "Contato",
-      "description": "Abra a página de contato",
+      "name": "联系",
+      "short_name": "联系",
+      "description": "打开联系页面",
       "url": "/contact/",
       "icons": [
         {
@@ -54,14 +54,14 @@
       "sizes": "1280x719",
       "type": "image/jpeg",
       "form_factor": "wide",
-      "label": "Página inicial do blog Hoa"
+      "label": "Hoa 个人作品站首页"
     },
     {
       "src": "/assets/images/screenshot-mobile.jpg",
       "sizes": "750x1334",
       "type": "image/jpeg",
       "form_factor": "narrow",
-      "label": "Página inicial do blog Hoa no celular"
+      "label": "Hoa 个人作品站移动端首页"
     }
   ],
   "icons": [

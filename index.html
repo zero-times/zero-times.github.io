@@ -1,198 +1,112 @@
 ---
-title: Arquitetura mobile e Flutter
+title: Flutter、Node.js 与中小型产品开发落地
 layout: default
-lang: pt-BR
+lang: zh-CN
+alternate_url: /en/
 hero_avatar_preload: true
 preconnect_fonts: false
 load_webfonts: false
 load_analytics: true
-preconnect_analytics: false
-prefetch_home_links: false
-description: "Especialista em arquitetura móvel e soluções multiplataforma com foco em Flutter e tecnologia nativa."
-keywords: "arquitetura móvel, Flutter, soluções multiplataforma, tecnologia, Brasil"
+description: "Hoa 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。"
+keywords: "Flutter, Node.js, 个人作品集, 中小型产品开发, 跨端开发"
 image: /assets/images/screenshot.jpg
-image_alt: Captura da página inicial com foco em arquitetura mobile e Flutter
+image_alt: Hoa 个人作品站首页
 image_width: 1280
 image_height: 719
 schema_type: ProfilePage
-last_modified_at: 2026-03-14
+last_modified_at: 2026-03-18
 ---
+{% assign featured_projects = site.projects | where: "lang", "zh-CN" | where: "featured", true | sort: "order" %}
 
-{% assign recent_posts = site.posts | slice: 0, 3 %}
-{% assign recent_posts_count = recent_posts | size %}
-{% assign home_publisher_name = site.title | default: site.author.name %}
-{% assign home_publisher_url = site.url | append: site.baseurl %}
-{% assign home_publisher_logo_src = site.logo | default: site.author.avatar %}
-{% if home_publisher_logo_src %}
-  {% if home_publisher_logo_src contains '://' %}
-    {% assign home_publisher_logo_url = home_publisher_logo_src %}
-  {% else %}
-    {% assign home_publisher_logo_url = home_publisher_logo_src | absolute_url %}
-  {% endif %}
-{% endif %}
-{% if recent_posts_count and recent_posts_count > 0 %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": "{{ page.title | default: site.title | escape }} - Últimas postagens",
-  "itemListOrder": "https://schema.org/ItemListOrderDescending",
-  "numberOfItems": {{ recent_posts_count }},
-  "itemListElement": [
-    {% for post in recent_posts %}
-    {
-      "@type": "ListItem",
-      "position": {{ forloop.index }},
-      "url": "{{ post.url | absolute_url | escape }}",
-      "name": "{{ post.title | escape }}",
-      "datePublished": "{{ post.date | date_to_xmlschema }}"
-    }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ]
-}
-</script>
-{% endif %}
-
-<div class="container my-5 home-v2">
-  <section class="home-v2__hero" aria-labelledby="page-title">
-    <div class="home-v2__hero-main">
-      <p class="home-v2__eyebrow">Arquitetura mobile · Flutter · HarmonyOS</p>
-      <h1 class="home-v2__title" id="page-title">Especialista em Arquitetura Móvel e Soluções Multiplataforma</h1>
-      <p class="home-v2__lead">9 anos de experiência em desenvolvimento e arquitetura móvel para transformar requisitos vagos em produtos robustos, escaláveis e com entrega previsível.</p>
-      <div class="home-v2__hero-actions">
-        <a class="home-v2__btn home-v2__btn--primary" href="{% link blog/index.html %}" aria-label="Ver todos os artigos">Ver todos os artigos</a>
-        <a class="home-v2__btn home-v2__btn--secondary" href="{% link pages/about.html %}" aria-label="Saber mais sobre Hoa">Saiba mais</a>
+<div class="container my-5 portfolio-shell">
+  <section class="portfolio-hero" aria-labelledby="page-title">
+    <div class="portfolio-hero__main">
+      <p class="portfolio-eyebrow">中文主站 · 英文基础页 · 低维护更新</p>
+      <h1 class="portfolio-title" id="page-title">Hoa，主要做 Flutter、Node.js 与中小型产品开发落地</h1>
+      <p class="portfolio-lead">这个站点不再以高频内容更新为目标，而是用少量真实项目、明确的能力边界和直接的联系入口，说明我现在能做什么。</p>
+      <div class="portfolio-actions">
+        <a class="portfolio-action portfolio-action--primary" href="{{ '/projects/' | relative_url }}">查看项目</a>
+        <a class="portfolio-action portfolio-action--secondary" href="{{ '/about/' | relative_url }}">关于我</a>
       </div>
     </div>
-    <figure class="home-v2__hero-visual">
-      <img src="{{ '/assets/images/sal-300.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="(max-width: 991.98px) calc(100vw - 2rem), 320px" alt="Consultoria técnica para produtos mobile" loading="eager" decoding="async" fetchpriority="high" width="300" height="300">
-      <figcaption>Da arquitetura ao lançamento com foco em performance e entrega.</figcaption>
-    </figure>
-  </section>
-
-  <section class="home-v2__metrics" aria-label="Indicadores principais">
-    <article class="home-v2__metric-card">
-      <p class="home-v2__metric-value">30+</p>
-      <p class="home-v2__metric-label">Projetos entregues</p>
-    </article>
-    <article class="home-v2__metric-card">
-      <p class="home-v2__metric-value">9</p>
-      <p class="home-v2__metric-label">Anos em mobile</p>
-    </article>
-    <article class="home-v2__metric-card">
-      <p class="home-v2__metric-value">100%</p>
-      <p class="home-v2__metric-label">Foco em resultado</p>
-    </article>
-  </section>
-
-  <section class="home-v2__content" aria-labelledby="home-latest-title">
-    <div class="home-v2__posts">
-      <p class="home-v2__content-eyebrow">Conteúdo recente</p>
-      <h2 class="home-v2__section-title" id="home-latest-title">Últimas postagens</h2>
-
-      {% if recent_posts and recent_posts.size > 0 %}
-        {% for post in recent_posts %}
-        <article class="home-v2__post-card" itemscope itemtype="https://schema.org/BlogPosting">
-          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-            <meta itemprop="name" content="{{ site.author.name | escape }}">
-            {% if site.author.url %}
-            <meta itemprop="url" content="{{ site.author.url | escape }}">
-            {% endif %}
-          </span>
-          {% if home_publisher_name %}
-          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-            <meta itemprop="name" content="{{ home_publisher_name | escape }}">
-            {% if home_publisher_url %}
-            <meta itemprop="url" content="{{ home_publisher_url | escape }}">
-            {% endif %}
-            {% if home_publisher_logo_url %}
-            <meta itemprop="logo" content="{{ home_publisher_logo_url | escape }}">
-            {% endif %}
-          </span>
-          {% endif %}
-          {% assign index_lang_raw = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
-          {% assign index_lang_parts = index_lang_raw | split: '-' %}
-          {% assign index_lang_primary = index_lang_parts[0] | downcase %}
-          {% assign index_lang_region = '' %}
-          {% if index_lang_parts.size > 1 %}
-            {% assign index_lang_region = index_lang_parts[1] | upcase %}
-          {% endif %}
-          {% if index_lang_region != '' %}
-          <meta itemprop="inLanguage" content="{{ index_lang_primary | append: '-' | append: index_lang_region }}">
-          {% else %}
-          <meta itemprop="inLanguage" content="{{ index_lang_primary }}">
-          {% endif %}
-          <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
-          <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
-          {% assign words = post.content | number_of_words %}
-          <meta itemprop="wordCount" content="{{ words }}">
-          {% if post.image %}
-            {% if post.image contains '://' %}
-          <meta itemprop="image" content="{{ post.image | escape }}">
-            {% else %}
-          <meta itemprop="image" content="{{ post.image | absolute_url | escape }}">
-            {% endif %}
-          {% elsif site.image %}
-          <meta itemprop="image" content="{{ site.image | absolute_url | escape }}">
-          {% endif %}
-
-          <h3 class="home-v2__post-title" itemprop="headline">
-            <a href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title | escape }}" itemprop="url">{{ post.title }}</a>
-          </h3>
-          <p class="home-v2__post-excerpt" itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 150 }}</p>
-          <p class="home-v2__post-meta">
-            <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
-            <span aria-hidden="true">•</span>
-            <span>{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
-          </p>
-        </article>
-        {% endfor %}
-
-        {% if recent_posts.size < 3 %}
-        <article class="home-v2__post-card home-v2__post-card--placeholder" role="status" aria-live="polite">
-          <h3 class="home-v2__post-title">Mais conteúdo em breve</h3>
-          <p class="home-v2__post-excerpt">Estamos preparando novos artigos. Enquanto isso, explore o arquivo completo do blog.</p>
-        </article>
-        {% endif %}
-      {% else %}
-      <article class="home-v2__post-card home-v2__post-card--placeholder" role="status" aria-live="polite">
-        <h3 class="home-v2__post-title">Sem postagens publicadas</h3>
-        <p class="home-v2__post-excerpt">Nenhum artigo disponível no momento. Volte em breve para ver novidades.</p>
-      </article>
-      {% endif %}
-
-      <a class="home-v2__btn home-v2__btn--primary home-v2__posts-cta" href="{% link blog/index.html %}" aria-label="Ver todos os artigos do blog">Ver todos os artigos</a>
-    </div>
-
-    <aside class="home-v2__sidebar" aria-label="Informações complementares">
-      <section class="home-v2__side-card">
-        <h3>Sobre mim</h3>
-        <p>{{ site.author.bio }}</p>
-        <img src="{{ '/assets/images/sal-150.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="112px" alt="{{ site.author.name | escape }}" loading="lazy" decoding="async" fetchpriority="low" width="112" height="112">
-        <a class="home-v2__btn home-v2__btn--secondary" href="{% link pages/about.html %}" aria-label="Saiba mais sobre Hoa">Saiba mais</a>
-      </section>
-
-      <section class="home-v2__side-card">
-        <h3>Especialidades</h3>
-        <ul>
-          <li>Flutter e HarmonyOS</li>
-          <li>Arquitetura móvel</li>
-          <li>Soluções multiplataforma</li>
-          <li>Performance mobile</li>
-        </ul>
-      </section>
-
-      <section class="home-v2__side-card">
-        <h3>Vamos conversar?</h3>
-        <p>Consultoria em arquitetura mobile para times distribuídos e produtos digitais.</p>
-        <a class="home-v2__btn home-v2__btn--success" href="{% link pages/contact.html %}" aria-label="Entre em contato para consultoria">Entre em contato</a>
-      </section>
+    <aside class="portfolio-panel" aria-label="当前方向">
+      <figure class="portfolio-profile-figure">
+        <img src="{{ '/assets/images/sal-300.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="(max-width: 991.98px) 112px, 136px" alt="Hoa 头像" loading="eager" decoding="async" fetchpriority="high" width="136" height="136">
+      </figure>
+      <h2>当前方向</h2>
+      <ul class="portfolio-mini-list">
+        <li>以 Flutter 为主，负责跨端产品体验与交付。</li>
+        <li>用 Node.js 补齐中小型产品的服务端与管理能力。</li>
+        <li>更愿意通过真实项目展示能力，而不是堆砌高频内容。</li>
+      </ul>
+      <a class="portfolio-inline-link" href="{{ '/contact/' | relative_url }}">如果你有一个想法或正在推进中的产品，可以直接联系我。</a>
     </aside>
   </section>
 
-  <section class="home-v2__final-cta" aria-labelledby="home-final-cta-title">
-    <h2 id="home-final-cta-title">Pronto para acelerar seu próximo produto mobile?</h2>
-    <p>Da estratégia técnica à entrega: ajudo seu time a construir com segurança e velocidade.</p>
-    <a class="home-v2__btn home-v2__btn--primary home-v2__final-cta-btn" href="{% link pages/contact.html %}" aria-label="Agendar uma conversa">Agendar conversa</a>
+  <section class="portfolio-section" aria-labelledby="capabilities-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">我能做什么</p>
+      <h2 id="capabilities-title">把一个中小型应用从思路推到可交付版本</h2>
+    </div>
+    <div class="portfolio-card-grid">
+      <article class="portfolio-card">
+        <h3>Flutter 双端开发</h3>
+        <p>围绕 iOS、Android 与跨端体验，做产品界面、交互落地、状态管理与发布准备。</p>
+      </article>
+      <article class="portfolio-card">
+        <h3>Node.js 后端补齐</h3>
+        <p>为中小型产品搭好最必要的服务、接口、后台和交付链路，不让产品止步于前端原型。</p>
+      </article>
+      <article class="portfolio-card">
+        <h3>从需求到上线</h3>
+        <p>我更擅长把需求梳理、功能范围、技术方案和实际交付放在同一条路径里推进。</p>
+      </article>
+      <article class="portfolio-card">
+        <h3>工具与独立产品实践</h3>
+        <p>会持续做小而真实的工具型项目，用真实使用场景而不是概念包装来校验方向。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="featured-projects-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">代表项目</p>
+      <h2 id="featured-projects-title">先用 3 个项目说明我的工作方式</h2>
+      <p>项目页是这个站点的核心。每个项目都会尽量说明背景、问题、职责、技术栈和当前状态。</p>
+    </div>
+    {% include project-grid.html projects=featured_projects %}
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="fit-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">更适合一起做的事情</p>
+      <h2 id="fit-title">我更适合参与这些类型的项目</h2>
+    </div>
+    <div class="portfolio-card-grid">
+      <article class="portfolio-card">
+        <h3>从 0 到 1 的轻量产品</h3>
+        <p>需要快速形成一个可验证、可发布、可继续迭代的版本，而不是先堆满复杂基础设施。</p>
+      </article>
+      <article class="portfolio-card">
+        <h3>已有产品的收敛和重构</h3>
+        <p>页面很多、方向混杂、技术债累积时，我更愿意先把结构收清楚，再决定该做什么。</p>
+      </article>
+      <article class="portfolio-card">
+        <h3>需要技术与产品一起判断的场景</h3>
+        <p>如果你需要的不只是“写代码”，而是有人一起判断边界、节奏和交付方式，这类协作会更合适。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="portfolio-archive-banner" aria-labelledby="archive-title">
+    <div>
+      <p class="portfolio-eyebrow">旧内容处理</p>
+      <h2 id="archive-title">博客保留为历史归档，不再作为主站导航重点</h2>
+      <p>过去的产品笔记、自动化内容和实验性更新仍然保留，但会作为归档内容存在，并逐步退出搜索索引。</p>
+    </div>
+    <div class="portfolio-actions">
+      <a class="portfolio-action portfolio-action--secondary" href="{{ '/blog/' | relative_url }}">查看内容归档</a>
+      <a class="portfolio-action portfolio-action--primary" href="{{ '/contact/' | relative_url }}">联系我</a>
+    </div>
   </section>
 </div>

@@ -1,137 +1,102 @@
 ---
-title: Sobre Mim
+title: 关于
 layout: default
 permalink: /about/
-lang: pt-BR
-description: Perfil profissional de Hoa, especialista em arquitetura móvel, Flutter e soluções multiplataforma.
-keywords: "arquitetura móvel, Flutter, HarmonyOS, soluções multiplataforma, consultoria técnica"
+lang: zh-CN
+alternate_url: /en/about/
+description: "关于 Hoa：以 Flutter 为主，也能用 Node.js 补齐中小型产品的完整落地。"
+keywords: "关于 Hoa, Flutter, Node.js, 产品开发, 个人作品站"
 schema_type: AboutPage
 load_webfonts: false
 image: /assets/images/screenshot.jpg
-image_alt: Prévia da página Sobre de Hoa
+image_alt: Hoa 关于页预览
 image_width: 1280
 image_height: 719
-last_modified_at: 2026-03-15
+last_modified_at: 2026-03-18
 hide_title: true
 ---
 
-{% capture about_page_path %}{% link pages/about.html %}{% endcapture %}
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "{{ site.author.name | escape }}",
-    "url": "{{ about_page_path | absolute_url }}",
-    "image": "{{ site.author.avatar | absolute_url }}",
-    "jobTitle": "Arquitetura móvel e soluções multiplataforma",
-    "description": "{{ site.author.bio | escape }}",
-    "email": "mailto:{{ site.email | escape }}"{% if site.social and site.social.links %},
-    "sameAs": [{% for link in site.social.links %}"{{ link }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
-    {% endif %}
-  }
-</script>
-
-<div class="container my-5 about-v2">
-  <section class="about-v2__hero" aria-labelledby="page-title">
-    <div class="about-v2__hero-main">
-      <p class="about-v2__eyebrow">Especialista em Arquitetura Móvel e Soluções Multiplataforma</p>
-      <h1 id="page-title">Wang Xionghao (Hoa)</h1>
-      <p class="about-v2__lead">9 anos de experiência prática em desenvolvimento e arquitetura móvel, combinando Flutter e tecnologia nativa para transformar requisitos vagos em entregas previsíveis.</p>
-      <ul class="about-v2__highlights">
-        <li><strong>9 anos</strong> de experiência em arquitetura móvel corporativa com iOS, Android e HarmonyOS.</li>
-        <li><strong>HarmonyOS NEXT</strong> early adopter com foco em integração Flutter e comunicação entre camadas.</li>
-        <li><strong>Do zero ao um</strong> em SDKs, streaming, pagamentos, ads e plataformas de dados.</li>
-      </ul>
-      <div class="about-v2__actions">
-        <a class="home-v2__btn home-v2__btn--primary" href="#expertise">Ver especialidades</a>
-        <a class="home-v2__btn home-v2__btn--secondary" href="{% link pages/contact.html %}">Vamos colaborar</a>
+<div class="container my-5 portfolio-shell">
+  <section class="portfolio-hero" aria-labelledby="page-title">
+    <div class="portfolio-hero__main">
+      <p class="portfolio-eyebrow">关于我</p>
+      <h1 class="portfolio-title" id="page-title">我现在主要做什么</h1>
+      <p class="portfolio-lead">我现在最想清楚表达的是：我以 Flutter 为主做跨端产品，也能用 Node.js 把中小型产品需要的后端与交付链路补齐。</p>
+      <div class="portfolio-actions">
+        <a class="portfolio-action portfolio-action--primary" href="{{ '/projects/' | relative_url }}">看项目</a>
+        <a class="portfolio-action portfolio-action--secondary" href="{{ '/contact/' | relative_url }}">联系我</a>
       </div>
     </div>
-    <div class="about-v2__status-grid" aria-label="Resultados principais">
-      <article class="about-v2__status-card">
-        <p class="about-v2__status-label">Integração HarmonyOS</p>
-        <p class="about-v2__status-value">Uma base de código · Três plataformas</p>
-        <p class="about-v2__status-copy">Camadas de abstração multiplataforma para mapas, pagamentos e HMS Core com manutenção simplificada.</p>
+    <aside class="portfolio-panel">
+      <h2>我希望这个页面解决的问题</h2>
+      <ul class="portfolio-mini-list">
+        <li>访问者能快速知道我是谁、能做什么。</li>
+        <li>能力边界清晰，不用营销话术放大自己。</li>
+        <li>项目类型、协作方式和联系入口都足够直接。</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="boundary-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">能力边界</p>
+      <h2 id="boundary-title">我能覆盖的范围</h2>
+    </div>
+    <div class="portfolio-card-grid">
+      <article class="portfolio-card">
+        <h3>Flutter 为主的产品实现</h3>
+        <p>负责端上体验、页面结构、功能实现与发布准备，把跨端产品做成一个能跑、能交付、能继续迭代的版本。</p>
       </article>
-      <article class="about-v2__status-card">
-        <p class="about-v2__status-label">Avanço de performance</p>
-        <p class="about-v2__status-value">Upload estável +300%</p>
-        <p class="about-v2__status-copy">Arquitetura assíncrona com Isolates para reduzir travamentos em uploads NAS de grandes arquivos.</p>
+      <article class="portfolio-card">
+        <h3>Node.js 作为后端补齐</h3>
+        <p>当产品需要最小可用的接口、后台、内容管理和流程支撑时，我可以补上这一段，而不是把问题留给后面。</p>
       </article>
-      <article class="about-v2__status-card">
-        <p class="about-v2__status-label">Eficiência de entrega</p>
-        <p class="about-v2__status-value">SDK de streaming pronto para produto</p>
-        <p class="about-v2__status-copy">Entrega de SDK leve para cenário real de produto, da seleção técnica até adaptação final.</p>
+      <article class="portfolio-card">
+        <h3>中小型产品的完整落地</h3>
+        <p>更适合需求相对明确、需要快速上线验证、又希望代码结构不要失控的项目。</p>
       </article>
     </div>
   </section>
 
-  <section class="about-v2__section" id="value" aria-labelledby="about-value-title">
-    <p class="about-v2__section-eyebrow">Valor proposto</p>
-    <h2 id="about-value-title">Um parceiro técnico multiplataforma orientado a resultado</h2>
-    <p class="about-v2__section-lead">Acompanho tendências e converto metas de negócio em soluções verificáveis e entregáveis.</p>
-    <div class="about-v2__grid about-v2__grid--three">
-      <article class="about-v2__card">
-        <h3>Cobertura ponta a ponta</h3>
-        <p>Defino objetivos, soluções e cronograma para transformar requisitos complexos em marcos executáveis.</p>
+  <section class="portfolio-section" aria-labelledby="fit-project-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">更适合的合作场景</p>
+      <h2 id="fit-project-title">如果你的项目符合这些特征，会更容易合作</h2>
+    </div>
+    <div class="portfolio-card-grid">
+      <article class="portfolio-card">
+        <h3>想把一个想法快速做成可发布版本</h3>
+        <p>比起先写很大的规划，我更倾向先定义足够小、但足够真实的首个版本。</p>
       </article>
-      <article class="about-v2__card">
-        <h3>Tendências primeiro</h3>
-        <p>Acompanho HarmonyOS NEXT e plataformas emergentes para criar vantagem competitiva para o produto.</p>
+      <article class="portfolio-card">
+        <h3>已有产品需要收敛、清理或补能力</h3>
+        <p>如果你已经有页面、内容或代码，但方向混杂，我会先帮你把结构和优先级收清楚。</p>
       </article>
-      <article class="about-v2__card">
-        <h3>Barreira de experiência</h3>
-        <p>Experiência em hardware, finanças, governo e saúde para reduzir custos de tentativa e erro.</p>
+      <article class="portfolio-card">
+        <h3>需要技术判断和产品判断一起发生</h3>
+        <p>我不是只负责一个孤立模块，更适合和你一起判断该做什么、不该做什么，以及何时交付更合适。</p>
       </article>
     </div>
   </section>
 
-  <section class="about-v2__section" id="expertise" aria-labelledby="about-expertise-title">
-    <p class="about-v2__section-eyebrow">Especialidades</p>
-    <h2 id="about-expertise-title">Arquitetura multiplataforma · Performance · Entrega</h2>
-    <div class="about-v2__grid about-v2__grid--four">
-      <article class="about-v2__card">
-        <h3>Arquitetura full-stack</h3>
-        <p>Flutter/Dart e modelos híbridos para interfaces unificadas em iOS, Android e HarmonyOS.</p>
+  <section class="portfolio-section" aria-labelledby="workflow-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">工作方式</p>
+      <h2 id="workflow-title">我更喜欢的推进方式</h2>
+    </div>
+    <div class="portfolio-card-grid">
+      <article class="portfolio-card">
+        <h3>先讲清身份与目标</h3>
+        <p>先把产品定位、核心页面、必须上线的能力说清楚，再决定视觉和实现，不反过来做。</p>
       </article>
-      <article class="about-v2__card">
-        <h3>HarmonyOS na prática</h3>
-        <p>Experiência real com Flutter on HarmonyOS e integração com HMS Core em cenário de produção.</p>
+      <article class="portfolio-card">
+        <h3>先做关键页面与真实项目</h3>
+        <p>优先搭出首页、项目页和联系入口，再决定博客或附加内容是否值得保留。</p>
       </article>
-      <article class="about-v2__card">
-        <h3>Gargalos de performance</h3>
-        <p>Métodos maduros para arquivos grandes, fluidez de UI, tamanho de app e resiliência de rede.</p>
-      </article>
-      <article class="about-v2__card">
-        <h3>Entrega de produto</h3>
-        <p>Liderança de SDKs, pagamentos, ads e plataformas de dados desde a concepção até o lançamento.</p>
+      <article class="portfolio-card">
+        <h3>以低维护为目标</h3>
+        <p>我不希望一个站点必须依赖高频更新才能成立，所以会优先保留长期有效的信息。</p>
       </article>
     </div>
-  </section>
-
-  <section class="about-v2__section" id="store" aria-labelledby="about-store-title">
-    <p class="about-v2__section-eyebrow">Minhas lojas</p>
-    <h2 id="about-store-title">Experimente meus trabalhos nas lojas de apps</h2>
-    <p class="about-v2__section-lead">Atualizações contínuas no Google Play e na App Store, com feedback sempre bem-vindo.</p>
-    <div class="about-v2__grid about-v2__grid--two">
-      <a class="about-v2__store-card" href="https://play.google.com/store/apps/dev?id=4642950853103060547" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin" aria-label="Abrir perfil de desenvolvedor no Google Play">
-        <span class="about-v2__store-label">Google Play</span>
-        <strong>Página do desenvolvedor no Google Play</strong>
-        <span>Explore produtos Flutter e HarmonyOS com atualização contínua.</span>
-      </a>
-      <a class="about-v2__store-card" href="https://apps.apple.com/developer/id1445704309" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin" aria-label="Abrir perfil de desenvolvedor na App Store">
-        <span class="about-v2__store-label">App Store</span>
-        <strong>Página do desenvolvedor na App Store</strong>
-        <span>Veja apps iOS criados com SwiftUI e foco em experiência do usuário.</span>
-      </a>
-    </div>
-  </section>
-
-  <section class="about-v2__final-cta" aria-labelledby="about-cta-title">
-    <p class="about-v2__section-eyebrow">Vamos conversar</p>
-    <h2 id="about-cta-title">Parceria, consultoria ou novas ideias: estou por perto</h2>
-    <p>Conte seu objetivo e preparo um caminho técnico claro, com execução e entrega.</p>
-    <a class="home-v2__btn home-v2__btn--primary" href="{% link pages/contact.html %}">Fale comigo</a>
-    <p class="about-v2__mail">Ou envie um email para <a href="mailto:{{site.email}}" aria-label="Enviar email para {{ site.email }}">{{site.email}}</a></p>
   </section>
 </div>

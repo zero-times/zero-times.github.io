@@ -1,217 +1,101 @@
 ---
 layout: default
-lang: pt-BR
-title: Blog
-description: Artigos do meu blog pessoal em português
-keywords: "blog, tecnologia, arquitetura móvel, Flutter, desenvolvimento"
+lang: zh-CN
+title: 内容归档
+description: "这里保留过去的文章、实验性内容与历史更新，作为归档查阅，不再作为主站重点。"
+keywords: "内容归档, 历史文章, 博客归档"
 schema_type: CollectionPage
 image: /assets/images/screenshot.jpg
-image_alt: Prévia da página de artigos do blog Hoa
+image_alt: Hoa 内容归档页预览
 image_width: 1280
 image_height: 719
-last_modified_at: 2026-03-15
+last_modified_at: 2026-03-18
+robots: "noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+sitemap: false
+load_analytics: false
 preconnect_formspree: false
 dns_prefetch_formspree: false
 ---
 {% assign blog_posts = paginator.posts | default: site.posts %}
-{% assign blog_visible_items = blog_posts | size %}
-{% assign blog_item_position_offset = 0 %}
-{% assign publisher_name = site.title | default: site.author.name %}
-{% assign publisher_url = site.url | append: site.baseurl %}
-{% assign publisher_logo_src = site.logo | default: site.author.avatar %}
-{% if publisher_logo_src %}
-  {% if publisher_logo_src contains '://' %}
-    {% assign publisher_logo_url = publisher_logo_src %}
-  {% else %}
-    {% assign publisher_logo_url = publisher_logo_src | absolute_url %}
-  {% endif %}
-{% endif %}
-{% if paginator and paginator.page and paginator.per_page %}
-  {% assign blog_item_position_offset = paginator.page | minus: 1 | times: paginator.per_page %}
-{% endif %}
-{% capture blog_item_list_json %}
-[
-{% for post in blog_posts %}
-  {
-    "@type": "ListItem",
-    "position": {{ forloop.index | plus: blog_item_position_offset }},
-    "url": "{{ post.url | absolute_url }}",
-    "name": "{{ post.title | strip_html | escape }}"
-  }{% unless forloop.last %},{% endunless %}
-{% endfor %}
-]
-{% endcapture %}
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "{{ page.title | escape }}",
-  "description": "{{ page.description | escape }}",
-  "url": "{{ page.url | absolute_url }}",
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "{{ site.title | escape }}",
-    "url": "{{ site.url }}{{ site.baseurl }}"
-  },
-  "mainEntity": {
-    "@type": "ItemList",
-    "itemListOrder": "https://schema.org/ItemListOrderDescending",
-    "numberOfItems": {{ blog_visible_items }},
-    "itemListElement": {{ blog_item_list_json | strip_newlines | strip }}
-  }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Início",
-      "item": "{{ '/' | absolute_url }}"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "{{ page.title | escape }}",
-      "item": "{{ page.url | absolute_url }}"
-    }
-  ]
-}
-</script>
-
-<div class="container my-5 blog-index-v2">
-  <div class="row">
-    <div class="col-lg-8">
-      <h1 class="display-5 fw-bold mb-4" id="page-title">Blog</h1>
-      
-      {% for post in blog_posts %}
-      <article class="blog-entry mb-5" itemscope itemtype="https://schema.org/BlogPosting">
-        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-          <meta itemprop="name" content="{{ site.author.name }}">
-          {% if site.author.url %}
-          <meta itemprop="url" content="{{ site.author.url }}">
-          {% endif %}
-        </span>
-        <meta itemprop="inLanguage" content="{{ page.lang | default: site.lang | default: site.default_lang }}">
-        <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
-        <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
-        {% assign words = post.content | number_of_words %}
-        <meta itemprop="wordCount" content="{{ words }}">
-        {% if publisher_name %}
-        <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-          <meta itemprop="name" content="{{ publisher_name | escape }}">
-          {% if publisher_url %}
-          <meta itemprop="url" content="{{ publisher_url | escape }}">
-          {% endif %}
-          {% if publisher_logo_url %}
-          <meta itemprop="logo" content="{{ publisher_logo_url | escape }}">
-          {% endif %}
-        </span>
-        {% endif %}
-        {% if post.image %}
-          {% if post.image contains '://' %}
-        <meta itemprop="image" content="{{ post.image }}">
-          {% else %}
-        <meta itemprop="image" content="{{ post.image | absolute_url }}">
-          {% endif %}
-        {% elsif site.image %}
-        <meta itemprop="image" content="{{ site.image | absolute_url }}">
-        {% endif %}
-        <meta itemprop="description" content="{{ post.excerpt | strip_html | strip_newlines | truncate: 160 }}">
-        <h2 class="blog-entry__title" itemprop="headline"><a href="{{ post.url | relative_url }}" class="text-decoration-none" rel="bookmark" itemprop="url" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h2>
-        <p class="text-muted blog-entry__meta">
-          <time class="blog-entry__date" datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
-          <span aria-hidden="true">•</span>
-          <span class="blog-entry__badge">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
-        </p>
-        <p itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 200 }}</p>
-        <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary" aria-label="Continuar lendo: {{ post.title }}" rel="bookmark">Continuar lendo</a>
-      </article>
-      {% endfor %}
-      
-      <!-- Pagination -->
-      {% if paginator and paginator.total_pages > 1 %}
-      <nav aria-label="Navegação de paginação do blog">
-        <ul class="pagination justify-content-center">
-          {% if paginator.previous_page %}
-          <li class="page-item">
-            <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}" rel="prev" aria-label="Página anterior">Anterior</a>
-          </li>
-          {% else %}
-          <li class="page-item disabled">
-            <span class="page-link" aria-disabled="true" tabindex="-1">Anterior</span>
-          </li>
-          {% endif %}
-
-          {% for page in (1..paginator.total_pages) %}
-          {% if page == paginator.page %}
-          <li class="page-item active">
-            <span class="page-link" aria-current="page" aria-label="Página {{ page }} de {{ paginator.total_pages }} (atual)">{{ page }}</span>
-          </li>
-          {% elsif page == 1 %}
-          <li class="page-item">
-            <a class="page-link" href="{% link blog/index.html %}" aria-label="Página {{ page }}" rel="first">{{ page }}</a>
-          </li>
-          {% else %}
-          <li class="page-item">
-            {% assign page_url = site.paginate_path | replace: ':num', page | relative_url %}
-            <a class="page-link" href="{{ page_url }}" aria-label="Página {{ page }}"{% if page == paginator.total_pages %} rel="last"{% endif %}>{{ page }}</a>
-          </li>
-          {% endif %}
-          {% endfor %}
-
-          {% if paginator.next_page %}
-          <li class="page-item">
-            <a class="page-link" href="{{ paginator.next_page_path | relative_url }}" rel="next" aria-label="Próxima página">Próxima</a>
-          </li>
-          {% else %}
-          <li class="page-item disabled">
-            <span class="page-link" aria-disabled="true" tabindex="-1">Próxima</span>
-          </li>
-          {% endif %}
-        </ul>
-      </nav>
-      {% endif %}
+<div class="container my-5 portfolio-shell">
+  <section class="portfolio-archive-banner" aria-labelledby="page-title">
+    <div>
+      <p class="portfolio-eyebrow">历史内容</p>
+      <h1 id="page-title" class="portfolio-title">内容归档</h1>
+      <p class="portfolio-lead">这里保留过去的文章、产品记录和自动化内容。它们仍然可访问，但不再承担主站定位，也会逐步退出搜索索引。</p>
     </div>
-    
-    <div class="col-lg-4">
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h5>Arquivos</h5>
-        </div>
-        <div class="card-body">
-          {% for post in site.posts limit: 5 %}
-          <div class="mb-2">
-            <a href="{{ post.url | relative_url }}" class="text-decoration-none blog-archive-link" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
-            <time class="text-muted d-block blog-archive-date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
-          </div>
-          {% endfor %}
-          <a href="{% link blog/index.html %}" class="btn btn-sm btn-outline-secondary mt-2" aria-label="Ver todos os posts do blog">Ver todos</a>
-        </div>
-      </div>
-      
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h5>Newsletter</h5>
-        </div>
-        <div class="card-body">
-          <p>Inscreva-se para receber atualizações sobre novos artigos.</p>
-          <form class="newsletter-form" action="https://formspree.io/f/xvoewlbz" method="POST" aria-label="Assinar newsletter" aria-describedby="blog-newsletter-hint">
-            <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <input type="hidden" name="source" value="blog-sidebar">
-            <div class="mb-3">
-              <label class="visually-hidden" for="blog-newsletter-email">Seu melhor email</label>
-              <input id="blog-newsletter-email" type="email" name="email" class="form-control" placeholder="Seu melhor email" aria-label="Seu melhor email" aria-describedby="blog-newsletter-hint" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" required>
-              <small id="blog-newsletter-hint" class="newsletter-hint">Sem spam. Cancelamento a qualquer momento.</small>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Inscrever-se</button>
-          </form>
-        </div>
-      </div>
+    <div class="portfolio-actions">
+      <a class="portfolio-action portfolio-action--primary" href="{{ '/projects/' | relative_url }}">回到项目页</a>
+      <a class="portfolio-action portfolio-action--secondary" href="{{ '/contact/' | relative_url }}">联系我</a>
     </div>
-  </div>
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="archive-list-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">归档列表</p>
+      <h2 id="archive-list-title">按时间保留的旧内容</h2>
+    </div>
+
+    {% for post in blog_posts %}
+    <article class="blog-entry mb-5" itemscope itemtype="https://schema.org/BlogPosting">
+      <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
+      <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
+      <h3 class="blog-entry__title" itemprop="headline">
+        <a href="{{ post.url | relative_url }}" rel="bookmark" itemprop="url" aria-label="打开归档内容：{{ post.title }}">{{ post.title }}</a>
+      </h3>
+      <p class="text-muted blog-entry__meta">
+        <time class="blog-entry__date" datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%Y-%m-%d" }}</time>
+        {% if post.lang %}
+        <span class="blog-entry__badge">{{ post.lang }}</span>
+        {% endif %}
+      </p>
+      <p itemprop="description">{{ post.excerpt | strip_html | strip_newlines | truncate: 180 }}</p>
+      <a href="{{ post.url | relative_url }}" class="portfolio-action portfolio-action--secondary" aria-label="继续查看：{{ post.title }}" rel="bookmark">打开归档内容</a>
+    </article>
+    {% endfor %}
+
+    {% if paginator and paginator.total_pages > 1 %}
+    <nav aria-label="归档分页">
+      <ul class="pagination justify-content-center">
+        {% if paginator.previous_page %}
+        <li class="page-item">
+          <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}" rel="prev" aria-label="上一页">上一页</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <span class="page-link" aria-disabled="true" tabindex="-1">上一页</span>
+        </li>
+        {% endif %}
+
+        {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+        <li class="page-item active">
+          <span class="page-link" aria-current="page">{{ page }}</span>
+        </li>
+        {% elsif page == 1 %}
+        <li class="page-item">
+          <a class="page-link" href="{% link blog/index.html %}" aria-label="第 {{ page }} 页">{{ page }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+          {% assign page_url = site.paginate_path | replace: ':num', page | relative_url %}
+          <a class="page-link" href="{{ page_url }}" aria-label="第 {{ page }} 页">{{ page }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        {% if paginator.next_page %}
+        <li class="page-item">
+          <a class="page-link" href="{{ paginator.next_page_path | relative_url }}" rel="next" aria-label="下一页">下一页</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <span class="page-link" aria-disabled="true" tabindex="-1">下一页</span>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </section>
 </div>

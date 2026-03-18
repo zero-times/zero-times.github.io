@@ -1,35 +1,35 @@
 ---
 layout: default
-title: Página não encontrada
-lang: pt-BR
-description: Página 404 do site com acesso rápido ao conteúdo principal.
-keywords: "404, página não encontrada, erro, Hoa"
+title: 页面不存在
+lang: zh-CN
+description: 页面不存在时的回退页面，提供首页、项目与联系入口。
+keywords: "404, 页面不存在, Hoa"
 robots: "noindex,follow"
 googlebot: "noindex,follow"
 sitemap: false
 preconnect_fonts: false
 load_webfonts: false
 load_analytics: false
-last_modified_at: 2026-03-13
+last_modified_at: 2026-03-18
 ---
 
 <div class="container my-5 error-hero">
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="error-hero__card text-center">
-        <span class="error-hero__badge">Erro 404</span>
+        <span class="error-hero__badge">404</span>
         <p class="error-hero__code" aria-hidden="true">404</p>
-        <h1 class="error-hero__title" id="page-title">Página não encontrada</h1>
-        <p class="error-hero__text">Desculpe, mas a página que você está procurando não existe ou foi movida.</p>
+        <h1 class="error-hero__title" id="page-title">这个页面不存在或已经移动</h1>
+        <p class="error-hero__text">如果你是从旧链接进来的，可以先回到首页或直接查看项目页。</p>
         <div class="error-hero__actions">
-          <a href="{% link index.html %}" class="btn btn-primary btn-lg">Voltar para a página inicial</a>
-          <a href="{% link blog/index.html %}" class="btn btn-outline-light btn-lg">Ir para o blog</a>
+          <a href="{{ '/' | relative_url }}" class="btn btn-primary btn-lg">回到首页</a>
+          <a href="{{ '/projects/' | relative_url }}" class="btn btn-outline-light btn-lg">查看项目</a>
         </div>
         <div class="error-hero__links">
-          <span>Atalhos:</span>
-          <a href="{% link pages/about.html %}">Sobre</a>
-          <a href="{% link pages/contact.html %}">Contato</a>
-          <a href="{% link pages/privacy-policy.md %}">Privacidade</a>
+          <span>快捷入口：</span>
+          <a href="{{ '/about/' | relative_url }}">关于</a>
+          <a href="{{ '/contact/' | relative_url }}">联系</a>
+          <a href="{{ '/blog/' | relative_url }}">内容归档</a>
         </div>
       </div>
     </div>

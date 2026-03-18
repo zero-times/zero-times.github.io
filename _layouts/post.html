@@ -48,6 +48,56 @@ layout: default
 {% else %}
   {% assign normalized_post_lang = normalized_post_lang_primary %}
 {% endif %}
+{% case normalized_post_lang_primary %}
+  {% when 'en' %}
+    {% assign post_reading_progress_label = 'Reading progress' %}
+    {% assign post_home_label = 'Home' %}
+    {% assign post_archive_label = 'Archive' %}
+    {% assign post_reading_time_label = 'Estimated reading time' %}
+    {% assign post_reading_time_suffix = 'min read' %}
+    {% assign post_updated_prefix = 'Updated on' %}
+    {% assign post_categories_label = 'Categories' %}
+    {% assign post_category_aria_prefix = 'Category: ' %}
+    {% assign post_tags_label = 'Tags' %}
+    {% assign post_tag_aria_prefix = 'Tag: ' %}
+    {% assign post_visit_site_label = 'Visit project site' %}
+    {% assign post_prev_nav_label = 'Post navigation' %}
+    {% assign post_prev_title = 'Previous post' %}
+    {% assign post_next_title = 'Next post' %}
+    {% assign post_author_site_label = 'Visit author website ' %}
+  {% when 'zh' %}
+    {% assign post_reading_progress_label = '阅读进度' %}
+    {% assign post_home_label = '首页' %}
+    {% assign post_archive_label = '内容归档' %}
+    {% assign post_reading_time_label = '预计阅读时间' %}
+    {% assign post_reading_time_suffix = '分钟阅读' %}
+    {% assign post_updated_prefix = '更新于' %}
+    {% assign post_categories_label = '分类' %}
+    {% assign post_category_aria_prefix = '分类：' %}
+    {% assign post_tags_label = '标签' %}
+    {% assign post_tag_aria_prefix = '标签：' %}
+    {% assign post_visit_site_label = '查看项目站点' %}
+    {% assign post_prev_nav_label = '文章导航' %}
+    {% assign post_prev_title = '上一篇' %}
+    {% assign post_next_title = '下一篇' %}
+    {% assign post_author_site_label = '访问作者网站' %}
+  {% else %}
+    {% assign post_reading_progress_label = 'Progresso de leitura' %}
+    {% assign post_home_label = 'Início' %}
+    {% assign post_archive_label = 'Blog' %}
+    {% assign post_reading_time_label = 'Tempo de leitura estimado' %}
+    {% assign post_reading_time_suffix = 'min de leitura' %}
+    {% assign post_updated_prefix = 'Atualizado em' %}
+    {% assign post_categories_label = 'Categorias' %}
+    {% assign post_category_aria_prefix = 'Categoria: ' %}
+    {% assign post_tags_label = 'Tags' %}
+    {% assign post_tag_aria_prefix = 'Tag: ' %}
+    {% assign post_visit_site_label = 'Visitar site' %}
+    {% assign post_prev_nav_label = 'Navegação de postagens' %}
+    {% assign post_prev_title = 'Post anterior' %}
+    {% assign post_next_title = 'Próximo post' %}
+    {% assign post_author_site_label = 'Visitar site do autor ' %}
+{% endcase %}
 {% assign featured_image_loading_raw = page.image_loading | default: 'eager' | downcase %}
 {% if featured_image_loading_raw == 'lazy' %}
   {% assign featured_image_loading = 'lazy' %}
@@ -91,7 +141,7 @@ layout: default
   {% endif %}
 {% endif %}
 
-<div class="reading-progress" role="progressbar" aria-label="Progresso de leitura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+<div class="reading-progress" role="progressbar" aria-label="{{ post_reading_progress_label }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
     <span class="reading-progress__bar"></span>
 </div>
 <article class="post{% if page.categories contains 'news' %} post--news{% endif %}" itemscope itemtype="https://schema.org/BlogPosting" aria-labelledby="page-title">
@@ -135,13 +185,13 @@ layout: default
                         <ol itemscope itemtype="https://schema.org/BreadcrumbList">
                             <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                                 <a itemprop="item" href="{% link index.html %}">
-                                    <span itemprop="name">Início</span>
+                                    <span itemprop="name">{{ post_home_label }}</span>
                                 </a>
                                 <meta itemprop="position" content="1">
                             </li>
                             <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                                 <a itemprop="item" href="{% link blog/index.html %}">
-                                    <span itemprop="name">Blog</span>
+                                    <span itemprop="name">{{ post_archive_label }}</span>
                                 </a>
                                 <meta itemprop="position" content="2">
                             </li>
@@ -156,10 +206,10 @@ layout: default
                     <div class="post-meta">
                         <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}" itemprop="datePublished">{{ page.date | date_to_string }}</time></span>
                         <span class="post-meta-sep" aria-hidden="true">•</span>
-                        <span class="post-reading-time" aria-label="Tempo de leitura estimado">{{ reading_minutes }} min de leitura</span>
+                        <span class="post-reading-time" aria-label="{{ post_reading_time_label }}">{{ reading_minutes }} {{ post_reading_time_suffix }}</span>
 
                         {% if page.last_modified_at %}
-                        <span class="post-updated">(<time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">Atualizado em {{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)</span>
+                        <span class="post-updated">(<time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ post_updated_prefix }} {{ page.last_modified_at | date: "%Y-%m-%d" }}</time>)</span>
                         {% endif %}
 
                         {% if author_name %}
@@ -177,10 +227,10 @@ layout: default
 
                         {% capture categories_page_url %}{% link pages/categories.html %}{% endcapture %}
                         {% if page.categories %}
-                            <div class="post-categories" role="list" aria-label="Categorias">
+                            <div class="post-categories" role="list" aria-label="{{ post_categories_label }}">
                                 {% for category in page.categories %}
                                 {% assign category_slug = category | slugify %}
-                                <a href="{{ categories_page_url }}#{{ category_slug }}" rel="tag" role="listitem" aria-label="Categoria: {{ category }}">{{ category }}</a>
+                                <a href="{{ categories_page_url }}#{{ category_slug }}" rel="tag" role="listitem" aria-label="{{ post_category_aria_prefix }}{{ category }}">{{ category }}</a>
                                 {% endfor %}
                             </div>
                         {% endif %}
@@ -213,7 +263,7 @@ layout: default
                             {% assign post_site_link = page.site | relative_url %}
                         {% endif %}
                         <div class="post-site mt-3">
-                            <a class="btn btn-sm btn-outline-secondary" href="{{ post_site_link }}"{% if post_site_external %} target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin"{% endif %} aria-label="Visitar site relacionado: {{ page.title | escape }}">Visitar site</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ post_site_link }}"{% if post_site_external %} target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin"{% endif %} aria-label="{{ post_visit_site_label }}: {{ page.title | escape }}">{{ post_visit_site_label }}</a>
                         </div>
                     {% endif %}
                 </div>
@@ -224,25 +274,25 @@ layout: default
             
                 {% capture tags_page_url %}{% link pages/tags.html %}{% endcapture %}
                 {% if page.tags %}
-                <div class="post-tags" role="list" aria-label="Tags">
+                <div class="post-tags" role="list" aria-label="{{ post_tags_label }}">
                     {% for tag in page.tags %}
                     {% assign tag_slug = tag | slugify %}
-                    <a class="badge rounded-pill bg-light text-dark" href="{{ tags_page_url }}#{{ tag_slug }}" rel="tag" role="listitem" aria-label="Tag: {{ tag }}">{{ tag }}</a>
+                    <a class="badge rounded-pill bg-light text-dark" href="{{ tags_page_url }}#{{ tag_slug }}" rel="tag" role="listitem" aria-label="{{ post_tag_aria_prefix }}{{ tag }}">{{ tag }}</a>
                     {% endfor %}
                 </div>
                 {% endif %}
             
                 <hr />
-                <nav class="previous-next-post" aria-label="Navegação de postagens">
+                <nav class="previous-next-post" aria-label="{{ post_prev_nav_label }}">
                     <div class="row">
                         <div class="col-md-6">
                             {% if page.previous.url %}
-                            <a class="btn btn-outline-primary" href="{{ page.previous.url | relative_url }}" rel="prev" title="Post anterior" aria-label="Post anterior: {{ page.previous.title }}">&laquo; {{ page.previous.title }}</a>
+                            <a class="btn btn-outline-primary" href="{{ page.previous.url | relative_url }}" rel="prev" title="{{ post_prev_title }}" aria-label="{{ post_prev_title }}: {{ page.previous.title }}">&laquo; {{ page.previous.title }}</a>
                             {% endif %}
                         </div>
                         <div class="col-md-6 text-md-end">
                             {% if page.next.url %}
-                            <a class="btn btn-outline-primary" href="{{ page.next.url | relative_url }}" rel="next" title="Próximo post" aria-label="Próximo post: {{ page.next.title }}">{{ page.next.title }} &raquo;</a>
+                            <a class="btn btn-outline-primary" href="{{ page.next.url | relative_url }}" rel="next" title="{{ post_next_title }}" aria-label="{{ post_next_title }}: {{ page.next.title }}">{{ page.next.title }} &raquo;</a>
                             {% endif %}
                         </div>
                     </div>
@@ -273,7 +323,7 @@ layout: default
                             <p class="author-description" itemprop="description">{{ author_bio }}</p>
                             {% endif %}
                             {% if author_web_link %}
-                            <a class="btn btn-sm btn-outline-primary" href="{{ author_web_link }}" itemprop="url"{% if author_web_external %} rel="author nofollow noopener noreferrer external" target="_blank" referrerpolicy="strict-origin-when-cross-origin"{% else %} rel="author"{% endif %} aria-label="Visitar site do autor {{ author_name | escape }}">Visitar site</a>
+                            <a class="btn btn-sm btn-outline-primary" href="{{ author_web_link }}" itemprop="url"{% if author_web_external %} rel="author nofollow noopener noreferrer external" target="_blank" referrerpolicy="strict-origin-when-cross-origin"{% else %} rel="author"{% endif %} aria-label="{{ post_author_site_label }}{{ author_name | escape }}">{% if normalized_post_lang_primary == 'en' %}Visit site{% elsif normalized_post_lang_primary == 'zh' %}访问网站{% else %}Visitar site{% endif %}</a>
                             {% endif %}
                         </div>
                     </div>

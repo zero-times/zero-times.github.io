@@ -1,0 +1,43 @@
+<div class="portfolio-project-grid">
+  {% for project in include.projects %}
+  <article class="portfolio-project-card" itemscope itemtype="https://schema.org/CreativeWork">
+    {% if project.image %}
+    <a class="portfolio-project-media" href="{{ project.url | relative_url }}" aria-label="{{ project.card_cta_label | default: project.title | escape }}">
+      <img src="{{ project.image | relative_url }}" alt="{{ project.image_alt | default: project.title | escape }}" loading="lazy" decoding="async" fetchpriority="low"{% if project.image_width %} width="{{ project.image_width }}"{% endif %}{% if project.image_height %} height="{{ project.image_height }}"{% endif %}>
+    </a>
+    {% endif %}
+    <div class="portfolio-project-body">
+      {% if project.status_label %}
+      <p class="portfolio-project-status">{{ project.status_label }}</p>
+      {% endif %}
+      <h3 itemprop="name"><a href="{{ project.url | relative_url }}" itemprop="url">{{ project.title }}</a></h3>
+      {% if project.summary %}
+      <p class="portfolio-project-summary" itemprop="description">{{ project.summary }}</p>
+      {% endif %}
+      {% if project.role %}
+      <p class="portfolio-project-role">{{ project.role }}</p>
+      {% endif %}
+      {% if project.stack %}
+      <ul class="portfolio-stack" role="list" aria-label="{{ project.title }} stack">
+        {% for item in project.stack limit: 5 %}
+        <li role="listitem">{{ item }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="portfolio-project-actions">
+        <a class="portfolio-action portfolio-action--primary" href="{{ project.url | relative_url }}">{{ project.card_cta_label | default: '查看详情' }}</a>
+        {% if project.primary_link_url and project.primary_link_label %}
+          {% if project.primary_link_url contains '://' %}
+            {% assign project_primary_href = project.primary_link_url %}
+            {% assign project_primary_external = true %}
+          {% else %}
+            {% assign project_primary_href = project.primary_link_url | relative_url %}
+            {% assign project_primary_external = false %}
+          {% endif %}
+        <a class="portfolio-action portfolio-action--secondary" href="{{ project_primary_href }}"{% if project_primary_external %} target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin"{% endif %}>{{ project.primary_link_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</div>

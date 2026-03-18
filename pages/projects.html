@@ -1,0 +1,43 @@
+---
+title: 项目
+layout: default
+permalink: /projects/
+lang: zh-CN
+alternate_url: /en/projects/
+description: "Hoa 的项目页：围绕 AppShots、隐私向应用和匿名案例，展示真实项目与当前方向。"
+keywords: "项目, 作品集, Flutter, Node.js, AppShots"
+schema_type: CollectionPage
+image: /assets/images/screenshot.jpg
+image_alt: Hoa 项目页预览
+image_width: 1280
+image_height: 719
+last_modified_at: 2026-03-18
+load_webfonts: false
+---
+{% assign projects = site.projects | where: "lang", "zh-CN" | sort: "order" %}
+
+<div class="container my-5 portfolio-shell">
+  <section class="portfolio-hero" aria-labelledby="page-title">
+    <div class="portfolio-hero__main">
+      <p class="portfolio-eyebrow">项目页是主站核心</p>
+      <h1 class="portfolio-title" id="page-title">用真实项目，而不是高频内容，说明我能做什么</h1>
+      <p class="portfolio-lead">这里先保留 3 个代表项目：一个工具站、一个正在推进中的隐私向应用，以及一个匿名化的中小型产品案例。</p>
+    </div>
+    <aside class="portfolio-panel">
+      <h2>整理原则</h2>
+      <ul class="portfolio-mini-list">
+        <li>先讲清背景和解决问题，再讲技术实现。</li>
+        <li>尽量明确我的职责和当前状态，而不是只罗列功能。</li>
+        <li>对外不便公开的项目，用匿名方式保留结构化说明。</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="project-list-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">项目列表</p>
+      <h2 id="project-list-title">当前对外展示的项目</h2>
+    </div>
+    {% include project-grid.html projects=projects %}
+  </section>
+</div>

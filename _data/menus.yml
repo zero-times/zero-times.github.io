@@ -1,29 +1,27 @@
-# Menu configuration for zero-times.github.io
-# Simplified menu structure without internationalization
-
 # Navigation menu
 topmenu:
-  - title: "Projetos"
-    url: "#projects"
-    class: "js-scroll-trigger"
-  - title: "Blog"
-    url: "#blog"
-    class: "js-scroll-trigger"
-  - title: "Sobre"
-    url: "/about"
-  - title: "Contato"
-    url: "/contact"
-    
-footermenu:
-  - title: "Início"
+  - title: "首页"
     url: "/"
-  - title: "Sobre"
-    url: "/about"
-  - title: "Contato"
-    url: "/contact"
-  - title: "Política de Privacidade"
-    url: "/privacy-policy"
-    
-# Additional site content
+  - title: "项目"
+    url: "/projects/"
+  - title: "关于"
+    url: "/about/"
+  - title: "联系"
+    url: "/contact/"
+
+footermenu:
+  - title: "首页"
+    url: "/"
+  - title: "项目"
+    url: "/projects/"
+  - title: "关于"
+    url: "/about/"
+  - title: "联系"
+    url: "/contact/"
+  - title: "内容归档"
+    url: "/blog/"
+  - title: "隐私政策"
+    url: "/privacy-policy/"
+
 site_content:
-  copyright: "Copyright © {{site.title}}. Todos os direitos reservados."
+  copyright: "Copyright © {{ site.title }}. All rights reserved."

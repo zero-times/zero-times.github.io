@@ -1,0 +1,60 @@
+---
+title: Contact
+layout: default
+permalink: /en/contact/
+lang: en
+alternate_url: /contact/
+description: "Contact Hoa for Flutter, Node.js and small-product collaboration."
+keywords: "Contact Hoa, Flutter, Node.js, product collaboration"
+schema_type: ContactPage
+last_modified_at: 2026-03-18
+load_webfonts: false
+hide_title: true
+---
+{% assign whatsapp_digits = site.whatsapp | default: '' | replace: '+', '' | strip %}
+
+<div class="container my-5 portfolio-shell">
+  <section class="portfolio-hero" aria-labelledby="page-title">
+    <div class="portfolio-hero__main">
+      <p class="portfolio-eyebrow">Contact</p>
+      <h1 class="portfolio-title" id="page-title">If you want to discuss a product, a rebuild, or whether an idea is worth pursuing</h1>
+      <p class="portfolio-lead">The site may not update often, but I do read email. A short message about your goal, current stage and main concern is enough to start.</p>
+    </div>
+    <aside class="portfolio-panel">
+      <h2>Direct channels</h2>
+      <ul class="portfolio-contact-list">
+        <li><span>Email</span><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        <li><span>GitHub</span><a href="https://github.com/zero-times" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin">zero-times</a></li>
+        <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/hoa-wang/" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin">hoa-wang</a></li>
+        {% if whatsapp_digits != '' %}
+        <li><span>WhatsApp</span><a href="https://wa.me/{{ whatsapp_digits }}" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin">+{{ whatsapp_digits }}</a></li>
+        {% endif %}
+      </ul>
+    </aside>
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="english-contact-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">Message</p>
+      <h2 id="english-contact-title">You can also use the form below</h2>
+    </div>
+    <form class="portfolio-form" action="https://formspree.io/f/xvoewlbz" method="POST" aria-label="Contact form">
+      <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="portfolio-form__grid">
+        <div class="portfolio-form__field">
+          <label for="en-contact-name">Name</label>
+          <input id="en-contact-name" class="form-control" type="text" name="name" autocomplete="name" autocapitalize="words" spellcheck="false">
+        </div>
+        <div class="portfolio-form__field">
+          <label for="en-contact-email">Email</label>
+          <input id="en-contact-email" class="form-control" type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+        </div>
+      </div>
+      <div class="portfolio-form__field">
+        <label for="en-contact-message">Context</label>
+        <textarea id="en-contact-message" rows="8" class="form-control" name="message" autocapitalize="sentences" spellcheck="true" required></textarea>
+      </div>
+      <button class="portfolio-action portfolio-action--primary portfolio-form__submit" type="submit">Send message</button>
+    </form>
+  </section>
+</div>
