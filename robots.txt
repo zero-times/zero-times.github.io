@@ -4,11 +4,6 @@ permalink: /robots.txt
 ---
 User-agent: *
 Allow: /
-Disallow: /share/
-Disallow: /categories/
-Disallow: /tags/
-Disallow: /privacy-policy/
-Disallow: /terms/
 Disallow: /404.html
 Disallow: /blog/page
 

@@ -29,6 +29,10 @@ SCAN_TARGETS = [
     '_projects',
     'pages',
     'en',
+    'gmscore',
+    'web_scoreboard',
+    'TaskEase',
+    'YiYanRiCheng',
     '_layouts',
     '_includes',
     'index.html',
@@ -135,7 +139,7 @@ def normalize_route(path: str) -> str:
 def collect_known_routes() -> set[str]:
     routes = {'/'}
 
-    for page_dir_name in ('pages', 'en'):
+    for page_dir_name in ('pages', 'en', 'gmscore', 'web_scoreboard', 'TaskEase', 'YiYanRiCheng'):
         page_dir = ROOT / page_dir_name
         if not page_dir.exists():
             continue
@@ -955,15 +959,23 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_social_image_alt = bool(site_social_image_alt and site_social_image_alt.strip())
     share_page_file = ROOT / 'pages/share.html'
     share_page_text = read_text(share_page_file) if share_page_file.exists() else ''
+    share_page_layout = extract_front_matter_value(share_page_text, 'layout')
+    share_page_redirect_to = extract_front_matter_value(share_page_text, 'redirect_to')
+    share_page_is_redirect = bool(
+        (share_page_layout or '').strip().lower() == 'redirect' or (share_page_redirect_to or '').strip()
+    )
     share_page_social_image = extract_front_matter_value(share_page_text, 'image')
     share_page_social_image_path = resolve_local_image_path(share_page_social_image)
     share_page_social_image_dimensions = (
         get_image_dimensions(share_page_social_image_path) if share_page_social_image_path else None
     )
     has_share_page_large_social_image = bool(
-        share_page_social_image_dimensions
-        and share_page_social_image_dimensions[0] >= 1200
-        and share_page_social_image_dimensions[1] >= 630
+        share_page_is_redirect
+        or (
+            share_page_social_image_dimensions
+            and share_page_social_image_dimensions[0] >= 1200
+            and share_page_social_image_dimensions[1] >= 630
+        )
     )
     taxonomy_noindex_targets = [ROOT / 'pages/categories.html', ROOT / 'pages/tags.html']
     utility_noindex_targets = [
@@ -1516,7 +1528,11 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                         f"({share_page_social_image_dimensions[0]}x{share_page_social_image_dimensions[1]})."
                     )
                     if has_share_page_large_social_image and share_page_social_image_path and share_page_social_image_dimensions
-                    else 'Set pages/share.html image to a local asset >=1200x630 for stronger social preview quality.',
+                    else (
+                        'pages/share.html is now a redirect page, so a dedicated social preview image is no longer required.'
+                        if share_page_is_redirect
+                        else 'Set pages/share.html image to a local asset >=1200x630 for stronger social preview quality.'
+                    ),
                 },
                 {
                     'aspect': 'Social image alt fallback template',

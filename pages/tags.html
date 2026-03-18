@@ -1,44 +1,16 @@
 ---
-layout: page
-title: Tags
+layout: redirect
+title: 标签页已迁移
 permalink: /tags/
-lang: pt-BR
-description: Índice de tags dos artigos publicados no blog.
-keywords: "tags, índice, blog, Flutter, arquitetura móvel"
-schema_type: CollectionPage
+lang: zh-CN
+redirect_to: /blog/
+redirect_message: 旧标签页已并入内容归档。
+description: 旧标签页已并入内容归档。
+keywords: "标签页跳转, 内容归档"
+schema_type: WebPage
 robots: noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
 sitemap: false
 load_analytics: false
 load_webfonts: false
-last_modified_at: 2026-03-11
+last_modified_at: 2026-03-18
 ---
-
-<div class="tags-archive">
-  {% assign sorted_tags = site.tags | sort %}
-  {% if sorted_tags.size > 0 %}
-    <div class="mb-4">
-      <p class="text-muted mb-2">Navegue por tema:</p>
-      <div class="d-flex flex-wrap gap-2">
-        {% for tag in sorted_tags %}
-          <a class="badge rounded-pill bg-light text-dark" href="#{{ tag[0] | slugify }}" rel="tag" aria-label="Ver tag {{ tag[0] }}">{{ tag[0] }} ({{ tag[1].size }})</a>
-        {% endfor %}
-      </div>
-    </div>
-
-    {% for tag in sorted_tags %}
-      <section class="mb-5" id="{{ tag[0] | slugify }}">
-        <h2 class="h4 mb-3">{{ tag[0] }} <small class="text-muted">({{ tag[1].size }})</small></h2>
-        <ul class="list-unstyled">
-          {% for post in tag[1] %}
-            <li class="mb-3 pb-3 border-bottom">
-              <a class="fw-semibold text-decoration-none" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir post: {{ post.title }}">{{ post.title }}</a>
-              <time class="small text-muted" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%d/%m/%Y" }}</time>
-            </li>
-          {% endfor %}
-        </ul>
-      </section>
-    {% endfor %}
-  {% else %}
-    <p class="text-muted mb-0">Ainda não há tags publicadas.</p>
-  {% endif %}
-</div>

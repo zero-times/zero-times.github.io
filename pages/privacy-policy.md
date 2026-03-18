@@ -1,59 +1,61 @@
 ---
 layout: page
-title: Política de Privacidade
+title: 隐私说明
 permalink: /privacy-policy/
-lang: pt-BR
+lang: zh-CN
 comments: false
 robots: noindex,follow
 sitemap: false
-description: Política de privacidade e tratamento de dados do site
-keywords: "privacidade, dados pessoais, cookies, analytics, conformidade"
+description: 王雄皓 (Hoa) 个人作品站的隐私说明与数据处理方式。
+keywords: "隐私说明, 数据处理, 联系表单, Analytics"
 schema_type: PrivacyPolicy
-last_modified_at: 2026-02-20
+last_modified_at: 2026-03-18
 load_webfonts: false
 load_analytics: false
 ---
 
-<section class="privacy-policy">
-  <p class="text-muted">Última atualização: 20/02/2026</p>
-  <h3>Introdução</h3>
-  <p>Valorizamos sua privacidade e segurança de dados. Este documento explica, de forma transparente, como coletamos, processamos e compartilhamos informações ao acessar o site, deixar mensagens ou interagir conosco.</p>
+<section class="legal-page">
+  <p class="legal-lead">最后更新：2026-03-18</p>
 
-  <h3>Coleta de informações</h3>
-  <ul>
-    <li>Informações de log: registramos IP, tipo de navegador, página de referência, horário de acesso e outros dados básicos para segurança e análise de desempenho.</li>
-    <li>Cookies e armazenamento local: usados para lembrar preferências (como idioma e tema) e podem ser utilizados por scripts de analytics ou anúncios.</li>
-    <li>Informações de cadastro/assinatura: quando você envia e-mail ou apelido, armazenamos com segurança e usamos apenas para notificações necessárias.</li>
-  </ul>
+  <article class="legal-card">
+    <h3>这是什么页面</h3>
+    <p>这个站点现在是王雄皓 (Hoa) 的个人作品站，主要用于展示项目、说明当前方向，并提供联系入口。它不是高频更新的内容平台，也不以追踪用户行为为目的。</p>
+  </article>
 
-  <h3>Finalidades de uso</h3>
-  <ul>
-    <li>Otimizar a experiência do site: aprimoramos desempenho, conteúdo e fluxos de interação com base em dados de acesso.</li>
-    <li>Enviar atualizações: com sua permissão, enviamos por e-mail novidades, eventos ou recomendações.</li>
-    <li>Segurança e conformidade: usamos logs e dados de dispositivo para identificar comportamentos anormais.</li>
-  </ul>
+  <article class="legal-card">
+    <h3>站点会收集什么</h3>
+    <ul>
+      <li>基础访问日志：由 GitHub Pages、浏览器或网络服务自动产生，用于站点访问与安全排查。</li>
+      <li>联系表单信息：如果你通过表单或邮件联系我，你提交的姓名、邮箱和消息内容会被用于回复沟通。</li>
+      <li>匿名统计信息：如果浏览器允许，站点可能会使用 Google Analytics 获取基础访问统计，用于判断页面是否被访问和大致来源。</li>
+    </ul>
+  </article>
 
-  <h3>Compartilhamento de dados</h3>
-  <p>Não vendemos, alugamos ou trocamos suas informações pessoais. Compartilhamos apenas quando necessário:</p>
-  <ol>
-    <li>Exigência legal: solicitações legítimas de autoridades regulatórias, tribunais ou órgãos de aplicação da lei.</li>
-    <li>Suporte de serviços: colaboração com terceiros confiáveis (hospedagem, analytics, anúncios) sob contrato.</li>
-  </ol>
+  <article class="legal-card">
+    <h3>这些信息如何使用</h3>
+    <ul>
+      <li>回复联系请求，理解你想讨论的项目背景和合作需求。</li>
+      <li>维护站点可用性，识别明显的错误页面、无效入口或性能问题。</li>
+      <li>做非常基础的站点分析，例如页面访问量和访问来源，不做广告定向或用户画像。</li>
+    </ul>
+  </article>
 
-  <h3>Gerenciamento de cookies</h3>
-  <p>Você pode desativar ou excluir cookies no navegador, mas isso pode afetar algumas funções do site.</p>
+  <article class="legal-card">
+    <h3>第三方服务</h3>
+    <p>当前站点可能使用 GitHub Pages、Formspree 和 Google Analytics 等第三方服务。这些服务可能基于各自的基础设施处理数据，具体规则以它们自己的隐私政策为准。</p>
+  </article>
 
-  <h3>Serviços de terceiros</h3>
-  <p>Podemos integrar Google Analytics, Google Ads ou outros parceiros. Eles podem usar cookies e histórico de navegação para personalizar conteúdo.</p>
+  <article class="legal-card">
+    <h3>你的选择</h3>
+    <ul>
+      <li>你可以直接通过邮件联系，而不是使用表单。</li>
+      <li>你可以关闭浏览器中的 Cookie 或跟踪相关设置，但这可能影响少量基础功能。</li>
+      <li>如果你希望删除通过表单发送的信息，可以直接邮件说明，我会尽量配合处理。</li>
+    </ul>
+  </article>
 
-  <h3>Seus direitos</h3>
-  <ul>
-    <li>Acessar, atualizar ou excluir suas informações pessoais.</li>
-    <li>Cancelar assinatura de e-mails ou outras autorizações de marketing a qualquer momento.</li>
-    <li>Opor-se ao processamento com base em interesse legítimo; responderemos prontamente.</li>
-  </ul>
-  <p>Para exercer esses direitos, entre em contato pela página ou pelo e-mail <a href="mailto:{{ site.email }}" aria-label="Enviar email para {{ site.email }}">{{ site.email }}</a>.</p>
-
-  <h3>Atualizações</h3>
-  <p>Esta política pode ser atualizada conforme mudanças legais ou de negócio. As novas versões entram em vigor imediatamente após publicação.</p>
+  <article class="legal-card">
+    <h3>联系</h3>
+    <p>如果你对这份说明有疑问，可以发邮件到 <a href="mailto:{{ site.email }}" aria-label="发送邮件到 {{ site.email }}">{{ site.email }}</a>。</p>
+  </article>
 </section>

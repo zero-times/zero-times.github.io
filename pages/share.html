@@ -1,117 +1,16 @@
 ---
-layout: share
-title: Compartilhar
+layout: redirect
+title: 分享页已迁移
 permalink: /share/
-lang: pt-BR
-description: Página de compartilhamento com links e formas de apoiar o site.
-keywords: "compartilhar, redes sociais, apps, portfólio, Hoa"
-schema_type: CollectionPage
+lang: zh-CN
+redirect_to: /contact/
+redirect_message: 旧分享页已下线，已跳转到联系页。
+description: 旧分享页已下线并跳转到联系页。
+keywords: "分享页跳转, 联系页"
+schema_type: WebPage
 robots: "noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
 sitemap: false
 load_analytics: false
-image: /assets/images/screenshot.jpg
-image_alt: Prévia da página de compartilhamento do youllbe.cn
-image_width: 1280
-image_height: 719
-last_modified_at: 2026-03-12
+load_webfonts: false
+last_modified_at: 2026-03-18
 ---
-
-{% capture home_page_path %}{% link index.html %}{% endcapture %}
-
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-lg-10">
-      <div class="share-card text-center">
-        <div class="share-card__badge">Compartilhe</div>
-        <h1 class="display-4" id="page-title">Espalhe a Palavra</h1>
-        <p class="share-card__tagline">Ajude-nos a crescer compartilhando com amigos e colegas</p>
-        
-        <div class="stats-card row text-center mt-5" role="list" aria-label="Estatísticas de impacto">
-          <div class="col-md-4 mb-4 mb-md-0" role="listitem">
-            <p class="stats-card__label">Usuários</p>
-            <p class="stats-card__value">1000+</p>
-          </div>
-          <div class="col-md-4 mb-4 mb-md-0" role="listitem">
-            <p class="stats-card__label">Downloads</p>
-            <p class="stats-card__value">50+</p>
-          </div>
-          <div class="col-md-4 mb-4 mb-md-0" role="listitem">
-            <p class="stats-card__label">Avaliação</p>
-            <p class="stats-card__value">4.8</p>
-          </div>
-        </div>
-        
-        <h2 class="mt-5">Como você pode nos ajudar</h2>
-        <ul class="help-list text-start mt-4">
-          <li>Compartilhe nosso conteúdo nas redes sociais</li>
-          <li>Indique-nos para amigos e colegas</li>
-          <li>Deixe uma avaliação positiva em lojas de aplicativos</li>
-        </ul>
-        
-        <h2 class="mt-5">Nossas Conquistas</h2>
-        <ul class="achievements-list text-start mt-4">
-          <li>Lançamento bem-sucedido de múltiplas aplicações</li>
-          <li>Feedback positivo da comunidade de usuários</li>
-          <li>Parcerias com empresas de renome</li>
-        </ul>
-        
-        <div class="contact-section mt-5">
-          <h3>Entre em Contato</h3>
-          <ul class="share-card__contact-list" aria-label="Canais de contato">
-            <li class="share-card__contact-item">
-              <p class="share-card__label">Website</p>
-              <a class="share-card__contact-link" href="{{ home_page_path | absolute_url | escape }}" aria-label="Abrir site {{ site.url | escape }}">{{ site.url | escape }}</a>
-            </li>
-            <li class="share-card__contact-item">
-              <p class="share-card__label">Email</p>
-              <a class="share-card__contact-link" href="mailto:{{ site.email | uri_escape }}" aria-label="Enviar email para {{ site.email | escape }}">{{ site.email | escape }}</a>
-            </li>
-          </ul>
-          <p class="share-card__label">Redes Sociais: Siga-nos nas redes sociais</p>
-        </div>
-        
-        <div class="store-section mt-5">
-          <div class="row store-row">
-            <div class="col-md-6 mb-4">
-              <a class="store-card" href="https://play.google.com/store/apps/dev?id=4642950853103060547" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin" aria-label="Abrir perfil de desenvolvedor no Google Play">
-                <div class="store-icon store-icon--play">
-                  <svg viewBox="0 0 512 512" aria-hidden="true" focusable="false">
-                    <path d="M96 60l236 196-236 196V60z" fill="#0a84ff"/>
-                    <path d="M96 60l140 116-56 60-84-176z" fill="#74b5ff"/>
-                    <path d="M96 452l140-116-56-60-84 176z" fill="#0050c8"/>
-                  </svg>
-                </div>
-                <div class="store-info">
-                  <p class="store-label">Google Play</p>
-                  <h3>Disponível na Play Store</h3>
-                  <p class="text-muted">Baixe nossos aplicativos</p>
-                </div>
-                <span class="store-link">Ver apps</span>
-              </a>
-            </div>
-            <div class="col-md-6 mb-4">
-              <a class="store-card" href="https://apps.apple.com/developer/id1445704309" target="_blank" rel="nofollow noopener noreferrer external" referrerpolicy="strict-origin-when-cross-origin" aria-label="Abrir perfil de desenvolvedor na App Store">
-                <div class="store-icon store-icon--apple">
-                  <svg viewBox="0 0 384 512" aria-hidden="true" focusable="false">
-                    <path fill="#f5f5f7" d="M318.7 268.7c-.3-62.6 51.4-92.8 53.8-94.3-29.3-42.8-74.8-48.6-90.7-49.3-38.6-3.9-75.3 22.7-94.9 22.7-19.6 0-49.8-22.1-81.9-21.5-42.1.6-80.9 24.4-102.6 61.6-43.7 75.8-11.2 188 31.3 249.5 20.7 30 45.4 63.7 78.1 62.4 31.4-1.3 43.3-20.2 81.3-20.2 38 0 48.6 20.2 81.9 19.6 33.9-.6 55.3-30.6 76-60.9 23.9-34.9 33.8-68.7 34.4-70.4-.7-.3-65.9-25.3-66.3-100.2zM259.5 82.5c17.3-20.9 29.1-50 26-79.1-25.2 1-55.6 16.8-73.6 37.7-16.2 18.5-30.3 48.2-26.6 76.5 28.1 2.2 56.9-14.2 74.2-35.1z"/>
-                  </svg>
-                </div>
-                <div class="store-info">
-                  <p class="store-label">App Store</p>
-                  <h3>Disponível na App Store</h3>
-                  <p class="text-muted">Baixe nossos aplicativos</p>
-                </div>
-                <span class="store-link">Ver apps</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <div class="footer-section mt-5 pt-4 border-top">
-          <p>© {{ site.time | date: '%Y' }} {{ site.title }}. Todos os direitos reservados.</p>
-          <p class="mb-0">Apoiamos a comunidade e incentivamos o compartilhamento</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>

@@ -11,6 +11,17 @@
   {% else %}
     {% assign postbox_lang = postbox_lang_primary %}
   {% endif %}
+  {% if postbox_lang_primary == 'en' %}
+    {% assign postbox_open_label = 'Open article: ' %}
+    {% assign postbox_read_more_label = 'Read more' %}
+    {% assign postbox_reading_suffix = 'min read' %}
+    {% assign postbox_date_format = '%Y-%m-%d' %}
+  {% else %}
+    {% assign postbox_open_label = '打开文章：' %}
+    {% assign postbox_read_more_label = '继续阅读' %}
+    {% assign postbox_reading_suffix = '分钟阅读' %}
+    {% assign postbox_date_format = '%Y-%m-%d' %}
+  {% endif %}
   <meta itemprop="mainEntityOfPage" content="{{ post.url | absolute_url }}">
   <meta itemprop="dateModified" content="{{ post.last_modified_at | default: post.date | date_to_xmlschema }}">
   <meta itemprop="inLanguage" content="{{ postbox_lang }}">
@@ -66,20 +77,20 @@
   {% endif %}
   <meta itemprop="description" content="{{ postbox_description | escape }}">
   {% if postbox_image_src %}
-  <a class="postbox-media" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title | escape }}">
+  <a class="postbox-media" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="{{ postbox_open_label }}{{ post.title | escape }}">
     <img class="postbox-thumb" src="{{ postbox_image_src }}" alt="{{ postbox_image_alt | escape }}" loading="lazy" decoding="async" fetchpriority="low" sizes="{{ postbox_image_sizes | escape }}"{% if postbox_image_width %} width="{{ postbox_image_width }}"{% endif %}{% if postbox_image_height %} height="{{ postbox_image_height }}"{% endif %}>
   </a>
   {% endif %}
   <div class="card-body">
     <h3 class="card-title">
-      <a href="{{ post.url | relative_url }}" class="postbox-link" rel="bookmark" aria-label="Abrir artigo: {{ post.title | escape }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a>
+      <a href="{{ post.url | relative_url }}" class="postbox-link" rel="bookmark" aria-label="{{ postbox_open_label }}{{ post.title | escape }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a>
     </h3>
     <p class="text-muted postbox-meta">
-      <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: "%d/%m/%Y" }}</time>
+      <time datetime="{{ post.date | date: "%Y-%m-%d" }}" itemprop="datePublished">{{ post.date | date: postbox_date_format }}</time>
       <span aria-hidden="true">•</span>
-      <span class="postbox-reading">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} min de leitura</span>
+      <span class="postbox-reading">{{ words | plus: 179 | divided_by: 180 | at_least: 1 }} {{ postbox_reading_suffix }}</span>
     </p>
     <p class="card-text" itemprop="description">{{ postbox_description }}</p>
-    <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary postbox-cta" rel="bookmark" aria-label="Leia mais: {{ post.title | escape }}">Leia mais</a>
+    <a href="{{ post.url | relative_url }}" class="btn btn-outline-primary postbox-cta" rel="bookmark" aria-label="{{ postbox_read_more_label }}：{{ post.title | escape }}">{{ postbox_read_more_label }}</a>
   </div>
 </div>

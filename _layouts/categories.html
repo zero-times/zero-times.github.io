@@ -1,21 +1,35 @@
 ---
 layout: default
 ---
+{% assign categories_lang = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' | split: '-' | first | downcase %}
+{% if categories_lang == 'en' %}
+  {% assign categories_title = 'Categories' %}
+  {% assign categories_prefix = 'Category: ' %}
+  {% assign categories_sidebar_title = 'All categories' %}
+  {% assign categories_link_label = 'Open article: ' %}
+  {% assign categories_jump_label = 'Go to category: ' %}
+{% else %}
+  {% assign categories_title = '内容分类' %}
+  {% assign categories_prefix = '分类：' %}
+  {% assign categories_sidebar_title = '全部分类' %}
+  {% assign categories_link_label = '打开文章：' %}
+  {% assign categories_jump_label = '跳转到分类：' %}
+{% endif %}
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h1 id="page-title">Categorias</h1>
+            <h1 id="page-title">{{ categories_title }}</h1>
             
             {% for category in site.categories %}
             <section class="category-section" id="{{ category[0] | slugify }}" aria-labelledby="category-{{ category[0] | slugify }}">
                 <h2 class="mt-5 mb-4 pb-2 border-bottom" id="category-{{ category[0] | slugify }}">
-                    <span class="text-capitalize small font-weight-bold">Categoria: {{ category[0] }}</span>
+                    <span class="text-capitalize small font-weight-bold">{{ categories_prefix }}{{ category[0] }}</span>
                 </h2>
                 
                 {% for post in category[1] %}
                 <div class="card mb-3 category-post-card">
                     <div class="card-body">
-                        <h5 class="card-title"><a class="category-post-link" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="Abrir artigo: {{ post.title }}">{{ post.title }}</a></h5>
+                        <h5 class="card-title"><a class="category-post-link" href="{{ post.url | relative_url }}" rel="bookmark" aria-label="{{ categories_link_label }}{{ post.title }}">{{ post.title }}</a></h5>
                         <p class="card-text">{{ post.excerpt | strip_html | truncate: 120 }}</p>
                         <small class="text-muted"><time class="category-post-date" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%B %d, %Y" }}</time></small>
                     </div>
@@ -28,12 +42,12 @@ layout: default
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h5>Todas as Categorias</h5>
+                    <h5>{{ categories_sidebar_title }}</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled category-list">
                         {% for category in site.categories %}
-                        <li><a class="category-link" href="#{{ category[0] | slugify }}" rel="tag" aria-label="Ir para categoria: {{ category[0] }}">{{ category[0] | capitalize }}</a> <span class="category-count">({{ category[1].size }})</span></li>
+                        <li><a class="category-link" href="#{{ category[0] | slugify }}" rel="tag" aria-label="{{ categories_jump_label }}{{ category[0] }}">{{ category[0] | capitalize }}</a> <span class="category-count">({{ category[1].size }})</span></li>
                         {% endfor %}
                     </ul>
                 </div>

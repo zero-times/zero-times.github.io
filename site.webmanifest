@@ -1,7 +1,7 @@
 {
-  "name": "Hoa | Flutter & Node.js",
-  "short_name": "Hoa",
-  "description": "Hoa 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。",
+  "name": "王雄皓 (Hoa) | Flutter & Node.js",
+  "short_name": "王雄皓 (Hoa)",
+  "description": "王雄皓 (Hoa) 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。",
   "lang": "zh-CN",
   "id": "/",
   "start_url": "/",
@@ -54,14 +54,14 @@
       "sizes": "1280x719",
       "type": "image/jpeg",
       "form_factor": "wide",
-      "label": "Hoa 个人作品站首页"
+      "label": "王雄皓 (Hoa) 个人作品站首页"
     },
     {
       "src": "/assets/images/screenshot-mobile.jpg",
       "sizes": "750x1334",
       "type": "image/jpeg",
       "form_factor": "narrow",
-      "label": "Hoa 个人作品站移动端首页"
+      "label": "王雄皓 (Hoa) 个人作品站移动端首页"
     }
   ],
   "icons": [

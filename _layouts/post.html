@@ -36,7 +36,7 @@ layout: default
 {% endif %}
 {% assign word_count = content | number_of_words %}
 {% assign reading_minutes = word_count | plus: 179 | divided_by: 180 | at_least: 1 %}
-{% assign normalized_post_lang_raw = page.lang | default: site.lang | default: site.default_lang | default: 'pt-BR' | replace: '_', '-' %}
+{% assign normalized_post_lang_raw = page.lang | default: site.lang | default: site.default_lang | default: 'zh-CN' | replace: '_', '-' %}
 {% assign normalized_post_lang_parts = normalized_post_lang_raw | split: '-' %}
 {% assign normalized_post_lang_primary = normalized_post_lang_parts[0] | downcase %}
 {% assign normalized_post_lang_region = '' %}
@@ -82,21 +82,21 @@ layout: default
     {% assign post_next_title = '下一篇' %}
     {% assign post_author_site_label = '访问作者网站' %}
   {% else %}
-    {% assign post_reading_progress_label = 'Progresso de leitura' %}
-    {% assign post_home_label = 'Início' %}
-    {% assign post_archive_label = 'Blog' %}
-    {% assign post_reading_time_label = 'Tempo de leitura estimado' %}
-    {% assign post_reading_time_suffix = 'min de leitura' %}
-    {% assign post_updated_prefix = 'Atualizado em' %}
-    {% assign post_categories_label = 'Categorias' %}
-    {% assign post_category_aria_prefix = 'Categoria: ' %}
+    {% assign post_reading_progress_label = 'Reading progress' %}
+    {% assign post_home_label = 'Home' %}
+    {% assign post_archive_label = 'Archive' %}
+    {% assign post_reading_time_label = 'Estimated reading time' %}
+    {% assign post_reading_time_suffix = 'min read' %}
+    {% assign post_updated_prefix = 'Updated on' %}
+    {% assign post_categories_label = 'Categories' %}
+    {% assign post_category_aria_prefix = 'Category: ' %}
     {% assign post_tags_label = 'Tags' %}
     {% assign post_tag_aria_prefix = 'Tag: ' %}
-    {% assign post_visit_site_label = 'Visitar site' %}
-    {% assign post_prev_nav_label = 'Navegação de postagens' %}
-    {% assign post_prev_title = 'Post anterior' %}
-    {% assign post_next_title = 'Próximo post' %}
-    {% assign post_author_site_label = 'Visitar site do autor ' %}
+    {% assign post_visit_site_label = 'Visit project site' %}
+    {% assign post_prev_nav_label = 'Post navigation' %}
+    {% assign post_prev_title = 'Previous post' %}
+    {% assign post_next_title = 'Next post' %}
+    {% assign post_author_site_label = 'Visit author website' %}
 {% endcase %}
 {% assign featured_image_loading_raw = page.image_loading | default: 'eager' | downcase %}
 {% if featured_image_loading_raw == 'lazy' %}

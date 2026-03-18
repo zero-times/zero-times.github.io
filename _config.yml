@@ -1,23 +1,23 @@
 # Site settings
-title: "Hoa"
+title: "王雄皓 (Hoa)"
 tagline: "Flutter、Node.js 与中小型产品开发落地"
 email: x5brain@gmail.com
-description: "Hoa 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。"
-keywords: "Flutter, Node.js, 个人作品集, 产品开发, 移动开发"
+description: "王雄皓 (Hoa) 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。"
+keywords: "王雄皓 (Hoa), Flutter, Node.js, 个人作品集, 产品开发, 移动开发"
 baseurl: ""
 url: "https://youllbe.cn"
 default_lang: "zh-CN"
 locale: "zh_CN"
 og_locale_alternate: "en_US"
 author:
-  name: "Wang Xionghao (Hoa)"
-  display_name: "Hoa"
+  name: "王雄皓 (Hoa)"
+  display_name: "王雄皓 (Hoa)"
   bio: "Flutter、Node.js 与中小型产品开发实践者"
   avatar: /assets/images/sal-300.jpg
   url: "https://youllbe.cn"
 logo: /assets/images/logo.png
 image: /assets/images/screenshot.jpg
-image_alt: "Hoa 个人作品站首页预览图"
+image_alt: "王雄皓 (Hoa) 个人作品站首页预览图"
 social_image_width: 1280
 social_image_height: 719
 theme_color_light: "#14324a"
@@ -49,7 +49,7 @@ github_username: zero-times
 whatsapp: "+8619152250086"
 disqus: "youllbe-cn"
 social:
-  name: Hoa
+  name: "王雄皓 (Hoa)"
   links:
     - https://github.com/zero-times
     - https://www.linkedin.com/in/hoa-wang/
@@ -95,6 +95,8 @@ defaults:
       sitemap: false
       load_analytics: false
       archive_content: true
+      comments: false
+      feed: false
   - scope:
       path: "_blogs"
     values:
@@ -107,3 +109,5 @@ defaults:
       sitemap: false
       load_analytics: false
       archive_content: true
+      comments: false
+      feed: false

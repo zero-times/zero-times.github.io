@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% assign redirect_target = page.redirect_to %}
+{% if redirect_target == nil and page.redirect_post_title %}
+  {% assign redirect_target = site.posts | where: "title", page.redirect_post_title | map: "url" | first %}
+{% endif %}
+{% if redirect_target == nil and page.redirect_blog_title %}
+  {% assign redirect_target = site.blogs | where: "title", page.redirect_blog_title | map: "url" | first %}
+{% endif %}
+{% if redirect_target == nil %}
+  {% assign redirect_target = '/' %}
+{% endif %}
+<html lang="{{ page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title | default: site.title | escape }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="{{ redirect_target | absolute_url }}">
+  <meta http-equiv="refresh" content="0; url={{ redirect_target | absolute_url }}">
+  <script>
+    window.location.replace({{ redirect_target | relative_url | jsonify }});
+  </script>
+</head>
+<body>
+  <main style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 2rem; line-height: 1.6;">
+    <p>{{ page.redirect_message | default: "This page has moved." }}</p>
+    <p><a href="{{ redirect_target | relative_url }}">Continue</a></p>
+  </main>
+</body>
+</html>

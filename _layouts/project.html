@@ -11,6 +11,11 @@ layout: default
     {% assign alternate_label = '中文版本' %}
     {% assign related_title = 'More projects' %}
     {% assign details_label = 'Project note' %}
+    {% assign facts_title = 'Quick facts' %}
+    {% assign deliverables_title = 'What I actually handled' %}
+    {% assign decisions_title = 'Key decisions' %}
+    {% assign highlights_title = 'Key points' %}
+    {% assign outcomes_title = 'What this project makes clear' %}
   {% when 'zh' %}
     {% assign role_label = '我的职责' %}
     {% assign status_note_label = '当前状态' %}
@@ -18,6 +23,11 @@ layout: default
     {% assign alternate_label = 'English version' %}
     {% assign related_title = '更多项目' %}
     {% assign details_label = '项目说明' %}
+    {% assign facts_title = '快速了解' %}
+    {% assign deliverables_title = '这次实际处理了什么' %}
+    {% assign decisions_title = '关键判断' %}
+    {% assign highlights_title = '关键点' %}
+    {% assign outcomes_title = '这个项目想说明什么' %}
   {% else %}
     {% assign role_label = 'Papel' %}
     {% assign status_note_label = 'Status' %}
@@ -25,6 +35,11 @@ layout: default
     {% assign alternate_label = 'English version' %}
     {% assign related_title = 'Mais projetos' %}
     {% assign details_label = 'Projeto' %}
+    {% assign facts_title = 'Resumo' %}
+    {% assign deliverables_title = 'What I handled' %}
+    {% assign decisions_title = 'Key decisions' %}
+    {% assign highlights_title = 'Pontos principais' %}
+    {% assign outcomes_title = 'O que este projeto demonstra' %}
 {% endcase %}
 {% assign related_projects = site.projects | where: "lang", page.lang | sort: "order" %}
 
@@ -104,8 +119,81 @@ layout: default
     </header>
 
     <div class="project-detail__content article-post serif-font">
+      {% if page.facts %}
+      <section class="project-detail__section project-detail__section--facts" aria-labelledby="project-facts-title">
+        <p class="portfolio-inline-label">{{ facts_title }}</p>
+        <div class="portfolio-card-grid" id="project-facts-title">
+          {% for fact in page.facts %}
+          <article class="portfolio-card">
+            <p class="portfolio-inline-label">{{ fact.label }}</p>
+            <h3>{{ fact.value }}</h3>
+            {% if fact.description %}
+            <p>{{ fact.description }}</p>
+            {% endif %}
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      {% if page.highlights %}
+      <section class="project-detail__section" aria-labelledby="project-highlights-title">
+        <p class="portfolio-inline-label">{{ highlights_title }}</p>
+        <div class="portfolio-card-grid" id="project-highlights-title">
+          {% for item in page.highlights %}
+          <article class="portfolio-card">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      {% if page.deliverables %}
+      <section class="project-detail__section" aria-labelledby="project-deliverables-title">
+        <p class="portfolio-inline-label">{{ deliverables_title }}</p>
+        <div class="portfolio-card-grid" id="project-deliverables-title">
+          {% for item in page.deliverables %}
+          <article class="portfolio-card">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
       <p class="portfolio-inline-label">{{ details_label }}</p>
       {{ content }}
+
+      {% if page.decisions %}
+      <section class="project-detail__section" aria-labelledby="project-decisions-title">
+        <p class="portfolio-inline-label">{{ decisions_title }}</p>
+        <div class="portfolio-card-grid" id="project-decisions-title">
+          {% for item in page.decisions %}
+          <article class="portfolio-card">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      {% if page.outcomes %}
+      <section class="project-detail__section" aria-labelledby="project-outcomes-title">
+        <p class="portfolio-inline-label">{{ outcomes_title }}</p>
+        <div class="portfolio-card-grid" id="project-outcomes-title">
+          {% for item in page.outcomes %}
+          <article class="portfolio-card">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
     </div>
   </article>
 
