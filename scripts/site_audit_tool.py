@@ -981,8 +981,6 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     utility_noindex_targets = [
         ROOT / '404.html',
         ROOT / 'pages/share.html',
-        ROOT / 'pages/privacy-policy.md',
-        ROOT / 'pages/terms.md',
     ]
     taxonomy_noindex_missing: list[str] = []
     taxonomy_sitemap_inclusion: list[str] = []
@@ -1076,8 +1074,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     )
     has_paginated_hreflang_guard = (
         '{% unless is_paginated_archive_page %}' in default_layout
-        and '<link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">' in default_layout
-        and '<link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">' in default_layout
+        and '{% assign current_page_abs_url = page.url | absolute_url %}' in default_layout
+        and '<link rel="alternate" hreflang="{{ page_lang }}" href="{{ current_page_abs_url }}">' in default_layout
+        and '<link rel="alternate" hreflang="x-default" href="{{ x_default_href }}">' in default_layout
         and '{% endunless %}' in default_layout
     )
     has_paginated_rel_navigation = (
@@ -1579,14 +1578,14 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'Utility page indexing policy',
                     'result': 'Good' if has_utility_noindex_policy else 'Needs improvement',
-                    'details': 'Noindex utility pages (404/share/privacy-policy/terms) expose robots noindex,follow to avoid low-intent indexing.'
+                    'details': 'Noindex utility pages (404/share) expose robots noindex,follow to avoid low-intent indexing.'
                     if has_utility_noindex_policy
                     else f"Add front matter robots noindex,follow on: {', '.join(utility_noindex_missing)}",
                 },
                 {
                     'aspect': 'Utility page sitemap inclusion policy',
                     'result': 'Good' if has_utility_sitemap_exclusion else 'Needs improvement',
-                    'details': 'Noindex utility pages (404/share/privacy-policy/terms) are excluded from sitemap (sitemap: false).'
+                    'details': 'Noindex utility pages (404/share) are excluded from sitemap (sitemap: false).'
                     if has_utility_sitemap_exclusion
                     else f"Set front matter sitemap: false on: {', '.join(utility_sitemap_inclusion)}",
                 },

@@ -1,12 +1,11 @@
 ---
 layout: page
-title: 隐私说明
+title: 隐私说明｜王雄皓 (Hoa)
 permalink: /privacy-policy/
 lang: zh-CN
 comments: false
-robots: noindex,follow
-sitemap: false
-description: 王雄皓 (Hoa) 个人作品站的隐私说明，站点聚焦 Flutter、Node.js 与中小型产品开发落地。
+robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
+description: 王雄皓 (Hoa) 个人作品站的隐私说明与数据处理方式。
 keywords: "王雄皓 (Hoa), 隐私说明, 数据处理, 联系表单, Analytics"
 schema_type: PrivacyPolicy
 last_modified_at: 2026-03-18

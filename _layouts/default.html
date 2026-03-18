@@ -13,6 +13,18 @@
   {% assign html_lang = lang_primary %}
   {% assign og_locale = lang_primary %}
 {% endif %}
+{% assign alternate_url = page.alternate_url | default: '' | strip %}
+{% assign alternate_lang = '' %}
+{% assign alternate_og_locale_fallback = '' %}
+{% if alternate_url != '' %}
+  {% if lang_primary == 'en' %}
+    {% assign alternate_lang = 'zh-CN' %}
+    {% assign alternate_og_locale_fallback = site.locale | default: 'zh_CN' %}
+  {% else %}
+    {% assign alternate_lang = 'en' %}
+    {% assign alternate_og_locale_fallback = site.og_locale_alternate | default: 'en_US' %}
+  {% endif %}
+{% endif %}
 <html lang="{{ html_lang }}">
 <head>
   <meta charset="utf-8">
@@ -53,7 +65,7 @@
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% endif %}
   <meta property="og:locale" content="{{ og_locale }}">
-  {% assign alternate_og_locale_raw = page.og_locale_alternate | default: site.og_locale_alternate | default: site.locale | default: '' %}
+  {% assign alternate_og_locale_raw = page.og_locale_alternate | default: alternate_og_locale_fallback | default: site.og_locale_alternate | default: site.locale | default: '' %}
   {% assign alternate_og_locale = alternate_og_locale_raw | replace: '-', '_' %}
   {% if alternate_og_locale != '' and alternate_og_locale != og_locale and alternate_og_locale contains '_' %}
   <meta property="og:locale:alternate" content="{{ alternate_og_locale }}">
@@ -62,11 +74,24 @@
     {% unless page.robots contains 'noindex' %}
       {% assign page_lang = html_lang %}
       {% assign page_lang_base = page_lang | split: '-' | first %}
-      <link rel="alternate" hreflang="{{ page_lang }}" href="{{ page.url | absolute_url }}">
+      {% assign current_page_abs_url = page.url | absolute_url %}
+      {% assign x_default_href = current_page_abs_url %}
+      <link rel="alternate" hreflang="{{ page_lang }}" href="{{ current_page_abs_url }}">
       {% if page_lang_base and page_lang_base != page_lang %}
-      <link rel="alternate" hreflang="{{ page_lang_base }}" href="{{ page.url | absolute_url }}">
+      <link rel="alternate" hreflang="{{ page_lang_base }}" href="{{ current_page_abs_url }}">
       {% endif %}
-      <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
+      {% if alternate_url != '' and alternate_lang != '' %}
+        {% assign alternate_page_abs_url = alternate_url | absolute_url %}
+        {% assign alternate_lang_base = alternate_lang | split: '-' | first %}
+      <link rel="alternate" hreflang="{{ alternate_lang }}" href="{{ alternate_page_abs_url }}">
+        {% if alternate_lang_base and alternate_lang_base != alternate_lang %}
+      <link rel="alternate" hreflang="{{ alternate_lang_base }}" href="{{ alternate_page_abs_url }}">
+        {% endif %}
+        {% if lang_primary == 'en' %}
+          {% assign x_default_href = alternate_page_abs_url %}
+        {% endif %}
+      {% endif %}
+      <link rel="alternate" hreflang="x-default" href="{{ x_default_href }}">
     {% endunless %}
   {% endunless %}
   {% assign social_image_alt = page.image_alt | default: site.image_alt | default: page.title | default: site.title %}

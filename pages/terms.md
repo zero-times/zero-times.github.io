@@ -1,12 +1,11 @@
 ---
 layout: page
-title: 使用条款
+title: 使用条款｜王雄皓 (Hoa)
 permalink: /terms/
 lang: zh-CN
 comments: false
-robots: noindex,follow
-sitemap: false
-description: 王雄皓 (Hoa) 个人作品站的使用条款，站点聚焦 Flutter、Node.js 与中小型产品开发落地。
+robots: index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1
+description: 王雄皓 (Hoa) 个人作品站的使用条款与访问说明。
 keywords: "王雄皓 (Hoa), 使用条款, 站点说明, 内容引用"
 schema_type: TermsOfService
 last_modified_at: 2026-03-18
