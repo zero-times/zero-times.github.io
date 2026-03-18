@@ -6,8 +6,8 @@ lang: zh-CN
 comments: false
 robots: noindex,follow
 sitemap: false
-description: 王雄皓 (Hoa) 个人作品站的使用条款与访问说明。
-keywords: "使用条款, 站点说明, 内容引用"
+description: 王雄皓 (Hoa) 个人作品站的使用条款，站点聚焦 Flutter、Node.js 与中小型产品开发落地。
+keywords: "王雄皓 (Hoa), 使用条款, 站点说明, 内容引用"
 schema_type: TermsOfService
 last_modified_at: 2026-03-18
 load_analytics: false
@@ -19,7 +19,7 @@ load_webfonts: false
 
   <article class="legal-card">
     <h3>站点用途</h3>
-    <p>这个站点主要用于展示项目、说明当前工作方向并提供联系入口。页面内容以个人项目、经验总结和公开可分享的信息为主。</p>
+    <p>这个站点是王雄皓 (Hoa) 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。页面内容以项目说明、经验总结和公开可分享的信息为主。</p>
   </article>
 
   <article class="legal-card">

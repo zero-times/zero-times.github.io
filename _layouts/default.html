@@ -600,9 +600,13 @@
       {% assign menu_close_label = 'Close main menu' %}
       {% assign menu_hint = 'Tap Close to collapse the menu' %}
       {% assign main_label = 'Main content' %}
-      {% assign footer_copy = site.tagline | default: 'Flutter, Node.js and end-to-end product delivery' %}
+      {% assign footer_copy = site.tagline_en | default: 'Flutter, Node.js and end-to-end delivery for small products' %}
       {% assign privacy_label = 'Privacy' %}
       {% assign terms_label = 'Terms' %}
+      {% assign nav_desktop_label = 'Primary sections' %}
+      {% assign nav_mobile_label = 'Mobile navigation' %}
+      {% assign footer_nav_label = 'Footer links' %}
+      {% assign back_to_top_label = 'Back to top' %}
       {% assign default_switch_url = '/' %}
       {% assign nav_home_url = '/en/' %}
       {% assign nav_projects_url = '/en/projects/' %}
@@ -626,29 +630,37 @@
       {% assign footer_copy = site.tagline | default: 'Flutter、Node.js 与中小型产品开发落地' %}
       {% assign privacy_label = '隐私' %}
       {% assign terms_label = '条款' %}
+      {% assign nav_desktop_label = '主要导航' %}
+      {% assign nav_mobile_label = '移动导航' %}
+      {% assign footer_nav_label = '页脚链接' %}
+      {% assign back_to_top_label = '回到顶部' %}
       {% assign default_switch_url = '/en/' %}
       {% assign nav_home_url = '/' %}
       {% assign nav_projects_url = '/projects/' %}
       {% assign nav_about_url = '/about/' %}
       {% assign nav_contact_url = '/contact/' %}
     {% else %}
-      {% assign skip_link_label = 'Pular para o conteúdo' %}
-      {% assign nav_home_label = 'Início' %}
-      {% assign nav_projects_label = 'Projetos' %}
-      {% assign nav_about_label = 'Sobre' %}
-      {% assign nav_contact_label = 'Contato' %}
-      {% assign nav_archive_label = 'Blog' %}
-      {% assign nav_contact_cta = 'Fale comigo' %}
+      {% assign skip_link_label = 'Skip to content' %}
+      {% assign nav_home_label = 'Home' %}
+      {% assign nav_projects_label = 'Projects' %}
+      {% assign nav_about_label = 'About' %}
+      {% assign nav_contact_label = 'Contact' %}
+      {% assign nav_archive_label = 'Archive' %}
+      {% assign nav_contact_cta = 'Get in touch' %}
       {% assign nav_switch_label = 'EN' %}
-      {% assign nav_switch_aria = 'Mudar para inglês' %}
+      {% assign nav_switch_aria = 'Switch to English' %}
       {% assign menu_label = 'Menu' %}
-      {% assign menu_open_label = 'Abrir menu principal' %}
-      {% assign menu_close_label = 'Fechar menu principal' %}
-      {% assign menu_hint = 'Toque em Fechar para recolher o menu' %}
-      {% assign main_label = 'Conteúdo principal' %}
-      {% assign footer_copy = site.tagline | default: 'Arquitetura mobile e blog técnico' %}
-      {% assign privacy_label = 'Privacidade' %}
-      {% assign terms_label = 'Termos' %}
+      {% assign menu_open_label = 'Open main menu' %}
+      {% assign menu_close_label = 'Close main menu' %}
+      {% assign menu_hint = 'Tap Close to collapse the menu' %}
+      {% assign main_label = 'Main content' %}
+      {% assign footer_copy = site.tagline_en | default: 'Flutter, Node.js and end-to-end delivery for small products' %}
+      {% assign privacy_label = 'Privacy' %}
+      {% assign terms_label = 'Terms' %}
+      {% assign nav_desktop_label = 'Primary sections' %}
+      {% assign nav_mobile_label = 'Mobile navigation' %}
+      {% assign footer_nav_label = 'Footer links' %}
+      {% assign back_to_top_label = 'Back to top' %}
       {% assign default_switch_url = '/en/' %}
       {% assign nav_home_url = '/' %}
       {% assign nav_projects_url = '/projects/' %}
@@ -670,7 +682,7 @@
         {{ brand_label }}
       </a>
 
-      <nav class="site-nav-desktop" aria-label="{% if lang_base == 'en' %}Primary sections{% elsif lang_base == 'zh' %}主要导航{% else %}Seções principais{% endif %}">
+      <nav class="site-nav-desktop" aria-label="{{ nav_desktop_label }}">
         <a class="site-nav-link{% if is_home %} is-active{% endif %}" href="{{ nav_home_url | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>{{ nav_home_label }}</a>
         <a class="site-nav-link{% if is_projects %} is-active{% endif %}" href="{{ nav_projects_url | relative_url }}"{% if is_projects %} aria-current="page"{% endif %} data-site-nav>{{ nav_projects_label }}</a>
         <a class="site-nav-link{% if is_about %} is-active{% endif %}" href="{{ nav_about_url | relative_url }}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>{{ nav_about_label }}</a>
@@ -699,7 +711,7 @@
     <div class="offcanvas-body">
       <h2 id="siteMobileDrawerTitle" class="visually-hidden">{{ menu_label }}</h2>
       <button class="site-mobile-drawer__close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ menu_close_label }}">{{ menu_close_label }}</button>
-      <nav class="site-mobile-drawer__nav" aria-label="{% if lang_base == 'en' %}Mobile navigation{% elsif lang_base == 'zh' %}移动导航{% else %}Navegação móvel{% endif %}">
+      <nav class="site-mobile-drawer__nav" aria-label="{{ nav_mobile_label }}">
         <a class="site-mobile-drawer__link{% if is_home %} is-active{% endif %}" href="{{ nav_home_url | relative_url }}"{% if is_home %} aria-current="page"{% endif %} data-site-nav>{{ nav_home_label }}</a>
         <a class="site-mobile-drawer__link{% if is_projects %} is-active{% endif %}" href="{{ nav_projects_url | relative_url }}"{% if is_projects %} aria-current="page"{% endif %} data-site-nav>{{ nav_projects_label }}</a>
         <a class="site-mobile-drawer__link{% if is_about %} is-active{% endif %}" href="{{ nav_about_url | relative_url }}"{% if is_about %} aria-current="page"{% endif %} data-site-nav>{{ nav_about_label }}</a>
@@ -723,7 +735,7 @@
         <p class="site-footer-v2__brand-copy">{{ footer_copy }}</p>
       </div>
       <div class="site-footer-v2__meta">
-        <nav class="site-footer-v2__links" aria-label="{% if lang_base == 'en' %}Footer links{% elsif lang_base == 'zh' %}页脚链接{% else %}Links do rodapé{% endif %}">
+        <nav class="site-footer-v2__links" aria-label="{{ footer_nav_label }}">
           <a href="{{ nav_projects_url | relative_url }}" aria-label="{{ nav_projects_label }}"{% if is_projects %} aria-current="page"{% endif %}>{{ nav_projects_label }}</a>
           <a href="{{ nav_about_url | relative_url }}" aria-label="{{ nav_about_label }}"{% if is_about %} aria-current="page"{% endif %}>{{ nav_about_label }}</a>
           <a href="{{ nav_contact_url | relative_url }}" aria-label="{{ nav_contact_label }}"{% if is_contact %} aria-current="page"{% endif %}>{{ nav_contact_label }}</a>
@@ -736,7 +748,7 @@
     </div>
   </footer>
 
-  <button class="back-to-top" type="button" aria-label="Voltar ao topo" hidden>
+  <button class="back-to-top" type="button" aria-label="{{ back_to_top_label }}" hidden>
     <span aria-hidden="true">↑</span>
   </button>
 

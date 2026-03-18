@@ -6,8 +6,8 @@ lang: zh-CN
 comments: false
 robots: noindex,follow
 sitemap: false
-description: 王雄皓 (Hoa) 个人作品站的隐私说明与数据处理方式。
-keywords: "隐私说明, 数据处理, 联系表单, Analytics"
+description: 王雄皓 (Hoa) 个人作品站的隐私说明，站点聚焦 Flutter、Node.js 与中小型产品开发落地。
+keywords: "王雄皓 (Hoa), 隐私说明, 数据处理, 联系表单, Analytics"
 schema_type: PrivacyPolicy
 last_modified_at: 2026-03-18
 load_webfonts: false
@@ -19,7 +19,7 @@ load_analytics: false
 
   <article class="legal-card">
     <h3>这是什么页面</h3>
-    <p>这个站点现在是王雄皓 (Hoa) 的个人作品站，主要用于展示项目、说明当前方向，并提供联系入口。它不是高频更新的内容平台，也不以追踪用户行为为目的。</p>
+    <p>这个站点是王雄皓 (Hoa) 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。它不是高频更新的内容平台，也不以追踪用户行为为主要目标。</p>
   </article>
 
   <article class="legal-card">

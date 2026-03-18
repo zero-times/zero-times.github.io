@@ -356,9 +356,17 @@
 {% endif %}
 {% endif %}
 </head>
+{% assign share_lang_base = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' | split: '-' | first | downcase %}
+{% if share_lang_base == 'zh' %}
+  {% assign share_skip_link_label = '跳转到主要内容' %}
+  {% assign share_main_label = '主要内容' %}
+{% else %}
+  {% assign share_skip_link_label = 'Skip to content' %}
+  {% assign share_main_label = 'Main content' %}
+{% endif %}
 <body class="share-page">
-  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
-  <main id="main-content" role="main" tabindex="-1" aria-label="Conteúdo principal">
+  <a class="skip-link" href="#main-content">{{ share_skip_link_label }}</a>
+  <main id="main-content" role="main" tabindex="-1" aria-label="{{ share_main_label }}">
     {{ content }}
   </main>
 </body>
