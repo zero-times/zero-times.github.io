@@ -349,6 +349,7 @@
   {% assign webpage_published = page.date %}
   {% assign webpage_modified = page.last_modified_at | default: page.date %}
   {% assign webpage_schema_type = page.schema_type | default: 'WebPage' %}
+  {% assign is_profile_page_schema = webpage_schema_type == 'ProfilePage' %}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -360,6 +361,17 @@
       "description": "{{ page.description | default: site.description | escape }}"{% if webpage_published %},
       "datePublished": "{{ webpage_published | date_to_xmlschema }}"{% endif %}{% if webpage_modified %},
       "dateModified": "{{ webpage_modified | date_to_xmlschema }}"{% endif %},
+      {% if is_profile_page_schema and site.author.name %}
+      "mainEntity": {
+        "@id": "{{ author_entity_id }}",
+        "@type": "Person",
+        "name": "{{ site.author.name | escape }}"{% if site.author.url %},
+        "url": "{{ site.author.url }}"{% endif %}{% if publisher_image_url %},
+        "image": "{{ publisher_image_url }}"{% endif %}{% if site.social and site.social.links %},
+        "sameAs": [{% for link in site.social.links %}"{{ link | escape }}"{% unless forloop.last %},{% endunless %}{% endfor %}]
+        {% endif %}
+      },
+      {% endif %}
       "publisher": {
         "@id": "{{ organization_entity_id }}"
       },
