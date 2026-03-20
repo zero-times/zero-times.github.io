@@ -210,14 +210,12 @@ jobs:
           fi
           grep -Eq '<link rel="apple-touch-icon"[^>]*sizes="180x180"[^>]*href="[^"]*assets/images/apple-touch-icon.png"' "$HOME"
 
-      - name: Assert noindex utility pages omit analytics payload
+      - name: Assert noindex auxiliary pages omit analytics payload
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -225,23 +223,21 @@ jobs:
               exit 1
             fi
             if grep -q 'googletagmanager.com/gtag/js' "$page"; then
-              echo "Unexpected GA loader on noindex utility page: $page"
+              echo "Unexpected GA loader on noindex auxiliary page: $page"
               exit 1
             fi
             if grep -q "gtag('config'" "$page"; then
-              echo "Unexpected GA config snippet on noindex utility page: $page"
+              echo "Unexpected GA config snippet on noindex auxiliary page: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages include robots noindex,follow
+      - name: Assert noindex auxiliary pages include robots noindex,follow
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -249,19 +245,17 @@ jobs:
               exit 1
             fi
             grep -q '<meta name="robots" content="noindex,follow">' "$page" || {
-              echo "Missing robots noindex,follow tag on utility page: $page"
+              echo "Missing robots noindex,follow tag on auxiliary page: $page"
               exit 1
             }
           done
 
-      - name: Assert noindex utility pages keep single canonical tag
+      - name: Assert noindex auxiliary pages keep single canonical tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -270,19 +264,17 @@ jobs:
             fi
             CANONICAL_COUNT=$(grep -o 'rel="canonical"' "$page" | wc -l | tr -d ' ')
             if [ "$CANONICAL_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 canonical tag on utility page, found $CANONICAL_COUNT: $page"
+              echo "Expected exactly 1 canonical tag on auxiliary page, found $CANONICAL_COUNT: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages keep single meta description tag
+      - name: Assert noindex auxiliary pages keep single meta description tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -291,19 +283,17 @@ jobs:
             fi
             DESCRIPTION_COUNT=$(grep -o '<meta name="description"' "$page" | wc -l | tr -d ' ')
             if [ "$DESCRIPTION_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 meta description tag on utility page, found $DESCRIPTION_COUNT: $page"
+              echo "Expected exactly 1 meta description tag on auxiliary page, found $DESCRIPTION_COUNT: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages keep single og:description tag
+      - name: Assert noindex auxiliary pages keep single og:description tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -312,19 +302,17 @@ jobs:
             fi
             OG_DESCRIPTION_COUNT=$(grep -o '<meta property="og:description"' "$page" | wc -l | tr -d ' ')
             if [ "$OG_DESCRIPTION_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 og:description tag on utility page, found $OG_DESCRIPTION_COUNT: $page"
+              echo "Expected exactly 1 og:description tag on auxiliary page, found $OG_DESCRIPTION_COUNT: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages keep single og:title tag
+      - name: Assert noindex auxiliary pages keep single og:title tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -333,19 +321,17 @@ jobs:
             fi
             OG_TITLE_COUNT=$(grep -o '<meta property="og:title"' "$page" | wc -l | tr -d ' ')
             if [ "$OG_TITLE_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 og:title tag on utility page, found $OG_TITLE_COUNT: $page"
+              echo "Expected exactly 1 og:title tag on auxiliary page, found $OG_TITLE_COUNT: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages keep single og:type tag
+      - name: Assert noindex auxiliary pages keep single og:type tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -354,19 +340,17 @@ jobs:
             fi
             OG_TYPE_COUNT=$(grep -o '<meta property="og:type"' "$page" | wc -l | tr -d ' ')
             if [ "$OG_TYPE_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 og:type tag on utility page, found $OG_TYPE_COUNT: $page"
+              echo "Expected exactly 1 og:type tag on auxiliary page, found $OG_TYPE_COUNT: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages keep single og:locale tag
+      - name: Assert noindex auxiliary pages keep single og:locale tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -375,19 +359,17 @@ jobs:
             fi
             OG_LOCALE_COUNT=$(grep -o '<meta property="og:locale"' "$page" | wc -l | tr -d ' ')
             if [ "$OG_LOCALE_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 og:locale tag on utility page, found $OG_LOCALE_COUNT: $page"
+              echo "Expected exactly 1 og:locale tag on auxiliary page, found $OG_LOCALE_COUNT: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages keep single twitter:description tag
+      - name: Assert noindex auxiliary pages keep single twitter:description tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -396,19 +378,17 @@ jobs:
             fi
             TWITTER_DESCRIPTION_COUNT=$(grep -o '<meta name="twitter:description"' "$page" | wc -l | tr -d ' ')
             if [ "$TWITTER_DESCRIPTION_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 twitter:description tag on utility page, found $TWITTER_DESCRIPTION_COUNT: $page"
+              echo "Expected exactly 1 twitter:description tag on auxiliary page, found $TWITTER_DESCRIPTION_COUNT: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages keep single twitter:title tag
+      - name: Assert noindex auxiliary pages keep single twitter:title tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -417,19 +397,17 @@ jobs:
             fi
             TWITTER_TITLE_COUNT=$(grep -o '<meta name="twitter:title"' "$page" | wc -l | tr -d ' ')
             if [ "$TWITTER_TITLE_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 twitter:title tag on utility page, found $TWITTER_TITLE_COUNT: $page"
+              echo "Expected exactly 1 twitter:title tag on auxiliary page, found $TWITTER_TITLE_COUNT: $page"
               exit 1
             fi
           done
 
-      - name: Assert noindex utility pages keep single twitter:card tag
+      - name: Assert noindex auxiliary pages keep single twitter:card tag
         run: |
           PAGES=(
             "_site/404.html"
             "_site/categories/index.html"
             "_site/tags/index.html"
-            "_site/privacy-policy/index.html"
-            "_site/terms/index.html"
           )
           for page in "${PAGES[@]}"; do
             if [ ! -f "$page" ]; then
@@ -438,7 +416,29 @@ jobs:
             fi
             TWITTER_CARD_COUNT=$(grep -o '<meta name="twitter:card"' "$page" | wc -l | tr -d ' ')
             if [ "$TWITTER_CARD_COUNT" -ne 1 ]; then
-              echo "Expected exactly 1 twitter:card tag on utility page, found $TWITTER_CARD_COUNT: $page"
+              echo "Expected exactly 1 twitter:card tag on auxiliary page, found $TWITTER_CARD_COUNT: $page"
+              exit 1
+            fi
+          done
+
+      - name: Assert rendered legal pages are indexable
+        run: |
+          PAGES=(
+            "_site/privacy-policy/index.html"
+            "_site/terms/index.html"
+          )
+          for page in "${PAGES[@]}"; do
+            if [ ! -f "$page" ]; then
+              echo "Missing rendered legal page: $page"
+              exit 1
+            fi
+            grep -q '<meta name="robots" content="index,follow' "$page" || {
+              echo "Missing indexable robots tag on legal page: $page"
+              exit 1
+            }
+            CANONICAL_COUNT=$(grep -o 'rel="canonical"' "$page" | wc -l | tr -d ' ')
+            if [ "$CANONICAL_COUNT" -ne 1 ]; then
+              echo "Expected exactly 1 canonical tag on legal page, found $CANONICAL_COUNT: $page"
               exit 1
             fi
           done
