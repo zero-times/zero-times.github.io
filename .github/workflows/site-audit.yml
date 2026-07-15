@@ -206,7 +206,15 @@ jobs:
             "_site/Gemfile"
             "_site/Gemfile.lock"
             "_site/assets/css/custom.css.backup"
+            "_site/assets/css/custom.css"
+            "_site/assets/css/brazilian-theme.css"
+            "_site/assets/css/i18n.css"
+            "_site/assets/css/responsive-enhancements.css"
             "_site/assets/css/theme.scss.backup"
+            "_site/assets/js/i18n.js"
+            "_site/main.js"
+            "_site/site.locale"
+            "_site/site.og_locale_alternate"
           )
           for path in "${PRIVATE_OUTPUTS[@]}"; do
             if [ -e "$path" ]; then
@@ -450,7 +458,7 @@ jobs:
               echo "Missing rendered page: $page"
               exit 1
             fi
-            TWITTER_TITLE_COUNT=$(grep -o '<meta name="twitter:title"' "$page" | wc -l | tr -d ' ')
+            TWITTER_TITLE_COUNT=$(grep -oE '<meta (name|property)="twitter:title"' "$page" | wc -l | tr -d ' ')
             if [ "$TWITTER_TITLE_COUNT" -ne 1 ]; then
               echo "Expected exactly 1 twitter:title tag on auxiliary page, found $TWITTER_TITLE_COUNT: $page"
               exit 1
@@ -512,8 +520,8 @@ jobs:
           grep -q '<meta name="apple-mobile-web-app-status-bar-style" content="default">' "$HOME"
           grep -q '<meta name="apple-mobile-web-app-title" content=' "$HOME"
           grep -q '<meta name="application-name" content=' "$HOME"
-          grep -q '<meta name="theme-color" content="#14324a">' "$HOME"
-          grep -q '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320">' "$HOME"
+          grep -q '<meta name="theme-color" content="#f4f1e8">' "$HOME"
+          grep -q '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1210">' "$HOME"
 
       - name: Assert rendered mobile drawer accessibility invariants
         run: |
@@ -522,13 +530,14 @@ jobs:
             echo "Missing rendered homepage: $HOME"
             exit 1
           fi
-          grep -Eq 'id="mobileMenuButton"[^>]*aria-controls="siteMobileDrawer"' "$HOME"
-          grep -Eq 'id="mobileMenuButton"[^>]*aria-haspopup="dialog"' "$HOME"
-          grep -Eq 'id="mobileMenuButton"[^>]*aria-expanded="false"' "$HOME"
-          grep -Eq 'id="siteMobileDrawer"[^>]*role="dialog"' "$HOME"
-          grep -Eq 'id="siteMobileDrawer"[^>]*aria-modal="true"' "$HOME"
-          grep -Eq 'id="siteMobileDrawer"[^>]*aria-describedby="siteMobileDrawerHint"' "$HOME"
-          grep -Eq 'id="siteMobileDrawerHint"' "$HOME"
+          HOME_SINGLE_LINE=$(tr '\n' ' ' < "$HOME")
+          grep -Eq 'id="mobileMenuButton"[^>]*aria-controls="siteMobileDrawer"' <<< "$HOME_SINGLE_LINE"
+          grep -Eq 'id="mobileMenuButton"[^>]*aria-haspopup="dialog"' <<< "$HOME_SINGLE_LINE"
+          grep -Eq 'id="mobileMenuButton"[^>]*aria-expanded="false"' <<< "$HOME_SINGLE_LINE"
+          grep -Eq 'id="siteMobileDrawer"[^>]*role="dialog"' <<< "$HOME_SINGLE_LINE"
+          grep -Eq 'id="siteMobileDrawer"[^>]*aria-modal="true"' <<< "$HOME_SINGLE_LINE"
+          grep -Eq 'id="siteMobileDrawer"[^>]*aria-describedby="siteMobileDrawerHint"' <<< "$HOME_SINGLE_LINE"
+          grep -Eq 'id="siteMobileDrawerHint"' <<< "$HOME_SINGLE_LINE"
 
       - name: Assert rendered manifest link policy
         run: |

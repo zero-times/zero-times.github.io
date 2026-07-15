@@ -9,12 +9,24 @@
 {% if redirect_target == nil %}
   {% assign redirect_target = '/' %}
 {% endif %}
-<html lang="{{ page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' }}">
+{% assign redirect_lang = page.lang | default: site.lang | default: site.default_lang | replace: '_', '-' %}
+{% assign redirect_og_locale = redirect_lang | replace: '-', '_' %}
+{% assign redirect_title = page.title | default: site.title %}
+{% assign redirect_description = page.description | default: site.description %}
+<html lang="{{ redirect_lang }}">
 <head>
   <meta charset="utf-8">
-  <title>{{ page.title | default: site.title | escape }}</title>
+  <title>{{ redirect_title | escape }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,follow">
+  <meta name="description" content="{{ redirect_description | escape }}">
+  <meta property="og:title" content="{{ redirect_title | escape }}">
+  <meta property="og:description" content="{{ redirect_description | escape }}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="{{ redirect_og_locale }}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ redirect_title | escape }}">
+  <meta name="twitter:description" content="{{ redirect_description | escape }}">
   <link rel="canonical" href="{{ redirect_target | absolute_url }}">
   <meta http-equiv="refresh" content="0; url={{ redirect_target | absolute_url }}">
   <script>

@@ -1,10 +1,10 @@
 # Site settings
 title: "王雄皓 (Hoa)"
-tagline: "Flutter、Node.js 与中小型产品开发落地"
-tagline_en: "Flutter, Node.js and end-to-end delivery for small products"
+tagline: "产品型开发者｜Flutter、Node.js 与微信生态产品交付"
+tagline_en: "Product-minded developer shipping Flutter, Node.js and WeChat products"
 email: x5brain@gmail.com
-description: "王雄皓 (Hoa) 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。"
-keywords: "王雄皓 (Hoa), Flutter, Node.js, 个人作品集, 产品开发, 移动开发"
+description: "王雄皓 (Hoa) 的开发者作品站，展示 Flutter 跨端应用、Node.js 服务端、微信生态工具与产品从需求到上线的完整交付。"
+keywords: "王雄皓 (Hoa), 产品型开发者, Flutter, Node.js, 微信小程序, 产品开发, 移动开发"
 baseurl: ""
 url: "https://youllbe.cn"
 default_lang: "zh-CN"
@@ -13,20 +13,19 @@ og_locale_alternate: "en_US"
 author:
   name: "王雄皓 (Hoa)"
   display_name: "王雄皓 (Hoa)"
-  bio: "Flutter、Node.js 与中小型产品开发实践者"
+  bio: "把产品判断、跨端开发与上线交付放在同一条工作流里的产品型开发者"
   avatar: /assets/images/sal-300.jpg
   url: "https://youllbe.cn"
 logo: /assets/images/logo.png
 image: /assets/images/screenshot.jpg
-image_alt: "王雄皓 (Hoa) 个人作品站首页预览图"
+image_alt: "王雄皓 (Hoa) Build Ledger 开发者作品站预览"
 social_image_width: 1280
-social_image_height: 719
-theme_color_light: "#14324a"
-theme_color_dark: "#0b1320"
+social_image_height: 720
+theme_color_light: "#f4f1e8"
+theme_color_dark: "#0d1210"
 
 # Build settings
 markdown: kramdown
-theme: minima
 timezone: Asia/Shanghai
 collections:
   projects:
@@ -74,11 +73,23 @@ exclude:
   - scripts
   - Gemfile
   - Gemfile.lock
+  - main.js
+  - site.locale
+  - site.og_locale_alternate
+  - assets/css/custom.css
   - assets/css/custom.css.backup
+  - assets/css/brazilian-theme.scss
+  - assets/css/i18n.css
+  - assets/css/responsive-enhancements.css
   - assets/css/theme.scss.backup
+  - assets/js/i18n.js
 
 # Defaults
 defaults:
+  - scope:
+      path: "en"
+    values:
+      locale: "en_US"
   - scope:
       path: ""
       type: "pages"

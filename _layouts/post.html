@@ -23,8 +23,11 @@ layout: default
       {% endif %}
       {% if internal_author_path == '' %}
         {% assign internal_author_path = '/' %}
-      {% elsif internal_author_path | slice: 0, 1 != '/' %}
+      {% else %}
+        {% assign internal_author_path_first_char = internal_author_path | slice: 0, 1 %}
+        {% if internal_author_path_first_char != '/' %}
         {% assign internal_author_path = '/' | append: internal_author_path %}
+        {% endif %}
       {% endif %}
       {% assign author_web_link = internal_author_path | relative_url %}
     {% else %}
@@ -252,8 +255,11 @@ layout: default
                                 {% endif %}
                                 {% if internal_site_path == '' %}
                                     {% assign internal_site_path = '/' %}
-                                {% elsif internal_site_path | slice: 0, 1 != '/' %}
+                                {% else %}
+                                    {% assign internal_site_path_first_char = internal_site_path | slice: 0, 1 %}
+                                    {% if internal_site_path_first_char != '/' %}
                                     {% assign internal_site_path = '/' | append: internal_site_path %}
+                                    {% endif %}
                                 {% endif %}
                                 {% assign post_site_link = internal_site_path | relative_url %}
                             {% else %}

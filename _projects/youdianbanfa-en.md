@@ -2,6 +2,7 @@
 title: Youdian Banfa｜WeChat content-to-tool loop
 permalink: /en/projects/youdianbanfa/
 lang: en
+locale: en_US
 alternate_url: /projects/youdianbanfa/
 description: "Youdian Banfa uses a WeChat Official Account as the problem-discovery entry and a Mini Program for material organization, privacy redaction, pre-report checks and evidence timelines, with local-first storage and measurable iteration."
 keywords: "Youdian Banfa, WeChat Official Account, WeChat Mini Program, local-first storage, content operations, product analytics"

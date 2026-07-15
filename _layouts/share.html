@@ -31,8 +31,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="format-detection" content="telephone=no, address=no, email=no, date=no, url=no">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="{{ site.theme_color_light | default: '#2c3e50' }}">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ site.theme_color_dark | default: '#0b1320' }}">
+<meta name="theme-color" content="{{ site.theme_color_light | default: '#f4f1e8' }}">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ site.theme_color_dark | default: '#0d1210' }}">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="{{ site.title | escape }}">
@@ -41,6 +41,19 @@
 <meta name="language" content="{{ html_lang }}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="author" content="{{ site.author.name | escape }}">
+<script>
+  (function () {
+    try {
+      var savedTheme = window.localStorage.getItem('hoa-site-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.documentElement.style.colorScheme = savedTheme;
+      }
+    } catch (error) {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  })();
+</script>
 {% assign effective_robots = page.robots | default: 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' %}
 <meta name="robots" content="{{ effective_robots }}">
 {% if page.googlebot %}
@@ -50,7 +63,6 @@
 {% else %}
 <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 {% endif %}
-<meta property="og:locale" content="{{ og_locale }}">
 {% assign alternate_og_locale_raw = page.og_locale_alternate | default: alternate_og_locale_fallback | default: site.og_locale_alternate | default: site.locale | default: '' %}
 {% assign alternate_og_locale = alternate_og_locale_raw | replace: '-', '_' %}
 {% if alternate_og_locale != '' and alternate_og_locale != og_locale and alternate_og_locale contains '_' %}
@@ -249,7 +261,6 @@
 {% seo %}
 <link rel="stylesheet" href="{{ '/assets/css/bootstrap.min.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 {% assign analytics_enabled = page.load_analytics %}
 {% assign allow_analytics_on_noindex = page.allow_analytics_on_noindex %}
 {% if analytics_enabled == nil %}
@@ -270,6 +281,7 @@
 <script>
   (function () {
     var dnt = window.doNotTrack === '1' || navigator.doNotTrack === '1' || navigator.msDoNotTrack === '1';
+    var isLocalPreview = /^(localhost|127\.0\.0\.1|::1)$/.test(window.location.hostname);
     var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     var lowBandwidth = !!(connection && typeof connection.downlink === 'number' && connection.downlink > 0 && connection.downlink <= 1.25);
     var reducedDataByConnection = !!(
@@ -291,7 +303,7 @@
     }
     var lowMemoryDevice = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 2;
     var reducedData = reducedDataByConnection || reducedDataByPreference || lowMemoryDevice;
-    if (dnt || reducedData) {
+    if (dnt || reducedData || isLocalPreview) {
       return;
     }
 
@@ -388,7 +400,7 @@
   {% assign share_skip_link_label = 'Skip to content' %}
   {% assign share_main_label = 'Main content' %}
 {% endif %}
-<body class="share-page">
+<body class="share-page" data-page-lang="{{ lang_primary }}">
   <a class="skip-link" href="#main-content">{{ share_skip_link_label }}</a>
   <main id="main-content" role="main" tabindex="-1" aria-label="{{ share_main_label }}">
     {{ content }}

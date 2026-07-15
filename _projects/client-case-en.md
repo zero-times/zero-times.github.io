@@ -2,6 +2,7 @@
 title: Anonymized small-product case
 permalink: /en/projects/anonymized-product-case/
 lang: en
+locale: en_US
 alternate_url: /projects/anonymized-product-case/
 description: "An anonymized case that covers requirement shaping, Flutter delivery, Node.js backend support and release coordination."
 keywords: "anonymized case, Flutter, Node.js, product delivery"

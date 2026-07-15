@@ -43,7 +43,9 @@ SCAN_TARGETS = [
 
 URL_RE = re.compile(r'https?://[^\s\)\]>\'"]+')
 DUP_PROTOCOL_RE = re.compile(r'https?://[^\s\)\]]*https?://')
-PLACEHOLDER_RE = re.compile(r'example\.com|localhost|127\.0\.0\.1|\bTODO\b|\bTBD\b')
+PLACEHOLDER_RE = re.compile(
+    r'(?i:example\.com|https?://(?:localhost|127\.0\.0\.1)(?::\d+)?)|\bTODO\b|\bTBD\b',
+)
 INVALID_PERCENT_ENCODING_RE = re.compile(r'%(?![0-9A-Fa-f]{2})')
 INTERNAL_LINK_RE = re.compile(r'\]\((/[^)\s?#][^)\s]*)')
 HTML_INTERNAL_ATTR_RE = re.compile(r'(?:href|src)\s*=\s*["\'](/(?!/)[^"\']*)["\']', re.IGNORECASE)
@@ -1039,27 +1041,27 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_share_application_name_meta = 'name="application-name" content="{{ site.title | escape }}"' in share_layout
     has_default_theme_color_meta = (
         (
-            'name="theme-color" content="#2c3e50"' in default_layout
-            or "name=\"theme-color\" content=\"{{ site.theme_color_light | default: '#2c3e50' }}\"" in default_layout
+            'name="theme-color" content="#f4f1e8"' in default_layout
+            or "name=\"theme-color\" content=\"{{ site.theme_color_light | default: '#f4f1e8' }}\"" in default_layout
         )
         and (
-            'name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320"' in default_layout
-            or "name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"{{ site.theme_color_dark | default: '#0b1320' }}\"" in default_layout
+            'name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1210"' in default_layout
+            or "name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"{{ site.theme_color_dark | default: '#0d1210' }}\"" in default_layout
         )
     )
     has_share_theme_color_meta = (
         (
-            'name="theme-color" content="#2c3e50"' in share_layout
-            or "name=\"theme-color\" content=\"{{ site.theme_color_light | default: '#2c3e50' }}\"" in share_layout
+            'name="theme-color" content="#f4f1e8"' in share_layout
+            or "name=\"theme-color\" content=\"{{ site.theme_color_light | default: '#f4f1e8' }}\"" in share_layout
         )
         and (
-            'name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320"' in share_layout
-            or "name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"{{ site.theme_color_dark | default: '#0b1320' }}\"" in share_layout
+            'name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1210"' in share_layout
+            or "name=\"theme-color\" media=\"(prefers-color-scheme: dark)\" content=\"{{ site.theme_color_dark | default: '#0d1210' }}\"" in share_layout
         )
     )
     has_config_backed_theme_color_tokens = (
-        "--primary-color: {{ site.theme_color_light | default: '#2c3e50' }};" in theme_scss
-        and "--dark-bg: {{ site.theme_color_dark | default: '#0b1320' }};" in theme_scss
+        "--ledger-bg: {{ site.theme_color_light | default: '#f4f1e8' }};" in theme_scss
+        and "--ledger-bg: {{ site.theme_color_dark | default: '#0d1210' }};" in theme_scss
     )
     has_default_main_landmark_aria_label = (
         '<main class="flex-grow-1" id="main-content" role="main" tabindex="-1" aria-label=' in default_layout
@@ -1067,8 +1069,16 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_share_main_landmark_aria_label = (
         '<main id="main-content" role="main" tabindex="-1" aria-label=' in share_layout
     )
-    has_paginated_noindex_policy = (
+    has_paginated_page_guard = (
         "{% assign is_paginated_archive_page = paginator and paginator.page and paginator.page > 1 %}" in default_layout
+        or (
+            "{% assign is_paginated_archive_page = false %}" in default_layout
+            and "{% if paginator and paginator.page > 1 %}" in default_layout
+            and "{% assign is_paginated_archive_page = true %}" in default_layout
+        )
+    )
+    has_paginated_noindex_policy = (
+        has_paginated_page_guard
         and '<meta name="robots" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">' in default_layout
         and '<meta name="googlebot" content="noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">' in default_layout
     )
@@ -1157,12 +1167,22 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
     has_home_avatar_priority = 'fetchpriority="high"' in homepage and 'loading="eager"' in homepage
     has_home_avatar_responsive_sources = 'srcset=' in homepage and 'sizes=' in homepage
     has_theme_js_preload = "rel=\"preload\" href=\"{{ '/assets/js/theme.js' | relative_url }}\" as=\"script\"" in default_layout
-    has_back_to_top_scroll_throttle = (
+    has_legacy_back_to_top_scroll_throttle = (
         "const backToTop = document.querySelector('.back-to-top');" in theme_js
         and 'let backToTopTicking = false;' in theme_js
         and 'const requestBackToTopTick = () => {' in theme_js
         and 'window.requestAnimationFrame(() => {' in theme_js
         and "window.addEventListener('scroll', requestBackToTopTick, { passive: true });" in theme_js
+    )
+    has_build_ledger_scroll_throttle = (
+        "const backToTop = document.querySelector('.back-to-top');" in theme_js
+        and 'let scrollFramePending = false;' in theme_js
+        and 'const requestScrollUpdate = () => {' in theme_js
+        and 'window.requestAnimationFrame(updateScrollUI);' in theme_js
+        and "window.addEventListener('scroll', requestScrollUpdate, { passive: true });" in theme_js
+    )
+    has_back_to_top_scroll_throttle = (
+        has_legacy_back_to_top_scroll_throttle or has_build_ledger_scroll_throttle
     )
     has_bootstrap_css_preload = (
         'rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style"' in default_layout
@@ -1685,9 +1705,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'Local stylesheet preload policy',
                     'result': 'Improved' if not has_local_css_preload else 'Needs tuning',
-                    'details': 'theme.css/custom.css are discovered early via normal stylesheet links, avoiding redundant preload hints.'
+                    'details': 'The single local theme.css entry is discovered through a normal stylesheet link, avoiding duplicate preload pressure.'
                     if not has_local_css_preload
-                    else 'Remove local stylesheet preload hints for theme.css/custom.css to reduce duplicate high-priority fetch pressure.',
+                    else 'Remove local stylesheet preload hints for theme.css to reduce duplicate high-priority fetch pressure.',
                 },
                 {
                     'aspect': 'Share layout stylesheet preload policy',
@@ -1842,9 +1862,9 @@ def build_report(http_check: bool = False, http_sample: int = 20, http_timeout: 
                 {
                     'aspect': 'Theme token consistency',
                     'result': 'Improved' if has_config_backed_theme_color_tokens else 'Needs tuning',
-                    'details': 'assets/css/theme.scss uses site.theme_color_light/site.theme_color_dark for --primary-color and --dark-bg, keeping CSS tokens aligned with head theme-color metadata.'
+                    'details': 'assets/css/theme.scss uses site.theme_color_light/site.theme_color_dark for the Build Ledger background token, keeping CSS and head metadata aligned.'
                     if has_config_backed_theme_color_tokens
-                    else 'Use site.theme_color_light and site.theme_color_dark in assets/css/theme.scss for --primary-color/--dark-bg to prevent CSS/head color drift.',
+                    else 'Use site.theme_color_light and site.theme_color_dark in assets/css/theme.scss for --ledger-bg to prevent CSS/head color drift.',
                 },
             ],
             'missing_post_image_dimensions': posts_missing_image_dimensions,

@@ -1,7 +1,7 @@
 {
-  "name": "王雄皓 (Hoa) | Flutter & Node.js",
+  "name": "王雄皓 (Hoa) | Build Ledger",
   "short_name": "王雄皓 (Hoa)",
-  "description": "王雄皓 (Hoa) 的个人作品站，聚焦 Flutter、Node.js 与中小型产品开发落地。",
+  "description": "王雄皓 (Hoa) 的开发者作品站，展示 Flutter、Node.js、微信生态产品与从需求到上线的交付案例。",
   "lang": "zh-CN",
   "id": "/",
   "start_url": "/",
@@ -18,8 +18,8 @@
     "minimal-ui",
     "browser"
   ],
-  "background_color": "#ffffff",
-  "theme_color": "#2c3e50",
+  "background_color": "#f4f1e8",
+  "theme_color": "#f4f1e8",
   "shortcuts": [
     {
       "name": "项目",
@@ -46,22 +46,6 @@
           "type": "image/png"
         }
       ]
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "/assets/images/screenshot.jpg",
-      "sizes": "1280x719",
-      "type": "image/jpeg",
-      "form_factor": "wide",
-      "label": "王雄皓 (Hoa) 个人作品站首页"
-    },
-    {
-      "src": "/assets/images/screenshot-mobile.jpg",
-      "sizes": "750x1334",
-      "type": "image/jpeg",
-      "form_factor": "narrow",
-      "label": "王雄皓 (Hoa) 个人作品站移动端首页"
     }
   ],
   "icons": [

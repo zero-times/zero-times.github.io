@@ -2,6 +2,7 @@
 title: Privacy-first app
 permalink: /en/projects/privacy-first-app/
 lang: en
+locale: en_US
 alternate_url: /projects/privacy-first-app/
 description: "A privacy-first product in progress, centered on restrained interaction, clearer boundaries and lower-noise experience."
 keywords: "privacy-first app, Flutter, product delivery"

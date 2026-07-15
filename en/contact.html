@@ -4,10 +4,10 @@ layout: default
 permalink: /en/contact/
 lang: en
 alternate_url: /contact/
-description: "Contact 王雄皓 (Hoa) about Flutter, Node.js, small-product development, rebuilds and release delivery."
-keywords: "王雄皓 (Hoa), Flutter, Node.js, product collaboration"
+description: "Contact 王雄皓 (Hoa) about Flutter, Node.js, WeChat products, existing-product rebuilds and release delivery."
+keywords: "王雄皓 (Hoa), product development, Flutter, Node.js, WeChat Mini Program, product rebuild"
 schema_type: ContactPage
-last_modified_at: 2026-03-18
+last_modified_at: 2026-07-15
 load_webfonts: false
 hide_title: true
 ---
@@ -16,9 +16,9 @@ hide_title: true
 <div class="container my-5 portfolio-shell">
   <section class="portfolio-hero" aria-labelledby="page-title">
     <div class="portfolio-hero__main">
-      <p class="portfolio-eyebrow">{{ site.tagline_en }}</p>
-      <h1 class="portfolio-title" id="page-title">If you want to discuss a product, a rebuild, or whether an idea is worth pursuing</h1>
-      <p class="portfolio-lead">The site may not update often, but I do read email. A short message about your goal, current stage and main concern is enough to start.</p>
+      <p class="portfolio-eyebrow">Contact</p>
+      <h1 class="portfolio-title" id="page-title">Send me the goal, the current state and the hardest decision.</h1>
+      <p class="portfolio-lead">Whether it is a new product, an existing-product rebuild or an early direction check, a concise brief is enough to start. Email is the most efficient entry point.</p>
     </div>
     <aside class="portfolio-panel">
       <h2>Direct channels</h2>
@@ -33,10 +33,32 @@ hide_title: true
     </aside>
   </section>
 
-  <section class="portfolio-section" aria-labelledby="english-contact-title">
+  <section class="portfolio-section" aria-labelledby="contact-fit-title">
     <div class="portfolio-section-head">
-      <p class="portfolio-eyebrow">Message</p>
-      <h2 id="english-contact-title">You can also use the form below</h2>
+      <p class="portfolio-eyebrow">What to include</p>
+      <h2 id="contact-fit-title">These details help me understand your project faster</h2>
+    </div>
+    <div class="portfolio-card-grid">
+      <article class="portfolio-card">
+        <h3>What stage are you at</h3>
+        <p>Is it an early idea, do you have designs ready, or is there already a version that needs tightening and gap-filling.</p>
+      </article>
+      <article class="portfolio-card">
+        <h3>What do you most need to solve first</h3>
+        <p>For example: first release, cross-platform implementation, admin backend, API layer, performance or structural cleanup.</p>
+      </article>
+      <article class="portfolio-card">
+        <h3>Rough timeline and collaboration mode</h3>
+        <p>Even a rough indication helps me decide whether it's better to offer advice, collaborate directly or suggest a staged approach.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="portfolio-section" aria-labelledby="contact-form-title">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">Form</p>
+      <h2 id="contact-form-title">You can also send a short brief directly</h2>
+      <p>If you prefer to write a paragraph of context first, use the form below.</p>
     </div>
     <form class="portfolio-form" action="https://formspree.io/f/xvoewlbz" method="POST" aria-label="Contact form">
       <input type="text" name="_gotcha" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -49,9 +71,17 @@ hide_title: true
           <label for="en-contact-email">Email</label>
           <input id="en-contact-email" class="form-control" type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" required>
         </div>
+        <div class="portfolio-form__field">
+          <label for="en-contact-topic">Project topic</label>
+          <input id="en-contact-topic" class="form-control" type="text" name="topic" autocomplete="off" autocapitalize="sentences" spellcheck="false">
+        </div>
+        <div class="portfolio-form__field">
+          <label for="en-contact-stage">Current stage</label>
+          <input id="en-contact-stage" class="form-control" type="text" name="stage" autocomplete="off" autocapitalize="sentences" spellcheck="false">
+        </div>
       </div>
       <div class="portfolio-form__field">
-        <label for="en-contact-message">Context</label>
+        <label for="en-contact-message">What do you most need to solve right now</label>
         <textarea id="en-contact-message" rows="8" class="form-control" name="message" autocapitalize="sentences" spellcheck="true" required></textarea>
       </div>
       <button class="portfolio-action portfolio-action--primary portfolio-form__submit" type="submit">Send message</button>

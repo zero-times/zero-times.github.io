@@ -55,14 +55,14 @@ outcomes:
 card_cta_label: "查看项目"
 secondary_link_label: "联系我聊类似项目"
 secondary_link_url: /contact/
-image: /assets/images/screenshot.jpg
-image_alt: AppShots 项目展示页预览
+image: /assets/images/appshots-project.jpg
+image_alt: AppShots 将截图、卖点文案与发布素材整理为可复用交付结构的项目封面
 image_width: 1280
-image_height: 719
+image_height: 720
 featured: true
 order: 2
 schema_type: CreativeWork
-last_modified_at: 2026-03-18
+last_modified_at: 2026-07-15
 ---
 
 ## 项目背景

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">AppShots project cover</title>
+  <desc id="desc">Build Ledger style cover showing screenshot, copy and release assets moving into one reusable structure.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#111814" stroke-opacity=".07"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="720" fill="#f4f1e8"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+  <rect width="1280" height="10" fill="#e94f2f"/>
+
+  <g transform="translate(68 58)">
+    <text fill="#e94f2f" font-family="Menlo, Consolas, monospace" font-size="14" font-weight="700" letter-spacing="2">CASE 02 / TOOL SITE</text>
+    <text y="92" fill="#111814" font-family="Iowan Old Style, Georgia, serif" font-size="96" font-weight="700" letter-spacing="-4">AppShots</text>
+    <text y="137" fill="#29332d" font-family="Avenir Next, Helvetica, sans-serif" font-size="24">Screenshots, positioning copy and release assets—one reusable structure.</text>
+  </g>
+
+  <g transform="translate(70 250)">
+    <g transform="translate(0 22)">
+      <rect width="232" height="360" fill="#fffdf7" stroke="#111814" stroke-width="3"/>
+      <rect x="18" y="18" width="196" height="208" fill="#18201b"/>
+      <rect x="40" y="46" width="152" height="18" fill="#d8f76c"/>
+      <rect x="40" y="82" width="112" height="10" fill="#a6b0a8"/>
+      <rect x="40" y="103" width="136" height="10" fill="#a6b0a8"/>
+      <rect x="40" y="145" width="78" height="42" fill="#e94f2f"/>
+      <text x="18" y="270" fill="#e94f2f" font-family="Menlo, Consolas, monospace" font-size="12" font-weight="700">01 / SCREENSHOT</text>
+      <rect x="18" y="291" width="170" height="9" fill="#111814"/>
+      <rect x="18" y="311" width="128" height="9" fill="#8d958e"/>
+    </g>
+
+    <path d="M252 202H314" stroke="#e94f2f" stroke-width="4"/>
+    <path d="m302 190 12 12-12 12" fill="none" stroke="#e94f2f" stroke-width="4"/>
+
+    <g transform="translate(334 0)">
+      <rect width="250" height="404" fill="#18201b" stroke="#111814" stroke-width="3"/>
+      <text x="22" y="38" fill="#d8f76c" font-family="Menlo, Consolas, monospace" font-size="12" font-weight="700">02 / POSITIONING</text>
+      <text x="22" y="100" fill="#f0f2e9" font-family="Iowan Old Style, Georgia, serif" font-size="38" font-weight="700">Say the useful</text>
+      <text x="22" y="142" fill="#f0f2e9" font-family="Iowan Old Style, Georgia, serif" font-size="38" font-weight="700">thing first.</text>
+      <rect x="22" y="178" width="198" height="1" fill="#3d4941"/>
+      <text x="22" y="216" fill="#a6b0a8" font-family="Menlo, Consolas, monospace" font-size="12">problem</text>
+      <text x="118" y="216" fill="#f0f2e9" font-family="Menlo, Consolas, monospace" font-size="12">→ clear copy</text>
+      <text x="22" y="252" fill="#a6b0a8" font-family="Menlo, Consolas, monospace" font-size="12">feature</text>
+      <text x="118" y="252" fill="#f0f2e9" font-family="Menlo, Consolas, monospace" font-size="12">→ user value</text>
+      <text x="22" y="288" fill="#a6b0a8" font-family="Menlo, Consolas, monospace" font-size="12">asset</text>
+      <text x="118" y="288" fill="#f0f2e9" font-family="Menlo, Consolas, monospace" font-size="12">→ reuse</text>
+      <rect x="22" y="334" width="132" height="40" fill="#d8f76c"/>
+      <text x="88" y="359" text-anchor="middle" fill="#111814" font-family="Menlo, Consolas, monospace" font-size="12" font-weight="700">READY</text>
+    </g>
+
+    <path d="M604 202H666" stroke="#e94f2f" stroke-width="4"/>
+    <path d="m654 190 12 12-12 12" fill="none" stroke="#e94f2f" stroke-width="4"/>
+
+    <g transform="translate(686 22)">
+      <rect width="232" height="360" fill="#fffdf7" stroke="#111814" stroke-width="3"/>
+      <text x="20" y="38" fill="#e94f2f" font-family="Menlo, Consolas, monospace" font-size="12" font-weight="700">03 / RELEASE KIT</text>
+      <rect x="20" y="60" width="192" height="84" fill="#e94f2f"/>
+      <text x="116" y="111" text-anchor="middle" fill="#fffaf2" font-family="Iowan Old Style, Georgia, serif" font-size="30" font-weight="700">SHIP</text>
+      <rect x="20" y="166" width="88" height="88" fill="#d8f76c" stroke="#111814" stroke-width="2"/>
+      <rect x="124" y="166" width="88" height="88" fill="#18201b"/>
+      <rect x="20" y="276" width="192" height="10" fill="#111814"/>
+      <rect x="20" y="298" width="146" height="10" fill="#8d958e"/>
+      <rect x="20" y="320" width="172" height="10" fill="#8d958e"/>
+    </g>
+  </g>
+
+  <g transform="translate(1038 250)">
+    <rect width="172" height="382" fill="#ebe7dc" stroke="#111814" stroke-width="2"/>
+    <text x="18" y="34" fill="#e94f2f" font-family="Menlo, Consolas, monospace" font-size="11" font-weight="700">BUILD NOTE</text>
+    <rect x="18" y="52" width="136" height="1" fill="#8d958e"/>
+    <text x="18" y="86" fill="#111814" font-family="Menlo, Consolas, monospace" font-size="11">INPUT</text>
+    <text x="18" y="110" fill="#5e6861" font-family="Menlo, Consolas, monospace" font-size="10">scattered assets</text>
+    <text x="18" y="158" fill="#111814" font-family="Menlo, Consolas, monospace" font-size="11">PROCESS</text>
+    <text x="18" y="182" fill="#5e6861" font-family="Menlo, Consolas, monospace" font-size="10">organize + frame</text>
+    <text x="18" y="230" fill="#111814" font-family="Menlo, Consolas, monospace" font-size="11">OUTPUT</text>
+    <text x="18" y="254" fill="#5e6861" font-family="Menlo, Consolas, monospace" font-size="10">reusable release kit</text>
+    <rect x="18" y="298" width="136" height="52" fill="#111814"/>
+    <text x="86" y="329" text-anchor="middle" fill="#d8f76c" font-family="Menlo, Consolas, monospace" font-size="11" font-weight="700">LOW MAINTENANCE</text>
+  </g>
+</svg>

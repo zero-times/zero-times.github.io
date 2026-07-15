@@ -31,8 +31,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="format-detection" content="telephone=no, address=no, email=no, date=no, url=no">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="{{ site.theme_color_light | default: '#2c3e50' }}">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ site.theme_color_dark | default: '#0b1320' }}">
+  <meta name="theme-color" content="{{ site.theme_color_light | default: '#f4f1e8' }}">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ site.theme_color_dark | default: '#0d1210' }}">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="{{ site.title | escape }}">
@@ -41,7 +41,23 @@
   <meta name="language" content="{{ html_lang }}">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="author" content="{{ site.author.name | escape }}">
-  {% assign is_paginated_archive_page = paginator and paginator.page and paginator.page > 1 %}
+  <script>
+    (function () {
+      try {
+        var savedTheme = window.localStorage.getItem('hoa-site-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+          document.documentElement.style.colorScheme = savedTheme;
+        }
+      } catch (error) {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    })();
+  </script>
+  {% assign is_paginated_archive_page = false %}
+  {% if paginator and paginator.page > 1 %}
+    {% assign is_paginated_archive_page = true %}
+  {% endif %}
   {% assign noindex_effective = false %}
   {% if page.robots and page.robots contains 'noindex' %}
     {% assign noindex_effective = true %}
@@ -64,7 +80,6 @@
   {% else %}
   <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   {% endif %}
-  <meta property="og:locale" content="{{ og_locale }}">
   {% assign alternate_og_locale_raw = page.og_locale_alternate | default: alternate_og_locale_fallback | default: site.og_locale_alternate | default: site.locale | default: '' %}
   {% assign alternate_og_locale = alternate_og_locale_raw | replace: '-', '_' %}
   {% if alternate_og_locale != '' and alternate_og_locale != og_locale and alternate_og_locale contains '_' %}
@@ -124,6 +139,7 @@
     <meta property="article:modified_time" content="{{ social_modified_time | date_to_xmlschema }}">
     <meta property="og:updated_time" content="{{ social_modified_time | date_to_xmlschema }}">
   {% endif %}
+  <meta name="twitter:description" content="{{ page.description | default: site.description | escape }}">
   {% if page.layout == 'post' %}
     {% assign primary_category = page.categories | first %}
     {% if primary_category %}
@@ -151,13 +167,15 @@
   {% if page.hero_avatar_preload %}
   <link rel="preload" as="image" href="{{ '/assets/images/sal-300.jpg' | relative_url }}" imagesrcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" imagesizes="(max-width: 991.98px) calc(100vw - 2rem), 320px">
   {% endif %}
-  {% if page.prefetch_home_links and (page.url == '/' or page.url == '/en/') %}
-    {% if lang_primary == 'en' %}
+  {% if page.prefetch_home_links %}
+    {% if page.url == '/' or page.url == '/en/' %}
+      {% if lang_primary == 'en' %}
   <link rel="prefetch" href="{{ '/en/projects/' | relative_url }}">
   <link rel="prefetch" href="{{ '/en/contact/' | relative_url }}">
-    {% else %}
+      {% else %}
   <link rel="prefetch" href="{{ '/projects/' | relative_url }}">
   <link rel="prefetch" href="{{ '/contact/' | relative_url }}">
+      {% endif %}
     {% endif %}
   {% endif %}
   {% if page.preconnect_news_sources %}
@@ -171,7 +189,9 @@
   {% assign webfonts_enabled = page.load_webfonts %}
   {% if webfonts_enabled == nil %}
     {% assign webfonts_enabled = true %}
-    {% if noindex_effective or (page.layout == 'post' and page.categories contains 'news') %}
+    {% if noindex_effective %}
+      {% assign webfonts_enabled = false %}
+    {% elsif page.layout == 'post' and page.categories contains 'news' %}
       {% assign webfonts_enabled = false %}
     {% endif %}
   {% endif %}
@@ -349,7 +369,10 @@
   {% assign webpage_published = page.date %}
   {% assign webpage_modified = page.last_modified_at | default: page.date %}
   {% assign webpage_schema_type = page.schema_type | default: 'WebPage' %}
-  {% assign is_profile_page_schema = webpage_schema_type == 'ProfilePage' %}
+  {% assign is_profile_page_schema = false %}
+  {% if webpage_schema_type == 'ProfilePage' %}
+    {% assign is_profile_page_schema = true %}
+  {% endif %}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -475,9 +498,8 @@
   <!-- Bootstrap 5 样式：直接作为 stylesheet 加载，避免 preload 竞争与样式闪烁 -->
   <link rel="stylesheet" href="{{ '/assets/css/bootstrap.min.css' | relative_url }}">
   
-  <!-- 站点样式：直接阻塞加载，避免移动端样式闪烁 -->
+  <!-- Build Ledger 主题：单一站点样式入口，避免历史覆盖层继续叠加 -->
   <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
   
   <!-- 网站图标 -->
   <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
@@ -508,6 +530,7 @@
   <script>
     (function () {
       var dnt = window.doNotTrack === '1' || navigator.doNotTrack === '1' || navigator.msDoNotTrack === '1';
+      var isLocalPreview = /^(localhost|127\.0\.0\.1|::1)$/.test(window.location.hostname);
       var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
       var lowBandwidth = !!(connection && typeof connection.downlink === 'number' && connection.downlink > 0 && connection.downlink <= 1.25);
       var reducedDataByConnection = !!(
@@ -529,7 +552,7 @@
       }
       var lowMemoryDevice = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 2;
       var reducedData = reducedDataByConnection || reducedDataByPreference || lowMemoryDevice;
-      if (dnt || reducedData) {
+      if (dnt || reducedData || isLocalPreview) {
         return;
       }
 
@@ -618,17 +641,17 @@
   {% endif %}
   {% endif %}
 </head>
-<body class="d-flex flex-column min-vh-100" data-bootstrap-src="{{ '/assets/js/bootstrap.min.js' | relative_url }}">
+<body class="d-flex flex-column min-vh-100 layout-{{ page.layout | default: 'default' }}" data-page-lang="{{ lang_primary }}" data-bootstrap-src="{{ '/assets/js/bootstrap.min.js' | relative_url }}">
   {% assign lang_base = lang_primary %}
   {% case lang_base %}
     {% when 'en' %}
       {% assign skip_link_label = 'Skip to content' %}
-      {% assign nav_home_label = 'Home' %}
-      {% assign nav_projects_label = 'Projects' %}
-      {% assign nav_about_label = 'About' %}
+      {% assign nav_home_label = 'Overview' %}
+      {% assign nav_projects_label = 'Case files' %}
+      {% assign nav_about_label = 'Approach' %}
       {% assign nav_contact_label = 'Contact' %}
-      {% assign nav_archive_label = 'Archive' %}
-      {% assign nav_contact_cta = 'Get in touch' %}
+      {% assign nav_archive_label = 'Lab archive' %}
+      {% assign nav_contact_cta = 'Start a conversation' %}
       {% assign nav_switch_label = '中文' %}
       {% assign nav_switch_aria = 'Switch to Chinese' %}
       {% assign menu_label = 'Menu' %}
@@ -636,7 +659,11 @@
       {% assign menu_close_label = 'Close main menu' %}
       {% assign menu_hint = 'Tap Close to collapse the menu' %}
       {% assign main_label = 'Main content' %}
-      {% assign footer_copy = site.tagline_en | default: 'Flutter, Node.js and end-to-end delivery for small products' %}
+      {% assign footer_copy = 'Design, build, ship — then let real use shape the next version.' %}
+      {% assign footer_ledger_label = 'BUILD LEDGER · PRODUCT ENGINEERING' %}
+      {% assign theme_control_label = 'Theme' %}
+      {% assign theme_to_dark_label = 'Switch to dark theme' %}
+      {% assign theme_to_light_label = 'Switch to light theme' %}
       {% assign privacy_label = 'Privacy' %}
       {% assign terms_label = 'Terms' %}
       {% assign nav_desktop_label = 'Primary sections' %}
@@ -650,12 +677,12 @@
       {% assign nav_contact_url = '/en/contact/' %}
     {% when 'zh' %}
       {% assign skip_link_label = '跳转到主要内容' %}
-      {% assign nav_home_label = '首页' %}
-      {% assign nav_projects_label = '项目' %}
-      {% assign nav_about_label = '关于' %}
+      {% assign nav_home_label = '概览' %}
+      {% assign nav_projects_label = '案例' %}
+      {% assign nav_about_label = '方法' %}
       {% assign nav_contact_label = '联系' %}
-      {% assign nav_archive_label = '内容归档' %}
-      {% assign nav_contact_cta = '联系我' %}
+      {% assign nav_archive_label = '开发归档' %}
+      {% assign nav_contact_cta = '聊聊项目' %}
       {% assign nav_switch_label = 'EN' %}
       {% assign nav_switch_aria = '切换到英文页面' %}
       {% assign menu_label = '菜单' %}
@@ -663,7 +690,11 @@
       {% assign menu_close_label = '关闭主菜单' %}
       {% assign menu_hint = '点击关闭即可收起菜单' %}
       {% assign main_label = '主要内容' %}
-      {% assign footer_copy = site.tagline | default: 'Flutter、Node.js 与中小型产品开发落地' %}
+      {% assign footer_copy = '设计、开发、上线，再用真实使用反馈校验下一步。' %}
+      {% assign footer_ledger_label = 'BUILD LEDGER · 产品工程记录' %}
+      {% assign theme_control_label = '主题' %}
+      {% assign theme_to_dark_label = '切换到深色主题' %}
+      {% assign theme_to_light_label = '切换到浅色主题' %}
       {% assign privacy_label = '隐私' %}
       {% assign terms_label = '条款' %}
       {% assign nav_desktop_label = '主要导航' %}
@@ -678,11 +709,11 @@
     {% else %}
       {% assign skip_link_label = 'Skip to content' %}
       {% assign nav_home_label = 'Home' %}
-      {% assign nav_projects_label = 'Projects' %}
-      {% assign nav_about_label = 'About' %}
+      {% assign nav_projects_label = 'Case files' %}
+      {% assign nav_about_label = 'Approach' %}
       {% assign nav_contact_label = 'Contact' %}
-      {% assign nav_archive_label = 'Archive' %}
-      {% assign nav_contact_cta = 'Get in touch' %}
+      {% assign nav_archive_label = 'Lab archive' %}
+      {% assign nav_contact_cta = 'Start a conversation' %}
       {% assign nav_switch_label = 'EN' %}
       {% assign nav_switch_aria = 'Switch to English' %}
       {% assign menu_label = 'Menu' %}
@@ -690,7 +721,11 @@
       {% assign menu_close_label = 'Close main menu' %}
       {% assign menu_hint = 'Tap Close to collapse the menu' %}
       {% assign main_label = 'Main content' %}
-      {% assign footer_copy = site.tagline_en | default: 'Flutter, Node.js and end-to-end delivery for small products' %}
+      {% assign footer_copy = 'Design, build, ship — then let real use shape the next version.' %}
+      {% assign footer_ledger_label = 'BUILD LEDGER · PRODUCT ENGINEERING' %}
+      {% assign theme_control_label = 'Theme' %}
+      {% assign theme_to_dark_label = 'Switch to dark theme' %}
+      {% assign theme_to_light_label = 'Switch to light theme' %}
       {% assign privacy_label = 'Privacy' %}
       {% assign terms_label = 'Terms' %}
       {% assign nav_desktop_label = 'Primary sections' %}
@@ -705,17 +740,35 @@
   {% endcase %}
   {% assign switch_url = page.alternate_url | default: default_switch_url %}
   <a class="skip-link" href="#main-content">{{ skip_link_label }}</a>
+  <div class="site-scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
   {% assign brand_label = site.author.display_name | default: site.title %}
-  {% assign is_home = page.url == '/' or page.url == '/en/' %}
-  {% assign is_blog = page.url contains '/blog/' %}
-  {% assign is_projects = page.url contains '/projects/' %}
-  {% assign is_about = page.url contains '/about/' %}
-  {% assign is_contact = page.url contains '/contact/' %}
+  {% assign is_home = false %}
+  {% assign is_blog = false %}
+  {% assign is_projects = false %}
+  {% assign is_about = false %}
+  {% assign is_contact = false %}
+  {% if page.url == '/' or page.url == '/en/' %}
+    {% assign is_home = true %}
+  {% endif %}
+  {% if page.url contains '/blog/' %}
+    {% assign is_blog = true %}
+  {% endif %}
+  {% if page.url contains '/projects/' %}
+    {% assign is_projects = true %}
+  {% endif %}
+  {% if page.url contains '/about/' %}
+    {% assign is_about = true %}
+  {% endif %}
+  {% if page.url contains '/contact/' %}
+    {% assign is_contact = true %}
+  {% endif %}
 
   <header class="site-header-v2 sticky-top" role="banner">
     <div class="container site-header-v2__inner">
       <a class="site-header-v2__brand" href="{{ nav_home_url | relative_url }}" rel="home" aria-label="{{ nav_home_label }} - {{ site.title }}">
-        {{ brand_label }}
+        <span class="site-header-v2__brand-mark" aria-hidden="true">H/</span>
+        <span class="site-header-v2__brand-name">Hoa</span>
+        <span class="site-header-v2__brand-ledger" aria-hidden="true">BUILD LEDGER</span>
       </a>
 
       <nav class="site-nav-desktop" aria-label="{{ nav_desktop_label }}">
@@ -725,6 +778,11 @@
         <a class="site-nav-link{% if is_contact %} is-active{% endif %}" href="{{ nav_contact_url | relative_url }}"{% if is_contact %} aria-current="page"{% endif %} data-site-nav>{{ nav_contact_label }}</a>
         <a class="site-nav-link" href="{{ switch_url | relative_url }}" aria-label="{{ nav_switch_aria }}" data-site-nav>{{ nav_switch_label }}</a>
       </nav>
+
+      <button class="site-theme-toggle" type="button" aria-pressed="false" aria-label="{{ theme_to_dark_label }}" data-theme-toggle data-label-dark="{{ theme_to_dark_label }}" data-label-light="{{ theme_to_light_label }}">
+        <span class="site-theme-toggle__icon" aria-hidden="true" data-theme-icon>◐</span>
+        <span class="site-theme-toggle__label">{{ theme_control_label }}</span>
+      </button>
 
       <a class="site-header-v2__cta d-none d-lg-inline-flex" href="{{ nav_contact_url | relative_url }}" aria-label="{{ nav_contact_cta }}">{{ nav_contact_cta }}</a>
 
@@ -767,6 +825,7 @@
   <footer class="site-footer site-footer-v2 mt-5" role="contentinfo">
     <div class="container site-footer-v2__inner">
       <div class="site-footer-v2__brand">
+        <span class="site-footer-v2__ledger">{{ footer_ledger_label }}</span>
         <strong class="site-footer-v2__brand-name">{{ brand_label }}</strong>
         <p class="site-footer-v2__brand-copy">{{ footer_copy }}</p>
       </div>
@@ -785,7 +844,7 @@
   </footer>
 
   <button class="back-to-top" type="button" aria-label="{{ back_to_top_label }}" hidden>
-    <span aria-hidden="true">↑</span>
+    <span aria-hidden="true">TOP ↑</span>
   </button>
 
   <div id="aria-live-region" class="visually-hidden" aria-live="polite" aria-atomic="true" role="status"></div>

@@ -2,6 +2,7 @@
 title: AppShots
 permalink: /en/projects/appshots/
 lang: en
+locale: en_US
 alternate_url: /projects/appshots/
 description: "AppShots is a lightweight project around screenshot organization, positioning and reusable release material."
 keywords: "AppShots, Flutter, Node.js, portfolio project"
@@ -55,14 +56,14 @@ outcomes:
 card_cta_label: "View project"
 secondary_link_label: "Discuss a similar project"
 secondary_link_url: /en/contact/
-image: /assets/images/screenshot.jpg
-image_alt: AppShots overview
+image: /assets/images/appshots-project.jpg
+image_alt: AppShots project cover showing screenshots, positioning copy and release assets moving into one reusable structure
 image_width: 1280
-image_height: 719
+image_height: 720
 featured: true
 order: 2
 schema_type: CreativeWork
-last_modified_at: 2026-03-18
+last_modified_at: 2026-07-15
 ---
 
 ## Background

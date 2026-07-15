@@ -1,5 +1,5 @@
 ---
-title: 王雄皓 (Hoa)｜Flutter、Node.js 与中小型产品开发
+title: 王雄皓 (Hoa)｜产品型开发者与跨端产品交付
 layout: default
 lang: zh-CN
 alternate_url: /en/
@@ -7,12 +7,12 @@ hero_avatar_preload: true
 preconnect_fonts: false
 load_webfonts: false
 load_analytics: true
-description: "王雄皓 (Hoa) 的个人作品站，主要展示 Flutter 双端开发、Node.js 后端补齐、中小型产品开发落地、项目案例与联系方式。"
-keywords: "王雄皓 (Hoa), Flutter, Node.js, 个人作品集, 中小型产品开发, 跨端开发"
+description: "王雄皓 (Hoa) 的开发者作品站：用 Flutter、Node.js 与微信生态能力，把需求整理、产品实现和上线交付放在同一条工作流里。"
+keywords: "王雄皓 (Hoa), 产品型开发者, Flutter, Node.js, 微信小程序, 跨端开发, 产品交付"
 image: /assets/images/screenshot.jpg
 image_alt: 王雄皓 (Hoa) 个人作品站首页
 image_width: 1280
-image_height: 719
+image_height: 720
 schema_type: ProfilePage
 last_modified_at: 2026-07-15
 ---
@@ -21,9 +21,9 @@ last_modified_at: 2026-07-15
 <div class="container my-5 portfolio-shell">
   <section class="portfolio-hero" aria-labelledby="page-title">
     <div class="portfolio-hero__main">
-      <p class="portfolio-eyebrow">中文主站 · 英文基础页 · 低维护更新</p>
-      <h1 class="portfolio-title" id="page-title">王雄皓 (Hoa)，主要做 Flutter、Node.js 与中小型产品开发落地</h1>
-      <p class="portfolio-lead">这个站点不再以高频内容更新为目标，而是用少量真实项目、明确的能力边界和直接的联系入口，说明我现在能做什么。</p>
+      <p class="portfolio-eyebrow">构建手记</p>
+      <h1 class="portfolio-title" id="page-title">把模糊需求做成能上线、能继续迭代的产品。</h1>
+      <p class="portfolio-lead">我是王雄皓 (Hoa)，一名产品型开发者。以 Flutter 负责跨端体验，用 Node.js 和微信生态能力补齐服务、工具与交付链路。</p>
       <div class="portfolio-actions">
         <a class="portfolio-action portfolio-action--primary" href="{{ '/projects/' | relative_url }}">查看项目</a>
         <a class="portfolio-action portfolio-action--secondary" href="{{ '/about/' | relative_url }}">关于我</a>
@@ -33,11 +33,11 @@ last_modified_at: 2026-07-15
       <figure class="portfolio-profile-figure">
         <img src="{{ '/assets/images/sal-300.jpg' | relative_url }}" srcset="{{ '/assets/images/sal-150.jpg' | relative_url }} 150w, {{ '/assets/images/sal-300.jpg' | relative_url }} 300w" sizes="(max-width: 991.98px) 112px, 136px" alt="王雄皓 (Hoa) 头像" loading="eager" decoding="async" fetchpriority="high" width="136" height="136">
       </figure>
-      <h2>当前方向</h2>
+      <h2>当前构建范围</h2>
       <ul class="portfolio-mini-list">
         <li>以 Flutter 为主，负责跨端产品体验与交付。</li>
         <li>用 Node.js 补齐中小型产品的服务端与管理能力。</li>
-        <li>更愿意通过真实项目展示能力，而不是堆砌高频内容。</li>
+        <li>把公众号内容、小程序工具和数据复盘做成完整的微信内产品闭环。</li>
       </ul>
       <a class="portfolio-inline-link" href="{{ '/contact/' | relative_url }}">如果你有一个想法或正在推进中的产品，可以直接联系我。</a>
     </aside>
@@ -72,7 +72,7 @@ last_modified_at: 2026-07-15
     <div class="portfolio-section-head">
       <p class="portfolio-eyebrow">代表项目</p>
       <h2 id="featured-projects-title">先用 3 个项目说明我的工作方式</h2>
-      <p>项目页是这个站点的核心。每个项目都会尽量说明背景、问题、职责、技术栈和当前状态。</p>
+      <p>每个项目都记录了背景、问题、职责、技术栈和当前状态，构成一条完整的构建轨迹。</p>
     </div>
     {% include project-grid.html projects=featured_projects %}
   </section>
@@ -98,14 +98,14 @@ last_modified_at: 2026-07-15
     </div>
   </section>
 
-  <section class="portfolio-archive-banner" aria-labelledby="archive-title">
+  <section class="portfolio-archive-banner" aria-labelledby="build-ledger-title" data-build-ledger="index">
     <div>
-      <p class="portfolio-eyebrow">旧内容处理</p>
-      <h2 id="archive-title">博客保留为历史归档，不再作为主站导航重点</h2>
-      <p>过去的产品笔记、自动化内容和实验性更新仍然保留，但会作为归档内容存在，并逐步退出搜索索引。</p>
+      <p class="portfolio-eyebrow">构建手记</p>
+      <h2 id="build-ledger-title">每一条构建记录，都是交付轨迹的一部分</h2>
+      <p>过去的产品笔记、自动化实验和历史更新仍可查阅，但不参与当前能力排序；现在的重点始终是上面的真实案例与交付结果。</p>
     </div>
     <div class="portfolio-actions">
-      <a class="portfolio-action portfolio-action--secondary" href="{{ '/blog/' | relative_url }}">查看内容归档</a>
+      <a class="portfolio-action portfolio-action--secondary" href="{{ '/blog/' | relative_url }}">查看构建手记</a>
       <a class="portfolio-action portfolio-action--primary" href="{{ '/contact/' | relative_url }}">联系我</a>
     </div>
   </section>

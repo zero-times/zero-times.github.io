@@ -5,46 +5,46 @@ layout: default
 {% assign project_lang_base = project_lang_raw | split: '-' | first | downcase %}
 {% case project_lang_base %}
   {% when 'en' %}
-    {% assign role_label = 'Role' %}
-    {% assign status_note_label = 'Current status' %}
-    {% assign stack_label = 'Stack' %}
-    {% assign alternate_label = '中文版本' %}
-    {% assign related_title = 'More projects' %}
-    {% assign details_label = 'Project note' %}
-    {% assign facts_title = 'Quick facts' %}
-    {% assign deliverables_title = 'What I actually handled' %}
-    {% assign decisions_title = 'Key decisions' %}
-    {% assign highlights_title = 'Key points' %}
-    {% assign outcomes_title = 'What this project makes clear' %}
-  {% when 'zh' %}
-    {% assign role_label = '我的职责' %}
-    {% assign status_note_label = '当前状态' %}
-    {% assign stack_label = '技术栈' %}
-    {% assign alternate_label = 'English version' %}
-    {% assign related_title = '更多项目' %}
-    {% assign details_label = '项目说明' %}
-    {% assign facts_title = '快速了解' %}
-    {% assign deliverables_title = '这次实际处理了什么' %}
-    {% assign decisions_title = '关键判断' %}
-    {% assign highlights_title = '关键点' %}
-    {% assign outcomes_title = '这个项目想说明什么' %}
-  {% else %}
-    {% assign role_label = 'Papel' %}
+    {% assign role_label = 'Contribution' %}
     {% assign status_note_label = 'Status' %}
-    {% assign stack_label = 'Stack' %}
+    {% assign stack_label = 'Build stack' %}
+    {% assign alternate_label = '中文版本' %}
+    {% assign related_title = 'More case files' %}
+    {% assign details_label = 'Case study' %}
+    {% assign facts_title = 'Evidence' %}
+    {% assign deliverables_title = 'What I shipped' %}
+    {% assign decisions_title = 'Product and engineering decisions' %}
+    {% assign highlights_title = 'Constraints and priorities' %}
+    {% assign outcomes_title = 'Outcome and review' %}
+  {% when 'zh' %}
+    {% assign role_label = '我的投入' %}
+    {% assign status_note_label = '当前状态' %}
+    {% assign stack_label = '技术与平台' %}
     {% assign alternate_label = 'English version' %}
-    {% assign related_title = 'Mais projetos' %}
-    {% assign details_label = 'Projeto' %}
-    {% assign facts_title = 'Resumo' %}
-    {% assign deliverables_title = 'What I handled' %}
-    {% assign decisions_title = 'Key decisions' %}
-    {% assign highlights_title = 'Pontos principais' %}
-    {% assign outcomes_title = 'O que este projeto demonstra' %}
+    {% assign related_title = '更多案例' %}
+    {% assign details_label = '案例拆解' %}
+    {% assign facts_title = '关键证据' %}
+    {% assign deliverables_title = '交付内容' %}
+    {% assign decisions_title = '产品与工程判断' %}
+    {% assign highlights_title = '约束与重点' %}
+    {% assign outcomes_title = '结果与复盘' %}
+  {% else %}
+    {% assign role_label = 'Contribution' %}
+    {% assign status_note_label = 'Status' %}
+    {% assign stack_label = 'Build stack' %}
+    {% assign alternate_label = 'English version' %}
+    {% assign related_title = 'More case files' %}
+    {% assign details_label = 'Case study' %}
+    {% assign facts_title = 'Evidence' %}
+    {% assign deliverables_title = 'What I shipped' %}
+    {% assign decisions_title = 'Product and engineering decisions' %}
+    {% assign highlights_title = 'Constraints and priorities' %}
+    {% assign outcomes_title = 'Outcome and review' %}
 {% endcase %}
 {% assign related_projects = site.projects | where: "lang", page.lang | sort: "order" %}
 
 <div class="container my-5 project-detail">
-  <article class="project-detail__shell" aria-labelledby="page-title">
+  <article class="project-detail__shell" aria-labelledby="page-title" data-reveal>
     <header class="project-detail__hero">
       <div class="project-detail__intro">
         {% if page.status_label %}

@@ -1,1037 +1,394 @@
-// Main JavaScript file for the Portuguese Personal Blog
+// Build Ledger interactions: theme, navigation, progress and accessible feedback.
 
-document.addEventListener('DOMContentLoaded', function() {
-  const supportsMatchMedia = typeof window.matchMedia === 'function';
-  const prefersReducedMotion = supportsMatchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
-  const prefersReducedDataMedia = supportsMatchMedia ? window.matchMedia('(prefers-reduced-data: reduce)').matches : false;
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  const lowBandwidth = !!(
-    connection &&
-    typeof connection.downlink === 'number' &&
-    connection.downlink > 0 &&
-    connection.downlink <= 1.25
-  );
-  const prefersReducedData = prefersReducedDataMedia || !!(
-    connection && (
-      connection.saveData ||
-      connection.effectiveType === 'slow-2g' ||
-      connection.effectiveType === '2g' ||
-      connection.effectiveType === '3g' ||
-      lowBandwidth
-    )
-  );
-  const prefersAutoScroll = prefersReducedMotion || prefersReducedData;
-  const defaultIframeReferrerPolicy = 'strict-origin-when-cross-origin';
-  // Limit deferred DOM scans to content-heavy article roots.
-  // This avoids walking entire list/home pages where markup is already optimized.
-  const contentOptimizationRoot = (
-    document.querySelector('.post-content') ||
-    document.querySelector('.article-post') ||
-    document.querySelector('.share-article')
-  );
-  const imageOptimizationSelector = [
-    'img[src]:not([src^="data:"]):not([loading])',
-    'img[src]:not([src^="data:"])[loading="auto"]',
-    'img[src]:not([src^="data:"]):not([decoding])',
-    'img[src]:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
-  ].join(', ');
-  const iframeOptimizationSelector = [
-    'iframe[src]:not([loading])',
-    'iframe[src][loading="auto"]',
-    'iframe[src]:not([title])',
-    'iframe[src]:not([referrerpolicy])'
-  ].join(', ');
-  const blankLinkHardeningSelector = [
-    'a[target="_blank"]:not([rel])',
-    'a[target="_blank"][rel]:not([rel~="noopener"])',
-    'a[target="_blank"][rel]:not([rel~="noreferrer"])'
-  ].join(', ');
-  const deferredOptimizationSeedSelector = [
-    imageOptimizationSelector,
-    iframeOptimizationSelector,
-    blankLinkHardeningSelector
-  ].join(', ');
-  const hasDeferredOptimizationCandidates = !!(
-    contentOptimizationRoot &&
-    contentOptimizationRoot.querySelector(deferredOptimizationSeedSelector)
-  );
-  let deferredContentOptimizationsDone = false;
-  const scheduleNonCriticalTask = (task, timeout) => {
-    const delay = typeof timeout === 'number' ? timeout : 1000;
-    if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(task, { timeout: delay });
-    } else {
-      const fallbackDelay = Math.max(120, Math.min(delay, 2200));
-      window.setTimeout(task, fallbackDelay);
-    }
-  };
+(function () {
+  'use strict';
 
-  const getEmbedHostLabel = (src) => {
-    if (!src) {
-      return 'site externo';
-    }
-    try {
-      const parsed = new URL(src, window.location.href);
-      const host = parsed.hostname.replace(/^www\./, '').toLowerCase();
-      if (host.includes('youtube.com') || host.includes('youtu.be')) {
-        return 'YouTube';
-      }
-      if (host.includes('vimeo.com')) {
-        return 'Vimeo';
-      }
-      if (host.includes('google.com')) {
-        return 'Google';
-      }
-      return host;
-    } catch (err) {
-      return 'site externo';
-    }
-  };
-  const runDeferredContentOptimizations = () => {
-    const candidateImages = contentOptimizationRoot.querySelectorAll(imageOptimizationSelector);
-    const candidateIframes = contentOptimizationRoot.querySelectorAll(iframeOptimizationSelector);
-    const candidateBlankLinks = contentOptimizationRoot.querySelectorAll(blankLinkHardeningSelector);
-
-    if (!candidateImages.length && !candidateIframes.length && !candidateBlankLinks.length) {
-      deferredContentOptimizationsDone = true;
+  const onReady = (callback) => {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', callback, { once: true });
       return;
     }
-
-    // Auto-optimize markdown/content images that do not declare loading hints.
-    // Prefer deterministic loading hints to avoid expensive layout reads on long pages.
-    let eagerImageBudget = 1;
-    candidateImages.forEach((image) => {
-      const hasHighPriority = image.getAttribute('fetchpriority') === 'high';
-      const loadingValue = (image.getAttribute('loading') || '').toLowerCase();
-      if (!image.hasAttribute('loading')) {
-        if (hasHighPriority) {
-          image.setAttribute('loading', 'eager');
-        } else if (prefersReducedData) {
-          image.setAttribute('loading', 'lazy');
-        } else if (eagerImageBudget > 0) {
-          image.setAttribute('loading', 'eager');
-          eagerImageBudget -= 1;
-        } else {
-          image.setAttribute('loading', 'lazy');
-        }
-      } else if (prefersReducedData && loadingValue === 'auto' && !hasHighPriority) {
-        image.setAttribute('loading', 'lazy');
-      }
-      if (!image.hasAttribute('decoding')) {
-        image.setAttribute('decoding', 'async');
-      }
-      if (!image.hasAttribute('fetchpriority') && image.getAttribute('loading') === 'lazy') {
-        image.setAttribute('fetchpriority', 'low');
-      }
-    });
-
-    // Avoid eager loading non-critical embeds on mobile pages.
-    // Default to lazy and allow explicit opt-in for above-the-fold embeds.
-    candidateIframes.forEach((frame) => {
-      const loadingValue = (frame.getAttribute('loading') || '').toLowerCase();
-      const hasHighPriority = frame.getAttribute('fetchpriority') === 'high' ||
-        frame.getAttribute('data-loading-priority') === 'high' ||
-        frame.getAttribute('data-loading') === 'eager';
-      if (!frame.hasAttribute('loading')) {
-        if (hasHighPriority && !prefersReducedData) {
-          frame.setAttribute('loading', 'eager');
-        } else {
-          frame.setAttribute('loading', 'lazy');
-        }
-      } else if ((prefersReducedData && loadingValue !== 'lazy' && !hasHighPriority) || (loadingValue === 'auto' && !hasHighPriority)) {
-        frame.setAttribute('loading', 'lazy');
-      }
-      if (!frame.hasAttribute('referrerpolicy')) {
-        frame.setAttribute('referrerpolicy', defaultIframeReferrerPolicy);
-      }
-      if (!frame.hasAttribute('title')) {
-        const provider = getEmbedHostLabel(frame.getAttribute('src'));
-        frame.setAttribute('title', `Conteudo incorporado de ${provider}`);
-      }
-    });
-
-    // Harden new-tab links inside content area against opener leaks.
-    candidateBlankLinks.forEach((link) => {
-      ensureSecureRel(link);
-    });
-    deferredContentOptimizationsDone = true;
+    callback();
   };
 
-  const scheduleDeferredContentOptimizations = () => {
-    if (!hasDeferredOptimizationCandidates) {
-      deferredContentOptimizationsDone = true;
-      return;
-    }
-    if (document.prerendering) {
-      document.addEventListener('prerenderingchange', scheduleDeferredContentOptimizations, { once: true });
-      return;
-    }
-    if (document.visibilityState === 'hidden') {
-      document.addEventListener('visibilitychange', function onVisibilityChange() {
-        if (document.visibilityState === 'visible') {
-          scheduleNonCriticalTask(runDeferredContentOptimizations, 1600);
-        }
-      }, { once: true });
-      return;
-    }
-    scheduleNonCriticalTask(runDeferredContentOptimizations, 1600);
-  };
-  scheduleDeferredContentOptimizations();
+  onReady(() => {
+    const root = document.documentElement;
+    const body = document.body;
+    const lang = (body.dataset.pageLang || root.lang || 'zh').toLowerCase();
+    const isEnglish = lang.startsWith('en');
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const prefersReducedMotion = reducedMotionQuery.matches;
+    const prefersReducedData = Boolean(connection && connection.saveData) ||
+      window.matchMedia('(prefers-reduced-data: reduce)').matches;
+    const liveRegion = document.getElementById('aria-live-region');
 
-  // Use delegated smooth scrolling only when in-page anchors exist.
-  if (document.querySelector('a[href^="#"]:not([href="#"]):not([href^="#!"])')) {
-    document.addEventListener('click', function(e) {
-      const anchor = e.target.closest('a[href^="#"]');
-      if (!anchor) {
-        return;
-      }
-      const href = anchor.getAttribute('href');
-      if (!href || href === '#' || href === '#!' || href.startsWith('#!') || anchor.hasAttribute('data-bs-toggle')) {
-        return;
-      }
-      let target = null;
-      try {
-        target = document.querySelector(href);
-      } catch (err) {
-        return;
-      }
-      if (!target) {
-        return;
-      }
-      e.preventDefault();
-      target.scrollIntoView({
-        behavior: prefersAutoScroll ? 'auto' : 'smooth',
-        block: 'start'
-      });
-
-      const targetId = target.getAttribute('id');
-      if (targetId) {
-        const encodedHash = `#${encodeURIComponent(targetId)}`;
-        if (window.location.hash !== encodedHash) {
-          history.pushState(null, '', encodedHash);
-        }
-      }
-
-      if (!target.hasAttribute('tabindex')) {
-        target.setAttribute('tabindex', '-1');
-        target.setAttribute('data-anchor-focus-temp', 'true');
-      }
-
-      const focusDelay = prefersAutoScroll ? 0 : 220;
-      window.setTimeout(() => {
-        target.focus({ preventScroll: true });
-        if (target.getAttribute('data-anchor-focus-temp') === 'true') {
-          target.removeAttribute('tabindex');
-          target.removeAttribute('data-anchor-focus-temp');
-        }
-      }, focusDelay);
-    });
-  }
-
-  // Reading progress indicator for post pages
-  const progressBar = document.querySelector('.reading-progress__bar');
-  const progressRoot = progressBar ? progressBar.closest('.reading-progress') : null;
-  if (progressBar && !prefersReducedData) {
-    let ticking = false;
-    const updateProgress = () => {
-      const docHeight = document.documentElement.scrollHeight;
-      const winHeight = window.innerHeight;
-      const maxScroll = Math.max(docHeight - winHeight, 1);
-      const progress = Math.min(100, Math.max(0, (window.scrollY / maxScroll) * 100));
-      progressBar.style.width = `${progress.toFixed(2)}%`;
-      if (progressRoot) {
-        const roundedProgress = Math.round(progress);
-        progressRoot.setAttribute('aria-valuenow', `${roundedProgress}`);
-        progressRoot.setAttribute('aria-valuetext', `Progresso de leitura: ${roundedProgress}%`);
-      }
-      ticking = false;
+    const messages = isEnglish ? {
+      required: 'Complete the required fields before sending.',
+      invalidEmail: 'Enter a valid email address.',
+      menuLoading: 'Loading menu',
+      embedded: 'Embedded content',
+      themeDark: 'Dark theme enabled.',
+      themeLight: 'Light theme enabled.'
+    } : {
+      required: '请先填写必填内容再发送。',
+      invalidEmail: '请输入有效的邮箱地址。',
+      menuLoading: '正在加载菜单',
+      embedded: '嵌入内容',
+      themeDark: '已切换到深色主题。',
+      themeLight: '已切换到浅色主题。'
     };
-    const requestTick = () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(updateProgress);
-      }
-    };
-    updateProgress();
-    window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', requestTick);
-  }
 
-  // Back-to-top button for long pages
-  const backToTop = document.querySelector('.back-to-top');
-  if (backToTop && !prefersReducedData) {
-    const backToTopThreshold = 480;
-    let backToTopTicking = false;
-    const setBackToTopVisibility = (shouldShow) => {
-      if (shouldShow) {
-        backToTop.hidden = false;
-        backToTop.classList.add('is-visible');
-      } else {
-        backToTop.classList.remove('is-visible');
-        backToTop.hidden = true;
-      }
-    };
-    const scrollToTop = () => {
-      window.scrollTo({
-        top: 0,
-        behavior: prefersAutoScroll ? 'auto' : 'smooth'
-      });
-    };
-    const requestBackToTopTick = () => {
-      if (backToTopTicking) {
-        return;
-      }
-      backToTopTicking = true;
+    const announce = (message) => {
+      if (!liveRegion || !message) return;
+      liveRegion.textContent = '';
       window.requestAnimationFrame(() => {
-        setBackToTopVisibility(window.scrollY > backToTopThreshold);
-        backToTopTicking = false;
-      });
-    };
-    backToTop.addEventListener('click', scrollToTop);
-    if ('IntersectionObserver' in window) {
-      const sentinel = document.createElement('span');
-      sentinel.setAttribute('aria-hidden', 'true');
-      sentinel.style.cssText = `position:absolute;top:${backToTopThreshold}px;left:0;width:1px;height:1px;pointer-events:none;opacity:0;`;
-      document.body.prepend(sentinel);
-
-      const observer = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        setBackToTopVisibility(!entry.isIntersecting);
-      });
-      observer.observe(sentinel);
-
-      window.addEventListener('pagehide', () => {
-        observer.disconnect();
-        sentinel.remove();
-      }, { once: true });
-    } else {
-      setBackToTopVisibility(window.scrollY > backToTopThreshold);
-      window.addEventListener('scroll', requestBackToTopTick, { passive: true });
-      window.addEventListener('resize', requestBackToTopTick);
-    }
-  }
-
-  // Enhance form validation
-  const forms = document.querySelectorAll('form');
-  const requiredInputSelector = 'input[required], textarea[required], select[required]';
-  const validateRequiredField = (field) => {
-    if (!field || !field.matches(requiredInputSelector)) {
-      return true;
-    }
-
-    const trimmedValue = typeof field.value === 'string' ? field.value.trim() : field.value;
-    const fieldValid = trimmedValue.length > 0 && field.validity.valid;
-
-    if (!fieldValid) {
-      field.classList.add('is-invalid');
-      field.setAttribute('aria-invalid', 'true');
-      return false;
-    }
-
-    field.classList.remove('is-invalid');
-    field.removeAttribute('aria-invalid');
-    return true;
-  };
-  const lockSubmittingForm = (form) => {
-    if (!form || form.getAttribute('data-form-submitting') === 'true') {
-      return false;
-    }
-    form.setAttribute('data-form-submitting', 'true');
-    form.setAttribute('aria-busy', 'true');
-    const submitButtons = form.querySelectorAll('button[type="submit"], input[type="submit"]');
-    submitButtons.forEach((button) => {
-      if (button.hasAttribute('disabled')) {
-        return;
-      }
-      button.setAttribute('data-was-enabled', 'true');
-      button.disabled = true;
-    });
-    return true;
-  };
-
-  forms.forEach(form => {
-    const requiredFields = form.querySelectorAll('[required]');
-    if (!requiredFields.length) {
-      return;
-    }
-
-    form.addEventListener('submit', function(e) {
-      let isValid = true;
-
-      requiredFields.forEach(field => {
-        if (!validateRequiredField(field)) {
-          isValid = false;
-        }
-      });
-
-      if (!isValid) {
-        e.preventDefault();
-        form.classList.add('was-validated');
-        const firstInvalid = form.querySelector('.is-invalid, [required]:invalid');
-        if (firstInvalid) {
-          firstInvalid.focus({ preventScroll: true });
-          firstInvalid.scrollIntoView({
-            behavior: prefersAutoScroll ? 'auto' : 'smooth',
-            block: 'center'
-          });
-        }
-        let announceMessage = 'Por favor, preencha todos os campos obrigatórios.';
-        if (firstInvalid) {
-          const trimmedValue = firstInvalid.value.trim();
-          if (firstInvalid.type === 'email' && trimmedValue && !firstInvalid.validity.valid) {
-            announceMessage = 'Por favor, insira um email válido.';
-          } else if (firstInvalid.type === 'url' && trimmedValue && !firstInvalid.validity.valid) {
-            announceMessage = 'Por favor, insira um link válido.';
-          }
-        }
-        announceToScreenReader(announceMessage);
-        form.removeAttribute('data-form-submitting');
-        form.removeAttribute('aria-busy');
-      } else if (lockSubmittingForm(form)) {
         window.setTimeout(() => {
-          if (!document.contains(form)) {
-            return;
-          }
-          form.removeAttribute('data-form-submitting');
-          form.removeAttribute('aria-busy');
-          form.querySelectorAll('[data-was-enabled="true"]').forEach((button) => {
-            button.disabled = false;
-            button.removeAttribute('data-was-enabled');
-          });
-        }, 15000);
-      }
-    });
-
-    // Real-time validation feedback with event delegation to reduce listeners on mobile forms.
-    form.addEventListener('input', function(e) {
-      validateRequiredField(e.target);
-    });
-
-    form.addEventListener('focusout', function(e) {
-      validateRequiredField(e.target);
-    });
-  });
-
-  // Update active nav state for desktop nav and mobile drawer nav.
-  const normalizePath = (path) => {
-    if (!path) return '/';
-    const trimmed = path.replace(/\/+$/, '');
-    return trimmed || '/';
-  };
-
-  const currentPath = normalizePath(window.location.pathname);
-  const bootstrapScriptSrc = document.body ? document.body.getAttribute('data-bootstrap-src') : '';
-  let bootstrapLoadPromise = null;
-  const loadBootstrapBundle = () => {
-    if (window.bootstrap && window.bootstrap.Offcanvas) {
-      return Promise.resolve(window.bootstrap);
-    }
-    if (bootstrapLoadPromise) {
-      return bootstrapLoadPromise;
-    }
-    if (!bootstrapScriptSrc) {
-      return Promise.reject(new Error('Bootstrap source not found'));
-    }
-
-    bootstrapLoadPromise = new Promise((resolve, reject) => {
-      const resolveIfReady = () => {
-        if (window.bootstrap && window.bootstrap.Offcanvas) {
-          resolve(window.bootstrap);
-          return true;
-        }
-        return false;
-      };
-      const existingScript = document.querySelector(`script[src="${bootstrapScriptSrc}"]`);
-      if (existingScript) {
-        if (resolveIfReady()) {
-          return;
-        }
-
-        const handleLoaded = () => {
-          existingScript.setAttribute('data-loaded', 'true');
-          if (resolveIfReady()) {
-            return;
-          }
-          window.setTimeout(() => {
-            if (!resolveIfReady()) {
-              reject(new Error('Bootstrap loaded without Offcanvas support'));
-            }
-          }, 0);
-        };
-
-        if (
-          existingScript.getAttribute('data-loaded') === 'true' ||
-          existingScript.readyState === 'loaded' ||
-          existingScript.readyState === 'complete'
-        ) {
-          handleLoaded();
-          return;
-        }
-
-        existingScript.addEventListener('load', handleLoaded, { once: true });
-        existingScript.addEventListener('error', () => reject(new Error('Bootstrap failed to load')), { once: true });
-        return;
-      }
-
-      const script = document.createElement('script');
-      script.src = bootstrapScriptSrc;
-      script.async = true;
-      script.fetchPriority = 'low';
-      script.onload = () => {
-        script.setAttribute('data-loaded', 'true');
-        if (window.bootstrap && window.bootstrap.Offcanvas) {
-          resolve(window.bootstrap);
-        } else {
-          reject(new Error('Bootstrap loaded without Offcanvas support'));
-        }
-      };
-      script.onerror = () => reject(new Error('Bootstrap failed to load'));
-      document.body.appendChild(script);
-    }).catch((error) => {
-      bootstrapLoadPromise = null;
-      throw error;
-    });
-
-    return bootstrapLoadPromise;
-  };
-  const navLinks = document.querySelectorAll('[data-site-nav]');
-  navLinks.forEach(link => {
-    if (link.getAttribute('aria-disabled') === 'true') {
-      return;
-    }
-
-    const href = link.getAttribute('href');
-    if (!href) {
-      return;
-    }
-
-    let resolved;
-    try {
-      resolved = new URL(href, window.location.origin);
-    } catch (err) {
-      return;
-    }
-
-    if (resolved.origin !== window.location.origin) {
-      return;
-    }
-
-    const linkPath = normalizePath(resolved.pathname);
-    const isBlogSection = linkPath === '/blog' && currentPath.startsWith('/blog');
-    const isCurrent = currentPath === linkPath || isBlogSection;
-
-    link.classList.toggle('is-active', isCurrent);
-    if (isCurrent) {
-      link.setAttribute('aria-current', 'page');
-    } else {
-      link.removeAttribute('aria-current');
-    }
-  });
-
-  // Mobile drawer state sync: Menu <-> Fechar and aria-expanded.
-  const mobileDrawer = document.getElementById('siteMobileDrawer');
-  const mobileMenuButton = document.getElementById('mobileMenuButton');
-  const mobileMenuButtonLabel = document.getElementById('mobileMenuButtonLabel');
-  const drawerIsolationTargets = [
-    document.getElementById('main-content'),
-    document.querySelector('.site-footer-v2')
-  ].filter(Boolean);
-  const initMobileDrawer = () => {
-    if (!mobileDrawer || !mobileMenuButton || !window.bootstrap || !window.bootstrap.Offcanvas) {
-      return false;
-    }
-    if (mobileDrawer.getAttribute('data-drawer-enhanced') === 'true') {
-      return true;
-    }
-
-    const drawerInstance = window.bootstrap.Offcanvas.getOrCreateInstance(mobileDrawer);
-    const syncMenuState = (isExpanded) => {
-      mobileMenuButton.setAttribute('aria-expanded', String(isExpanded));
-      mobileMenuButton.setAttribute('aria-label', isExpanded ? 'Fechar menu principal' : 'Abrir menu principal');
-      if (mobileMenuButtonLabel) {
-        mobileMenuButtonLabel.textContent = isExpanded ? 'Fechar' : 'Menu';
-      }
-    };
-    const setDrawerIsolation = (isOpen) => {
-      drawerIsolationTargets.forEach((target) => {
-        if (isOpen) {
-          target.setAttribute('aria-hidden', 'true');
-          target.setAttribute('inert', '');
-          return;
-        }
-        target.removeAttribute('inert');
-        target.removeAttribute('aria-hidden');
+          liveRegion.textContent = message;
+        }, 40);
       });
     };
 
-    let shouldRestoreMenuFocus = false;
-
-    mobileDrawer.addEventListener('show.bs.offcanvas', () => {
-      shouldRestoreMenuFocus = document.activeElement === mobileMenuButton;
-      setDrawerIsolation(true);
-    });
-
-    mobileDrawer.addEventListener('shown.bs.offcanvas', () => syncMenuState(true));
-    mobileDrawer.addEventListener('hidden.bs.offcanvas', () => {
-      syncMenuState(false);
-      setDrawerIsolation(false);
-      if (shouldRestoreMenuFocus || mobileDrawer.contains(document.activeElement)) {
-        try {
-          mobileMenuButton.focus({ preventScroll: true });
-        } catch (err) {
-          mobileMenuButton.focus();
-        }
-      }
-      shouldRestoreMenuFocus = false;
-    });
-
-    mobileDrawer.addEventListener('click', (event) => {
-      const link = event.target.closest('a[href]');
-      if (!link || !mobileDrawer.contains(link) || link.hasAttribute('data-bs-toggle')) {
-        return;
-      }
-      drawerInstance.hide();
-    });
-
-    syncMenuState(false);
-    mobileDrawer.setAttribute('data-drawer-enhanced', 'true');
-    return true;
-  };
-
-  if (mobileDrawer && mobileMenuButton) {
-    initMobileDrawer();
-    let bootstrapWarmRequested = false;
-    const setMenuLoadingState = (isLoading) => {
-      mobileMenuButton.setAttribute('aria-busy', isLoading ? 'true' : 'false');
-      mobileMenuButton.classList.toggle('is-loading', isLoading);
-      if (mobileMenuButtonLabel) {
-        mobileMenuButtonLabel.textContent = isLoading ? 'Carregando' : 'Menu';
-      }
-    };
-
-    const warmBootstrapLoad = (options = {}) => {
-      const silent = !!options.silent;
-      if (window.bootstrap && window.bootstrap.Offcanvas) {
-        initMobileDrawer();
-        return;
-      }
-      if (bootstrapWarmRequested) {
-        return;
-      }
-      bootstrapWarmRequested = true;
-      if (!silent) {
-        setMenuLoadingState(true);
-      }
-      loadBootstrapBundle()
-        .then(() => {
-          initMobileDrawer();
-        })
-        .catch(() => {
-          // Keep menu button accessible even if the bundle fails to load.
-        })
-        .finally(() => {
-          bootstrapWarmRequested = false;
-          if (!silent) {
-            setMenuLoadingState(false);
-          }
-        });
-    };
-
-    const warmTriggerEvents = window.PointerEvent ? ['pointerdown', 'focus'] : ['touchstart', 'focus'];
-    warmTriggerEvents.forEach((eventName) => {
-      mobileMenuButton.addEventListener(eventName, warmBootstrapLoad, {
-        once: true,
-        passive: eventName !== 'focus'
-      });
-    });
-
-    if (!prefersReducedData) {
-      const warmMenuInBackground = () => {
-        if (window.bootstrap && window.bootstrap.Offcanvas) {
-          return;
-        }
-        scheduleNonCriticalTask(() => warmBootstrapLoad({ silent: true }), 2400);
-      };
-
-      if ('IntersectionObserver' in window) {
-        const menuButtonObserver = new IntersectionObserver((entries) => {
-          const visible = entries.some((entry) => entry.isIntersecting);
-          if (!visible) {
-            return;
-          }
-          menuButtonObserver.disconnect();
-          warmMenuInBackground();
-        }, { rootMargin: '96px 0px' });
-        menuButtonObserver.observe(mobileMenuButton);
+    const scheduleIdle = (task, timeout = 1200) => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(task, { timeout });
       } else {
-        window.addEventListener('load', warmMenuInBackground, { once: true });
+        window.setTimeout(task, Math.min(timeout, 600));
       }
+    };
+
+    // Theme control ---------------------------------------------------------
+    const themeButtons = document.querySelectorAll('[data-theme-toggle]');
+    const getEffectiveTheme = () => {
+      const explicitTheme = root.getAttribute('data-theme');
+      if (explicitTheme === 'light' || explicitTheme === 'dark') return explicitTheme;
+      return darkModeQuery.matches ? 'dark' : 'light';
+    };
+
+    const updateThemeColor = () => {
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]:not([media])');
+      if (!themeColorMeta) return;
+      const background = getComputedStyle(root).getPropertyValue('--ledger-bg').trim();
+      if (background) themeColorMeta.setAttribute('content', background);
+    };
+
+    const syncThemeButtons = () => {
+      const isDark = getEffectiveTheme() === 'dark';
+      themeButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(isDark));
+        button.setAttribute('aria-label', isDark ? button.dataset.labelLight : button.dataset.labelDark);
+        const icon = button.querySelector('[data-theme-icon]');
+        if (icon) icon.textContent = isDark ? '☼' : '◐';
+      });
+      updateThemeColor();
+    };
+
+    const applyTheme = (theme, persist) => {
+      root.setAttribute('data-theme', theme);
+      root.style.colorScheme = theme;
+      if (persist) {
+        try {
+          window.localStorage.setItem('hoa-site-theme', theme);
+        } catch (error) {
+          // A blocked storage API should not prevent theme switching.
+        }
+      }
+      syncThemeButtons();
+    };
+
+    themeButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const nextTheme = getEffectiveTheme() === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme, true);
+        announce(nextTheme === 'dark' ? messages.themeDark : messages.themeLight);
+      });
+    });
+
+    darkModeQuery.addEventListener('change', () => {
+      if (!root.hasAttribute('data-theme')) syncThemeButtons();
+    });
+    syncThemeButtons();
+
+    // Scroll progress and back-to-top --------------------------------------
+    const progressBar = document.querySelector('[data-scroll-progress]');
+    const backToTop = document.querySelector('.back-to-top');
+    let scrollFramePending = false;
+
+    const updateScrollUI = () => {
+      const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const progress = Math.min(1, Math.max(0, window.scrollY / scrollRange));
+      if (progressBar) progressBar.style.transform = `scaleX(${progress.toFixed(4)})`;
+      if (backToTop) {
+        const shouldShow = window.scrollY > 520;
+        backToTop.hidden = !shouldShow;
+        backToTop.classList.toggle('is-visible', shouldShow);
+      }
+      scrollFramePending = false;
+    };
+
+    const requestScrollUpdate = () => {
+      if (scrollFramePending) return;
+      scrollFramePending = true;
+      window.requestAnimationFrame(updateScrollUI);
+    };
+
+    updateScrollUI();
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+    window.addEventListener('resize', requestScrollUpdate, { passive: true });
+
+    if (backToTop) {
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      });
     }
 
-    mobileMenuButton.addEventListener('click', (event) => {
-      if (window.bootstrap && window.bootstrap.Offcanvas) {
-        initMobileDrawer();
-        return;
-      }
-      event.preventDefault();
-      event.stopPropagation();
-      setMenuLoadingState(true);
-      loadBootstrapBundle()
-        .then(() => {
-          if (!initMobileDrawer()) {
-            return;
-          }
-          const offcanvas = window.bootstrap.Offcanvas.getOrCreateInstance(mobileDrawer);
-          offcanvas.show();
-        })
-        .catch(() => {
-          // Leave native navigation state untouched if bootstrap cannot be loaded.
-        })
-        .finally(() => {
-          setMenuLoadingState(false);
+    // Reveal meaningful content once, without hiding anything when JS fails.
+    const revealItems = Array.from(document.querySelectorAll(
+      '[data-reveal], .portfolio-hero, .portfolio-section, .portfolio-archive-banner, .project-detail__section'
+    ));
+    if (revealItems.length && !prefersReducedMotion && !prefersReducedData && 'IntersectionObserver' in window) {
+      root.classList.add('reveal-ready');
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
         });
-    }, { capture: true });
-  }
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
 
-  // Ensure security rel attributes for external links that open in new tabs
-  const ensureSecureRel = (link) => {
-    if (!link || link.getAttribute('target') !== '_blank') {
-      return;
-    }
-    const href = link.getAttribute('href') || '';
-    const relValue = link.getAttribute('rel') || '';
-    const relTokens = relValue
-      .split(/\s+/)
-      .map((token) => token.trim().toLowerCase())
-      .filter(Boolean);
-    const hasNoOpener = relTokens.includes('noopener');
-    const hasNoReferrer = relTokens.includes('noreferrer');
-    let changed = false;
-
-    if (!hasNoOpener) {
-      relTokens.push('noopener');
-      changed = true;
-    }
-    if (!hasNoReferrer) {
-      relTokens.push('noreferrer');
-      changed = true;
+      revealItems.forEach((item) => revealObserver.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add('is-revealed'));
     }
 
-    const shouldCheckExternal = !relTokens.includes('nofollow') || !relTokens.includes('external');
-    if (shouldCheckExternal) {
-      let isExternalHttp = false;
-      try {
-        const resolvedUrl = new URL(href, window.location.origin);
-        isExternalHttp = /^https?:$/i.test(resolvedUrl.protocol) && resolvedUrl.origin !== window.location.origin;
-      } catch (err) {
-        isExternalHttp = false;
-      }
-
-      if (isExternalHttp) {
-        if (!relTokens.includes('nofollow')) {
-          relTokens.push('nofollow');
-          changed = true;
-        }
-        if (!relTokens.includes('external')) {
-          relTokens.push('external');
-          changed = true;
-        }
-      }
-    }
-
-    if (changed) {
-      link.setAttribute('rel', relTokens.join(' '));
-    }
-  };
-
-  if (document.querySelector('a[target="_blank"]')) {
+    // Accessible in-page navigation ---------------------------------------
     document.addEventListener('click', (event) => {
-      const link = event.target.closest('a[target="_blank"]');
-      if (!link) {
+      const anchor = event.target.closest('a[href^="#"]');
+      if (!anchor || anchor.getAttribute('href') === '#' || anchor.hasAttribute('data-bs-toggle')) return;
+      let target;
+      try {
+        target = document.querySelector(anchor.getAttribute('href'));
+      } catch (error) {
         return;
       }
-      ensureSecureRel(link);
-    }, { capture: true });
-  }
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+      const id = target.id;
+      if (id) history.pushState(null, '', `#${encodeURIComponent(id)}`);
+    });
 
-  const bindFormspreeWarmup = () => {
-    if (!document.head) {
-      return;
-    }
-    const forms = document.querySelectorAll('form[action*="formspree.io"]');
-    if (!forms.length) {
-      return;
-    }
+    // Navigation state -----------------------------------------------------
+    const normalizePath = (path) => {
+      const normalized = (path || '/').replace(/\/+$/, '');
+      return normalized || '/';
+    };
+    const currentPath = normalizePath(window.location.pathname);
 
-    let warmed = false;
-    const warmup = () => {
-      if (warmed) {
+    document.querySelectorAll('[data-site-nav]').forEach((link) => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      let url;
+      try {
+        url = new URL(href, window.location.origin);
+      } catch (error) {
         return;
       }
-      warmed = true;
+      if (url.origin !== window.location.origin) return;
+      const linkPath = normalizePath(url.pathname);
+      const isCurrent = linkPath === currentPath || (linkPath.endsWith('/blog') && currentPath.includes('/blog'));
+      link.classList.toggle('is-active', isCurrent);
+      if (isCurrent) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
 
-      if (!document.head.querySelector('link[rel="preconnect"][href="https://formspree.io"]')) {
+    // Lazy-load Bootstrap only for the mobile drawer.
+    const drawer = document.getElementById('siteMobileDrawer');
+    const menuButton = document.getElementById('mobileMenuButton');
+    const menuButtonLabel = document.getElementById('mobileMenuButtonLabel');
+    const bootstrapSrc = body.dataset.bootstrapSrc;
+    let bootstrapPromise;
+
+    const loadBootstrap = () => {
+      if (window.bootstrap && window.bootstrap.Offcanvas) return Promise.resolve(window.bootstrap);
+      if (bootstrapPromise) return bootstrapPromise;
+      bootstrapPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = bootstrapSrc;
+        script.async = true;
+        script.fetchPriority = 'low';
+        script.onload = () => window.bootstrap && window.bootstrap.Offcanvas ? resolve(window.bootstrap) : reject(new Error('Offcanvas unavailable'));
+        script.onerror = () => reject(new Error('Bootstrap failed to load'));
+        document.body.appendChild(script);
+      }).catch((error) => {
+        bootstrapPromise = null;
+        throw error;
+      });
+      return bootstrapPromise;
+    };
+
+    const getDrawerInstance = () => {
+      if (!drawer || !window.bootstrap || !window.bootstrap.Offcanvas) return null;
+      const Offcanvas = window.bootstrap.Offcanvas;
+      if (typeof Offcanvas.getOrCreateInstance === 'function') {
+        return Offcanvas.getOrCreateInstance(drawer);
+      }
+      return Offcanvas.getInstance(drawer) || new Offcanvas(drawer);
+    };
+
+    const enhanceDrawer = () => {
+      if (!drawer || !menuButton || !window.bootstrap || drawer.dataset.enhanced === 'true') return;
+      const instance = getDrawerInstance();
+      if (!instance) return;
+      const closeButton = drawer.querySelector('.site-mobile-drawer__close');
+      const openLabel = menuButton.getAttribute('aria-label');
+      const closeLabel = closeButton ? closeButton.getAttribute('aria-label') : openLabel;
+      const defaultButtonText = menuButtonLabel ? menuButtonLabel.textContent : '';
+      const isolationTargets = [document.getElementById('main-content'), document.querySelector('.site-footer-v2')].filter(Boolean);
+
+      const setIsolation = (isOpen) => {
+        isolationTargets.forEach((target) => {
+          if (isOpen) {
+            target.setAttribute('inert', '');
+            target.setAttribute('aria-hidden', 'true');
+          } else {
+            target.removeAttribute('inert');
+            target.removeAttribute('aria-hidden');
+          }
+        });
+      };
+
+      drawer.addEventListener('show.bs.offcanvas', () => setIsolation(true));
+      drawer.addEventListener('shown.bs.offcanvas', () => {
+        menuButton.setAttribute('aria-expanded', 'true');
+        menuButton.setAttribute('aria-label', closeLabel);
+      });
+      drawer.addEventListener('hidden.bs.offcanvas', () => {
+        setIsolation(false);
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', openLabel);
+        if (menuButtonLabel) menuButtonLabel.textContent = defaultButtonText;
+        menuButton.focus({ preventScroll: true });
+      });
+      drawer.addEventListener('click', (event) => {
+        const link = event.target.closest('a[href]');
+        if (link) instance.hide();
+      });
+      if (closeButton) {
+        closeButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          instance.hide();
+        });
+      }
+      drawer.dataset.enhanced = 'true';
+    };
+
+    if (drawer && menuButton && bootstrapSrc) {
+      const warmDrawer = () => loadBootstrap().then(enhanceDrawer).catch(() => {});
+      menuButton.addEventListener('pointerenter', warmDrawer, { once: true, passive: true });
+      menuButton.addEventListener('focus', warmDrawer, { once: true, passive: true });
+      menuButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (window.bootstrap && window.bootstrap.Offcanvas) {
+          enhanceDrawer();
+          const instance = getDrawerInstance();
+          if (instance) instance.show();
+          return;
+        }
+        menuButton.setAttribute('aria-busy', 'true');
+        if (menuButtonLabel) menuButtonLabel.textContent = messages.menuLoading;
+        loadBootstrap().then(() => {
+          enhanceDrawer();
+          const instance = getDrawerInstance();
+          if (instance) instance.show();
+        }).finally(() => {
+          menuButton.removeAttribute('aria-busy');
+        });
+      }, { capture: true });
+      if (!prefersReducedData) scheduleIdle(warmDrawer, 2200);
+    }
+
+    // Form validation and Formspree warm-up -------------------------------
+    document.querySelectorAll('form').forEach((form) => {
+      const requiredFields = Array.from(form.querySelectorAll('[required]'));
+      if (!requiredFields.length) return;
+
+      const validate = (field) => {
+        const valid = field.validity.valid && String(field.value || '').trim().length > 0;
+        field.classList.toggle('is-invalid', !valid);
+        if (valid) field.removeAttribute('aria-invalid');
+        else field.setAttribute('aria-invalid', 'true');
+        return valid;
+      };
+
+      requiredFields.forEach((field) => {
+        field.addEventListener('blur', () => validate(field));
+        field.addEventListener('input', () => {
+          if (field.classList.contains('is-invalid') && field.validity.valid) validate(field);
+        });
+      });
+
+      form.addEventListener('submit', (event) => {
+        const firstInvalid = requiredFields.find((field) => !validate(field));
+        if (!firstInvalid) return;
+        event.preventDefault();
+        firstInvalid.focus({ preventScroll: true });
+        firstInvalid.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+        announce(firstInvalid.type === 'email' && firstInvalid.value ? messages.invalidEmail : messages.required);
+      });
+    });
+
+    const formspreeForms = document.querySelectorAll('form[action*="formspree.io"]');
+    if (formspreeForms.length) {
+      let warmed = false;
+      const warmFormspree = () => {
+        if (warmed) return;
+        warmed = true;
         const preconnect = document.createElement('link');
         preconnect.rel = 'preconnect';
         preconnect.href = 'https://formspree.io';
         preconnect.crossOrigin = 'anonymous';
         document.head.appendChild(preconnect);
-      }
-
-      if (!document.head.querySelector('link[rel="dns-prefetch"][href="//formspree.io"]')) {
-        const dnsPrefetch = document.createElement('link');
-        dnsPrefetch.rel = 'dns-prefetch';
-        dnsPrefetch.href = '//formspree.io';
-        document.head.appendChild(dnsPrefetch);
-      }
-    };
-
-    forms.forEach((form) => {
-      if (form.dataset.formspreeWarmupBound === 'true') {
-        return;
-      }
-      form.dataset.formspreeWarmupBound = 'true';
-      form.addEventListener('focusin', warmup, { passive: true });
-      form.addEventListener('pointerdown', warmup, { passive: true });
-      form.addEventListener('touchstart', warmup, { passive: true });
-    });
-  };
-  bindFormspreeWarmup();
-
-  // Normalize outbound links inside article-like content for SEO and security.
-  // This keeps curated source links consistently marked as external/nofollow.
-  const normalizeContentOutboundLinks = () => {
-    if (!contentOptimizationRoot) {
-      return;
-    }
-
-    const candidates = contentOptimizationRoot.querySelectorAll(
-      'a[href]:not([href^="#"]):not([href^="mailto:"]):not([href^="tel:"]):not([data-no-external-enhance])'
-    );
-    if (!candidates.length) {
-      return;
-    }
-
-    candidates.forEach((link) => {
-      const href = link.getAttribute('href') || '';
-      let resolvedUrl;
-      try {
-        resolvedUrl = new URL(href, window.location.origin);
-      } catch (err) {
-        return;
-      }
-
-      const isExternalHttp = /^https?:$/i.test(resolvedUrl.protocol) && resolvedUrl.origin !== window.location.origin;
-      if (!isExternalHttp) {
-        return;
-      }
-
-      if (!link.hasAttribute('target')) {
-        link.setAttribute('target', '_blank');
-      }
-      ensureSecureRel(link);
-      link.classList.add('is-external-link');
-    });
-  };
-
-  if (contentOptimizationRoot) {
-    scheduleNonCriticalTask(normalizeContentOutboundLinks, prefersReducedData ? 2400 : 1400);
-  }
-
-  // Add language attribute to html tag if not present
-  if (!document.documentElement.getAttribute('lang')) {
-    document.documentElement.setAttribute('lang', 'zh-CN');
-  }
-
-  const enhanceMediaDefaults = () => {
-    // Add media defaults on article containers first to reduce unnecessary DOM work.
-    const mediaScope = contentOptimizationRoot;
-    if (!mediaScope) {
-      return;
-    }
-    const hasMediaDefaultsWork = deferredContentOptimizationsDone
-      ? mediaScope.querySelector('img:not([src^="data:"]):not([alt]), iframe:not([fetchpriority]), video:not([preload]), video:not([playsinline]), audio:not([preload]), img[data-src], img.news-inline-thumb')
-      : mediaScope.querySelector(
-        'img:not([src^="data:"]):not([loading]), ' +
-        'img:not([src^="data:"])[loading="auto"], ' +
-        'img:not([src^="data:"]):not([decoding]), ' +
-        'img:not([src^="data:"]):not([alt]), ' +
-        'img:not([src^="data:"])[loading="lazy"]:not([fetchpriority]), ' +
-        'iframe:not([loading]), iframe[loading="auto"], iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy]), ' +
-        'video:not([preload]), video:not([playsinline]), audio:not([preload]), img[data-src], img.news-inline-thumb'
-      );
-    if (!hasMediaDefaultsWork) {
-      return;
-    }
-
-    const imagesMissingDefaults = deferredContentOptimizationsDone
-      ? mediaScope.querySelectorAll('img:not([src^="data:"]):not([alt])')
-      : mediaScope.querySelectorAll(
-        'img:not([src^="data:"]):not([loading]), ' +
-        'img:not([src^="data:"])[loading="auto"], ' +
-        'img:not([src^="data:"]):not([decoding]), ' +
-        'img:not([src^="data:"]):not([alt]), ' +
-        'img:not([src^="data:"])[loading="lazy"]:not([fetchpriority])'
-      );
-    imagesMissingDefaults.forEach(img => {
-      const fetchPriority = img.getAttribute('fetchpriority');
-      const loadingValue = (img.getAttribute('loading') || '').toLowerCase();
-      if (!img.hasAttribute('loading')) {
-        img.setAttribute('loading', fetchPriority === 'high' ? 'eager' : 'lazy');
-      } else if (prefersReducedData && loadingValue === 'auto' && fetchPriority !== 'high') {
-        img.setAttribute('loading', 'lazy');
-      }
-      if (!img.hasAttribute('decoding')) {
-        img.setAttribute('decoding', 'async');
-      }
-      if (!img.hasAttribute('alt')) {
-        img.setAttribute('alt', '');
-      }
-      if (!img.hasAttribute('fetchpriority') && img.getAttribute('loading') === 'lazy') {
-        img.setAttribute('fetchpriority', 'low');
-      }
-    });
-
-    const iframesMissingDefaults = deferredContentOptimizationsDone
-      ? mediaScope.querySelectorAll('iframe:not([fetchpriority])')
-      : mediaScope.querySelectorAll(
-        'iframe:not([loading]), iframe[loading="auto"], iframe:not([fetchpriority]), iframe:not([title]), iframe:not([referrerpolicy])'
-      );
-    iframesMissingDefaults.forEach(frame => {
-      const loadingValue = (frame.getAttribute('loading') || '').toLowerCase();
-      if (!frame.hasAttribute('loading')) {
-        frame.setAttribute('loading', 'lazy');
-      } else if (prefersReducedData && loadingValue === 'auto') {
-        frame.setAttribute('loading', 'lazy');
-      }
-      if (!frame.hasAttribute('fetchpriority')) {
-        frame.setAttribute('fetchpriority', 'low');
-      }
-      if (!frame.hasAttribute('title')) {
-        const fallbackTitle = frame.getAttribute('data-title') || frame.getAttribute('aria-label') || 'Embedded content';
-        frame.setAttribute('title', fallbackTitle);
-      }
-      if (!frame.hasAttribute('referrerpolicy')) {
-        frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-      }
-    });
-
-    const mediaElementsMissingDefaults = mediaScope.querySelectorAll(
-      'video:not([preload]), video:not([playsinline]), audio:not([preload])'
-    );
-    mediaElementsMissingDefaults.forEach(media => {
-      if (!media.hasAttribute('preload')) {
-        media.setAttribute('preload', 'metadata');
-      }
-      if (media.tagName.toLowerCase() === 'video' && !media.hasAttribute('playsinline')) {
-        media.setAttribute('playsinline', '');
-      }
-    });
-
-    const lazyImages = mediaScope.querySelectorAll('img[data-src]');
-    if (lazyImages.length > 0) {
-      if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target;
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-              observer.unobserve(img);
-            }
-          });
-        });
-
-        lazyImages.forEach(img => imageObserver.observe(img));
-      } else {
-        lazyImages.forEach(img => {
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-        });
-      }
-    }
-
-    const newsInlineThumbs = mediaScope.querySelectorAll('img.news-inline-thumb');
-    newsInlineThumbs.forEach(img => {
-      if (!img.hasAttribute('loading')) {
-        img.setAttribute('loading', 'lazy');
-      }
-      if (!img.hasAttribute('decoding')) {
-        img.setAttribute('decoding', 'async');
-      }
-      if (!img.hasAttribute('fetchpriority')) {
-        img.setAttribute('fetchpriority', 'low');
-      }
-      if (!img.hasAttribute('alt')) {
-        img.setAttribute('alt', 'Imagem relacionada à notícia');
-      }
-      img.classList.add('news-inline-thumb--lazy');
-    });
-  };
-
-  const scheduleEnhanceMediaDefaults = () => {
-    if (document.prerendering) {
-      document.addEventListener('prerenderingchange', scheduleEnhanceMediaDefaults, { once: true });
-      return;
-    }
-    if (document.visibilityState === 'hidden') {
-      document.addEventListener('visibilitychange', function onVisibilityChange() {
-        if (document.visibilityState === 'visible') {
-          scheduleNonCriticalTask(enhanceMediaDefaults, prefersReducedData ? 2200 : 1200);
-        }
-      }, { once: true });
-      return;
-    }
-    scheduleNonCriticalTask(enhanceMediaDefaults, prefersReducedData ? 2200 : 1200);
-  };
-  scheduleEnhanceMediaDefaults();
-
-  // Add focus management for dropdowns with delegated listener to reduce bindings
-  document.addEventListener('keydown', function(e) {
-    if (e.key !== 'Enter' && e.key !== ' ') {
-      return;
-    }
-    const dropdown = e.target.closest('.dropdown-toggle');
-    if (!dropdown) {
-      return;
-    }
-    e.preventDefault();
-    dropdown.click();
-  });
-
-  // Enhance modal dialogs (if any) without forcing eager Bootstrap instances.
-  if (window.bootstrap && window.bootstrap.Modal) {
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-      modal.addEventListener('shown.bs.modal', function() {
-        const focusableElements = modal.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        if (focusableElements.length > 0) {
-          focusableElements[0].focus();
-        }
+      };
+      formspreeForms.forEach((form) => {
+        form.addEventListener('focusin', warmFormspree, { once: true, passive: true });
+        form.addEventListener('pointerdown', warmFormspree, { once: true, passive: true });
       });
-    });
-  }
-});
+    }
 
-// Utility function for dynamic content updates
-function updateLanguage(lang) {
-  // Update language in URL or perform other language switching logic
-  console.log(`Switching to language: ${lang}`);
-  // Additional logic would go here
-}
+    // Content safety and media defaults -----------------------------------
+    const contentRoot = document.querySelector('.post-content, .article-post, .share-article');
+    if (contentRoot) {
+      scheduleIdle(() => {
+        contentRoot.querySelectorAll('img').forEach((image) => {
+          if (!image.hasAttribute('alt')) image.setAttribute('alt', '');
+          if (!image.hasAttribute('decoding')) image.setAttribute('decoding', 'async');
+          if (!image.hasAttribute('loading') && !image.classList.contains('featured-image')) image.setAttribute('loading', 'lazy');
+        });
 
-// Utility function for announcement of dynamic content changes
-function announceToScreenReader(message) {
-  const element = document.getElementById('aria-live-region');
-  if (!element) {
-    return;
-  }
-  element.textContent = '';
-  window.requestAnimationFrame(() => {
-    window.setTimeout(() => {
-      element.textContent = message;
-    }, 50);
+        contentRoot.querySelectorAll('iframe').forEach((frame) => {
+          if (!frame.hasAttribute('loading')) frame.setAttribute('loading', 'lazy');
+          if (!frame.hasAttribute('title')) frame.setAttribute('title', messages.embedded);
+          if (!frame.hasAttribute('referrerpolicy')) frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        });
+
+        contentRoot.querySelectorAll('a[href]').forEach((link) => {
+          let url;
+          try {
+            url = new URL(link.href, window.location.href);
+          } catch (error) {
+            return;
+          }
+          if (!/^https?:$/.test(url.protocol) || url.origin === window.location.origin) return;
+          link.target = '_blank';
+          const rel = new Set((link.rel || '').split(/\s+/).filter(Boolean));
+          ['noopener', 'noreferrer', 'nofollow', 'external'].forEach((token) => rel.add(token));
+          link.rel = Array.from(rel).join(' ');
+          link.classList.add('is-external-link');
+        });
+      }, 1000);
+    }
   });
-}
+})();
