@@ -59,8 +59,8 @@ image: /assets/images/minipro_change_banner.jpg
 image_alt: 匿名案例的项目封面图
 image_width: 1280
 image_height: 716
-featured: true
-order: 3
+featured: false
+order: 4
 schema_type: CreativeWork
 last_modified_at: 2026-03-18
 ---

@@ -60,7 +60,7 @@ image_alt: 隐私向应用的移动端预览图
 image_width: 750
 image_height: 1334
 featured: true
-order: 2
+order: 3
 schema_type: CreativeWork
 last_modified_at: 2026-03-18
 ---

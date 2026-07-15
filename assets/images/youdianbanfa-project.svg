@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">有点办法公众号与小程序产品闭环</title>
+  <desc id="desc">公众号内容进入材料整理、发前打码、举报前检查和留证时间线，再连接本地处理与数据复盘。</desc>
+  <defs>
+    <linearGradient id="background" x1="70" y1="20" x2="1210" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5FAFC"/>
+      <stop offset="1" stop-color="#E7F7F3"/>
+    </linearGradient>
+    <linearGradient id="sourceCard" x1="90" y1="150" x2="370" y2="570" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14324A"/>
+      <stop offset="1" stop-color="#245B76"/>
+    </linearGradient>
+    <linearGradient id="resultCard" x1="930" y1="150" x2="1190" y2="570" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F766E"/>
+      <stop offset="1" stop-color="#15947F"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0F2638" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5E8094"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="720" rx="36" fill="url(#background)"/>
+  <circle cx="1160" cy="82" r="160" fill="#BCEBDD" opacity="0.32"/>
+  <circle cx="126" cy="662" r="210" fill="#BFDCEA" opacity="0.28"/>
+
+  <g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+    <text x="80" y="88" fill="#14324A" font-size="34" font-weight="700">内容发现 → 工具承接 → 本地完成 → 数据复盘</text>
+    <text x="82" y="124" fill="#537184" font-size="18">“有点办法”把微信里的问题入口和下一步动作连成一个可持续迭代的产品闭环</text>
+
+    <g filter="url(#shadow)">
+      <rect x="80" y="170" width="280" height="400" rx="28" fill="url(#sourceCard)"/>
+      <rect x="112" y="210" width="216" height="148" rx="20" fill="#FFFFFF" fill-opacity="0.96"/>
+      <rect x="138" y="238" width="164" height="16" rx="8" fill="#BCD2DE"/>
+      <rect x="138" y="272" width="122" height="12" rx="6" fill="#D8E6EC"/>
+      <rect x="138" y="300" width="146" height="12" rx="6" fill="#D8E6EC"/>
+      <circle cx="290" cy="330" r="13" fill="#39C6A3"/>
+      <text x="112" y="410" fill="#D7F2F0" font-size="18" font-weight="600" letter-spacing="2">WECHAT CONTENT</text>
+      <text x="112" y="456" fill="#FFFFFF" font-size="32" font-weight="700">公众号文章</text>
+      <text x="112" y="494" fill="#D7E8EF" font-size="18">问题型 · 搜索型 · 工具型</text>
+      <text x="112" y="526" fill="#D7E8EF" font-size="18">把混乱问题拆成下一步</text>
+    </g>
+
+    <path d="M 380 370 C 410 370, 420 370, 446 370" fill="none" stroke="#5E8094" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="460" y="170" width="420" height="400" rx="28" fill="#FFFFFF"/>
+      <text x="494" y="218" fill="#14324A" font-size="18" font-weight="700" letter-spacing="2">MINI PROGRAM TOOLS</text>
+
+      <rect x="494" y="246" width="166" height="126" rx="20" fill="#EDF7FB"/>
+      <rect x="516" y="270" width="38" height="46" rx="8" fill="#2B6E8B"/>
+      <path d="M526 282h18M526 294h18M526 306h12" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+      <text x="516" y="348" fill="#14324A" font-size="22" font-weight="700">材料整理</text>
+
+      <rect x="680" y="246" width="166" height="126" rx="20" fill="#ECFAF5"/>
+      <rect x="702" y="270" width="48" height="40" rx="8" fill="#21A483"/>
+      <circle cx="714" cy="282" r="5" fill="#FFFFFF"/>
+      <path d="M704 304l13-13 10 9 9-8 12 12" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M740 266l12 12-28 28-14 3 3-14z" fill="#14324A"/>
+      <text x="702" y="348" fill="#14324A" font-size="22" font-weight="700">发前打码</text>
+
+      <rect x="494" y="392" width="166" height="126" rx="20" fill="#F1F4FC"/>
+      <rect x="516" y="416" width="42" height="48" rx="8" fill="#556CA6"/>
+      <path d="M526 430l6 6 14-15M526 450l6 6 14-15" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="516" y="494" fill="#14324A" font-size="22" font-weight="700">举报前检查</text>
+
+      <rect x="680" y="392" width="166" height="126" rx="20" fill="#FFF7E9"/>
+      <path d="M712 420v48M712 430h40M712 452h28" stroke="#C8842A" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="712" cy="426" r="8" fill="#F1B45A"/>
+      <circle cx="712" cy="450" r="8" fill="#F1B45A"/>
+      <circle cx="712" cy="472" r="8" fill="#F1B45A"/>
+      <text x="702" y="494" fill="#14324A" font-size="22" font-weight="700">留证时间线</text>
+    </g>
+
+    <path d="M 894 370 C 918 370, 924 370, 946 370" fill="none" stroke="#5E8094" stroke-width="5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="960" y="170" width="240" height="400" rx="28" fill="url(#resultCard)"/>
+      <circle cx="1080" cy="276" r="70" fill="#FFFFFF" fill-opacity="0.14"/>
+      <path d="M1046 282c0-25 16-45 36-45s36 20 36 45" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round"/>
+      <rect x="1038" y="277" width="84" height="62" rx="15" fill="#FFFFFF"/>
+      <circle cx="1080" cy="303" r="9" fill="#15947F"/>
+      <path d="M1080 312v13" stroke="#15947F" stroke-width="7" stroke-linecap="round"/>
+      <text x="992" y="410" fill="#D8F6EC" font-size="18" font-weight="600" letter-spacing="2">LOCAL FIRST</text>
+      <text x="992" y="456" fill="#FFFFFF" font-size="24" font-weight="700">本地处理与落盘</text>
+      <text x="992" y="494" fill="#D8F6EC" font-size="18">草稿 · 时间线 · 图片结果</text>
+      <rect x="992" y="520" width="176" height="1" fill="#FFFFFF" fill-opacity="0.28"/>
+      <text x="992" y="552" fill="#D8F6EC" font-size="17">来源与核心动作复盘</text>
+    </g>
+  </g>
+</svg>

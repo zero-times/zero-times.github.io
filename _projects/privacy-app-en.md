@@ -60,7 +60,7 @@ image_alt: Privacy-first app mobile preview
 image_width: 750
 image_height: 1334
 featured: true
-order: 2
+order: 3
 schema_type: CreativeWork
 last_modified_at: 2026-03-18
 ---

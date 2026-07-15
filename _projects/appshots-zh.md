@@ -60,7 +60,7 @@ image_alt: AppShots 项目展示页预览
 image_width: 1280
 image_height: 719
 featured: true
-order: 1
+order: 2
 schema_type: CreativeWork
 last_modified_at: 2026-03-18
 ---

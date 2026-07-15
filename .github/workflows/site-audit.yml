@@ -6,13 +6,19 @@ on:
       - main
     paths:
       - "_config.yml"
+      - "Gemfile"
+      - "Gemfile.lock"
+      - ".github/workflows/site-audit.yml"
       - "_layouts/**"
       - "_includes/**"
       - "_posts/**"
       - "_blogs/**"
+      - "_projects/**"
       - "pages/**"
+      - "en/**"
       - "index.html"
       - "assets/css/**"
+      - "assets/images/**"
       - "assets/js/**"
       - "_data/**"
       - "robots.txt"
@@ -21,13 +27,19 @@ on:
   pull_request:
     paths:
       - "_config.yml"
+      - "Gemfile"
+      - "Gemfile.lock"
+      - ".github/workflows/site-audit.yml"
       - "_layouts/**"
       - "_includes/**"
       - "_posts/**"
       - "_blogs/**"
+      - "_projects/**"
       - "pages/**"
+      - "en/**"
       - "index.html"
       - "assets/css/**"
+      - "assets/images/**"
       - "assets/js/**"
       - "_data/**"
       - "robots.txt"
@@ -159,6 +171,49 @@ jobs:
 
       - name: Build site for rendered SEO smoke check
         run: bundle exec jekyll build
+
+      - name: Assert representative project and public output boundary
+        run: |
+          PROJECT_PAGES=(
+            "_site/projects/youdianbanfa/index.html"
+            "_site/en/projects/youdianbanfa/index.html"
+          )
+          for page in "${PROJECT_PAGES[@]}"; do
+            if [ ! -f "$page" ]; then
+              echo "Missing rendered representative project page: $page"
+              exit 1
+            fi
+            grep -q '74.19%' "$page"
+            grep -q 'assets/images/youdianbanfa-project.jpg' "$page"
+          done
+
+          if [ ! -f "_site/assets/images/youdianbanfa-project.jpg" ]; then
+            echo "Missing representative project cover in rendered output."
+            exit 1
+          fi
+
+          PRIVATE_OUTPUTS=(
+            "_site/feed.xml"
+            "_site/AGENTS.html"
+            "_site/README.html"
+            "_site/SEO_FINAL_CLEANUP.html"
+            "_site/STYLE_UPGRADE_SUMMARY.html"
+            "_site/style-improvements.html"
+            "_site/temp_codex_prompt.txt"
+            "_site/create_brazil_news_post.py"
+            "_site/debug_audit.py"
+            "_site/scripts"
+            "_site/Gemfile"
+            "_site/Gemfile.lock"
+            "_site/assets/css/custom.css.backup"
+            "_site/assets/css/theme.scss.backup"
+          )
+          for path in "${PRIVATE_OUTPUTS[@]}"; do
+            if [ -e "$path" ]; then
+              echo "Unexpected internal file in rendered output: $path"
+              exit 1
+            fi
+          done
 
       - name: Assert rendered canonical/noindex signals on paginated archive
         run: |
@@ -457,7 +512,7 @@ jobs:
           grep -q '<meta name="apple-mobile-web-app-status-bar-style" content="default">' "$HOME"
           grep -q '<meta name="apple-mobile-web-app-title" content=' "$HOME"
           grep -q '<meta name="application-name" content=' "$HOME"
-          grep -q '<meta name="theme-color" content="#2c3e50">' "$HOME"
+          grep -q '<meta name="theme-color" content="#14324a">' "$HOME"
           grep -q '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1320">' "$HOME"
 
       - name: Assert rendered mobile drawer accessibility invariants

@@ -176,7 +176,6 @@ PLATFORMS
 DEPENDENCIES
   jekyll (~> 4.4)
   jekyll-archives
-  jekyll-feed
   jekyll-paginate
   jekyll-seo-tag
   jekyll-sitemap
