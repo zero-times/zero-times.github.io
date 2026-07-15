@@ -1,14 +1,16 @@
 ---
 title: AppShots
+lifecycle: abandoned
+archived: true
 permalink: /en/projects/appshots/
 lang: en
 locale: en_US
 alternate_url: /projects/appshots/
-description: "AppShots is a lightweight project around screenshot organization, positioning and reusable release material."
+description: "AppShots was a lightweight project around screenshot organization, positioning and reusable release material — now discontinued, kept only as a historical build record."
 keywords: "AppShots, Flutter, Node.js, portfolio project"
-summary: "A lightweight tool-site project for organizing app screenshots, positioning copy and reusable release assets."
-status_label: "Live"
-status_note: "Public-facing version is still being refined"
+summary: "A lightweight tool-site project for organizing app screenshots, positioning copy and reusable release assets. No longer maintained; kept as a structural record."
+status_label: "Abandoned · archived"
+status_note: "The standalone tool-site direction was abandoned and is kept only as a historical build record"
 role: "Positioning, information architecture, frontend experience and delivery framing"
 stack:
   - Flutter
@@ -17,11 +19,11 @@ stack:
   - Lightweight content architecture
 facts:
   - label: Project type
-    value: Tool-style presentation project
-    description: Built to help a small product explain itself more clearly without turning into a heavy platform.
-  - label: Current goal
-    value: Fix the expression layer first
-    description: The first goal is not feature expansion. It is to make screenshots, copy and structure reusable.
+    value: Tool-style presentation project (archived)
+    description: Built to help a small product explain itself more clearly without turning into a heavy platform. Development has been discontinued.
+  - label: Archive reason
+    value: Direction abandoned; no further development
+    description: The expression structure and page patterns have been reused in later work. The standalone tool site itself is no longer maintained.
   - label: Delivery mode
     value: Flutter + Node.js
     description: A compact frontend and minimal backend support, enough to stay extensible without becoming bloated.
@@ -47,12 +49,12 @@ decisions:
   - title: Let one project improve the rest of the site
     description: AppShots is treated both as a project and as the structural testbed for the broader portfolio.
 outcomes:
-  - title: It validates a lighter way to present product work
-    description: Clarifying a project before expanding features is a better fit than jumping into a larger platform too early.
+  - title: It validated a lighter way to present product work
+    description: Clarifying a project before expanding features was a better fit than jumping into a larger platform too early at the time.
   - title: It provided a reusable project-page skeleton
-    description: Background, problem, role, tradeoffs and status became a repeatable pattern through this project.
-  - title: It turns presentation into actual product work
-    description: The page is not decorative. It directly supports how the product is explained and reused later.
+    description: Background, problem, role, tradeoffs and status became a repeatable pattern through this project and has been reused in later work.
+  - title: It treated presentation as actual product work
+    description: The page was never just decorative — it directly supported how the product was explained. The standalone tool site is now archived, but the method lives on.
 card_cta_label: "View project"
 secondary_link_label: "Discuss a similar project"
 secondary_link_url: /en/contact/
@@ -60,7 +62,7 @@ image: /assets/images/appshots-project.jpg
 image_alt: AppShots project cover showing screenshots, positioning copy and release assets moving into one reusable structure
 image_width: 1280
 image_height: 720
-featured: true
+featured: false
 order: 2
 schema_type: CreativeWork
 last_modified_at: 2026-07-15
@@ -103,16 +105,12 @@ I used this project to shape positioning, page structure and delivery framing. I
 
 ## Current state
 
-The project is already useful as part of the public portfolio. The current work is focused on refining the public explanation and keeping the surface lightweight.
+The project has been discontinued and is no longer maintained. The standalone tool site direction has been abandoned. This page is kept only as a historical build record — documenting the positioning, structural decisions and expression approach at the time. The method and information structure recorded here have since been reused in later projects, including this portfolio site.
 
-## Next step
+## Why it stopped
 
-If I keep moving it forward, the next useful improvements are:
-
-- A steadier way to organize assets.
-- A clearer relationship between project cards and detail pages.
-- A structure that can be reused across more projects without extra maintenance.
+During development, it became clear that the maintenance cost of a standalone tool site did not match the resource priorities of the current phase, and its core expression structure had already been absorbed into subsequent work. The decision was made to stop independent development and focus effort on projects more directly tied to current operations.
 
 ## Short reflection
 
-AppShots is a good example of how I prefer to work: clarify the problem and the structure first, then keep the product boundary small and maintainable.
+AppShots is a good example of how I prefer to work: clarify the problem and the structure first, then keep the product boundary small and maintainable. Even though the project itself has stopped, that approach continues to shape subsequent work.

@@ -1,5 +1,7 @@
 ---
 title: Anonymized small-product case
+lifecycle: delivered
+archived: true
 permalink: /en/projects/anonymized-product-case/
 lang: en
 locale: en_US
@@ -7,8 +9,8 @@ alternate_url: /projects/anonymized-product-case/
 description: "An anonymized case that covers requirement shaping, Flutter delivery, Node.js backend support and release coordination."
 keywords: "anonymized case, Flutter, Node.js, product delivery"
 summary: "An anonymized case that shows how I usually move a small product from shaped requirements to Flutter delivery, Node.js support and release coordination."
-status_label: "Delivered"
-status_note: "Only an anonymized summary can be shared publicly"
+status_label: "Delivered · archived"
+status_note: "Project delivery completed; only an anonymized summary can be shared — this record is archived"
 role: "Requirement shaping, Flutter delivery, Node.js backend support and release coordination"
 stack:
   - Flutter
@@ -63,7 +65,7 @@ image_height: 716
 featured: false
 order: 4
 schema_type: CreativeWork
-last_modified_at: 2026-03-18
+last_modified_at: 2026-07-15
 ---
 
 ## Background

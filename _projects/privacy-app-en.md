@@ -1,14 +1,16 @@
 ---
 title: Privacy-first app
+lifecycle: abandoned
+archived: true
 permalink: /en/projects/privacy-first-app/
 lang: en
 locale: en_US
 alternate_url: /projects/privacy-first-app/
-description: "A privacy-first product in progress, centered on restrained interaction, clearer boundaries and lower-noise experience."
+description: "A discontinued privacy-first product exploration, centered on restrained interaction, clearer boundaries and lower-noise experience — kept as a record of direction and trade-offs."
 keywords: "privacy-first app, Flutter, product delivery"
-summary: "A product in progress that puts restraint, privacy boundaries and low-noise interaction ahead of feature volume."
-status_label: "In progress"
-status_note: "Public version and explanation are still being prepared"
+summary: "A discontinued privacy-first product exploration that put restraint, privacy boundaries and low-noise interaction ahead of feature volume. Kept only as a direction record."
+status_label: "Abandoned · archived"
+status_note: "The app direction was abandoned and is kept only as a record of approach and trade-offs"
 role: "Product direction, Flutter implementation and feature-boundary decisions"
 stack:
   - Flutter
@@ -17,28 +19,28 @@ stack:
   - Small-product iteration
 facts:
   - label: Stage
-    value: Public version still in progress
-    description: The goal is to get the scope and explanation right before moving into broader expansion.
+    value: Archived — no longer in progress
+    description: The direction has been stopped. Work on scope definition and the public explanation has been discontinued.
   - label: Core principle
     value: Low-noise, privacy-first, boundary-aware
-    description: Not every possible feature belongs in the first version.
+    description: Not every possible feature belongs in the first version. These principles remain relevant as methodology.
   - label: Current scope
-    value: Focused on first-version viability
-    description: The project is being shaped around the minimum version that still feels coherent and honest.
+    value: Structured record only
+    description: The page, image and route are preserved as a record of the direction exploration and trade-off decisions.
 highlights:
-  - title: Restraint comes before expansion
-    description: The project starts from a quieter experience, not a broader feature checklist.
+  - title: Restraint came before expansion
+    description: The project started from a quieter experience, not a broader feature checklist.
   - title: Privacy affects the structure early
     description: Privacy is treated as a product-shaping decision, not a note added after implementation.
   - title: The first version stays deliberately small
     description: The goal is to prove the direction in a realistic scope before making it larger.
 deliverables:
   - title: A tighter first-version boundary
-    description: The project is being shaped around the smallest version that still feels coherent and worth releasing.
+    description: The exploration defined the smallest version that could have felt coherent and worth releasing.
   - title: A lower-noise interaction structure
-    description: Information hierarchy, pacing and user flow are being tuned to stay quieter and more intentional.
+    description: Information hierarchy, pacing and user flow were shaped to stay quieter and more intentional.
   - title: A clearer public explanation of the privacy stance
-    description: The public version is being prepared with the product boundary and privacy position stated early instead of retrofitted later.
+    description: The product boundary and privacy position were documented early instead of being retrofitted later.
 decisions:
   - title: Avoid growth-heavy interaction patterns
     description: Attention-hijacking prompts and non-essential nudges are intentionally kept out of the product surface.
@@ -48,27 +50,27 @@ decisions:
     description: A smaller but coherent version is more valuable than a broad first release that loses its position.
 outcomes:
   - title: It shows how I judge product boundaries
-    description: The first question is not what else can be added, but what should stay out for now.
-  - title: It validates low-noise interaction
-    description: Less friction and fewer attention-hijacking patterns make the core intent easier to see.
-  - title: It keeps the public version coherent
-    description: The project is trying to become clear before it becomes large.
+    description: The first question is not what else can be added, but what should stay out for now. This framework remains valid after the direction stopped.
+  - title: It validated low-noise interaction as a methodology
+    description: Less friction and fewer attention-hijacking patterns make the core intent easier to see. This insight was formed during the exploration phase.
+  - title: Preserved as a direction and trade-off record
+    description: The first version did not reach a public stage and the direction has been stopped. This page keeps the structural reasoning from that phase, not as an active project.
 card_cta_label: "View project"
-secondary_link_label: "Ask about the progress"
+secondary_link_label: "Discuss a similar direction"
 secondary_link_url: /en/contact/
 image: /assets/images/screenshot-mobile.jpg
 image_alt: Privacy-first app mobile preview
 image_width: 750
 image_height: 1334
-featured: true
+featured: false
 order: 3
 schema_type: CreativeWork
-last_modified_at: 2026-03-18
+last_modified_at: 2026-07-15
 ---
 
 ## Background
 
-This project starts from a simple observation: many apps keep adding features, but lose clarity around privacy, distraction control and product boundaries. I wanted to explore a more restrained alternative.
+This project started from a simple observation: many apps keep adding features, but lose clarity around privacy, distraction control and product boundaries. I wanted to explore a more restrained alternative.
 
 ## Problem it addresses
 
@@ -84,7 +86,7 @@ This project starts from a simple observation: many apps keep adding features, b
 
 ## My role
 
-This is a self-directed project. I am responsible for the product direction, the Flutter implementation and the judgment around what should stay inside the first public version.
+This was a self-directed exploration. I was responsible for the product direction, the Flutter implementation and the judgment around what should stay inside the first public version.
 
 ## What I actually handled
 
@@ -94,16 +96,12 @@ This is a self-directed project. I am responsible for the product direction, the
 
 ## Current state
 
-The product is still moving toward its public version. Right now the focus is on shaping a coherent public scope rather than expanding into a bigger feature set too early.
+This direction has been stopped and is no longer being developed. This page is kept only as a structured record of the direction exploration and trade-off decisions — documenting the positioning, boundary judgments and first-version scoping process at the time. The page, image and route remain unchanged but do not represent an active or in-progress project.
 
-## Next step
+## Why it stopped
 
-The next important questions are not about feature count. They are about whether:
-
-- the public explanation is clear enough,
-- the user flow really feels low-noise,
-- and the data handling matches the privacy stance of the product.
+During the exploration phase, it became clear that the resource commitment required for this direction did not match current priorities, and the scope failed to converge into a clear enough public version that could be advanced independently. The decision was made to stop and refocus effort on projects more directly tied to current operations. The methodology around low-noise, boundary-aware and privacy-first design has been absorbed into subsequent product work.
 
 ## Short reflection
 
-This project keeps reinforcing the same lesson: a better product is often the one that refuses unnecessary complexity.
+This project keeps reinforcing the same lesson: a better product is often the one that refuses unnecessary complexity. That judgment still holds, even though the direction has been archived.

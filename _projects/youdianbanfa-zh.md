@@ -1,5 +1,7 @@
 ---
 title: 有点办法｜公众号与小程序闭环
+lifecycle: active
+archived: false
 permalink: /projects/youdianbanfa/
 lang: zh-CN
 alternate_url: /en/projects/youdianbanfa/

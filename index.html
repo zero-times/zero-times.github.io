@@ -16,7 +16,8 @@ image_height: 720
 schema_type: ProfilePage
 last_modified_at: 2026-07-15
 ---
-{% assign featured_projects = site.projects | where: "lang", "zh-CN" | where: "featured", true | sort: "order" %}
+{% assign active_projects = site.projects | where: "lang", "zh-CN" | where: "lifecycle", "active" | sort: "order" %}
+{% assign archived_count_zh = site.projects | where: "lang", "zh-CN" | where: "archived", true | size %}
 
 <div class="container my-5 portfolio-shell">
   <section class="portfolio-hero" aria-labelledby="page-title">
@@ -68,13 +69,13 @@ last_modified_at: 2026-07-15
     </div>
   </section>
 
-  <section class="portfolio-section" aria-labelledby="featured-projects-title">
+  <section class="portfolio-section" aria-labelledby="active-project-title">
     <div class="portfolio-section-head">
-      <p class="portfolio-eyebrow">代表项目</p>
-      <h2 id="featured-projects-title">先用 3 个项目说明我的工作方式</h2>
-      <p>每个项目都记录了背景、问题、职责、技术栈和当前状态，构成一条完整的构建轨迹。</p>
+      <p class="portfolio-eyebrow">当前运营项目</p>
+      <h2 id="active-project-title">一个正在持续运行的产品系统</h2>
+      <p>以下项目代表我当前仍在运营和迭代的工作；其余项目已归档，作为历史构建记录保留，用于展示判断与复盘，不代表仍在运营。</p>
     </div>
-    {% include project-grid.html projects=featured_projects %}
+    {% include project-grid.html projects=active_projects %}
   </section>
 
   <section class="portfolio-section" aria-labelledby="fit-title">
@@ -100,11 +101,12 @@ last_modified_at: 2026-07-15
 
   <section class="portfolio-archive-banner" aria-labelledby="build-ledger-title" data-build-ledger="index">
     <div>
-      <p class="portfolio-eyebrow">构建手记</p>
+      <p class="portfolio-eyebrow">历史归档</p>
       <h2 id="build-ledger-title">每一条构建记录，都是交付轨迹的一部分</h2>
-      <p>过去的产品笔记、自动化实验和历史更新仍可查阅，但不参与当前能力排序；现在的重点始终是上面的真实案例与交付结果。</p>
+      <p>另有 {{ archived_count_zh }} 个已归档项目与过去的产品笔记、自动化实验和历史更新仍可查阅，但不参与当前能力排序；现在的重点始终是上面的真实案例与交付结果。归档记录保留用于展示判断与复盘，不代表仍在运营。</p>
     </div>
     <div class="portfolio-actions">
+      <a class="portfolio-action portfolio-action--secondary" href="{{ '/projects/' | relative_url }}">查看全部项目（含归档）</a>
       <a class="portfolio-action portfolio-action--secondary" href="{{ '/blog/' | relative_url }}">查看构建手记</a>
       <a class="portfolio-action portfolio-action--primary" href="{{ '/contact/' | relative_url }}">联系我</a>
     </div>

@@ -1,13 +1,15 @@
 ---
 title: 中小型应用匿名案例
+lifecycle: delivered
+archived: true
 permalink: /projects/anonymized-product-case/
 lang: zh-CN
 alternate_url: /en/projects/anonymized-product-case/
 description: "一个匿名化的中小型产品案例，展示从需求梳理到 Flutter 客户端、Node.js 后端和上线配合的完整路径。"
 keywords: "匿名案例, Flutter, Node.js, 中小型应用"
 summary: "一个匿名化的中小型产品案例：从需求梳理开始，到 Flutter 客户端、Node.js 后端与上线配合，都尽量收在一条路径里。"
-status_label: "已交付"
-status_note: "因合作约束，仅保留匿名化说明"
+status_label: "已交付归档"
+status_note: "项目已完成交付，因合作约束仅保留匿名化说明；此记录已归档"
 role: "需求梳理、Flutter 客户端、Node.js 后端与交付配合"
 stack:
   - Flutter
@@ -62,7 +64,7 @@ image_height: 716
 featured: false
 order: 4
 schema_type: CreativeWork
-last_modified_at: 2026-03-18
+last_modified_at: 2026-07-15
 ---
 
 ## 项目背景

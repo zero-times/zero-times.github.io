@@ -223,6 +223,69 @@ jobs:
             fi
           done
 
+      - name: Assert rendered project lifecycle grouping
+        run: |
+          HOME_PAGES=(
+            "_site/index.html"
+            "_site/en/index.html"
+          )
+          for page in "${HOME_PAGES[@]}"; do
+            if [ ! -f "$page" ]; then
+              echo "Missing rendered homepage: $page"
+              exit 1
+            fi
+            PROJECT_CARD_COUNT=$(grep -o '<article class="portfolio-project-card' "$page" | wc -l | tr -d ' ')
+            if [ "$PROJECT_CARD_COUNT" -ne 1 ]; then
+              echo "Expected exactly one active project card on homepage, found $PROJECT_CARD_COUNT: $page"
+              exit 1
+            fi
+            grep -q 'projects/youdianbanfa/' "$page"
+          done
+
+          PROJECT_INDEXES=(
+            "_site/projects/index.html"
+            "_site/en/projects/index.html"
+          )
+          for page in "${PROJECT_INDEXES[@]}"; do
+            if [ ! -f "$page" ]; then
+              echo "Missing rendered project index: $page"
+              exit 1
+            fi
+            PROJECT_CARD_COUNT=$(grep -o '<article class="portfolio-project-card' "$page" | wc -l | tr -d ' ')
+            ARCHIVED_CARD_COUNT=$(grep -o 'portfolio-project-card--archived' "$page" | wc -l | tr -d ' ')
+            if [ "$PROJECT_CARD_COUNT" -ne 4 ] || [ "$ARCHIVED_CARD_COUNT" -ne 3 ]; then
+              echo "Expected one active and three archived project cards: $page"
+              exit 1
+            fi
+          done
+
+          ARCHIVED_DETAILS=(
+            "_site/projects/appshots/index.html"
+            "_site/projects/privacy-first-app/index.html"
+            "_site/projects/anonymized-product-case/index.html"
+            "_site/en/projects/appshots/index.html"
+            "_site/en/projects/privacy-first-app/index.html"
+            "_site/en/projects/anonymized-product-case/index.html"
+          )
+          for page in "${ARCHIVED_DETAILS[@]}"; do
+            if [ ! -f "$page" ]; then
+              echo "Missing rendered archived project detail: $page"
+              exit 1
+            fi
+            grep -q 'project-detail__archive-notice' "$page"
+          done
+
+          ACTIVE_DETAILS=(
+            "_site/projects/youdianbanfa/index.html"
+            "_site/en/projects/youdianbanfa/index.html"
+          )
+          for page in "${ACTIVE_DETAILS[@]}"; do
+            if grep -q 'project-detail__archive-notice' "$page"; then
+              echo "Active project unexpectedly rendered an archive notice: $page"
+              exit 1
+            fi
+          done
+
       - name: Assert rendered canonical/noindex signals on paginated archive
         run: |
           PAGE2="_site/blog/page2/index.html"

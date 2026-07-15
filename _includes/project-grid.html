@@ -1,11 +1,11 @@
 <div class="portfolio-project-grid">
   {% for project in include.projects %}
   {% assign case_number = forloop.index | prepend: '0' | slice: -2, 2 %}
-  <article class="portfolio-project-card" itemscope itemtype="https://schema.org/CreativeWork" data-reveal>
+  <article class="portfolio-project-card{% if project.archived %} portfolio-project-card--archived{% endif %}" itemscope itemtype="https://schema.org/CreativeWork" data-reveal>
     <div class="portfolio-project-kicker">
       <span aria-hidden="true">CASE {{ case_number }}</span>
       {% if project.status_label %}
-      <span class="portfolio-project-status">{{ project.status_label }}</span>
+      <span class="portfolio-project-status{% if project.archived %} portfolio-project-status--archived{% endif %}">{{ project.status_label }}</span>
       {% endif %}
     </div>
     {% if project.image %}
@@ -17,6 +17,17 @@
       <h3 itemprop="name"><a href="{{ project.url | relative_url }}" itemprop="url">{{ project.title }}</a></h3>
       {% if project.summary %}
       <p class="portfolio-project-summary" itemprop="description">{{ project.summary }}</p>
+      {% endif %}
+      {% if project.archived %}
+      <p class="portfolio-project-archive-note">
+        {% if project.lifecycle == 'abandoned' %}
+          {% if project.lang == 'en' %}This project is no longer maintained. Kept as a historical build record.{% else %}此项目已停止维护，仅作为历史构建记录保留。{% endif %}
+        {% elsif project.lifecycle == 'delivered' %}
+          {% if project.lang == 'en' %}Project delivered and archived. Kept as a structured record.{% else %}项目已交付归档，作为结构化记录保留。{% endif %}
+        {% else %}
+          {% if project.lang == 'en' %}This record has been archived and does not represent active operations.{% else %}此记录已归档，不代表仍在运营。{% endif %}
+        {% endif %}
+      </p>
       {% endif %}
       {% if project.role %}
       <p class="portfolio-project-role"><span>{% if project.lang == 'en' %}Contribution{% else %}我的投入{% endif %}</span>{{ project.role }}</p>

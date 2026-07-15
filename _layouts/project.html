@@ -9,7 +9,8 @@ layout: default
     {% assign status_note_label = 'Status' %}
     {% assign stack_label = 'Build stack' %}
     {% assign alternate_label = '中文版本' %}
-    {% assign related_title = 'More case files' %}
+    {% assign related_title = 'Current and archived case files' %}
+    {% assign archive_notice_label = 'Archive status' %}
     {% assign details_label = 'Case study' %}
     {% assign facts_title = 'Evidence' %}
     {% assign deliverables_title = 'What I shipped' %}
@@ -21,7 +22,8 @@ layout: default
     {% assign status_note_label = '当前状态' %}
     {% assign stack_label = '技术与平台' %}
     {% assign alternate_label = 'English version' %}
-    {% assign related_title = '更多案例' %}
+    {% assign related_title = '当前与归档记录' %}
+    {% assign archive_notice_label = '归档状态' %}
     {% assign details_label = '案例拆解' %}
     {% assign facts_title = '关键证据' %}
     {% assign deliverables_title = '交付内容' %}
@@ -33,7 +35,8 @@ layout: default
     {% assign status_note_label = 'Status' %}
     {% assign stack_label = 'Build stack' %}
     {% assign alternate_label = 'English version' %}
-    {% assign related_title = 'More case files' %}
+    {% assign related_title = 'Current and archived case files' %}
+    {% assign archive_notice_label = 'Archive status' %}
     {% assign details_label = 'Case study' %}
     {% assign facts_title = 'Evidence' %}
     {% assign deliverables_title = 'What I shipped' %}
@@ -41,6 +44,17 @@ layout: default
     {% assign highlights_title = 'Constraints and priorities' %}
     {% assign outcomes_title = 'Outcome and review' %}
 {% endcase %}
+{% if page.lifecycle == 'abandoned' %}
+  {% if project_lang_base == 'en' %}
+    {% assign deliverables_title = 'What was explored' %}
+    {% assign decisions_title = 'Decisions at the time' %}
+    {% assign outcomes_title = 'What remains useful' %}
+  {% else %}
+    {% assign deliverables_title = '探索内容' %}
+    {% assign decisions_title = '当时的产品与工程判断' %}
+    {% assign outcomes_title = '留存价值与复盘' %}
+  {% endif %}
+{% endif %}
 {% assign related_projects = site.projects | where: "lang", page.lang | sort: "order" %}
 
 <div class="container my-5 project-detail">
@@ -49,6 +63,17 @@ layout: default
       <div class="project-detail__intro">
         {% if page.status_label %}
         <p class="portfolio-eyebrow">{{ page.status_label }}</p>
+        {% endif %}
+        {% if page.archived %}
+        <aside class="project-detail__archive-notice" aria-label="{{ archive_notice_label }}">
+          {% if page.lifecycle == 'abandoned' %}
+            <p><strong>{% if project_lang_base == 'en' %}This project is no longer maintained — kept only as a historical build record.{% else %}此项目已停止维护，仅作为历史构建记录保留。{% endif %}</strong> {% if project_lang_base == 'en' %}The page, image and route are preserved for reference. Nothing on this page represents active operations or ongoing development.{% else %}页面、图片与路由保留以供参考，此页面内容不代表仍在运营或推进中。{% endif %}</p>
+          {% elsif page.lifecycle == 'delivered' %}
+            <p><strong>{% if project_lang_base == 'en' %}This project has been delivered and archived.{% else %}此项目已完成交付并归档。{% endif %}</strong> {% if project_lang_base == 'en' %}Kept as a structured record of delivery method and working approach — not an active project.{% else %}作为交付方法与工作方式的结构化记录保留，不代表仍在运营。{% endif %}</p>
+          {% else %}
+            <p><strong>{% if project_lang_base == 'en' %}This record has been archived.{% else %}此记录已归档。{% endif %}</strong> {% if project_lang_base == 'en' %}Kept for reference; does not represent active operations.{% else %}保留以供参考，不代表仍在运营。{% endif %}</p>
+          {% endif %}
+        </aside>
         {% endif %}
         <h1 id="page-title" class="project-detail__title">{{ page.title }}</h1>
         {% if page.summary %}
@@ -205,7 +230,7 @@ layout: default
     <div class="portfolio-project-grid">
       {% for project in related_projects %}
         {% if project.url != page.url %}
-        <article class="portfolio-project-card">
+        <article class="portfolio-project-card{% if project.archived %} portfolio-project-card--archived{% endif %}">
           {% if project.image %}
           <a class="portfolio-project-media" href="{{ project.url | relative_url }}" aria-label="{{ project.title | escape }}">
             <img src="{{ project.image | relative_url }}" alt="{{ project.image_alt | default: project.title | escape }}" loading="lazy" decoding="async" fetchpriority="low"{% if project.image_width %} width="{{ project.image_width }}"{% endif %}{% if project.image_height %} height="{{ project.image_height }}"{% endif %}>
@@ -213,11 +238,22 @@ layout: default
           {% endif %}
           <div class="portfolio-project-body">
             {% if project.status_label %}
-            <p class="portfolio-project-status">{{ project.status_label }}</p>
+            <p class="portfolio-project-status{% if project.archived %} portfolio-project-status--archived{% endif %}">{{ project.status_label }}</p>
             {% endif %}
             <h3><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
             {% if project.summary %}
             <p class="portfolio-project-summary">{{ project.summary }}</p>
+            {% endif %}
+            {% if project.archived %}
+            <p class="portfolio-project-archive-note">
+              {% if project.lifecycle == 'abandoned' %}
+                {% if project.lang == 'en' %}This project is no longer maintained. Kept as a historical build record.{% else %}此项目已停止维护，仅作为历史构建记录保留。{% endif %}
+              {% elsif project.lifecycle == 'delivered' %}
+                {% if project.lang == 'en' %}Project delivered and archived. Kept as a structured record.{% else %}项目已交付归档，作为结构化记录保留。{% endif %}
+              {% else %}
+                {% if project.lang == 'en' %}This record has been archived and does not represent active operations.{% else %}此记录已归档，不代表仍在运营。{% endif %}
+              {% endif %}
+            </p>
             {% endif %}
             <div class="portfolio-project-actions">
               <a class="portfolio-action portfolio-action--primary" href="{{ project.url | relative_url }}">{{ project.card_cta_label | default: '查看详情' }}</a>

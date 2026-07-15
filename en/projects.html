@@ -4,8 +4,8 @@ layout: default
 permalink: /en/projects/
 lang: en
 alternate_url: /projects/
-description: "Explore four product case files by 王雄皓 (Hoa), spanning a WeChat content-to-tool loop, a tool site, a privacy-first app and an anonymized delivery project."
-keywords: "王雄皓 (Hoa), product case studies, WeChat Mini Program, Flutter, Node.js, AppShots"
+description: "Explore product case files by 王雄皓 (Hoa): one currently operating project and three archived records, spanning a WeChat content-to-tool loop, a tool site, a privacy-first app and an anonymized delivery project."
+keywords: "王雄皓 (Hoa), product case studies, WeChat Mini Program, Flutter, Node.js, AppShots, archived projects"
 schema_type: CollectionPage
 image: /assets/images/screenshot.jpg
 image_alt: 王雄皓 (Hoa) projects page
@@ -14,14 +14,15 @@ image_height: 720
 last_modified_at: 2026-07-15
 load_webfonts: false
 ---
-{% assign projects = site.projects | where: "lang", "en" | sort: "order" %}
+{% assign active_projects = site.projects | where: "lang", "en" | where: "lifecycle", "active" | sort: "order" %}
+{% assign archived_projects = site.projects | where: "lang", "en" | where: "archived", true | sort: "order" %}
 
 <div class="container my-5 portfolio-shell">
   <section class="portfolio-hero" aria-labelledby="page-title">
     <div class="portfolio-hero__main">
       <p class="portfolio-eyebrow">Build Ledger</p>
-      <h1 class="portfolio-title" id="page-title">Four case files tracing products from problem to delivery.</h1>
-      <p class="portfolio-lead">A WeChat content-to-tool loop, an app-asset tool, a privacy-first product and an anonymized delivery case—each one records the problem, my contribution, the decisions and the current result.</p>
+      <h1 class="portfolio-title" id="page-title">One operating product, with three case files in the archive.</h1>
+      <p class="portfolio-lead">The currently operating project is the WeChat content-to-tool loop. The other three projects have been archived and are kept as historical build records — each one documents the problem, my contribution, the decisions and the current result, for judgment and review.</p>
     </div>
     <aside class="portfolio-panel">
       <h2>Documentation principles</h2>
@@ -29,15 +30,25 @@ load_webfonts: false
         <li>Start from the problem and the context, not a feature list.</li>
         <li>State my role and the current status clearly.</li>
         <li>Projects that cannot be shared publicly are described with structure, not omitted.</li>
+        <li>Archived projects keep their pages, images and routes but do not represent active operations.</li>
       </ul>
     </aside>
   </section>
 
-  <section class="portfolio-section" aria-labelledby="project-list-title" data-build-ledger="projects">
+  <section class="portfolio-section" aria-labelledby="active-projects-title">
     <div class="portfolio-section-head">
-      <p class="portfolio-eyebrow">Selected projects</p>
-      <h2 id="project-list-title">Current public project set</h2>
+      <p class="portfolio-eyebrow">Currently operating</p>
+      <h2 id="active-projects-title">Actively maintained products</h2>
     </div>
-    {% include project-grid.html projects=projects %}
+    {% include project-grid.html projects=active_projects %}
+  </section>
+
+  <section class="portfolio-section portfolio-section--archive" aria-labelledby="archived-projects-title" data-build-ledger="projects">
+    <div class="portfolio-section-head">
+      <p class="portfolio-eyebrow">Archive</p>
+      <h2 id="archived-projects-title">Archived case files: kept for judgment and review</h2>
+      <p>The projects below have been discontinued or archived after delivery. Pages, images and routes are preserved as structured records of direction exploration, trade-off decisions and delivery methods. They do not represent active operations.</p>
+    </div>
+    {% include project-grid.html projects=archived_projects %}
   </section>
 </div>

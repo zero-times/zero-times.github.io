@@ -1,13 +1,15 @@
 ---
 title: 隐私向应用
+lifecycle: abandoned
+archived: true
 permalink: /projects/privacy-first-app/
 lang: zh-CN
 alternate_url: /en/projects/privacy-first-app/
-description: "一个正在推进中的隐私向应用，重点放在克制交互、内容边界与低干扰体验。"
+description: "一个已停止的隐私向应用方向探索，重点放在克制交互、内容边界与低干扰体验，仅作为方向与取舍记录保留。"
 keywords: "隐私, Flutter, 产品开发, 个人项目"
-summary: "一个正在推进中的隐私向应用，重点不在堆功能，而在于让信息、交互和存储方式更克制。"
-status_label: "开发中"
-status_note: "正在整理上线版本与公开说明"
+summary: "一个已停止的隐私向应用方向探索，重点不在堆功能，而在于让信息、交互和存储方式更克制。仅作方向与取舍记录保留。"
+status_label: "已放弃 · 归档"
+status_note: "应用方向已放弃，不再推进；仅保留为方向与取舍记录"
 role: "产品方向、Flutter 客户端实现与功能边界判断"
 stack:
   - Flutter
@@ -16,14 +18,14 @@ stack:
   - 中小型产品迭代
 facts:
   - label: 项目阶段
-    value: 仍在推进中的公开版本
-    description: 当前重点是把边界和说明做对，而不是匆忙进入大规模扩展。
+    value: 已归档，不再推进
+    description: 该方向已停止。首版成立条件和公开说明的整理工作已经终止。
   - label: 核心原则
     value: 低干扰、边界感、隐私优先
-    description: 不是所有“能做的功能”都要做，先守住体验和边界。
+    description: 不是所有“能做的功能”都要做，先守住体验和边界。这些判断原则仍具有参考价值。
   - label: 当前范围
-    value: 聚焦首版成立条件
-    description: 先把真正成立的使用场景和信息结构收清楚，再决定后续功能。
+    value: 仅保留结构化记录
+    description: 该项目的页面、图片和路由保留，作为方向探索与取舍判断的记录。
 highlights:
   - title: 先做克制体验
     description: 这个项目不追求上来就做很多能力，而是先减少干扰和注意力消耗。
@@ -47,22 +49,22 @@ decisions:
     description: 与其追求“看起来完整”，不如先让方向明确、逻辑自洽的版本真正成立。
 outcomes:
   - title: 说明了我对产品边界的判断方式
-    description: 不是只看“还能加什么”，而是先判断“哪些不该先做”。
+    description: 不是只看“还能加什么”，而是先判断“哪些不该先做”。该判断框架在方向停止后仍然成立。
   - title: 验证了低干扰设计的重要性
-    description: 更少的噪音、更少的诱导动作，反而更能让产品核心意图被看见。
-  - title: 让公开版本可以更克制地成立
-    description: 当前目标不是一次性做满，而是做出一个方向明确、可以继续长大的版本。
+    description: 更少的噪音、更少的诱导动作，反而更能让产品核心意图被看见。这是方向探索期间形成的方法论。
+  - title: 留存为方向与取舍记录
+    description: 首版未能推进到公开阶段，方向已停止。该页面保留当时的结构判断，不作为当前推进中的项目展示。
 card_cta_label: "查看项目"
-secondary_link_label: "联系我了解进展"
+secondary_link_label: "联系我讨论类似方向"
 secondary_link_url: /contact/
 image: /assets/images/screenshot-mobile.jpg
 image_alt: 隐私向应用的移动端预览图
 image_width: 750
 image_height: 1334
-featured: true
+featured: false
 order: 3
 schema_type: CreativeWork
-last_modified_at: 2026-03-18
+last_modified_at: 2026-07-15
 ---
 
 ## 项目背景
@@ -93,16 +95,12 @@ last_modified_at: 2026-03-18
 
 ## 当前状态
 
-项目仍在推进中，现阶段更关注公开版本的边界和说明，而不是匆忙扩展到过大的范围。
+该方向已停止推进，不再继续开发。此页面仅作为方向探索与取舍判断的结构化记录保留——记录当时的定位思路、边界判断和首版成立条件的收敛过程。页面、图片和路由均保持不变，但不代表仍在运营或推进中。
 
-## 下一阶段
+## 为什么停止
 
-如果继续往下推进，接下来更重要的不是“加多少功能”，而是：
-
-- 首版的关键信息是否足够清楚。
-- 使用路径是否真的低干扰。
-- 数据处理方式是否和项目的隐私立场一致。
+在方向推进过程中逐步明确：该方向的资源投入与当前阶段的优先级不匹配，且未能收敛到一个足够清晰、可以独立推进的公开版本。决定停止推进，把精力集中在更直接服务于当前业务的项目上。关于低干扰、边界感和隐私前置的判断方法已内化到后续产品工作中。
 
 ## 简短复盘
 
-这个项目让我更确认，很多产品真正需要的不是“再加一个功能”，而是有意识地减少不必要的复杂度。
+这个项目让我更确认，很多产品真正需要的不是“再加一个功能”，而是有意识地减少不必要的复杂度。即使该方向已停止，这个判断仍然有效。

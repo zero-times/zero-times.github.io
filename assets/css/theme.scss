@@ -1743,6 +1743,81 @@ pre code {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/*  Archive section, cards & notices — Build Ledger lifecycle styling */
+/* ------------------------------------------------------------------ */
+
+.portfolio-section--archive {
+  border-top-style: dashed;
+}
+
+.portfolio-project-card--archived {
+  background: color-mix(in srgb, var(--ledger-surface-strong) 78%, transparent);
+  border-color: var(--ledger-line);
+  box-shadow: 2px 2px 0 rgba(17, 24, 20, 0.06);
+}
+
+.portfolio-project-card--archived:hover,
+.portfolio-project-card--archived:focus-within {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--ledger-muted) 30%, transparent);
+}
+
+.portfolio-project-status--archived {
+  color: var(--ledger-muted);
+}
+
+.portfolio-project-status--archived::before {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ledger-muted) 18%, transparent);
+}
+
+.portfolio-project-archive-note {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  color: var(--ledger-muted);
+  background: var(--ledger-surface-strong);
+  border-inline-start: 3px solid var(--ledger-line-strong);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.portfolio-project-card--archived .portfolio-project-media img {
+  filter: saturate(0.35) contrast(0.92);
+}
+
+.portfolio-project-card--archived:hover .portfolio-project-media img,
+.portfolio-project-card--archived:focus-within .portfolio-project-media img {
+  filter: saturate(0.55) contrast(0.95);
+}
+
+.project-detail__archive-notice {
+  padding: clamp(0.8rem, 2vw, 1.2rem);
+  background: var(--ledger-surface-strong);
+  border: 1px solid var(--ledger-line-strong);
+  border-inline-start: 4px solid var(--ledger-muted);
+}
+
+.project-detail__archive-notice p {
+  margin: 0;
+  color: var(--ledger-ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.project-detail__archive-notice strong {
+  color: var(--ledger-ink);
+}
+
+@media (max-width: 47.99rem) {
+  .portfolio-project-archive-note {
+    font-size: 0.75rem;
+  }
+
+  .project-detail__archive-notice p {
+    font-size: 0.83rem;
+  }
+}
+
 @media print {
   .site-header-v2,
   .site-footer-v2,

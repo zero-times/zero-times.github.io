@@ -1,13 +1,15 @@
 ---
 title: AppShots
+lifecycle: abandoned
+archived: true
 permalink: /projects/appshots/
 lang: zh-CN
 alternate_url: /en/projects/appshots/
-description: "AppShots 是一个围绕截图整理、卖点表达与发布素材收敛的轻量工具站项目。"
+description: "AppShots 是一个围绕截图整理、卖点表达与发布素材收敛的轻量工具站项目，已停止推进，仅作为历史构建记录保留。"
 keywords: "AppShots, Flutter, Node.js, 项目展示"
-summary: "把应用截图、卖点文案和发布素材整理成一个更容易复用的轻量工具站。"
-status_label: "已上线"
-status_note: "对外展示版持续整理中"
+summary: "把应用截图、卖点文案和发布素材整理成一个更容易复用的轻量工具站；已停止维护，仅作结构记录保留。"
+status_label: "已放弃 · 归档"
+status_note: "独立工具站方向已放弃，仅作为历史构建记录保留"
 role: "产品定位、信息结构、前端体验与交付整理"
 stack:
   - Flutter
@@ -16,11 +18,11 @@ stack:
   - 轻量内容架构
 facts:
   - label: 项目类型
-    value: 工具型展示项目
-    description: 面向独立开发者或小团队，用更低维护的方式整理截图、卖点与发布素材。
-  - label: 当前目标
-    value: 先解决表达与整理问题
-    description: 不先堆复杂功能，而是先把“怎么说明一个产品”这件事收清楚。
+    value: 工具型展示项目（已归档）
+    description: 面向独立开发者或小团队，用更低维护的方式整理截图、卖点与发布素材。目前已停止推进。
+  - label: 归档原因
+    value: 方向已放弃，不再继续开发
+    description: 项目的表达结构与页面模式已在后续作品中复用，独立工具站本身不再维护。
   - label: 交付方式
     value: Flutter + Node.js
     description: 前端展示和最小服务端能力配合，保证项目能持续演进但不失控。
@@ -47,11 +49,11 @@ decisions:
     description: 它不仅是一个独立项目，也被当成整理其他项目页时的结构实验场。
 outcomes:
   - title: 验证了一种更轻的产品表达方式
-    description: 先把项目讲清楚，再决定要不要继续扩功能，比先做重平台更适合当前阶段。
+    description: 先把项目讲清楚，再决定要不要继续扩功能，比先做重平台更适合当时阶段。
   - title: 让后续项目页有了可继承的骨架
-    description: 背景、问题、职责、取舍、状态这样的结构，是从这个项目中明确下来的。
+    description: 背景、问题、职责、取舍、状态这样的结构，是从这个项目中明确下来的，已在其他项目中复用。
   - title: 让“作品展示”也成为真正的产品工作
-    description: 它不是装饰性的页面，而是直接服务于产品表达和后续交付判断的工具。
+    description: 它不是装饰性的页面，而是直接服务于产品表达和后续交付判断的工具；独立工具站已停止维护，但方法留存。
 card_cta_label: "查看项目"
 secondary_link_label: "联系我聊类似项目"
 secondary_link_url: /contact/
@@ -59,7 +61,7 @@ image: /assets/images/appshots-project.jpg
 image_alt: AppShots 将截图、卖点文案与发布素材整理为可复用交付结构的项目封面
 image_width: 1280
 image_height: 720
-featured: true
+featured: false
 order: 2
 schema_type: CreativeWork
 last_modified_at: 2026-07-15
@@ -102,16 +104,12 @@ last_modified_at: 2026-07-15
 
 ## 当前状态
 
-项目已经可以作为对外展示的一部分存在，目前重点是继续整理公开版本的说明与后续展示方式，而不是无限扩展功能。
+项目已停止推进，不再继续维护。独立工具站方向已放弃，仅保留此页面作为历史构建记录——记录当时的定位思路、结构取舍和表达方式。页面中保留的方法与信息结构已在后续项目（包括本作品站）中复用。
 
-## 下一步
+## 不再继续的原因
 
-如果继续推进，我更倾向于补这些能力：
-
-- 更稳定的素材组织方式。
-- 更清楚的项目卡片与详情页关系。
-- 更适合多项目复用的说明结构。
+在推进过程中逐渐明确：独立工具站的维护成本与当前阶段的资源投入不匹配，且其核心表达结构已经在后续多个项目中被吸收和继承。因此决定停止独立推进，转而把精力集中在更直接服务于当前业务的项目上。
 
 ## 简短复盘
 
-AppShots 对我来说的价值，不只是“做了一个工具”，而是验证了我更偏好的工作方式：先把问题和结构收清楚，再决定功能边界和交付节奏。
+AppShots 对我来说的价值，不只是“做了一个工具”，而是验证了我更偏好的工作方式：先把问题和结构收清楚，再决定功能边界和交付节奏。即使项目本身已停止，这套方法仍在后续作品中持续生效。

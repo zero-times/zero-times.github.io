@@ -1,5 +1,7 @@
 ---
 title: Youdian Banfa｜WeChat content-to-tool loop
+lifecycle: active
+archived: false
 permalink: /en/projects/youdianbanfa/
 lang: en
 locale: en_US

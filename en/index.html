@@ -14,7 +14,8 @@ schema_type: ProfilePage
 last_modified_at: 2026-07-15
 load_webfonts: false
 ---
-{% assign featured_projects = site.projects | where: "lang", "en" | where: "featured", true | sort: "order" %}
+{% assign active_projects = site.projects | where: "lang", "en" | where: "lifecycle", "active" | sort: "order" %}
+{% assign archived_count_en = site.projects | where: "lang", "en" | where: "archived", true | size %}
 
 <div class="container my-5 portfolio-shell">
   <section class="portfolio-hero" aria-labelledby="page-title">
@@ -66,13 +67,13 @@ load_webfonts: false
     </div>
   </section>
 
-  <section class="portfolio-section" aria-labelledby="featured-projects-title">
+  <section class="portfolio-section" aria-labelledby="active-project-title">
     <div class="portfolio-section-head">
-      <p class="portfolio-eyebrow">Selected work</p>
-      <h2 id="featured-projects-title">Three projects that show how I work</h2>
-      <p>Each project documents the context, problem, my role, the stack and the current state — a complete build track.</p>
+      <p class="portfolio-eyebrow">Currently operating</p>
+      <h2 id="active-project-title">One actively maintained product system</h2>
+      <p>The project below represents work I'm still operating and iterating on. The remaining projects have been archived and are kept as historical build records for judgment and review — they do not represent active operations.</p>
     </div>
-    {% include project-grid.html projects=featured_projects %}
+    {% include project-grid.html projects=active_projects %}
   </section>
 
   <section class="portfolio-section" aria-labelledby="fit-title">
@@ -98,11 +99,12 @@ load_webfonts: false
 
   <section class="portfolio-archive-banner" aria-labelledby="build-ledger-title" data-build-ledger="index">
     <div>
-      <p class="portfolio-eyebrow">Build Ledger</p>
+      <p class="portfolio-eyebrow">Archive</p>
       <h2 id="build-ledger-title">Every entry is part of a delivery trail</h2>
-      <p>Earlier product notes, automation experiments and historical updates remain accessible, but they do not define the current portfolio. The case files and delivery evidence above do.</p>
+      <p>{{ archived_count_en }} archived projects remain accessible alongside earlier product notes, automation experiments and historical updates, but they do not define the current portfolio. The active case file and delivery evidence above do. Archived records are kept for judgment and review — they do not represent active operations.</p>
     </div>
     <div class="portfolio-actions">
+      <a class="portfolio-action portfolio-action--secondary" href="{{ '/en/projects/' | relative_url }}">View all projects (including archive)</a>
       <a class="portfolio-action portfolio-action--secondary" href="{{ '/blog/' | relative_url }}">Browse build archive</a>
       <a class="portfolio-action portfolio-action--primary" href="{{ '/en/contact/' | relative_url }}">Contact</a>
     </div>
